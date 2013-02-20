@@ -62,7 +62,7 @@ public:
 	}
 
 	MediaDataModel *getMessages() const;
-	int getUnreadMessages() const { return unreadMessages; }
+	int getUnreadMessages() const { return unread_messages; }
 
 signals:
 	void messagesChanged();
@@ -78,7 +78,7 @@ private:
 
 	MessageDevice *dev;
 	MediaDataModel message_list;
-	int unreadMessages;
+	int unread_messages;
 };
 
 #endif // MESSAGESOBJECTS_H

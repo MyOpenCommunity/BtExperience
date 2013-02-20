@@ -58,7 +58,7 @@ MessagesSystem::MessagesSystem(MessageDevice *d) :
 	message_list(this)
 {
 	dev = d;
-	unreadMessages = 0;
+	unread_messages = 0;
 
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
 	connect(&message_list, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updateUnreadMessagesIfChanged()));
@@ -106,9 +106,9 @@ void MessagesSystem::updateUnreadMessagesIfChanged()
 		if (!pMsg->isRead())
 			++unreads;
 	}
-	if (unreads != unreadMessages)
+	if (unreads != unread_messages)
 	{
-		unreadMessages = unreads;
+		unread_messages = unreads;
 		emit unreadMessagesChanged();
 	}
 }
