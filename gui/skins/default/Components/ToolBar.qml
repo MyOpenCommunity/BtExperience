@@ -30,7 +30,7 @@ Item {
         anchors.right: parent.right
 
         source: homeProperties.skin === HomeProperties.Clear ? imagesPath + "toolbar/toolbar_bg_top.svg":
-                                                                imagesPath + "toolbar/toolbar_bg_top_dark.svg"
+                                                               imagesPath + "toolbar/toolbar_bg_top_dark.svg"
         width: parent.width
     }
 
@@ -53,9 +53,9 @@ Item {
                 defaultImageBg: imagesPath + "toolbar/bg_home.svg"
                 pressedImageBg: imagesPath + "toolbar/bg_home_pressed.svg"
                 defaultImage: homeProperties.skin === HomeProperties.Clear ? imagesPath + "toolbar/icon_home.svg":
-                                                                              imagesPath + "toolbar/icon_home_pressed.svg"
+                                                                             imagesPath + "toolbar/icon_home_pressed.svg"
                 pressedImage: homeProperties.skin === HomeProperties.Clear ? imagesPath + "toolbar/icon_home_pressed.svg":
-                                                                              imagesPath + "toolbar/icon_home.svg"
+                                                                             imagesPath + "toolbar/icon_home.svg"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 onPressed: toolbar.homeClicked() //doStuff()
@@ -137,7 +137,7 @@ Item {
                 property variant itemObject: probeModel.count > 0 ? probeModel.getObject(0) : undefined
                 text: itemObject !== undefined ? (itemObject.btObject.temperature / 10).toFixed(1) + " °C" : ""
                 color: homeProperties.skin === HomeProperties.Clear ? "black":
-                                                                       "white"
+                                                                      "white"
                 font.pixelSize: toolbar.fontSize
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -168,7 +168,8 @@ Item {
                                (homeProperties.skin === HomeProperties.Clear ?
                                     "../images/toolbar/icon_alarm-disabled_p.svg" :
                                     "../images/toolbar/icon_alarm-disabled.svg")
-            onPressed: {
+            pageName: "Antintrusion"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage(Script.getTarget(Container.IdAntintrusion))
             }
@@ -184,7 +185,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm-clock_p.svg" :
                               "../images/toolbar/icon_alarm-clock.svg"
-            onPressed: {
+            pageName: "Settings"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 if (EventManager.eventManager.clockRinging) {
                     // the video camera page expects navigation to be managed in toolbar
@@ -209,7 +211,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-open_p.svg" :
                               "../images/toolbar/icon_vde-auto-open.svg"
-            onPressed: {
+            pageName: "Settings"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.AUTO_OPEN})
             }
@@ -225,7 +228,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-auto-answer_p.svg" :
                               "../images/toolbar/icon_vde-auto-answer.svg"
-            onPressed: {
+            pageName: "Settings"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.HANDS_FREE})
             }
@@ -241,7 +245,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_vde-mute_p.svg" :
                               "../images/toolbar/icon_vde-mute.svg"
-            onPressed: {
+            pageName: "Settings"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_MUTE})
             }
@@ -257,7 +262,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_teleloop_p.svg" :
                               "../images/toolbar/icon_teleloop.svg"
-            onPressed: {
+            pageName: "Settings"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.VDE_TELELOOP})
             }
@@ -274,7 +280,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_alarm_p.svg" :
                               "../images/toolbar/icon_alarm.svg"
-            onPressed: {
+            pageName: "Antintrusion"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("Antintrusion.qml", {"navigationTarget": Navigation.ALARM_LOG})
             }
@@ -290,7 +297,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_source-play_p.svg" :
                               "../images/toolbar/icon_source-play.svg"
-            onPressed: {
+            pageName: "AudioPlayer"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("AudioPlayer.qml", {"upnp": global.audioVideoPlayer.isUpnp()})
             }
@@ -307,7 +315,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_new-message_p.svg" :
                               "../images/toolbar/icon_new-message.svg"
-            onPressed: {
+            pageName: "Messages"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage(Script.getTarget(Container.IdMessages))
             }
@@ -364,7 +373,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/icon_energy_p.svg" :
                               "../images/toolbar/icon_energy.svg"
-            onPressed: {
+            pageName: "EnergyManagement"
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.goToPage("EnergyManagement.qml", {"navigationTarget": Navigation.SUPERVISION})
             }
@@ -385,7 +395,8 @@ Item {
             pressedImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/help_online_p.svg" :
                               "../images/toolbar/help_online.svg"
-            onPressed: {
+            pageName: "" // forces action on click
+            function action() {
                 toolbar.toolbarNavigationClicked()
                 Stack.currentPage().processLaunched(global.browser)
                 global.browser.displayUrl(helpUrl)
