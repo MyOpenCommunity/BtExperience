@@ -10,6 +10,7 @@ BasePage {
     property variant containerWithCard
     property string newFilename
     property alias fullImage: sourceImage.source
+    property alias helpUrl: toolbar.helpUrl
 
     Rectangle {
         id: bg

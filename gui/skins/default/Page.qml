@@ -15,6 +15,7 @@ BasePage {
     property alias showSettingsButton: navigationBar.settingsButton
     property alias showRoomsButton: navigationBar.roomsButton
     property alias showMultimediaButton: navigationBar.multimediaButton
+    property alias helpUrl: toolbar.helpUrl
 
     function homeButtonClicked() {
         Stack.backToHome()

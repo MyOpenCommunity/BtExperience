@@ -9,6 +9,8 @@ import "js/EventManager.js" as EventManager
 BasePage {
     id: mainarea
 
+    property alias helpUrl: toolbar.helpUrl
+
     source : homeProperties.homeBgImage
 
     Rectangle {
