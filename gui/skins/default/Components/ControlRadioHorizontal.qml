@@ -12,7 +12,6 @@ Item {
 
     signal pressed
 
-    width: radioBg.width + radioLabel.width
     height: radioBg.height
 
     UbuntuLightText {
@@ -23,8 +22,6 @@ Item {
 
         anchors {
             left: parent.left
-            right: radioBg.left
-            rightMargin: 5
             verticalCenter: radioBg.verticalCenter
         }
         elide: Text.ElideRight
@@ -34,8 +31,8 @@ Item {
         id: radioBg
 
         anchors {
+            top: parent.top
             right: parent.right
-            bottom: parent.bottom
         }
 
         source: "../images/common/btn_giorni.svg"
