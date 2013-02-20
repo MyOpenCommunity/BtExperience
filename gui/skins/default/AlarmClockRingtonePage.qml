@@ -228,8 +228,7 @@ Page {
         font.pixelSize: 16
         color: "white"
         anchors {
-            left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            left: paginator.left
             top: horizontalSeparator.bottom
             topMargin: bg.height / 100 * 2
         }
@@ -244,11 +243,11 @@ Page {
         anchors {
             top: sourceText.bottom
             topMargin: bg.height / 100 * 5
+            bottom: bg.bottom
+            bottomMargin: bg.height / 100 * 2.92
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             right: verticalSeparator.right
-            bottom: bg.bottom
-            bottomMargin: bg.width / 100 * 2.00
         }
         model: page.actualModel
 
