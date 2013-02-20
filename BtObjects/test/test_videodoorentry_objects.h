@@ -62,6 +62,8 @@ private slots:
 	void testCCTVTeleloopTimeouFrame();
 	void testCCTVTeleloopTimeouTimer();
 
+	void testOpenAssociatedPE();
+
 protected:
 	void compareClientCommandThatWorks(int timeout = 0);
 

@@ -56,7 +56,7 @@ ObjectInterface *createCCTV(QList<ObjectPair> places)
 		list.append(place);
 	}
 
-	return new CCTV(list, d);
+	return new CCTV(list, d, (*bt_global::config)[DEFAULT_PE]);
 }
 
 ObjectInterface *createIntercom(QList<ObjectPair> places, bool pager)
@@ -217,7 +217,8 @@ bool VDEBase::getTeleloop() const
 }
 
 
-CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list, d)
+CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d, QString _pe_address) :
+	VDEBase(list, d)
 {
 	// initial values
 	brightness = 50;
@@ -230,6 +231,7 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d) : VDEBase(list,
 	ringtone = ExternalPlace1;
 	is_autoswitch = false;
 	is_teleloop = false;
+	pe_address = _pe_address;
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
@@ -405,12 +407,18 @@ void CCTV::cameraOn(ExternalPlace *place)
 
 void CCTV::openLock()
 {
-	dev->openLock();
+	if (call_in_progress)
+		dev->openLock();
+	else
+		dev->openLock(pe_address);
 }
 
 void CCTV::releaseLock()
 {
-	dev->releaseLock();
+	if (call_in_progress)
+		dev->releaseLock();
+	else
+		dev->releaseLock(pe_address);
 }
 
 void CCTV::stairLightActivate()

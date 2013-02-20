@@ -226,7 +226,7 @@ public:
 		ExternalPlace4
 	};
 
-	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d);
+	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d, QString pe_address);
 
 	virtual int getObjectId() const
 	{
@@ -315,6 +315,7 @@ private:
 	QTimer association_timeout;
 	QTimer grabber_delay;
 	QTimer hands_free_delay;
+	QString pe_address;
 };
 
 

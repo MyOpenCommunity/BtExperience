@@ -47,7 +47,7 @@ void TestVideoDoorEntry::init()
 	l << new ExternalPlace("portone", ObjectInterface::IdExternalPlace, "21");
 	l << new ExternalPlace("garage", ObjectInterface::IdExternalPlace, "21#2");
 
-	cctv = new CCTV(l, new VideoDoorEntryDevice("11", "0"));
+	cctv = new CCTV(l, new VideoDoorEntryDevice("11", "0"), "22");
 
 	intercom = new Intercom(l, new VideoDoorEntryDevice("11", "0"), false);
 
@@ -960,4 +960,15 @@ void TestVideoDoorEntry::testCCTVTeleloopTimeouTimer()
 	cctv->valueReceived(v);
 	v.clear();
 	ttimeout.checkNoSignals();
+}
+
+void TestVideoDoorEntry::testOpenAssociatedPE()
+{
+	cctv->openLock();
+	dev->openLock("22");
+	compareClientCommandThatWorks();
+
+	cctv->releaseLock();
+	dev->releaseLock("22");
+	compareClientCommandThatWorks();
 }
