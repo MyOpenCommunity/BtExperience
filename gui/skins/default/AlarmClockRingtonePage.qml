@@ -17,7 +17,7 @@ Page {
                                       beepModel :
                                       (page.state === "" ?
                                            sourceModel :
-                                           amplifierModel)
+                                           outputModel)
 
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
@@ -64,9 +64,49 @@ Page {
             {objectId: ObjectInterface.IdSoundAmplifierGroup},
             {objectId: ObjectInterface.IdSoundAmplifier},
             {objectId: ObjectInterface.IdPowerAmplifier},
-            {objectId: ObjectInterface.IdAmplifierGeneral},
+            {objectId: ObjectInterface.IdAmplifierGeneral}
         ]
-        containers: [page.alarmClock.ambient === null ? -1 : page.alarmClock.ambient.uii]
+    }
+
+    ObjectModel {
+        id: ambientModel
+        filters: [
+            {objectId: ObjectInterface.IdMultiChannelSpecialAmbient},
+            {objectId: ObjectInterface.IdMultiChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMonoChannelSoundAmbient},
+            {objectId: ObjectInterface.IdMultiGeneral}
+        ]
+    }
+
+    ObjectModelSource {
+        id: outputModelSource
+    }
+
+    Component.onCompleted: {
+        var idx = 0 // index of element to append
+        for (var i = 0; i < ambientModel.count; ++i) {
+            var amb = ambientModel.getObject(i)
+            // filters amplifiers by ambient
+            amplifierModel.containers = [amb.uii]
+            var amplifierCount = amplifierModel.count
+            if (amplifierCount === 0) // no ampli in this ambient, skips
+                continue
+            // if ambient is last page element, adds a spacer to make ambient
+            // visible on next page
+            if (idx % paginator.elementsOnPage === paginator.elementsOnPage - 1)
+                outputModelSource.appendEmpty()
+            outputModelSource.append(amb) // adds ambient to list
+            ++idx
+            for (var j = 0; j < amplifierCount; ++j) {
+                outputModelSource.append(amplifierModel.getObject(j)) // adds ampli to list
+                ++idx
+            }
+        }
+    }
+
+    ObjectModel {
+        id: outputModel
+        source: outputModelSource.model
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
@@ -195,107 +235,124 @@ Page {
         }
     }
 
-    ButtonImageThreeStates {
-        id: leftAmbient
-
-        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 soundDiffusionModel.count > 0
-        opacity: 0
-        defaultImageBg: "images/common/button_pager.svg"
-        pressedImageBg: "images/common/button_pager_press.svg"
-        shadowImage: "images/common/shadow_button_pager.svg"
-        defaultImage: "images/common/icon_pager_arrow_prev.svg"
-        pressedImage: "images/common/icon_pager_arrow_prev_p.svg"
-        anchors {
-            left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
-            top: sourceText.bottom
-            topMargin: bg.height / 100 * 2
-        }
-        onPressed: page.alarmClock.decrementAmbient()
-    }
-
-    Item {
-        id: ambientTextItem
-
-        anchors {
-            top: leftAmbient.top
-            bottom: leftAmbient.bottom
-            left: leftAmbient.right
-            right: rightAmbient.left
-        }
-
-        UbuntuLightText {
-            id: ambientText
-
-            visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                     soundDiffusionModel.count > 0
-            opacity: 0
-            text: page.alarmClock.ambient ? page.alarmClock.ambient.name : ""
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 16
-            color: "white"
-            anchors.centerIn: parent
-        }
-    }
-
-    ButtonImageThreeStates {
-        id: rightAmbient
-
-        visible: page.alarmClock.alarmType === AlarmClock.AlarmClockSoundSystem &&
-                 soundDiffusionModel.count > 0
-        opacity: 0
-        defaultImageBg: "images/common/button_pager.svg"
-        pressedImageBg: "images/common/button_pager_press.svg"
-        shadowImage: "images/common/shadow_button_pager.svg"
-        defaultImage: "images/common/icon_pager_arrow.svg"
-        pressedImage: "images/common/icon_pager_arrow_p.svg"
-        anchors {
-            right: pageChanger.left
-            rightMargin: bg.width / 100 * 3.92
-            top: sourceText.bottom
-            topMargin: bg.height / 100 * 2
-        }
-        onPressed: page.alarmClock.incrementAmbient()
-    }
-
     PaginatorOnBackground {
         id: paginator
 
         visible: soundDiffusionModel.count > 0
-        elementsOnPage: 5
-        itemSpacing: 9
+        elementsOnPage: 6
+        itemSpacing: 25
         anchors {
-            top: ambientTextItem.bottom
+            top: sourceText.bottom
             topMargin: bg.height / 100 * 5
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             right: verticalSeparator.right
             bottom: bg.bottom
-            bottomMargin: bg.width / 100 * 4.58
+            bottomMargin: bg.width / 100 * 2.00
         }
         model: page.actualModel
-        delegate: Item {
-            width: delegateRadio.width
-            height: delegateRadio.height + bg.height / 100 * 2.29 // adds spacing
 
-            ControlRadioHorizontal {
-                id: delegateRadio
+        delegate: paginatorDelegate
+    }
 
-                property variant itemObject: page.actualModel.getObject(index)
+    Component {
+        id: paginatorDelegate
 
-                width: bg.width / 100 * 40
-                text: delegateRadio.itemObject === undefined ? "" : delegateRadio.itemObject.name
-                pixelSize: 16
-                onPressed: {
-                    if (page.state === "")
-                        page.alarmClock.source = itemObject
+        Item {
+            id: paginatorItem
+
+            property variant itemObject: page.actualModel.getObject(index)
+
+            width: bg.width / 100 * 40
+            height: bg.height / 100 * 5.72
+
+            function bestDelegate(type) {
+                switch(type) {
+                case "":
+                    return sourceDelegate
+                case "amplifiers":
+                    if (itemObject.objectId === ObjectInterface.IdEmptyObject)
+                        return spacerDelegate
+                    else if (itemObject.objectId === ObjectInterface.IdAmbientAmplifier ||
+                             itemObject.objectId === ObjectInterface.IdSoundAmplifierGroup ||
+                             itemObject.objectId === ObjectInterface.IdSoundAmplifier ||
+                             itemObject.objectId === ObjectInterface.IdPowerAmplifier ||
+                             itemObject.objectId === ObjectInterface.IdAmplifierGeneral)
+                        return amplifierDelegate
+                    else if (itemObject.objectId === ObjectInterface.IdMultiChannelSpecialAmbient ||
+                             itemObject.objectId === ObjectInterface.IdMultiChannelSoundAmbient ||
+                             itemObject.objectId === ObjectInterface.IdMonoChannelSoundAmbient ||
+                             itemObject.objectId === ObjectInterface.IdMultiGeneral)
+                        return ambientDelegate
                     else
-                        page.alarmClock.amplifier = itemObject
+                        console.log("Unknown delegate id: " + itemObject.objectId + " " + itemObject)
                 }
-                status: (page.state === "" && page.alarmClock.source === itemObject) ||
-                        (page.state === "amplifiers" && page.alarmClock.amplifier === itemObject)
             }
+
+            Loader {
+                id: paginatorLoader
+
+                sourceComponent: bestDelegate(page.state)
+                anchors.centerIn: paginatorItem
+                z: 1
+                onLoaded: item.itemObject = paginatorItem.itemObject
+            }
+        }
+    }
+
+    Component {
+        id: sourceDelegate
+
+        ControlRadioHorizontal {
+            property variant itemObject
+
+            width: bg.width / 100 * 40
+            height: bg.height / 100 * 5.72
+            text: itemObject === undefined ? "" : itemObject.name
+            pixelSize: 16
+            onPressed: page.alarmClock.source = itemObject
+            status: page.alarmClock.source === itemObject
+        }
+    }
+
+    Component {
+        id: amplifierDelegate
+
+        ControlRadioHorizontal {
+            property variant itemObject
+
+            width: bg.width / 100 * 40
+            height: bg.height / 100 * 5.72
+            text: itemObject === undefined ? "" : itemObject.name
+            pixelSize: 16
+            onPressed: page.alarmClock.amplifier = itemObject.amplifier
+            status: page.alarmClock.amplifier === itemObject.amplifier
+        }
+    }
+
+    Component {
+        id: ambientDelegate
+
+        UbuntuMediumText {
+            property variant itemObject
+
+            width: bg.width / 100 * 40
+            height: bg.height / 100 * 5.72
+            text: itemObject === undefined ? "" : itemObject.name
+            font.pixelSize: 16
+        }
+    }
+
+    Component {
+        id: spacerDelegate
+
+        UbuntuLightText {
+            property variant itemObject
+
+            width: bg.width / 100 * 40
+            height: bg.height / 100 * 5.72
+            text: " "
+            font.pixelSize: 16
         }
     }
 
@@ -392,18 +449,6 @@ Page {
                 target: pageChanger
                 defaultImage: "images/common/alarm_clock/freccia_sx.svg"
                 pressedImage: "images/common/freccia_sx_P.svg"
-            }
-            PropertyChanges {
-                target: ambientText
-                opacity: 1
-            }
-            PropertyChanges {
-                target: leftAmbient
-                opacity: 1
-            }
-            PropertyChanges {
-                target: rightAmbient
-                opacity: 1
             }
         }
     ]
