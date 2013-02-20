@@ -161,6 +161,9 @@ public:
 	/// Append an object to the model
 	Q_INVOKABLE void append(ItemInterface *obj) { model->append(obj); }
 
+	/// Append an empty object to the model
+	Q_INVOKABLE void appendEmpty();
+
 	/// Remove all objects from the model
 	Q_INVOKABLE void clear() { model->clear(); }
 

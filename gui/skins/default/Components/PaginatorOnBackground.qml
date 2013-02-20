@@ -34,6 +34,14 @@ Item {
         return Math.floor(ret)
     }
 
+    function openDelegate(absIndex, openFunc) {
+        var indexes = paglistPrivateProps.getIndexesInPaginator(absIndex)
+        paginator.goToPage(indexes[0])
+        internalList.currentIndex = indexes[1]
+        var itemObject = model.getObject(internalList.currentIndex)
+        openFunc(itemObject)
+    }
+
     QtObject {
         id: paglistPrivateProps
 
@@ -44,6 +52,21 @@ Item {
                 internalList.delegateWidth = internalList.children[0].children[0].width
                 internalList.delegateHeight = internalList.children[0].children[0].height
             }
+        }
+
+        // function to select an internalList element from an absolute index
+        // once the element is selected, it returns the page and the relative index
+        // inside the page
+        function getIndexesInPaginator(absIndex) {
+            // some pages (like AddQuicklink.qml) have a variable number of elements
+            // per page, so a simple division doesn't cut it; we must use computePageRange
+            for (var p = 1; p <= totalPages; ++p) {
+                var r = computePageRange(p, elementsOnPage)
+                if (absIndex >= r[0] && absIndex < r[1])
+                    return [p, absIndex - r[0]]
+            }
+            // in case totalPages is zero returns 0
+            return [0, 0]
         }
     }
 
@@ -63,7 +86,7 @@ Item {
         currentIndex: -1
         // see comments in PaginatorList
         width: delegateWidth
-        height: delegateHeight * elementsOnPage
+        height: delegateHeight * elementsOnPage + itemSpacing * (elementsOnPage - 1)
 
         anchors.left: parent.left
     }

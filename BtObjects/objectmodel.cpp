@@ -186,3 +186,8 @@ ObjectModelFilters &ObjectModelFilters::operator <<(ObjectModelFilters f)
 
 	return *this;
 }
+
+void ObjectModelSource::appendEmpty()
+{
+	model->append(new EmptyObject(this));
+}

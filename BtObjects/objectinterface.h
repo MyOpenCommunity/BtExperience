@@ -66,6 +66,7 @@ public:
 		IdMonoChannelSoundAmbient,
 		IdSoundAmplifierGroup,                  // 10
 		IdMediaDevice,
+		IdEmptyObject,
 
 		IdMultiChannelSoundAmbient = 14,        // Container::IdAmbient
 		IdMultiChannelSpecialAmbient = 16,      // Container::IdSpecialAmbient
@@ -262,5 +263,27 @@ private:
 
 typedef QPair<int, ObjectInterface *> ObjectPair;
 
+
+/*!
+	\ingroup Core
+	\brief An empty object to be used with ObjectModelSource
+
+	ObjectModelSource defines a method appendEmpty that creates an instance of
+	this class. It has id IdEmptyObject so objects can be checked against this
+	value to know if it is a true object or a fake one. Useful in
+	AlarmClockRingtonePage, for example, to identify spacers inside the model.
+*/
+class EmptyObject : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	EmptyObject(QObject *parent = 0) : ObjectInterface(parent) {}
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdEmptyObject;
+	}
+};
 
 #endif // OBJECTINTERFACE_H
