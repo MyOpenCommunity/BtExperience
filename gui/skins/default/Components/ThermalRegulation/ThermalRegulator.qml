@@ -30,6 +30,7 @@ MenuColumn {
         id: paginator
         currentIndex: -1
 
+        elementsOnPage: elementsOnMenuPage
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             description: Script.description(itemObject)

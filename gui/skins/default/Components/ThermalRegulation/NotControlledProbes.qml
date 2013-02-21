@@ -24,6 +24,7 @@ MenuColumn {
         id: itemList
 
         currentIndex: -1
+        elementsOnPage: elementsOnMenuPage
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
             onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)

@@ -16,6 +16,7 @@ MenuColumn {
     }
 
     PaginatorList {
+        elementsOnPage: elementsOnMenuPage
         currentIndex: {
             for (var i = 0; i < model.count; ++i) {
                 if (model.getObject(i) === column.idx)
@@ -23,7 +24,6 @@ MenuColumn {
             }
             return -1
         }
-        elementsOnPage: 8
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)

@@ -18,6 +18,7 @@ MenuColumn {
     PaginatorList {
         id: paginator
 
+        elementsOnPage: elementsOnMenuPage
         delegate: MenuItemDelegate {
             itemObject: listModel.getObject(index)
             name: itemObject.name
