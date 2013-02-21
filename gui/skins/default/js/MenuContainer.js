@@ -33,6 +33,7 @@ function loadComponent(menuLevel, component, title, dataModel, properties, creat
     properties["y"] = 33
     properties["dataModel"] = dataModel
     properties["pageObject"] = pageObject
+    properties["elementsOnMenuPage"] = elementsOnMenuPage
 
     // creates an object from the component
     // Here we assume that width for the given MenuColumn is set correctly to

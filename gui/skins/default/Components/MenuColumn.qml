@@ -79,6 +79,9 @@ Item {
     // the page where the element is placed
     property variant pageObject: undefined
 
+    // max number of elements in paged menus
+    property int elementsOnMenuPage: 8
+
     // Signals emitted from the container
 
     // This signal is emitted from the MenuContainer when the requested child

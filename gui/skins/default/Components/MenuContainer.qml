@@ -29,6 +29,9 @@ Item {
     // the object that represents the current element (the last column open)
     property variant currentObject: undefined
 
+    // max number of elements in paged menus
+    property int elementsOnMenuPage: 8
+
     property alias clipBehavior: clippingContainer.clip
 
     signal closed
