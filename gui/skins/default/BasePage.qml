@@ -16,6 +16,8 @@ Image {
     // Warning: this property must be considered constant.
     property string _pageName: ""
 
+    signal popupDismissed
+
     // The alert management and API.
     function showAlert(sourceElement, message) {
         popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
@@ -147,6 +149,7 @@ Image {
     function closePopup() {
         page.state = ""
         popupLoader.setComponent(undefined)
+        page.popupDismissed()
     }
 
     Constants {

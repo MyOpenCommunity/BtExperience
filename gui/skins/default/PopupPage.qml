@@ -19,14 +19,7 @@ BasePage {
     opacity: 0
     _pageName: "PopupPage"
 
-    Timer {
-        id: dismissTimer
-
-        running: false
-        interval: 2000
-        repeat: false
-        onTriggered: privateProps.dismissTimerTriggered()
-    }
+    onPopupDismissed: privateProps.scenarioPopupClosed()
 
     Component {
         id: generalPopupComponent
@@ -123,7 +116,7 @@ BasePage {
 
         property variant alarmClock
 
-        function dismissTimerTriggered() {
+        function scenarioPopupClosed() {
             var p = PopupLogic.highestPriorityPopup()
             if (p["_kind"] === "scenario")
                 privateProps.update(PopupLogic.dismiss())
@@ -173,9 +166,13 @@ BasePage {
             }
 
             if (data["_kind"] === "scenario") {
-                installPopup(scenarioPopupComponent)
-
-                popupLoader.item.text = data.line1
+                // we may be here more if the user presses very quickly on
+                // scenario activation; if a popup is already present don't do
+                // anything and wait for the popup loop
+                if (popupLoader.item === null) {
+                    installPopup(scenarioPopupComponent)
+                    popupLoader.item.text = data.line1
+                }
             }
             else {
                 installPopup(generalPopupComponent)
@@ -187,9 +184,6 @@ BasePage {
                 popupLoader.item.confirmText = data.confirmText
                 popupLoader.item.dismissText = data.dismissText
             }
-
-            if (data["_kind"] === "scenario")
-                dismissTimer.start()
 
             if (data["_kind"] === "threshold_exceeded") {
                 energyGraphCache.energyData = data["_device"]
