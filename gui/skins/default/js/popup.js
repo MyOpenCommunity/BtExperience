@@ -316,6 +316,9 @@ function confirm() {
   *
   * Returns data to show when a popup must be shown, otherwise returns undefined
   */
+// TODO: probably this should be changed to take the popup in input and search
+// it in all arrays. For now I've just used the same order as in
+// highestPriorityPopup()
 function dismiss() {
     if (_alarmPopups.length > 0) {
         _alarmPopups.pop()
@@ -335,13 +338,13 @@ function dismiss() {
         return highestPriorityPopup()
     }
 
-    if (_scenarioActivationPopups.length > 0) {
-        _scenarioActivationPopups.pop()
+    if (_unreadMessagesPopups.length > 0) {
+        _unreadMessagesPopups.pop()
         return highestPriorityPopup()
     }
 
-    if (_unreadMessagesPopups.length > 0) {
-        _unreadMessagesPopups.pop()
+    if (_scenarioActivationPopups.length > 0) {
+        _scenarioActivationPopups.pop()
         return highestPriorityPopup()
     }
 
