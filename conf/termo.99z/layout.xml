@@ -15,6 +15,15 @@
 	</container>
 	<container id="100" > <!-- rooms -->
                 <ist uii="102" descr="living room" img="images/background/living_room.jpg" img_card="images/card/living_room.jpg">
+			<link uii="2001" x="100" y="100"/>
+			<link uii="2011" x="320" y="100"/>
+			<link uii="2012" x="540" y="100"/>
+			<link uii="2013" x="100" y="160"/>
+			<link uii="2014" x="320" y="160"/>
+			<link uii="2041" x="540" y="160"/>
+			<link uii="2042" x="100" y="220"/>
+			<link uii="2051" x="320" y="220"/>
+			<link uii="2052" x="540" y="220"/>
 		</ist>
                 <ist uii="103" descr="bathroom" img="images/background/bathroom.jpg" img_card="images/card/bathroom.jpg">
 		</ist>

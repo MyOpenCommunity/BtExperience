@@ -17,6 +17,17 @@
 	</container>
 	<container id="100" > <!-- rooms -->
                 <ist uii="102" descr="living room" img="images/background/living_room.jpg" img_card="images/card/living_room.jpg">
+			<link uii="3001" x="100" y="100"/>
+			<link uii="3003" x="320" y="100"/>
+			<link uii="3012" x="540" y="100"/>
+			<link uii="3014" x="100" y="160"/>
+			<link uii="3015" x="320" y="160"/>
+			<link uii="3016" x="540" y="160"/>
+			<link uii="3017" x="100" y="220"/>
+			<link uii="3041" x="320" y="220"/>
+			<link uii="3042" x="540" y="220"/>
+			<link uii="3051" x="100" y="280"/>
+			<link uii="3052" x="320" y="280"/>
 		</ist>
                 <ist uii="103" descr="bathroom" img="images/background/bathroom.jpg" img_card="images/card/bathroom.jpg">
 		</ist>
