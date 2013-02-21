@@ -484,10 +484,26 @@ Page {
         }
     }
 
-
     EnergyManagementNames {
         id: translations
     }
+
+    // Same logic as in EnergyDataDelegate; if we skip the EnergyDataDetail
+    // page, we never request energy updates.
+    Connections {
+        target: global.screenState
+        onStateChangedInt: {
+            if (energyFunctions.automaticUpdatesEnabled(old_state) &&
+                    !energyFunctions.automaticUpdatesEnabled(new_state))
+                energyData.requestCurrentUpdateStop()
+            else if (!energyFunctions.automaticUpdatesEnabled(old_state) &&
+                     energyFunctions.automaticUpdatesEnabled(new_state))
+                energyData.requestCurrentUpdateStart()
+        }
+    }
+
+    Component.onCompleted: energyData.requestCurrentUpdateStart()
+    Component.onDestruction: energyData.requestCurrentUpdateStop()
 
     states: [
         State {

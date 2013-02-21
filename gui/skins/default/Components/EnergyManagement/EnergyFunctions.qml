@@ -82,5 +82,22 @@ QtObject {
         return false
     }
 
+    function automaticUpdatesEnabled(screen_state) {
+        switch (screen_state) {
+        case ScreenState.ScreenOff:
+        case ScreenState.Screensaver:
+        case ScreenState.PasswordCheck:
+        case ScreenState.Calibration:
+        case ScreenState.ForcedNormal:
+        {
+            return false;
+        }
+        case ScreenState.Normal:
+        case ScreenState.Freeze:
+        {
+            return true;
+        }
+        }
+    }
 }
 
