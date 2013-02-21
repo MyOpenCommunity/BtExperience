@@ -96,69 +96,95 @@ MenuColumn {
 
                 source: "../../images/" + (index % 2 === 0 ? "common/row_background_01.svg" : "common/row_background_02.svg")
 
-                Row {
-                    anchors.fill: itemBackground
+                Item {
+                    id: spacer1
+                    height: 1
+                    width: 5
+                    anchors.left: parent.left
+                }
 
-                    Row {
-                        anchors.top: parent.top
-                        anchors.topMargin: parent.height / 100 * 11
-
-                        Item {
-                            height: parent.height / 100 * 89
-                            width: 5
-                        }
-
-                        UbuntuLightText {
-                            height: parent.height / 100 * 89
-                            width: 147
-                            color: "white"
-                            text: itemObject !== undefined ? pageObject.names.get('ALARM_TYPE', itemObject.type) : ""
-                            elide: Text.ElideRight
-                            font.pixelSize: 16
-                        }
-
-                        Item {
-                            height: parent.height / 100 * 89
-                            width: 5
-                        }
-
-                        UbuntuLightText {
-                            height: parent.height / 100 * 89
-                            width: 111
-                            color: "white"
-                            text: itemObject !== undefined ? itemObject.number + "\n" + itemObject.name : ""
-                            elide: Text.ElideRight
-                            wrapMode: Text.WordWrap
-                            font.pixelSize: 16
-                        }
-
-                        Item {
-                            height: parent.height / 100 * 89
-                            width: 5
-                        }
-
-                        UbuntuLightText {
-                            height: parent.height / 100 * 89
-                            width: 106
-                            color: "white"
-                            text: itemObject !== undefined ? DateTime.format(itemObject.date_time)["date"] + "\n" + DateTime.format(itemObject.date_time)["time"] : ""
-                            font.pixelSize: 13
-                        }
-
-                        Item {
-                            height: parent.height / 100 * 89
-                            width: 7
-                        }
-
-                        SvgImage {
-                            source: "../../images/common/icon_delete.svg"
-                            BeepingMouseArea {
-                                id: btnArea
-                                anchors.fill: parent
-                                onPressed: modelList.remove(index)
-                            }
-                        }
+                UbuntuLightText {
+                    id: alarmTypeText
+                    height: parent.height / 100 * 89
+                    width: 147
+                    color: "white"
+                    text: itemObject !== undefined ? pageObject.names.get('ALARM_TYPE', itemObject.type) : ""
+                    elide: Text.ElideRight
+                    font.pixelSize: 16
+                    anchors {
+                        top: parent.top
+                        topMargin: parent.height / 100 * 11
+                        left: spacer1.right
                     }
+                }
+
+                Item {
+                    id: spacer2
+                    height: 1
+                    width: 5
+                    anchors.left: alarmTypeText.right
+                }
+
+                UbuntuLightText {
+                    id: alarmNameText
+                    height: parent.height / 100 * 89
+                    width: 111
+                    color: "white"
+                    text: itemObject !== undefined ? itemObject.number + "\n" + itemObject.name : ""
+                    elide: Text.ElideRight
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 16
+                    anchors {
+                        top: parent.top
+                        topMargin: parent.height / 100 * 11
+                        left: spacer2.right
+                    }
+                }
+
+                Item {
+                    id: spacer3
+                    height: 1
+                    width: 5
+                    anchors.left: alarmNameText.right
+                }
+
+                UbuntuLightText {
+                    id: alarmDateTimeText
+                    height: parent.height / 100 * 89
+                    width: 106
+                    color: "white"
+                    text: itemObject !== undefined ? DateTime.format(itemObject.date_time)["date"] + "\n" + DateTime.format(itemObject.date_time)["time"] : ""
+                    font.pixelSize: 13
+                    anchors {
+                        top: parent.top
+                        topMargin: parent.height / 100 * 11
+                        left: spacer3.right
+                    }
+                }
+
+                Item {
+                    id: spacer4
+                    height: 1
+                    width: 7
+                    anchors.left: alarmDateTimeText.right
+                }
+
+                SvgImage {
+                    source: "../../images/common/icon_delete.svg"
+                    anchors {
+                        top: parent.top
+                        topMargin: parent.height / 100 * 11
+                        left: spacer4.right
+                    }
+                }
+
+                BeepingMouseArea {
+                    id: btnArea
+                    anchors {
+                        fill: parent
+                        leftMargin: parent.width / 8 * 7
+                    }
+                    onPressed: modelList.remove(index)
                 }
             }
 
