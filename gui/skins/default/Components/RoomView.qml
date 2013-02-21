@@ -297,7 +297,7 @@ Item {
                 privateProps.refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
                 privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
 
-                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': res.x, 'y': res.y, 'pageObject': pageObject, "itemObject": obj})
+                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': res.x, 'y': res.y, 'pageObject': pageObject, "itemObject": obj, "elementsOnMenuPage": 6})
                 Script.obj_array.push(object)
             }
         }
