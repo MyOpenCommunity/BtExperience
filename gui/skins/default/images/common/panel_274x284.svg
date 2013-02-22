@@ -5,13 +5,13 @@
 ]>
 <svg version="1.1"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-	 x="0px" y="0px" width="252px" height="261px" viewBox="0 0 252 261" overflow="visible" enable-background="new 0 0 252 261"
+	 x="0px" y="0px" width="274px" height="284px" viewBox="0 0 274 284" overflow="visible" enable-background="new 0 0 274 284"
 	 xml:space="preserve">
 <defs>
 </defs>
-<linearGradient id="sfondo_2_" gradientUnits="userSpaceOnUse" x1="61.1172" y1="-137.1123" x2="8.8849" y2="159.1119" gradientTransform="matrix(1 0 0 -1 91 141.5)">
+<linearGradient id="sfondo_2_" gradientUnits="userSpaceOnUse" x1="74.3184" y1="210.709" x2="17.553" y2="532.6411" gradientTransform="matrix(1 0 0 -1 91 513.5)">
 	<stop  offset="0.1104" style="stop-color:#797979"/>
 	<stop  offset="0.816" style="stop-color:#BDBDBD"/>
 </linearGradient>
-<rect id="sfondo_1_" fill="url(#sfondo_2_)" width="252" height="261"/>
+<rect id="sfondo_1_" fill="url(#sfondo_2_)" width="273.871" height="283.65"/>
 </svg>

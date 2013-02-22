@@ -5,11 +5,11 @@
 ]>
 <svg version="1.1"
 	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-	 x="0px" y="0px" width="238px" height="58px" viewBox="0 0 238 58" overflow="visible" enable-background="new 0 0 238 58"
+	 x="0px" y="0px" width="259px" height="64px" viewBox="0 0 259 64" overflow="visible" enable-background="new 0 0 259 64"
 	 xml:space="preserve">
 <defs>
 </defs>
-<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="118.9995" y1="0" x2="118.9995" y2="58">
+<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="129.5" y1="0" x2="129.5" y2="64">
 	<stop  offset="0" style="stop-color:#C9C8C8"/>
 	<stop  offset="0.0479" style="stop-color:#D0CECE"/>
 	<stop  offset="0.2118" style="stop-color:#E3E1E1"/>
@@ -17,5 +17,5 @@
 	<stop  offset="0.6241" style="stop-color:#FBFAFA"/>
 	<stop  offset="1" style="stop-color:#FFFFFF"/>
 </linearGradient>
-<rect fill="url(#SVGID_1_)" width="238" height="58"/>
+<rect fill="url(#SVGID_1_)" width="259" height="64"/>
 </svg>

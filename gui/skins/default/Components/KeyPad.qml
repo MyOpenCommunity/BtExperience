@@ -15,7 +15,7 @@ SvgImage {
     signal closePopup
     signal digitClicked(string digit)
 
-    source: "../images/common/panel_252x261.svg"
+    source: "../images/common/panel_274x284.svg"
 
     onCancelClicked: {
         textInserted = ""
@@ -56,7 +56,7 @@ SvgImage {
             id: titleLabel
             text: mainLabel
             font.capitalization: Font.AllUppercase
-            font.pixelSize: 16
+            font.pixelSize: 18
             color: "black"
             anchors.top: parent.top
             anchors.topMargin: 10
@@ -83,7 +83,7 @@ SvgImage {
 
                 UbuntuLightText {
                     text: labelKeypad.text
-                    font.pixelSize: 15
+                    font.pixelSize: 16
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -177,6 +177,7 @@ SvgImage {
                         pressedImage: "../images/common/button_keypad_press.svg"
                         shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 1
+                        font.pixelSize: 18
                         onPressed: keypad.digitClicked(text)
                         status: 0
                     }
@@ -191,6 +192,7 @@ SvgImage {
                         pressedImage: "../images/common/button_keypad_press.svg"
                         shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 4
+                        font.pixelSize: 18
                         onPressed: keypad.digitClicked(text)
                         status: 0
                     }
@@ -205,6 +207,7 @@ SvgImage {
                         pressedImage: "../images/common/button_keypad_press.svg"
                         shadowImage: "../images/common/shadow_button_keypad.svg"
                         text: index + 7
+                        font.pixelSize: 18
                         onPressed: keypad.digitClicked(text)
                         status: 0
                     }
@@ -232,6 +235,7 @@ SvgImage {
                     pressedImage: "../images/common/button_keypad_press.svg"
                     shadowImage: "../images/common/shadow_button_keypad.svg"
                     text: "0"
+                    font.pixelSize: 18
                     onPressed: keypad.digitClicked(text)
                 }
             }
