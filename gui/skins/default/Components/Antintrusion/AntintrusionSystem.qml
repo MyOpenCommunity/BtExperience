@@ -204,7 +204,7 @@ MenuColumn {
 
         SvgImage {
             source: "../../images/common/panel_zones.svg"
-            height: zoneText.height + zoneView.height + buttonZones.height
+            height: zoneText.height + zoneView.height + buttonZones.height + parent.height / 100 * 11
 
             Rectangle {
                 id: zoneDarkRect
@@ -237,8 +237,8 @@ MenuColumn {
                 width: cellWidth * 2
                 height: 200 // (cellHeight * zoneModel.count / 2) // Why it does not work???
                 interactive: false
-                cellWidth: 99
-                cellHeight: 47
+                cellWidth: 100
+                cellHeight: 57
 
                 delegate: ButtonThreeStates {
                     id: zoneButton
@@ -248,13 +248,24 @@ MenuColumn {
 
                     LedZone {
                         id: led
-                        text: itemObject.number
                         status: itemObject.selected ? 1 : 0
                         anchors {
                             top: parent.top
                             left: parent.left
                             topMargin: parent.height / 100 * 12 // manual alignment to center the image with the text
-                            leftMargin: parent.width / 100 * 6
+                            leftMargin: parent.width / 100 * 3
+                        }
+                    }
+
+                    UbuntuLightText {
+                        text: itemObject.number
+                        color: itemObject.selected ? "white" : "black"
+                        font.pixelSize: 15
+                        anchors {
+                            top: parent.top
+                            topMargin: zoneButton.height / 100 * 6
+                            right: parent.right
+                            rightMargin: zoneButton.width / 100 * 3
                         }
                     }
 
@@ -262,13 +273,15 @@ MenuColumn {
                     textAnchors.top: zoneButton.top
                     textAnchors.topMargin: zoneButton.height / 100 * 6
                     textAnchors.left: led.right
-                    textAnchors.leftMargin: zoneButton.width / 100 * 6
+                    textAnchors.leftMargin: zoneButton.width / 100 * 3
                     textAnchors.right: zoneButton.right
-                    font.pixelSize: 12
+                    textAnchors.rightMargin: zoneButton.width / 100 * 13
+                    elide: Text.ElideRight
+                    font.pixelSize: 15
                     horizontalAlignment: Text.AlignLeft
-                    defaultImage: "../../images/common/btn_99x35.svg"
-                    pressedImage: "../../images/common/btn_99x35_P.svg"
-                    selectedImage: "../../images/common/btn_99x35_S.svg"
+                    defaultImage: "../../images/common/btn_99x45.svg"
+                    pressedImage: "../../images/common/btn_99x45_P.svg"
+                    selectedImage: "../../images/common/btn_99x45_S.svg"
                     shadowImage: "../../images/common/btn_shadow_99x35.svg"
                     text: itemObject.name
                     onPressed: itemObject.selected = !itemObject.selected

@@ -14,6 +14,7 @@ SvgImage {
     property alias text: label.text
     property alias font: label.font
     property alias textAnchors: label.anchors
+    property alias elide: label.elide
     property alias horizontalAlignment: label.horizontalAlignment
     property alias pressAndHoldEnabled: area.pressAndHoldEnabled
 
