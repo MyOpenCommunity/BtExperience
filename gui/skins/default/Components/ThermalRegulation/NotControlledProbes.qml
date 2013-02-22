@@ -7,7 +7,7 @@ import "../../js/MenuItem.js" as Script
 MenuColumn {
     id: column
 
-    onChildDestroyed: itemList.currentIndex = -1
+    onChildDestroyed: paginator.currentIndex = -1
 
     BtObjectsMapping { id: mapping }
 
@@ -18,10 +18,11 @@ MenuColumn {
             {objectId: ObjectInterface.IdThermalNonControlledProbe}
         ]
         containers: [thermalRegulation.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     PaginatorList {
-        id: itemList
+        id: paginator
 
         currentIndex: -1
         elementsOnPage: elementsOnMenuPage
