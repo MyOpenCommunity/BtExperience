@@ -16,7 +16,6 @@ MenuColumn {
     MediaModel {
         id: theModel
         source: objectModel.getObject(0).messages
-        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     SvgImage {
