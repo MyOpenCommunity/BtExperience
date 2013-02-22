@@ -149,8 +149,8 @@ SvgImage {
         defaultImageBg: "../../images/common/button_close.svg"
         pressedImageBg: "../../images/common/button_close_p.svg"
         shadowImage: "../../images/common/btn_shadow_45x35.svg"
-        defaultImage: ""
-        pressedImage: ""
+        defaultImage: "../../images/common/button_close.svg"
+        pressedImage: "../../images/common/button_close_p.svg"
 
         onReleased: {
             // looks for last visible browser window and hides it
