@@ -224,6 +224,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	FrameSender::setClients(clients);
 
 	general_amplifier = 0;
+	is_upnp_source_available = false;
 	configurations = new ConfigFile(this);
 	global_models.setParent(this);
 	note_model.setParent(this);
@@ -1342,7 +1343,15 @@ void BtObjectsPlugin::setContainerForLocalSources(int container_uii)
 		if ((o->getObjectId() == ObjectInterface::IdIpRadioSource ||
 		     o->getObjectId() == ObjectInterface::IdSoundSource) &&
 		    qobject_cast<SourceMedia *>(o))
+		{
+			// for UPnP sources, we must set the container only if
+			// linked in devices section in layout.xml
+			SourceUpnpMedia *s = qobject_cast<SourceUpnpMedia *>(o);
+			if (s && !is_upnp_source_available)
+				return;
+
 			o->setContainerUii(container_uii);
+		}
 	}
 }
 
@@ -1443,6 +1452,14 @@ void BtObjectsPlugin::parseMediaContainers(const QDomNode &container)
 			}
 
 			l->setContainerUii(media_uii);
+			// We need to check if the upnp source is linked in the devices
+			// section to later link it in the sound diffusion container.
+			SourceUpnpMedia *s = qobject_cast<SourceUpnpMedia *>(l);
+			if (s)
+			{
+				qDebug() << "Found SourceUpnpMedia object in media section";
+				is_upnp_source_available = true;
+			}
 		}
 	}
 }

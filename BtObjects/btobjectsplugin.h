@@ -42,6 +42,7 @@ private:
 	ConfigFile *configurations;
 	AmplifierGroup *general_amplifier;
 	HomeProperties home_properties;
+	bool is_upnp_source_available;
 
 	void createObjects();
 	void parseConfig();
