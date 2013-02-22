@@ -144,59 +144,43 @@ SvgImage {
         }
     }
 
-    Item {
+    ButtonImageThreeStates {
         id: closeBrowser
-        width: 36
-        height: 35
+        defaultImageBg: "../../images/common/button_close.svg"
+        pressedImageBg: "../../images/common/button_close_p.svg"
+        shadowImage: "../../images/common/btn_shadow_45x35.svg"
+        defaultImage: ""
+        pressedImage: ""
+
+        onReleased: {
+            // looks for last visible browser window and hides it
+            // if the to be hidden window is the last one, quits
+            var children = webBrowser.children
+            var windows = 0
+            var ghost = undefined
+            for (var i = 0; i < children.length; ++i) {
+                var child = children[i]
+                if (child.objectName === "browserItem")
+                    if (child.visible) { // last visible one must be hidden
+                        ++windows
+                        ghost = child
+                    }
+            }
+            if (windows <= 1) // last window
+                global.quit()
+            else
+                // the popup object is created with C++ ownership, hence there is no way
+                // to destroy it from QML; calling deleteLater() from C++ appears to be the
+                // correct way to free the object
+                global.destroyQmlItem(ghost)
+        }
         anchors {
             top: bgText.top
             left: zoomBarButton.right
             leftMargin: 10
         }
-
-        SvgImage {
-            id: closeIcon
-            anchors.centerIn: parent
-            source: "../../images/common/button_close.svg"
-            states: [
-                State {
-                    name: "pressed"
-                    PropertyChanges {
-                        target: closeIcon
-                        source: "../../images/common/button_close_p.svg"
-                    }
-                }
-            ]
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                // looks for last visible browser window and hides it
-                // if the to be hidden window is the last one, quits
-                var children = webBrowser.children
-                var windows = 0
-                var ghost = undefined
-                for (var i = 0; i < children.length; ++i) {
-                    var child = children[i]
-                    if (child.objectName === "browserItem")
-                        if (child.visible) { // last visible one must be hidden
-                            ++windows
-                            ghost = child
-                        }
-                }
-                if (windows <= 1) // last window
-                    global.quit()
-                else
-                    // the popup object is created with C++ ownership, hence there is no way
-                    // to destroy it from QML; calling deleteLater() from C++ appears to be the
-                    // correct way to free the object
-                    global.destroyQmlItem(ghost)
-            }
-            onPressed: closeIcon.state = "pressed"
-            onReleased: closeIcon.state = ""
-        }
     }
+
 
     UrlInput {
         id: urlInput
