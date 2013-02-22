@@ -56,6 +56,7 @@ MenuColumn {
 
         PaginatorList {
             id: paginator
+            elementsOnPage: elementsOnMenuPage - 1
             currentIndex: -1
             onCurrentPageChanged: element.closeChild()
             delegate: MenuItemDelegate {

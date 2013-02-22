@@ -39,6 +39,7 @@ MenuColumn {
 
             model: objectModel
             onCurrentPageChanged: column.closeChild()
+            elementsOnPage: elementsOnMenuPage - 1
 
             delegate: MenuItemDelegate {
                 itemObject: objectModel.getObject(index)

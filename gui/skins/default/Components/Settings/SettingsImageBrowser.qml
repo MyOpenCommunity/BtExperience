@@ -92,6 +92,7 @@ MenuColumn {
                 }
             }
 
+            elementsOnPage: elementsOnMenuPage - 2
             model: modelList
             onCurrentPageChanged: column.closeChild()
         }

@@ -72,7 +72,7 @@ MenuColumn {
         PaginatorList {
             id: itemList
 
-            elementsOnPage: 4
+            elementsOnPage: elementsOnMenuPage - 4
             delegate: MenuItemDelegate {
                 editable: true
                 itemObject: objectModel.getObject(index)

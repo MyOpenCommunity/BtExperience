@@ -21,6 +21,8 @@ MenuColumn {
     Column {
         PaginatorList {
             id: paginator
+
+            elementsOnPage: elementsOnMenuPage - 1
             delegate: MenuItemDelegate {
                 itemObject: energiesFamilies.getObject(index)
                 hasChild: true
