@@ -108,7 +108,7 @@ Page {
                 id: delegate
                 itemObject: energiesCounters.getObject(index)
                 measureType: EnergyData.Consumption
-                onClicked: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
+                onTouched: Stack.pushPage("EnergyDataGraph.qml", {"energyData": itemObject})
                 maxValue: {
                     if (parseInt(family.objectKey) !== EnergyFamily.Custom) {
                         return energiesCounters.getMaxValue()

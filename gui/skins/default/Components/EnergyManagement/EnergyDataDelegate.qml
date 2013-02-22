@@ -15,8 +15,8 @@ Column {
     property variant view
     property alias moveAnimationRunning: defaultAnimation.running
 
-    signal clicked()
-    signal removeAnimationFinished() // for CardView usage
+    signal touched
+    signal removeAnimationFinished // for CardView usage
 
     EnergyFunctions {
         id: energyFunctions
@@ -91,7 +91,7 @@ Column {
                 color: headerButton.state === "pressed" ? "white" : "#5A5A5A"
             }
         }
-        onClicked: delegate.clicked()
+        onTouched: delegate.touched()
     }
 
 
@@ -152,7 +152,7 @@ Column {
                 Item {
                     BeepingMouseArea {
                         anchors.fill: parent
-                        onClicked: delegate.clicked()
+                        onClicked: delegate.touched()
                     }
 
                     width: columnBg.width
