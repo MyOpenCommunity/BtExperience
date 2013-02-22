@@ -69,6 +69,7 @@ Item {
             if (global.debugTs) {
                 var dot = Qt.createComponent("Components/PressDot.qml")
                 dot.createObject(container, {"x": mouseX, "y": mouseY})
+                onClicked: console.log( mouseX, mouseY)
             }
             mouse.accepted = false
         }
