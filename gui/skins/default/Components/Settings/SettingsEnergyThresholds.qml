@@ -12,6 +12,7 @@ MenuColumn {
     ObjectModel {
         id: energiesCounters
         filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     Column {

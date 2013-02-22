@@ -42,6 +42,7 @@ MenuColumn {
     MediaModel {
         id: floorsModel
         source: myHomeModels.floors
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     PaginatorList {

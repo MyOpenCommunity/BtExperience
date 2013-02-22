@@ -13,9 +13,11 @@ MenuColumn {
     ObjectModel {
         id: modalitiesModel
         source: column.dataModel.modalities
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     PaginatorList {
+        id: paginator
         elementsOnPage: elementsOnMenuPage
         currentIndex: {
             for (var i = 0; i < model.count; ++i) {

@@ -19,25 +19,24 @@ MenuColumn {
         id: roomsModel
         source: myHomeModels.rooms
         containers: [floorUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    Column {
-        PaginatorList {
-            id: paginator
-            function openColumn(itemObject) {
-                column.loadColumn(modifyRoom, itemObject.description, itemObject)
-            }
-
-            delegate: MenuItemDelegate {
-                itemObject: roomsModel.getObject(index)
-                name: itemObject.description
-                hasChild: true
-                onClicked: openColumn(itemObject)
-            }
-            model: roomsModel
+    PaginatorList {
+        id: paginator
+        function openColumn(itemObject) {
+            column.loadColumn(modifyRoom, itemObject.description, itemObject)
         }
+
+        delegate: MenuItemDelegate {
+            itemObject: roomsModel.getObject(index)
+            name: itemObject.description
+            hasChild: true
+            onClicked: openColumn(itemObject)
+        }
+        model: roomsModel
     }
 
     QtObject {

@@ -16,7 +16,7 @@ MenuColumn {
 
     onChildDestroyed: {
         privateProps.currentIndex = -1
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
     SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
@@ -24,6 +24,7 @@ MenuColumn {
     ObjectModel {
         id: modelList
         containers: [deviceModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     Column {
@@ -33,7 +34,7 @@ MenuColumn {
             hasChild: true
 
             onClicked: {
-                itemList.currentIndex = -1
+                paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 column._isStock = true
                 var props = {
@@ -53,7 +54,7 @@ MenuColumn {
             hasChild: true
 
             onClicked: {
-                itemList.currentIndex = -1
+                paginator.currentIndex = -1
                 privateProps.currentIndex = 2
                 column._isStock = false
                 var props = {
@@ -68,7 +69,7 @@ MenuColumn {
         }
 
         PaginatorList {
-            id: itemList
+            id: paginator
             currentIndex: -1
 
             delegate: MenuItemDelegate {

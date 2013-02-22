@@ -12,7 +12,7 @@ MenuColumn {
     property bool restoreBrowserState
 
     onChildDestroyed: {
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
     SystemsModel { id: deviceModel; systemId: Container.IdMultimediaDevice; source: myHomeModels.mediaContainers }
@@ -20,10 +20,11 @@ MenuColumn {
     ObjectModel {
         id: modelList
         containers: [deviceModel.systemUii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     PaginatorList {
-        id: itemList
+        id: paginator
         currentIndex: -1
 
         property QtObject restoredItem
@@ -34,7 +35,7 @@ MenuColumn {
             hasChild: true
             enabled: Script.mediaItemEnabled(itemObject, restoredItem)
             onEnabledChanged: if (!Script.mediaItemMounted(itemObject)) column.closeChild()
-            onDelegateClicked: itemList._openColumn(itemObject, false)
+            onDelegateClicked: paginator._openColumn(itemObject, false)
         }
 
         model: modelList
@@ -88,7 +89,7 @@ MenuColumn {
         interval: 1
         repeat: false
         running: false
-        onTriggered: itemList.restoreBrowserState()
+        onTriggered: paginator.restoreBrowserState()
     }
 
     Component.onCompleted: {

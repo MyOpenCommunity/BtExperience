@@ -5,9 +5,6 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    height: 50 * itemList.count
-    width: 212
-
     signal scenarioSelected(variant obj)
 
     onScenarioSelected: obj.apply()
@@ -15,12 +12,11 @@ MenuColumn {
     ObjectModel {
         id: scenariosModel
         source: column.dataModel
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    ListView {
-        id: itemList
-        anchors.fill: parent
-        interactive: false
+    PaginatorList {
+        id: paginator
 
         currentIndex: selectItem()
 

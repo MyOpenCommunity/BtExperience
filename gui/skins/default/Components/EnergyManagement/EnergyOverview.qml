@@ -10,6 +10,7 @@ MenuColumn {
     ObjectModel {
         id: energiesFamilies
         filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
     ObjectModel {
