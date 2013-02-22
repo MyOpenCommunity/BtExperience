@@ -29,7 +29,7 @@ Item {
         ButtonImageThreeStates {
             id: backButton
             visible: buttonsColumn.backButton
-            onPressed: buttonsColumn.backClicked()
+            onTouched: buttonsColumn.backClicked()
             defaultImage: "../images/common/icon_back.svg"
             pressedImage: "../images/common/icon_back_p.svg"
             defaultImageBg: "../images/common/button_navigation_column.svg"
@@ -38,7 +38,7 @@ Item {
 
         ButtonImageThreeStates {
             visible: buttonsColumn.systemsButton
-            onPressed: buttonsColumn.systemsClicked()
+            onTouched: buttonsColumn.systemsClicked()
             defaultImage: "../images/common/ico_sistemi.svg"
             pressedImage: "../images/common/ico_sistemi_P.svg"
             defaultImageBg: "../images/common/button_navigation_column.svg"
@@ -47,7 +47,7 @@ Item {
 
         ButtonImageThreeStates {
             visible: buttonsColumn.settingsButton
-            onPressed: buttonsColumn.settingsClicked()
+            onTouched: buttonsColumn.settingsClicked()
             defaultImage: "../images/common/ico_opzioni.svg"
             pressedImage: "../images/common/ico_opzioni_P.svg"
             defaultImageBg: "../images/common/button_navigation_column.svg"
@@ -56,7 +56,7 @@ Item {
 
         ButtonImageThreeStates {
             visible: buttonsColumn.roomsButton
-            onPressed: buttonsColumn.roomsClicked()
+            onTouched: buttonsColumn.roomsClicked()
             defaultImage: "../images/common/ico_stanze.svg"
             pressedImage: "../images/common/ico_stanze_P.svg"
             defaultImageBg: "../images/common/button_navigation_column.svg"
@@ -65,7 +65,7 @@ Item {
 
         ButtonImageThreeStates {
             visible: buttonsColumn.multimediaButton
-            onPressed: buttonsColumn.multimediaClicked()
+            onTouched: buttonsColumn.multimediaClicked()
             defaultImage: "../images/common/ico_multimedia.svg"
             pressedImage: "../images/common/ico_multimedia_P.svg"
             defaultImageBg: "../images/common/button_navigation_column.svg"
