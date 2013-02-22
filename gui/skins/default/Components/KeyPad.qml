@@ -15,7 +15,7 @@ SvgImage {
     signal closePopup
     signal digitClicked(string digit)
 
-    source: "../images/common/panel_keypad.svg"
+    source: "../images/common/panel_252x261.svg"
 
     onCancelClicked: {
         textInserted = ""
@@ -49,7 +49,7 @@ SvgImage {
 
         source: "../images/common/keypad_display_background.svg"
         anchors.top: parent.top
-        anchors.topMargin: keypad.height / 100 * 4.65
+        anchors.topMargin: keypad.height / 100 * 5
         anchors.horizontalCenter: parent.horizontalCenter
 
         UbuntuLightText {
@@ -148,7 +148,7 @@ SvgImage {
 
         anchors {
             top: display.bottom
-            topMargin: keypad.height / 100 * 6.2
+            topMargin: keypad.height / 100 * 5
             left: parent.left
             right: parent.right
             bottom: parent.bottom
@@ -167,7 +167,7 @@ SvgImage {
             id: gridKeypad
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            spacing: keypad.height / 100 * 6.2
+            spacing: keypad.height / 100 * 3
 
             Row {
                 Repeater {
