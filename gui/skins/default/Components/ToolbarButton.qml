@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import Components.Text 1.0
-import "../js/Stack.js" as Stack
 
 
 Item {
@@ -10,16 +9,8 @@ Item {
     property alias pressedImage: button.pressedImage
     property alias enabled: button.enabled
     property int quantity: 0
-    property string pageName // the page to navigate to
 
-    // this function must be reimplemented in ToolbarButtons to define what
-    // happens when user clicks on the button; it manages clicks and presses
-    // automatically if you define pageName properly
-    function action() {
-        console.log("No action implemented in this ToolbarButton. Default image: " + defaultImage)
-    }
-
-    property bool _managed // used internally to manage clicks and presses
+    signal touched
 
     visible: quantity > 0
     width: separator.width + button.width
@@ -41,23 +32,9 @@ Item {
         visible: control.visible
         defaultImageBg: "../images/toolbar/_bg_alert.svg"
         pressedImageBg: "../images/toolbar/_bg_alert_pressed.svg"
-        onPressed: {
-            _managed = false
-            // if we already are in target page, acts on press
-            if (Stack.currentPage()._pageName === pageName) {
-                action()
-                _managed = true
-            }
-        }
-        onClicked: {
-            if (_managed)
-                return
-            // we are not in target page: acts on click
-            action()
-        }
-
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
+        onTouched: control.touched()
 
         SvgImage {
             id: quantityBg
