@@ -27,6 +27,6 @@ MenuColumn {
                 column.closeColumn()
             }
         }
-        }
+    }
 }
 
