@@ -25,6 +25,7 @@ SvgImage {
     signal pressed(variant mouse)
     signal clicked(variant mouse)
     signal released(variant mouse)
+    signal touched
 
     source: defaultImage
 
@@ -32,10 +33,16 @@ SvgImage {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked(mouse)
-        onPressed: {bg.pressed(mouse)} //;console.log("ButtonThreeStatesAutomation.qml clicked!")}
+        onPressed: {touchTimer.restart();bg.pressed(mouse)} //;console.log("ButtonThreeStatesAutomation.qml clicked!")}
         onReleased: {bg.released(mouse)} //;console.log("ButtonThreeStatesAutomation.qml released!")}
         // in some cases I have to disable the button to not accept any input
         visible: bg.enabled
+
+        Timer {
+            id: touchTimer
+            interval: 50
+            onTriggered: bg.touched()
+        }
     }
 
     UbuntuLightText {

@@ -30,6 +30,7 @@ SvgImage {
     signal clicked
     signal pressed
     signal released
+    signal touched
 
     source: defaultImageBg
 
@@ -37,9 +38,18 @@ SvgImage {
         id: area
         anchors.fill: parent
         onClicked: bg.clicked()
-        onPressed: bg.pressed()
+        onPressed: {
+            touchTimer.restart()
+            bg.pressed()
+        }
         onReleased: bg.released()
         visible: bg.enabled
+
+        Timer {
+            id: touchTimer
+            interval: 50
+            onTriggered: bg.touched()
+        }
     }
 
     Rectangle {

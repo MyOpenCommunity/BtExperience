@@ -13,12 +13,18 @@ SvgImage {
     property url sourcePressed: ""
     property bool enabled: true
 
-    signal pressed
+    signal touched
 
     BeepingMouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressed: button.pressed()
+        onPressed: touchTimer.restart()
+
+        Timer {
+            id: touchTimer
+            interval: 50
+            onTriggered: button.touched()
+        }
     }
 
     Rectangle {

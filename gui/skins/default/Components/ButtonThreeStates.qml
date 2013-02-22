@@ -23,6 +23,7 @@ SvgImage {
     signal clicked(variant mouse)
     signal held(variant mouse)
     signal pressed(variant mouse)
+    signal touched
 
     source: defaultImage
 
@@ -33,7 +34,16 @@ SvgImage {
 
         onClicked: bg.clicked(mouse)
         onHeld: bg.held(mouse)
-        onPressed: bg.pressed(mouse)
+        onPressed: {
+            touchTimer.restart()
+            bg.pressed(mouse)
+        }
+
+        Timer {
+            id: touchTimer
+            interval: 50
+            onTriggered: bg.touched()
+        }
     }
 
     Rectangle {
