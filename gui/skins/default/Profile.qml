@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
+import Components.Popup 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
 import "js/array.js" as Script
@@ -207,7 +208,18 @@ Page {
         }
 
         function addNote() {
+            if (userNotes.count >= 10) {
+                installPopup(errorFeedback, { text: qsTr("Max notes limit reached") })
+                return
+            }
             installPopup(popupAddNote)
+        }
+    }
+
+    Component {
+        id: errorFeedback
+        FeedbackPopup {
+            isOk: false
         }
     }
 
