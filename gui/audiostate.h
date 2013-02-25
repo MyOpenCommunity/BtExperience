@@ -124,6 +124,7 @@ private:
 	};
 
 	bool pauseActivePlayer();
+	void pauseSoundDiffusionPlayer();
 	void releasePausedPlayer();
 	void resumeActivePlayer();
 
