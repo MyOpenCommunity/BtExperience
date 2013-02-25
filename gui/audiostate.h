@@ -62,6 +62,7 @@ public:
 
 	Q_INVOKABLE void disableState(State state);
 	Q_INVOKABLE void enableState(State state);
+	Q_INVOKABLE bool isStateEnabled(State state);
 
 	State getState() const;
 

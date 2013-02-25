@@ -139,6 +139,14 @@ void AudioState::enableState(State state)
 		updateState();
 }
 
+bool AudioState::isStateEnabled(State state)
+{
+	Q_ASSERT_X(state != Invalid, "AudioState::enableState", "Do not use \"Invalid\" state");
+	if (state < AudioState::StateCount)
+		return states[state];
+	return false;
+}
+
 void AudioState::updateState()
 {
 	State new_state = Idle;

@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 
@@ -91,6 +92,8 @@ MenuColumn {
             }
 
             Image {
+                property bool beepStateEnabled: false
+
                 source: objModel.source.savedStationsCount === 5 ? imagesPath + "sound_diffusion/bg_5stazioni_radio.svg" :
                                                                    imagesPath + "sound_diffusion/bg_15stazioni_radio.svg"
                 Grid {
@@ -132,12 +135,23 @@ MenuColumn {
                                 pressAndHoldEnabled: true
                                 onHeld: {
                                     objModel.source.saveStation(stationNumber)
-                                    if (global.guiSettings.beep)
-                                        global.beep()
+                                    global.beep()
                                 }
                             }
                         }
                     }
+                }
+
+                // We want to beep when a radio station is saved; we need to
+                // enable the beep state and disable it if was previously disabled
+                Component.onCompleted: {
+                    beepStateEnabled = global.audioState.isStateEnabled(AudioState.Beep)
+                    global.audioState.enableState(AudioState.Beep)
+                }
+
+                Component.onDestruction: {
+                    if (!beepStateEnabled)
+                        global.audioState.disableState(AudioState.Beep)
                 }
             }
         }
