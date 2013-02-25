@@ -226,7 +226,7 @@ void BtNetworkAccessManager::checkSslStatus(QNetworkReply *reply)
 
 	QUrl url = wrapped_reply->request().url();
 	QString host = fullHostName(url);
-	bool originating_request = fullHostName(originator->requestedUrl()) != host;
+	bool originating_request = fullHostName(originator->requestedUrl()) == host;
 	bool is_https = wrapped_reply->request().url().scheme() == "https";
 
 	// for requests in the SSL exceptions list we do not have an API to check whether the
