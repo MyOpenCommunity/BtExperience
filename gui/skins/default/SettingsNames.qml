@@ -30,6 +30,9 @@ QtObject {
         container['KEYBOARD']["it_bticino"] = qsTr("Italian")
         container['KEYBOARD']["en_bticino"] = qsTr("English")
         container['KEYBOARD']["fr_bticino"] = qsTr("French")
+        container['KEYBOARD']["it"] = qsTr("Italian")
+        container['KEYBOARD']["en"] = qsTr("English")
+        container['KEYBOARD']["fr"] = qsTr("French")
 
         container['SKIN'] = []
         container['SKIN'][HomeProperties.Clear] = qsTr("Clear")

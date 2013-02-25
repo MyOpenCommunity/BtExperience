@@ -191,3 +191,9 @@ void ObjectModelSource::appendEmpty()
 {
 	model->append(new EmptyObject(this));
 }
+
+void ObjectModelSource::init(QStringList source)
+{
+	foreach (QString value, source)
+		model->append(new StringObject(value));
+}

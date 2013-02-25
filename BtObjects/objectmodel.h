@@ -167,6 +167,9 @@ public:
 	/// Remove all objects from the model
 	Q_INVOKABLE void clear() { model->clear(); }
 
+	/// inits the model from a QStringList
+	Q_INVOKABLE void init(QStringList source);
+
 private:
 	ObjectDataModel *model;
 };

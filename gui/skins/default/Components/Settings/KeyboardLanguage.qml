@@ -9,18 +9,28 @@ MenuColumn {
 
     signal keyboardLayoutChanged(string config)
 
-    width: 212
-    height: Math.max(1, 50 * view.count)
+    ObjectModelSource {
+        id: listSourceModel
+    }
 
-    ListView {
-        id: view
-        anchors.fill: parent
-        interactive: false
-        delegate: MenuItem {
-            name: pageObject.names.get('KEYBOARD', modelData)
-            isSelected: global.keyboardLayout === modelData
-            onClicked: keyboardLayoutChanged(modelData)
+    ObjectModel {
+        id: listModel
+        source: listSourceModel.model
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    Component.onCompleted: listSourceModel.init(global.keyboardLayouts)
+
+    PaginatorList {
+        id: paginator
+        currentIndex: -1
+        onCurrentPageChanged: column.closeChild()
+        delegate: MenuItemDelegate {
+            itemObject: listModel.getObject(index)
+            name: pageObject.names.get('KEYBOARD', itemObject.name)
+            hasChild: false
+            onClicked: keyboardLayoutChanged(itemObject.name)
         }
-        model: global.keyboardLayouts
+        model: listModel
     }
 }

@@ -67,6 +67,7 @@ public:
 		IdSoundAmplifierGroup,                  // 10
 		IdMediaDevice,
 		IdEmptyObject,
+		IdStringObject,
 
 		IdMultiChannelSoundAmbient = 14,        // Container::IdAmbient
 		IdMultiChannelSpecialAmbient = 16,      // Container::IdSpecialAmbient
@@ -283,6 +284,30 @@ public:
 	virtual int getObjectId() const
 	{
 		return ObjectInterface::IdEmptyObject;
+	}
+};
+
+/*!
+	\ingroup Core
+	\brief A string object to be used with ObjectModelSource
+
+	When setting a QStringList model to an ObjectModelSource, an instance of
+	this class per string is created. The model will contain these readonly
+	objects that can be paginated (like keyboard layouts, for example).
+*/
+class StringObject : public ObjectInterface
+{
+	Q_OBJECT
+
+public:
+	StringObject(QString name, QObject *parent = 0) : ObjectInterface(parent)
+	{
+		setName(name);
+	}
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdStringObject;
 	}
 };
 

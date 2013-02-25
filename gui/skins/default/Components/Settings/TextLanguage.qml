@@ -8,18 +8,28 @@ MenuColumn {
 
     signal textLanguageChanged(string config)
 
-    width: 212
-    height: Math.max(1, 50 * view.count)
+    ObjectModelSource {
+        id: listSourceModel
+    }
 
-    ListView {
-        id: view
-        anchors.fill: parent
-        interactive: false
-        delegate: MenuItem {
-            name: pageObject.names.get('LANGUAGE', modelData)
-            isSelected: global.guiSettings.language === model.type
-            onClicked: textLanguageChanged(model.type)
+    ObjectModel {
+        id: listModel
+        source: listSourceModel.model
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    Component.onCompleted: listSourceModel.init(global.guiSettings.languages)
+
+    PaginatorList {
+        id: paginator
+        currentIndex: -1
+        onCurrentPageChanged: column.closeChild()
+        delegate: MenuItemDelegate {
+            itemObject: listModel.getObject(index)
+            name: pageObject.names.get('LANGUAGE', itemObject.name)
+            hasChild: false
+            onClicked: textLanguageChanged(itemObject.name)
         }
-        model: global.guiSettings.languages
+        model: listModel
     }
 }
