@@ -209,7 +209,7 @@ Page {
 
             onClicked: {
                 player.mediaPlayer.terminate()
-                Stack.goToPage('Devices.qml', {restoreBrowserState: true})
+                privateProps.goToSourcePage()
             }
         }
 
@@ -250,7 +250,7 @@ Page {
             leftMargin: frameBg.width / 100 * 1.90
         }
 
-        onClicked: Stack.goToPage('Devices.qml', {restoreBrowserState: true})
+        onClicked: privateProps.goToSourcePage()
     }
 
     ControlAudio {
@@ -313,6 +313,13 @@ Page {
             else if (info["file_name"])
                 return info["file_name"]
             else return ""
+        }
+
+        function goToSourcePage() {
+            if (player.mediaPlayer.isWebRadio())
+                Stack.goToPage('BrowserPage.qml', {"containerId": Container.IdMultimediaWebRadio, "type": "webradio"})
+            else
+                Stack.goToPage('Devices.qml', {restoreBrowserState: true})
         }
     }
 

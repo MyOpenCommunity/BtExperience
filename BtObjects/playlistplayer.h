@@ -36,6 +36,8 @@ public:
 	Q_INVOKABLE void restoreLocalState(DirectoryListModel *model);
 	Q_INVOKABLE void restoreUpnpState(UPnPListModel *model);
 
+	Q_INVOKABLE bool isWebRadio() const { return !local_state && !upnp_state; }
+
 	// methods needed to restore state when coming back to player page
 	Q_INVOKABLE bool isUpnp() const { return ((actual_list == upnp_list) ? true : false); }
 
