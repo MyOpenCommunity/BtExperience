@@ -139,6 +139,14 @@ void AudioState::enableState(State state)
 		updateState();
 }
 
+bool AudioState::isStateEnabled(State state)
+{
+	Q_ASSERT_X(state != Invalid, "AudioState::enableState", "Do not use \"Invalid\" state");
+	if (state < AudioState::StateCount)
+		return states[state];
+	return false;
+}
+
 void AudioState::updateState()
 {
 	State new_state = Idle;
@@ -344,8 +352,9 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 
 	emit stateChanged(old_state, new_state);
 
-	if (new_state == LocalPlayback || new_state == LocalPlaybackMute)
-		resumeActivePlayer();
+	if (current_state > Ringtone)
+		pauseSoundDiffusionPlayer();
+	resumeActivePlayer();
 }
 
 void AudioState::completeTransition(bool state)
@@ -499,6 +508,24 @@ bool AudioState::pauseActivePlayer()
 	return false;
 }
 
+void AudioState::pauseSoundDiffusionPlayer()
+{
+	for (int i = 0; i < players.count(); ++i)
+	{
+		PlayerInfo &info = players[i];
+
+		if (info.player->getAudioOutputState() == MultiMediaPlayer::AudioOutputActive)
+		{
+			if (info.type == SoundDiffusion)
+			{
+				qDebug() << "Sound diffusion player entering temporary pause";
+				info.temporary_pause = true;
+				info.player->pause();
+			}
+		}
+	}
+}
+
 void AudioState::resumeActivePlayer()
 {
 	for (int i = 0; i < players.count(); ++i)
@@ -507,10 +534,14 @@ void AudioState::resumeActivePlayer()
 
 		if (info.temporary_pause && info.player->getPlayerState() != MultiMediaPlayer::Stopped)
 		{
-			qDebug() << "Player leaving temporary pause";
+			if (((current_state == LocalPlayback || current_state == LocalPlaybackMute) && info.type == MultiMedia) ||
+			    ((current_state <= Ringtone) && info.type == SoundDiffusion))
+			{
+				qDebug() << (info.type == SoundDiffusion ? "Sound diffusion player" : "Player") << "leaving temporary pause";
 
-			info.temporary_pause = false;
-			info.player->resume();
+				info.temporary_pause = false;
+				info.player->resume();
+			}
 		}
 	}
 }
