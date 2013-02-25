@@ -141,11 +141,21 @@ Column {
         id: energyStackComponent
         Column {
             spacing: delegate.spacing
-            UbuntuLightText {
-                font.pixelSize: 18
-                text: energyFunctions.formatValue(privateProps.monthConsumptionObj)
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: "white"
+
+            Item {
+                height: consumptionObjText.font.pixelSize + 4
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                }
+
+                UbuntuLightText {
+                    id: consumptionObjText
+                    font.pixelSize: 18
+                    text: energyFunctions.formatValue(privateProps.monthConsumptionObj)
+                    anchors.centerIn: parent
+                    color: "white"
+                }
             }
 
             Column {
