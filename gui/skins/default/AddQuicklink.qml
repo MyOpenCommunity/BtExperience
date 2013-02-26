@@ -183,11 +183,13 @@ Page {
         text: choices.get(privateProps.currentIndex).addText
         font.pixelSize: 16
         color: "white"
+        elide: Text.ElideRight
         anchors {
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             top: horizontalSeparator.bottom
             topMargin: bg.height / 100 * 1.57
+            right: linkBgImage.right
         }
     }
 
@@ -299,11 +301,13 @@ Page {
         text: choices.get(privateProps.currentIndex).selectText
         font.pixelSize: 16
         color: "white"
+        elide: Text.ElideRight
         anchors {
             left: verticalSeparator.left
             leftMargin: bg.width / 100 * 3.92
             top: horizontalRightSeparator.bottom
             topMargin: bg.height / 100 * 2.29
+            right: linkBgImage.right
         }
     }
 
