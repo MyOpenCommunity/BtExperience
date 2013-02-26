@@ -276,7 +276,9 @@ MenuColumn {
                     textAnchors.leftMargin: zoneButton.width / 100 * 3
                     textAnchors.right: zoneButton.right
                     textAnchors.rightMargin: zoneButton.width / 100 * 13
+                    maximumLineCount: 2
                     elide: Text.ElideRight
+                    wrapMode: Text.Wrap
                     font.pixelSize: 15
                     horizontalAlignment: Text.AlignLeft
                     defaultImage: "../../images/common/btn_99x45.svg"

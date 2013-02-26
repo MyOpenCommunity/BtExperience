@@ -17,6 +17,8 @@ SvgImage {
     property alias elide: label.elide
     property alias horizontalAlignment: label.horizontalAlignment
     property alias pressAndHoldEnabled: area.pressAndHoldEnabled
+    property alias maximumLineCount: label.maximumLineCount
+    property alias wrapMode: label.wrapMode
 
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
