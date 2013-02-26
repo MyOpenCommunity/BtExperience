@@ -133,9 +133,14 @@ void StopAndGoPlus::setDiagnostic(bool active)
 		dev->sendTrackingSystemDisactivation();
 }
 
-void StopAndGoPlus::forceClosed()
+void StopAndGoPlus::open()
 {
-	// TODO waiting for clarifications
+	dev->sendOpen();
+}
+
+void StopAndGoPlus::close()
+{
+	dev->sendClose();
 }
 
 void StopAndGoPlus::valueReceived(const DeviceValues &values_list)

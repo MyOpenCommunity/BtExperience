@@ -8,10 +8,22 @@ SvgImage {
     property string upperText: ""
     property string text
     property int pixelSize: 15
+    property bool enabled: true
 
     signal pressed
 
     source: "../images/common/panel_212x50.svg";
+
+    Rectangle {
+        z: 1
+        anchors.fill: parent
+        color: "silver"
+        opacity: 0.6
+        visible: control.enabled === false
+        MouseArea {
+            anchors.fill: parent
+        }
+    }
 
     Component {
         id: textComponent
