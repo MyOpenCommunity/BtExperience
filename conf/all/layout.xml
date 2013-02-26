@@ -260,6 +260,7 @@
 	<container id="24" descr="Web links" img="web_links.png" >
 		<ist uii="322">
 			<link uii="8012" />
+			<link uii="80022" />
 			<link uii="80013" />
 			<link uii="80014" />
 			<link uii="80015" />
