@@ -46,7 +46,6 @@ function systemsModelContainers(systemsModel) {
         return keys;
     }
 
-    // TODO: add messages system
     for (var i = 0; i < systemsModel.count; ++i) {
         var obj = systemsModel.getObject(i)
 

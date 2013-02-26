@@ -128,7 +128,6 @@ void BtNetworkAccessManager::abortConnection()
 
 void BtNetworkAccessManager::addSecurityException()
 {
-	// TODO: save certificates
 	loop.exit(IgnoreCertificateErrors);
 }
 
