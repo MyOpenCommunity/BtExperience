@@ -23,9 +23,9 @@ SvgImage {
         font.capitalization: Font.AllUppercase
         anchors {
             left: parent.left
-            leftMargin: parent.width / 100 * 5
+            leftMargin: Math.round(parent.width / 100 * 5)
             right: parent.right
-            rightMargin: parent.width / 100 * 5
+            rightMargin: Math.round(parent.width / 100 * 5)
             verticalCenter: parent.verticalCenter
         }
         elide: Text.ElideRight

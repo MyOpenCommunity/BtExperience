@@ -204,10 +204,10 @@ BasePage {
 
         anchors {
             right: parent.right
-            rightMargin: parent.width / 100 * 4
+            rightMargin: Math.round(parent.width / 100 * 4)
             bottom: favourites.top
             top: toolbar.bottom
-            topMargin: parent.height / 100 * 7
+            topMargin: Math.round(parent.height / 100 * 7)
         }
 
         SvgImage {

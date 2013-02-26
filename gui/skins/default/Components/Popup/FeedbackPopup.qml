@@ -20,7 +20,7 @@ SvgImage {
         text: qsTr("programming impossible")
         anchors {
             left: icon.right
-            leftMargin: parent.width / 100 * 2
+            leftMargin: Math.round(parent.width / 100 * 2)
             verticalCenter: parent.verticalCenter
         }
         font.pixelSize: 18

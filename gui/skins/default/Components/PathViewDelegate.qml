@@ -25,10 +25,10 @@ Item {
                     "../" + itemObject.cardImageCached
         anchors {
             fill: bg
-            topMargin: bg.height / 100 * 1.65
-            leftMargin: bg.width / 100 * 1.98
-            rightMargin: bg.width / 100 * 2.38
-            bottomMargin: bg.height / 100 * 15.50
+            topMargin: Math.round(bg.height / 100 * 1.65)
+            leftMargin: Math.round(bg.width / 100 * 1.98)
+            rightMargin: Math.round(bg.width / 100 * 2.38)
+            bottomMargin: Math.round(bg.height / 100 * 15.50)
         }
     }
 

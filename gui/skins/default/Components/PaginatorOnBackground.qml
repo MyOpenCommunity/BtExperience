@@ -103,7 +103,7 @@ Item {
             left: internalList.left
             right: internalList.right
             bottom: parent.bottom
-            bottomMargin: parent.height / 100 * 1
+            bottomMargin: Math.round(parent.height / 100 * 1)
         }
         opacity: ((paginator.visible === true) || (button.sourceComponent !== undefined)) ? 1 : 0
         height: Math.max(paginator.height, button.height)

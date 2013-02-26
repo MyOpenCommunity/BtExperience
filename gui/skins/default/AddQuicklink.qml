@@ -98,7 +98,7 @@ Page {
         anchors {
             horizontalCenter: bottomBg.horizontalCenter
             bottom: bottomBg.top
-            bottomMargin: bg.height / 100 * 2.29
+            bottomMargin: Math.round(bg.height / 100 * 2.29)
         }
     }
 
@@ -108,7 +108,7 @@ Page {
         anchors {
             horizontalCenter: bg.horizontalCenter
             top: bg.top
-            topMargin: bg.height / 100 * 10.30
+            topMargin: Math.round(bg.height / 100 * 10.30)
         }
     }
 
@@ -117,9 +117,9 @@ Page {
         source: "images/common/separator_vertical_1x370.svg"
         anchors {
             top: horizontalSeparator.bottom
-            topMargin: bg.height / 100 * 1.57
+            topMargin: Math.round(bg.height / 100 * 1.57)
             left: bg.left
-            leftMargin: bg.width / 100 * 31.40
+            leftMargin: Math.round(bg.width / 100 * 31.40)
         }
     }
 
@@ -129,9 +129,9 @@ Page {
         color: "white"
         anchors {
             left: bg.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             bottom: horizontalSeparator.top
-            bottomMargin: bg.height / 100 * 1.57
+            bottomMargin: Math.round(bg.height / 100 * 1.57)
         }
     }
 
@@ -142,9 +142,9 @@ Page {
         color: "white"
         anchors {
             left: bg.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             top: horizontalSeparator.bottom
-            topMargin: bg.height / 100 * 1.57
+            topMargin: Math.round(bg.height / 100 * 1.57)
         }
     }
 
@@ -152,9 +152,9 @@ Page {
         spacing: bg.height / 100 * 4.58
         anchors {
             left: bg.left
-            leftMargin: bg.width / 100 * 4.71
+            leftMargin: Math.round(bg.width / 100 * 4.71)
             top: nameBgImage.top
-            topMargin: bg.height / 100 * 2.70
+            topMargin: Math.round(bg.height / 100 * 2.70)
         }
         Repeater {
             id: repeater
@@ -185,9 +185,9 @@ Page {
         color: "white"
         anchors {
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             top: horizontalSeparator.bottom
-            topMargin: bg.height / 100 * 1.57
+            topMargin: Math.round(bg.height / 100 * 1.57)
         }
     }
 
@@ -196,9 +196,9 @@ Page {
         source: "images/common/bg_text-input.svg"
         anchors {
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             top: addTextText.bottom
-            topMargin: bg.height / 100 * 2.29
+            topMargin: Math.round(bg.height / 100 * 2.29)
         }
 
         UbuntuLightText {
@@ -212,9 +212,9 @@ Page {
             elide: Text.ElideMiddle
             anchors {
                 left: nameBgImage.left
-                leftMargin: bg.width / 100 * 1.5
+                leftMargin: Math.round(bg.width / 100 * 1.5)
                 right: nameBgImage.right
-                rightMargin: bg.width / 100 * 1.5
+                rightMargin: Math.round(bg.width / 100 * 1.5)
                 verticalCenter: nameBgImage.verticalCenter
             }
         }
@@ -230,9 +230,9 @@ Page {
         source: "images/common/bg_text-input.svg"
         anchors {
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             top: nameBgImage.bottom
-            topMargin: bg.height / 100 * 2.29
+            topMargin: Math.round(bg.height / 100 * 2.29)
         }
 
         UbuntuLightText {
@@ -246,9 +246,9 @@ Page {
             elide: Text.ElideMiddle
             anchors {
                 left: linkBgImage.left
-                leftMargin: bg.width / 100 * 1.5
+                leftMargin: Math.round(bg.width / 100 * 1.5)
                 right: linkBgImage.right
-                rightMargin: bg.width / 100 * 1.5
+                rightMargin: Math.round(bg.width / 100 * 1.5)
                 verticalCenter: linkBgImage.verticalCenter
             }
         }
@@ -270,9 +270,9 @@ Page {
 
         anchors {
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             top: linkBgImage.bottom
-            topMargin: bg.height / 100 * 2.29
+            topMargin: Math.round(bg.height / 100 * 2.29)
         }
         onPressed: {
             if (nameText.realText === "" || linkText.realText === "")
@@ -287,10 +287,10 @@ Page {
         source: "images/common/separator_horizontal_590x1.svg"
         anchors {
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             right: nameBgImage.right
             top: addButton.bottom
-            topMargin: bg.height / 100 * 4.58
+            topMargin: Math.round(bg.height / 100 * 4.58)
         }
     }
 
@@ -301,9 +301,9 @@ Page {
         color: "white"
         anchors {
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             top: horizontalRightSeparator.bottom
-            topMargin: bg.height / 100 * 2.29
+            topMargin: Math.round(bg.height / 100 * 2.29)
         }
     }
 
@@ -317,12 +317,12 @@ Page {
         itemSpacing: 5
         anchors {
             top: selectTextText.bottom
-            topMargin: bg.height / 100 * 2.29
+            topMargin: Math.round(bg.height / 100 * 2.29)
             left: verticalSeparator.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             right: nameBgImage.right
             bottom: bg.bottom
-            bottomMargin: bg.width / 100 * 4.58
+            bottomMargin: Math.round(bg.width / 100 * 4.58)
         }
         onCurrentPageChanged: page.currentLink = -1
         model: page.actualModel
@@ -352,7 +352,7 @@ Page {
                     anchors {
                         verticalCenter: delegateRadio.verticalCenter
                         left: delegateRadio.right
-                        leftMargin: bg.width / 100 * 2.51
+                        leftMargin: Math.round(bg.width / 100 * 2.51)
                     }
                     onPressed: page.installPopup(confirmDeleteDialog, {"itemObject": delegateRadio.itemObject})
                 }
@@ -404,7 +404,7 @@ Page {
             horizontalCenter: parent.horizontalCenter
             horizontalCenterOffset: navigationBar.width / 2
             bottom: parent.bottom
-            bottomMargin: bg.height / 100 * 2.29
+            bottomMargin: Math.round(bg.height / 100 * 2.29)
         }
         visible: page.homeCustomization || page.profile !== undefined
     }
@@ -416,7 +416,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: okButton.left
-            rightMargin: bg.width / 100 * 4.00
+            rightMargin: Math.round(bg.width / 100 * 4.00)
         }
         visible: page.homeCustomization || page.profile !== undefined
     }
@@ -470,7 +470,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: bottomBg.right
-            rightMargin: bg.width / 100 * 1.10
+            rightMargin: Math.round(bg.width / 100 * 1.10)
         }
         visible: page.homeCustomization || page.profile !== undefined
         onPressed: Stack.popPage()

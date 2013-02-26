@@ -18,9 +18,9 @@ SvgImage {
         horizontalAlignment: Text.AlignLeft
         anchors {
             top: parent.top
-            topMargin: parent.height / 100 * 15
+            topMargin: Math.round(parent.height / 100 * 15)
             left: parent.left
-            leftMargin: parent.width / 100 * 5
+            leftMargin: Math.round(parent.width / 100 * 5)
         }
     }
 
@@ -31,9 +31,9 @@ SvgImage {
         horizontalAlignment: Text.AlignLeft
         anchors {
             bottom: parent.bottom
-            bottomMargin: parent.height / 100 * 15
+            bottomMargin: Math.round(parent.height / 100 * 15)
             left: parent.left
-            leftMargin: parent.width / 100 * 5
+            leftMargin: Math.round(parent.width / 100 * 5)
         }
     }
 

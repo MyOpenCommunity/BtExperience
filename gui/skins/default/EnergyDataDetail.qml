@@ -61,7 +61,7 @@ Page {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: parent.width / 100 * 5
+                leftMargin: Math.round(parent.width / 100 * 5)
             }
 
             font.pixelSize: 28
@@ -84,7 +84,7 @@ Page {
             source: "images/energy/linea.svg"
             anchors {
                 top: parent.top
-                topMargin: parent.height / 100 * 14.5
+                topMargin: Math.round(parent.height / 100 * 14.5)
                 horizontalCenter: parent.horizontalCenter
             }
         }

@@ -44,7 +44,7 @@ Page {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: parent.width / 100 * 5
+                leftMargin: Math.round(parent.width / 100 * 5)
             }
 
             font.pixelSize: 28
@@ -66,7 +66,7 @@ Page {
             id: buttonRow
             anchors {
                 top: parent.top
-                topMargin: parent.height / 100 * 3
+                topMargin: Math.round(parent.height / 100 * 3)
                 right: divisorLine.right
             }
 
@@ -111,7 +111,7 @@ Page {
             source: "images/energy/linea.svg"
             anchors {
                 top: buttonRow.bottom
-                topMargin: parent.height / 100 * 3
+                topMargin: Math.round(parent.height / 100 * 3)
                 horizontalCenter: parent.horizontalCenter
             }
         }

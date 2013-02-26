@@ -295,12 +295,12 @@ Page {
 
         anchors {
             left: navigationBar.right
-            leftMargin: parent.width / 100 * 1
+            leftMargin: Math.round(parent.width / 100 * 1)
             top: navigationBar.top
             bottom: parent.bottom
-            bottomMargin: parent.height / 100 * 1.67
+            bottomMargin: Math.round(parent.height / 100 * 1.67)
             right: parent.right
-            rightMargin: parent.width / 100 * 3
+            rightMargin: Math.round(parent.width / 100 * 3)
         }
 
         Item {
@@ -342,9 +342,9 @@ Page {
                     ButtonImageThreeStates {
                         anchors {
                             right: parent.right
-                            rightMargin: parent.height / 100 * 10
+                            rightMargin: Math.round(parent.height / 100 * 10)
                             bottom: parent.bottom
-                            bottomMargin: parent.height / 100 * 10
+                            bottomMargin: Math.round(parent.height / 100 * 10)
                         }
 
                         defaultImageBg: "images/common/btn_66x35.svg"
@@ -360,7 +360,7 @@ Page {
                         width: parent.width / 100 * 38
                         height: parent.height / 100 * 80
                         anchors.top: parent.top
-                        anchors.topMargin: parent.height / 100 * 8
+                        anchors.topMargin: Math.round(parent.height / 100 * 8)
                         source: profilePage.profile.cardImageCached
                         fillMode: Image.PreserveAspectFit
                     }
@@ -397,7 +397,7 @@ Page {
 
                         defaultImage: "images/common/ico_piu.svg"
                         pressedImage: "images/common/ico_piu_P.svg"
-                        imageAnchors.rightMargin: parent.width / 100 * 5
+                        imageAnchors.rightMargin: Math.round(parent.width / 100 * 5)
 
                         shadowImage: "images/common/ombra_btn_cercapersone.svg"
 
@@ -432,8 +432,8 @@ Page {
                     left: paginatorBackground.left
                     right: paginatorBackground.right
                 }
-                bottomRowAnchors.bottomMargin: paginatorBackground.height / 100 * 3
-                bottomRowAnchors.leftMargin: paginatorBackground.width / 100 * 9
+                bottomRowAnchors.bottomMargin: Math.round(paginatorBackground.height / 100 * 3)
+                bottomRowAnchors.leftMargin: Math.round(paginatorBackground.width / 100 * 9)
 
                 width: addNote.width
                 elementsOnPage: 2
@@ -462,9 +462,9 @@ Page {
                         source: "images/profile-settings/icon_delete.svg"
                         anchors {
                             right: bgDelegate.right
-                            rightMargin: delegate.width / 100 * 5
+                            rightMargin: Math.round(delegate.width / 100 * 5)
                             top: bgDelegate.top
-                            topMargin: delegate.height / 100 * 5
+                            topMargin: Math.round(delegate.height / 100 * 5)
                         }
                     }
 
@@ -479,11 +479,11 @@ Page {
                     UbuntuLightText {
                         anchors {
                             left: bgDelegate.left
-                            leftMargin: delegate.width / 100 * 2
+                            leftMargin: Math.round(delegate.width / 100 * 2)
                             right: bgDelegate.right
-                            rightMargin: delegate.width / 100 * 2
+                            rightMargin: Math.round(delegate.width / 100 * 2)
                             top: closeButton.bottom
-                            topMargin: delegate.height / 100 * 5
+                            topMargin: Math.round(delegate.height / 100 * 5)
                         }
                         color: "gray"
                         font.pixelSize: 15

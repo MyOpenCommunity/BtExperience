@@ -33,7 +33,7 @@ Column {
                 top: parent.top
                 bottom: parent.bottom
                 left: parent.left
-                leftMargin: parent.width / 100 * 2.27
+                leftMargin: Math.round(parent.width / 100 * 2.27)
             }
             verticalAlignment: Text.AlignVCenter
         }
@@ -101,9 +101,9 @@ Column {
             onPressed: dismissClicked()
             anchors {
                 right: bgBottom.right
-                rightMargin: bgTitle.width / 100 * 1.59
+                rightMargin: Math.round(bgTitle.width / 100 * 1.59)
                 bottom: bgBottom.bottom
-                bottomMargin: bgTitle.height / 100 * 11.24
+                bottomMargin: Math.round(bgTitle.height / 100 * 11.24)
             }
         }
 
@@ -121,7 +121,7 @@ Column {
                 right: buttonDismiss.visible ? buttonDismiss.left : bgBottom.right
                 rightMargin: buttonDismiss.visible ? 0 : bgTitle.width / 100 * 1.59
                 bottom: bgBottom.bottom
-                bottomMargin: bgTitle.height / 100 * 11.24
+                bottomMargin: Math.round(bgTitle.height / 100 * 11.24)
             }
         }
     }

@@ -15,7 +15,7 @@ Page {
     showSystemsButton: true
 
     // The spacing between the buttons on the left and the MenuContainer
-    property int containerLeftMargin: systemPage.width / 100 * 2
+    property int containerLeftMargin: Math.round(systemPage.width / 100 * 2)
     property int navigationTarget: 0 // for menu navigation, see navigation.js for further details
     property variant navigationData: undefined // for menu navigation, see navigation.js for further details
 

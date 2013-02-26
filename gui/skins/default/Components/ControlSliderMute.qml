@@ -37,9 +37,9 @@ SvgImage {
 
         anchors {
             top: parent.top
-            topMargin: buttonSlider.height / 100 * 5
+            topMargin: Math.round(buttonSlider.height / 100 * 5)
             left: parent.left
-            leftMargin: buttonSlider.width / 100 * 3.30
+            leftMargin: Math.round(buttonSlider.width / 100 * 3.30)
         }
 
         text: qsTr("volume")
@@ -52,9 +52,9 @@ SvgImage {
 
         anchors {
             top: parent.top
-            topMargin: buttonSlider.height / 100 * 5
+            topMargin: Math.round(buttonSlider.height / 100 * 5)
             right: parent.right
-            rightMargin: buttonSlider.width / 100 * 7.07
+            rightMargin: Math.round(buttonSlider.width / 100 * 7.07)
         }
 
         text: percentage + " %"
@@ -67,7 +67,7 @@ SvgImage {
 
         anchors {
             top: label.bottom
-            topMargin: buttonSlider.height / 100 * 10
+            topMargin: Math.round(buttonSlider.height / 100 * 10)
             horizontalCenter: parent.horizontalCenter
         }
 
@@ -81,7 +81,7 @@ SvgImage {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: -buttonSlider.width / 100 * 0.94
+                leftMargin: -Math.round(buttonSlider.width / 100 * 0.94)
             }
 
             height: parent.height + 2
@@ -154,7 +154,7 @@ SvgImage {
         onPressed: muteClicked()
         anchors {
             top: imageSlider.bottom
-            topMargin: buttonSlider.height / 100 * 5
+            topMargin: Math.round(buttonSlider.height / 100 * 5)
             left: imageSlider.left
         }
     }
@@ -170,7 +170,7 @@ SvgImage {
         repetitionOnHold: true
         anchors {
             top: imageSlider.bottom
-            topMargin: buttonSlider.height / 100 * 5
+            topMargin: Math.round(buttonSlider.height / 100 * 5)
             right: buttonPlus.left
             rightMargin: 4
         }
@@ -187,7 +187,7 @@ SvgImage {
         repetitionOnHold: true
         anchors {
             top: imageSlider.bottom
-            topMargin: buttonSlider.height / 100 * 5
+            topMargin: Math.round(buttonSlider.height / 100 * 5)
             right: imageSlider.right
         }
     }

@@ -26,10 +26,10 @@ Item {
         // top folder
         anchors {
             fill: bg
-            topMargin: bg.height / 100 * 1.65
-            leftMargin: bg.width / 100 * 2.38
-            rightMargin: bg.width / 100 * 2.86
-            bottomMargin: bg.height / 100 * 16.17
+            topMargin: Math.round(bg.height / 100 * 1.65)
+            leftMargin: Math.round(bg.width / 100 * 2.38)
+            rightMargin: Math.round(bg.width / 100 * 2.86)
+            bottomMargin: Math.round(bg.height / 100 * 16.17)
         }
         source: ""
     }

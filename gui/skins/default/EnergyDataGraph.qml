@@ -78,7 +78,7 @@ Page {
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
-                leftMargin: parent.width / 100 * 5
+                leftMargin: Math.round(parent.width / 100 * 5)
             }
 
             font.pixelSize: 28
@@ -102,7 +102,7 @@ Page {
                 id: timeButtonRow
                 anchors {
                     top: parent.top
-                    topMargin: parent.height / 100 * 3
+                    topMargin: Math.round(parent.height / 100 * 3)
                     left: divisorLine.left
                 }
 
@@ -161,7 +161,7 @@ Page {
             Item {
                 anchors {
                     top: parent.top
-                    topMargin: parent.height / 100 * 3
+                    topMargin: Math.round(parent.height / 100 * 3)
                     right: buttonRowLoader.left
                     left: timeButtonRow.right
                 }
@@ -221,7 +221,7 @@ Page {
                 id: buttonRowLoader
                 anchors {
                     top: parent.top
-                    topMargin: parent.height / 100 * 3
+                    topMargin: Math.round(parent.height / 100 * 3)
                     right: divisorLine.right
                 }
                 sourceComponent: energyData.rate !== null ? buttonRowComponent : undefined
@@ -264,7 +264,7 @@ Page {
                 height: 1
                 anchors {
                     top: timeButtonRow.bottom
-                    topMargin: parent.height / 100 * 3
+                    topMargin: Math.round(parent.height / 100 * 3)
                     horizontalCenter: parent.horizontalCenter
                 }
             }
@@ -368,7 +368,7 @@ Page {
                 energyData: page.energyData
                 anchors {
                     top: parent.top
-                    topMargin: parent.height / 100 * 3
+                    topMargin: Math.round(parent.height / 100 * 3)
                     horizontalCenter: parent.horizontalCenter
                 }
             }
@@ -392,7 +392,7 @@ Page {
                 source: "images/energy/bg_instant_consumption.svg"
                 anchors {
                     top: dateSelector.bottom
-                    topMargin: parent.height / 100 * 24
+                    topMargin: Math.round(parent.height / 100 * 24)
                     horizontalCenter: parent.horizontalCenter
                 }
                 EnergyItemObject {
@@ -447,7 +447,7 @@ Page {
                 source: "images/energy/livello_cumulative_consumption.svg"
                 anchors {
                     top: instantConsumption.bottom
-                    topMargin: parent.height / 100 * 25
+                    topMargin: Math.round(parent.height / 100 * 25)
                     horizontalCenter: parent.horizontalCenter
                 }
 

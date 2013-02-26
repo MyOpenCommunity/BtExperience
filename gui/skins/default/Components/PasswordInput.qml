@@ -19,9 +19,9 @@ SvgImage {
         text: qsTr("Insert security code")
         anchors {
             right: parent.right
-            rightMargin: parent.width / 100 * 2
+            rightMargin: Math.round(parent.width / 100 * 2)
             left: parent.left
-            leftMargin: parent.width / 100 * 2
+            leftMargin: Math.round(parent.width / 100 * 2)
         }
     }
 
@@ -61,9 +61,9 @@ SvgImage {
                 horizontalAlignment: Text.AlignHCenter
                 anchors {
                     right: parent.right
-                    rightMargin: parent.width / 100 * 2
+                    rightMargin: Math.round(parent.width / 100 * 2)
                     left: parent.left
-                    leftMargin: parent.width / 100 * 2
+                    leftMargin: Math.round(parent.width / 100 * 2)
                     verticalCenter: parent.verticalCenter
                 }
                 onCursorRectangleChanged: flick.ensureVisible(cursorRectangle)

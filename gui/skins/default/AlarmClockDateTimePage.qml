@@ -37,7 +37,7 @@ Page {
         anchors {
             horizontalCenter: bottomBg.horizontalCenter
             bottom: bottomBg.top
-            bottomMargin: bg.height / 100 * 2.29
+            bottomMargin: Math.round(bg.height / 100 * 2.29)
         }
     }
 
@@ -47,7 +47,7 @@ Page {
         anchors {
             horizontalCenter: bg.horizontalCenter
             top: bg.top
-            topMargin: bg.height / 100 * 10.30
+            topMargin: Math.round(bg.height / 100 * 10.30)
         }
     }
 
@@ -57,9 +57,9 @@ Page {
         color: "white"
         anchors {
             left: bg.left
-            leftMargin: bg.width / 100 * 3.92
+            leftMargin: Math.round(bg.width / 100 * 3.92)
             bottom: horizontalSeparator.top
-            bottomMargin: bg.height / 100 * 1.57
+            bottomMargin: Math.round(bg.height / 100 * 1.57)
         }
     }
 
@@ -67,7 +67,7 @@ Page {
     Row {
         anchors {
             top: horizontalSeparator.bottom
-            topMargin: bg.width / 100 * 3.92
+            topMargin: Math.round(bg.width / 100 * 3.92)
             left: bg.left
             right: bg.right
             bottom: bottomBg.top
@@ -189,9 +189,9 @@ Page {
                     elide: Text.ElideMiddle
                     anchors {
                         left: nameBgImage.left
-                        leftMargin: bg.width / 100 * 1.5
+                        leftMargin: Math.round(bg.width / 100 * 1.5)
                         right: nameBgImage.right
-                        rightMargin: bg.width / 100 * 1.5
+                        rightMargin: Math.round(bg.width / 100 * 1.5)
                         verticalCenter: nameBgImage.verticalCenter
                     }
                 }
@@ -226,7 +226,7 @@ Page {
             horizontalCenter: parent.horizontalCenter
             horizontalCenterOffset: navigationBar.width / 2
             bottom: parent.bottom
-            bottomMargin: bg.height / 100 * 2.29
+            bottomMargin: Math.round(bg.height / 100 * 2.29)
         }
     }
 
@@ -237,7 +237,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: okButton.left
-            rightMargin: bg.width / 100 * 4.00
+            rightMargin: Math.round(bg.width / 100 * 4.00)
         }
     }
 
@@ -287,7 +287,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: bottomBg.right
-            rightMargin: bg.width / 100 * 1.10
+            rightMargin: Math.round(bg.width / 100 * 1.10)
         }
         onPressed: {
             if (isNewAlarm) {

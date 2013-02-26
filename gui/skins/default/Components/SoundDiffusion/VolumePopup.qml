@@ -27,9 +27,9 @@ SvgImage {
         font.capitalization: Font.AllUppercase
         anchors {
             top: volumePopup.top
-            topMargin: volumePopup.height / 100 * 10
+            topMargin: Math.round(volumePopup.height / 100 * 10)
             left: volumePopup.left
-            leftMargin: volumePopup.width / 100 * 7
+            leftMargin: Math.round(volumePopup.width / 100 * 7)
         }
     }
 
@@ -39,9 +39,9 @@ SvgImage {
         font.pixelSize: volumePopup.height / 100 * 20
         anchors {
             top: volumePopup.top
-            topMargin: volumePopup.height / 100 * 10
+            topMargin: Math.round(volumePopup.height / 100 * 10)
             right: volumePopup.right
-            rightMargin: volumePopup.width / 100 * 7
+            rightMargin: Math.round(volumePopup.width / 100 * 7)
         }
     }
 
@@ -51,9 +51,9 @@ SvgImage {
         source: volumePopup.mute ? "../../images/common/regola_volume/ico_mute.svg" : "../../images/common/regola_volume/ico_volume.svg"
         anchors {
             top: volumePopup.top
-            topMargin: volumePopup.height / 100 * 50
+            topMargin: Math.round(volumePopup.height / 100 * 50)
             left: volumePopup.left
-            leftMargin: volumePopup.width / 100 * 7
+            leftMargin: Math.round(volumePopup.width / 100 * 7)
         }
     }
 
@@ -62,7 +62,7 @@ SvgImage {
         anchors {
             verticalCenter: muteIcon.verticalCenter
             left: muteIcon.right
-            leftMargin: volumePopup.width / 100 * 2
+            leftMargin: Math.round(volumePopup.width / 100 * 2)
         }
 
         Rectangle {
