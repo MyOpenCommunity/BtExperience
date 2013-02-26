@@ -21,17 +21,36 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    PaginatorList {
-        id: paginator
-        currentIndex: -1
-        onCurrentPageChanged: column.closeChild()
-        delegate: MenuItemDelegate {
-            itemObject: objModel.getObject(index)
-            name: global.ringtoneManager.descriptionFromType(itemObject.name)
-            hasChild: true
-            onClicked: column.loadColumn(settingsRingtone, name, undefined, {type: itemObject.name})
+    Column {
+        ControlSlider {
+            property int volumePercentage: global.audioState.getVolume(AudioState.RingtoneVolume)
+            description: qsTr("Ringtone volume")
+            percentage: volumePercentage
+            onVolumePercentageChanged: global.audioState.setVolume(AudioState.RingtoneVolume, volumePercentage)
+            onPlusClicked: {
+                if (volumePercentage > 0)
+                    volumePercentage += 5
+            }
+            onMinusClicked: {
+                if (volumePercentage < 100)
+                    volumePercentage -= 5
+            }
+            onSliderClicked: volumePercentage = Math.round(desiredPercentage / 5) * 5
         }
-        model: objModel
+
+        PaginatorList {
+            id: paginator
+            currentIndex: -1
+            elementsOnPage: 6
+            onCurrentPageChanged: column.closeChild()
+            delegate: MenuItemDelegate {
+                itemObject: objModel.getObject(index)
+                name: global.ringtoneManager.descriptionFromType(itemObject.name)
+                hasChild: true
+                onClicked: column.loadColumn(settingsRingtone, name, undefined, {type: itemObject.name})
+            }
+            model: objModel
+        }
     }
 
     Component {
