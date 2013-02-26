@@ -25,9 +25,9 @@
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
-#define CPU_FREQ_DEVICE   "/sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed"
+#define CPU_FREQ_DEVICE    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"
 #define CPU_CLOCK_IDLE    300000
-#define CPU_CLOCK_ACTIVE 1000000
+#define CPU_CLOCK_ACTIVE  800000
 
 #define BROWSER_HISTORY_SIZE 10
 
@@ -740,11 +740,11 @@ void GlobalProperties::updateCpuFrequency()
 	QFile dev(CPU_FREQ_DEVICE);
 	QByteArray freq = QByteArray::number(new_cpu_frequency);
 
-	qDebug() << "Disabled: Setting CPU frequency to" << freq;
-//Disabled cpu frequency rescaling to prevent error on reboot (Kernel blocked)
-/*	if (!dev.open(QFile::WriteOnly) || dev.write(freq) != freq.size())
-		qWarning() << "Error setting CPU frequency to" << freq;
-*/
+	qDebug() << "Disabled: Setting CPU min frequency to" << freq;
+
+	if (!dev.open(QFile::WriteOnly) || dev.write(freq) != freq.size())
+		qWarning() << "Error setting CPU min frequency to" << freq;
+
 }
 
 GlobalProperties::UpnpStatus GlobalProperties::getUpnpStatus() const
