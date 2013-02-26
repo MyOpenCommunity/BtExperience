@@ -14,7 +14,7 @@ QtObject {
         container['STOP_GO_STATUS'][StopAndGo.Unknown] = qsTr("Unknown")
         container['STOP_GO_STATUS'][StopAndGo.Closed] = qsTr("Closed")
         container['STOP_GO_STATUS'][StopAndGo.Opened] = qsTr("Opened")
-        container['STOP_GO_STATUS'][StopAndGo.Locked] = qsTr("Locked")
+        container['STOP_GO_STATUS'][StopAndGo.Blocked] = qsTr("Blocked")
         container['STOP_GO_STATUS'][StopAndGo.ShortCircuit] = qsTr("ShortCircuit")
         container['STOP_GO_STATUS'][StopAndGo.GroundFail] = qsTr("GroundFail")
         container['STOP_GO_STATUS'][StopAndGo.Overtension] = qsTr("Overtension")

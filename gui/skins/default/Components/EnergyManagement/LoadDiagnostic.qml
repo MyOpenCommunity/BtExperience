@@ -46,7 +46,7 @@ MenuColumn {
                 return qsTr("Closed")
             else if (obj.status === StopAndGo.Opened)
                 return qsTr("Open")
-            else if (obj.status === StopAndGo.Locked)
+            else if (obj.status === StopAndGo.Blocked)
                 return qsTr("Open - Block")
             else if (obj.status === StopAndGo.ShortCircuit)
                 return qsTr("Open - Short Circuit")

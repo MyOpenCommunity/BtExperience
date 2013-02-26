@@ -40,7 +40,7 @@ class StopAndGo : public DeviceObjectInterface
 		Can be one of:
 		- Closed (normal status)
 		- Opened
-		- Locked
+		- Blocked: automatic rearm with unhook within 5 seconds
 		- ShortCircuit
 		- GroundFail
 		- OverTension
@@ -60,7 +60,7 @@ public:
 		Unknown = 0,
 		Closed = 1,
 		Opened,
-		Locked,
+		Blocked, // see #19824 for the reason of name change
 		ShortCircuit,
 		GroundFail,
 		Overtension

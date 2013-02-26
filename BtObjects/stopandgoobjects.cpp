@@ -73,7 +73,7 @@ void StopAndGo::valueReceived(const DeviceValues &values_list)
 	else
 	{
 		if (values_list[StopAndGoDevice::DIM_LOCKED].toBool())
-			st = Locked;
+			st = Blocked;
 		else if (values_list[StopAndGoDevice::DIM_OPENED_LE_N].toBool())
 			st = ShortCircuit;
 		else if (values_list[StopAndGoDevice::DIM_OPENED_GROUND].toBool())

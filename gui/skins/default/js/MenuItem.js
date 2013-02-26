@@ -127,7 +127,7 @@ function description(itemObject) {
         case StopAndGo.Opened:
             descr = qsTr("Open")
             break
-        case StopAndGo.Locked:
+        case StopAndGo.Blocked:
             descr = qsTr("Open - Block")
             break
         case StopAndGo.ShortCircuit:
