@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <archive>
 	<obj cid="6101" id="6101" descr="Stop and go" where="1">
-		<ist uii="4001" descr="Stop and Go" where="2" />
+		<ist uii="4001" descr="Stop and Go" where="22" />
 	</obj>
 	<obj cid="6102" id="6102" descr="Stop and go plus" where="1">
-		<ist uii="4002" descr="Stop and go plus" where="3" />
+		<ist uii="4002" descr="Stop and go plus" where="23" />
 	</obj>
 	<obj cid="6103" id="6103" descr="Stop and go btest" where="1">
-		<ist uii="4003" descr="Stop and go btest" where="5" />
+		<ist uii="4003" descr="Stop and go btest" where="25" />
 	</obj>
 	<obj cid="6104" id="6104" descr="Load diagnostic" where="0" phase="0">
 		<ist uii="4007" descr="Washing machine" where="76#6" />
