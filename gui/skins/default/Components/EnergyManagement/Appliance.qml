@@ -36,25 +36,9 @@ MenuColumn {
         id: applianceBaseWithCu
 
         Column {
-            ControlSwitch {
-                visible: element.dataModel.hasControlUnit
-                upperText: qsTr("Device")
-                // the following test is "simplified" because the switch is
-                // visible only if the load has a CU: if CU is not present
-                // the switch is not visible
-                text: privateProps.loadEnabled() ? qsTr("Controlled") : qsTr("Not Controlled")
-                pixelSize: 14
-                onPressed: privateProps.loadEnabled() && element.dataModel.loadForced ?
-                               element.dataModel.stopForcing() :
-                               element.dataModel.forceOn()
-                status: !(privateProps.loadEnabled() && element.dataModel.loadForced)
-            }
-
-            ForceLoad {
-                visible: element.dataModel.loadForced
+            ControlSwitchLoadManagement {
                 loadWithCU: element.dataModel
             }
-
         }
     }
 
@@ -94,22 +78,7 @@ MenuColumn {
         id: applianceAdvancedWithCu
 
         Column {
-            ControlSwitch {
-                visible: element.dataModel.hasControlUnit
-                upperText: qsTr("Device")
-                // the following test is "simplified" because the switch is
-                // visible only if the load has a CU: if CU is not present
-                // the switch is not visible
-                text: privateProps.loadEnabled() ? qsTr("Controlled") : qsTr("Not Controlled")
-                pixelSize: 14
-                onPressed: privateProps.loadEnabled() && element.dataModel.loadForced ?
-                               element.dataModel.stopForcing() :
-                               element.dataModel.forceOn()
-                status: !(privateProps.loadEnabled() && element.dataModel.loadForced)
-            }
-
-            ForceLoad {
-                visible: element.dataModel.loadForced
+            ControlSwitchLoadManagement {
                 loadWithCU: element.dataModel
             }
 
@@ -138,14 +107,6 @@ MenuColumn {
                 load: element.dataModel
             }
 
-        }
-    }
-
-    QtObject {
-        id: privateProps
-
-        function loadEnabled() {
-            return element.dataModel.hasControlUnit && element.dataModel.loadEnabled
         }
     }
 }

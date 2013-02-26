@@ -376,6 +376,15 @@ void EnergyLoadManagementWithControlUnit::increaseForceDuration()
 	emit forceDurationChanged();
 }
 
+void EnergyLoadManagementWithControlUnit::resetForceDuration()
+{
+	if (force_duration == LoadsDevice::FORCE_DURATION_DEFAULT)
+		return;
+
+	force_duration = LoadsDevice::FORCE_DURATION_DEFAULT;
+	emit forceDurationChanged();
+}
+
 void EnergyLoadManagementWithControlUnit::valueReceived(const DeviceValues &values_list)
 {
 	EnergyLoadManagement::valueReceived(values_list);

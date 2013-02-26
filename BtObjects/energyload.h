@@ -362,6 +362,7 @@ public slots:
 
 	void decreaseForceDuration();
 	void increaseForceDuration();
+	void resetForceDuration();
 
 signals:
 	void loadEnabledChanged();
