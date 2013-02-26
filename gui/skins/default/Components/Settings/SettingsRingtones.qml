@@ -7,58 +7,46 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    // using a ListView, so I have to hardcode dim
-    height: 450
-    width: 212
-
     onChildDestroyed: {
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
-    ListModel {
-        id: modelList
-
-        Component.onCompleted: {
-            var types = [
-                        RingtoneManager.Alarm,
-                        RingtoneManager.Message,
-                        RingtoneManager.CCTVExternalPlace1,
-                        RingtoneManager.CCTVExternalPlace2,
-                        RingtoneManager.CCTVExternalPlace3,
-                        RingtoneManager.CCTVExternalPlace4,
-                        RingtoneManager.InternalIntercom,
-                        RingtoneManager.ExternalIntercom,
-                        RingtoneManager.IntercomFloorcall
-                    ]
-            var r = global.ringtoneManager
-            for (var i = 0; i < types.length; ++i) {
-                modelList.append(
-                            {
-                                name: r.descriptionFromType(types[i]),
-                                type: types[i]
-                            })
-            }
-        }
+    ObjectModelSource {
+        id: sourceModel
     }
 
-    ListView {
-        id: itemList
+    ObjectModel {
+        id: objModel
+        source: sourceModel.model
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
 
-        anchors.fill: parent
+    PaginatorList {
+        id: paginator
         currentIndex: -1
-        interactive: false
-
+        onCurrentPageChanged: column.closeChild()
         delegate: MenuItemDelegate {
-            name: model.name
+            itemObject: objModel.getObject(index)
+            name: global.ringtoneManager.descriptionFromType(itemObject.name)
             hasChild: true
-            onClicked: column.loadColumn(settingsRingtone, model.name, undefined, {type: model.type})
+            onClicked: column.loadColumn(settingsRingtone, name, undefined, {type: itemObject.name})
         }
-
-        model: modelList
+        model: objModel
     }
 
     Component {
         id: settingsRingtone
         SettingsRingtone {}
     }
+
+    Component.onCompleted: sourceModel.init([RingtoneManager.Alarm,
+                                             RingtoneManager.Message,
+                                             RingtoneManager.CCTVExternalPlace1,
+                                             RingtoneManager.CCTVExternalPlace2,
+                                             RingtoneManager.CCTVExternalPlace3,
+                                             RingtoneManager.CCTVExternalPlace4,
+                                             RingtoneManager.InternalIntercom,
+                                             RingtoneManager.ExternalIntercom,
+                                             RingtoneManager.IntercomFloorcall
+                                            ])
 }
