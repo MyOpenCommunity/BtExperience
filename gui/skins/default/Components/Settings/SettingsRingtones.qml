@@ -35,8 +35,7 @@ MenuColumn {
                 modelList.append(
                             {
                                 name: r.descriptionFromType(types[i]),
-                                type: types[i],
-                                component: "SettingsRingtone.qml"
+                                type: types[i]
                             })
             }
         }
@@ -52,18 +51,14 @@ MenuColumn {
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: true
-            onClicked: column.loadColumn(nameToComponent(model.component), model.name, undefined, {type: model.type})
+            onClicked: column.loadColumn(settingsRingtone, model.name, undefined, {type: model.type})
         }
 
         model: modelList
     }
 
-    function nameToComponent(name) {
-        var component = Qt.createComponent(name)
-        // TODO: handle more states
-        if (component.status === Component.Ready) {
-            return component
-        }
-        console.log("Error on creating component for ringtone settings:" + component.errorString())
+    Component {
+        id: settingsRingtone
+        SettingsRingtone {}
     }
 }
