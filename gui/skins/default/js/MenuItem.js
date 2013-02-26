@@ -49,7 +49,7 @@ function status(itemObject) {
 
     case ObjectInterface.IdStopAndGo:
     case ObjectInterface.IdStopAndGoPlus:
-    case ObjectInterface.IdStopAndGoBtest:
+    case ObjectInterface.IdStopAndGoBTest:
         switch (itemObject.status) {
         case StopAndGo.Closed:
             return 1

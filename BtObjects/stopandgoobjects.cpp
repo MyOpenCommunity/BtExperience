@@ -247,8 +247,11 @@ void StopAndGoBTest::valueReceived(const DeviceValues &values_list)
 
 void StopAndGoBTest::apply()
 {
+	// resend autotest frequency only if value has changed
+	bool resend_freq = (current[AUTO_TEST_FREQUENCY].toInt() != to_apply[AUTO_TEST_FREQUENCY].toInt());
 	current = to_apply;
-	dev->sendSelftestFreq(current[AUTO_TEST_FREQUENCY].toInt());
+	if (resend_freq)
+		dev->sendSelftestFreq(to_apply[AUTO_TEST_FREQUENCY].toInt());
 }
 
 void StopAndGoBTest::reset()
