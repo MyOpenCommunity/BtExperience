@@ -157,11 +157,19 @@ void BtNetworkReply::handleError(QNetworkReply::NetworkError error_code)
 	// if the error response does not have any content, use a pre-defined error page
 	if (buffer.isEmpty())
 	{
-		QString temp = tr(error_page);
+		QString temp = tr(error_page), encoded;
 
 		temp.replace("$SERVER", reply->request().url().host());
 
-		buffer = temp.toUtf8();
+		for (int i = 0; i < temp.size(); ++i)
+		{
+			if (temp[i] < 128)
+				encoded.append(temp[i]);
+			else
+				encoded.append(QString("&#%1;").arg(temp[i].unicode()));
+		}
+
+		buffer = encoded.toUtf8();
 	}
 
 	emit error(error_code);
