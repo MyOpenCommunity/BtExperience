@@ -100,7 +100,7 @@ void TestStopAndGo::testReceiveStatus()
 
 	obj->valueReceived(v);
 	t.checkSignals();
-	QCOMPARE(obj->getStatus(), StopAndGo::Locked);
+	QCOMPARE(obj->getStatus(), StopAndGo::Blocked);
 
 	v[StopAndGoDevice::DIM_OPENED] = true;
 	v[StopAndGoDevice::DIM_FAULT] = false;
