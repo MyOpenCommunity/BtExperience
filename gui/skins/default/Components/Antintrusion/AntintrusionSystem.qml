@@ -153,7 +153,7 @@ MenuColumn {
             Switch {
                 id: systemIcon
                 anchors.right: parent.right
-                anchors.rightMargin: Math.round(width / 100 * 10)
+                anchors.rightMargin: width / 100 * 10
                 anchors.verticalCenter: parent.verticalCenter
                 status: 1
                 onPressed: {
@@ -223,7 +223,7 @@ MenuColumn {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignLeft
                 anchors.top: parent.top
-                anchors.topMargin: Math.round(parent.height / 100 * 1)
+                anchors.topMargin: parent.height / 100 * 1
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: zoneView.width
             }
@@ -233,7 +233,7 @@ MenuColumn {
 
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: zoneText.bottom
-                anchors.topMargin: Math.round(parent.height / 100 * 2)
+                anchors.topMargin: parent.height / 100 * 2
                 width: cellWidth * 2
                 height: 200 // (cellHeight * zoneModel.count / 2) // Why it does not work???
                 interactive: false
@@ -252,8 +252,8 @@ MenuColumn {
                         anchors {
                             top: parent.top
                             left: parent.left
-                            topMargin: Math.round(parent.height / 100 * 12) // manual alignment to center the image with the text
-                            leftMargin: Math.round(parent.width / 100 * 3)
+                            topMargin: parent.height / 100 * 12 // manual alignment to center the image with the text
+                            leftMargin: parent.width / 100 * 3
                         }
                     }
 
@@ -263,19 +263,19 @@ MenuColumn {
                         font.pixelSize: 15
                         anchors {
                             top: parent.top
-                            topMargin: Math.round(zoneButton.height / 100 * 6)
+                            topMargin: zoneButton.height / 100 * 6
                             right: parent.right
-                            rightMargin: Math.round(zoneButton.width / 100 * 3)
+                            rightMargin: zoneButton.width / 100 * 3
                         }
                     }
 
                     textAnchors.centerIn: null
                     textAnchors.top: zoneButton.top
-                    textAnchors.topMargin: Math.round(zoneButton.height / 100 * 6)
+                    textAnchors.topMargin: zoneButton.height / 100 * 6
                     textAnchors.left: led.right
-                    textAnchors.leftMargin: Math.round(zoneButton.width / 100 * 3)
+                    textAnchors.leftMargin: zoneButton.width / 100 * 3
                     textAnchors.right: zoneButton.right
-                    textAnchors.rightMargin: Math.round(zoneButton.width / 100 * 13)
+                    textAnchors.rightMargin: zoneButton.width / 100 * 13
                     maximumLineCount: 2
                     elide: Text.ElideRight
                     wrapMode: Text.Wrap
@@ -309,7 +309,7 @@ MenuColumn {
                 font.pixelSize: 15
                 onPressed: privateProps.partialize()
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: Math.round(parent.height / 100 * 3)
+                anchors.bottomMargin: parent.height / 100 * 3
                 anchors.horizontalCenter: parent.horizontalCenter
                 Rectangle {
                     z: 1

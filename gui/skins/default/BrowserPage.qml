@@ -50,9 +50,9 @@ Page {
         source: "images/common/bg_browse.svg"
         anchors {
             top: toolbar.bottom
-            topMargin: Math.round(bg.height * 11 / 100)
+            topMargin: bg.height * 11 / 100
             left: navigationBar.right
-            leftMargin: Math.round(bg.width * 7 / 100)
+            leftMargin: bg.width * 7 / 100
         }
 
         PaginatorOnBackground {
@@ -62,9 +62,9 @@ Page {
             model: objectLinksModel
             anchors {
                 top: parent.top
-                topMargin: Math.round(parent.height / 100 * 2)
+                topMargin: parent.height / 100 * 2
                 left: parent.left
-                leftMargin: Math.round(parent.width / 100 * 2.5)
+                leftMargin: parent.width / 100 * 2.5
                 right: parent.right
                 bottom: parent.bottom
             }

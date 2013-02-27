@@ -29,11 +29,11 @@ MenuColumn {
             shadowImage: "../../images/common/btn_shadow_84x35.svg"
             anchors {
                 top: parent.top
-                topMargin: Math.round(bg.height / 100 * 5)
+                topMargin: bg.height / 100 * 5
                 left: parent.left
-                leftMargin: Math.round(bg.width / 100 * 3)
+                leftMargin: bg.width / 100 * 3
                 right: parent.right
-                rightMargin: Math.round(bg.width / 100 * 3)
+                rightMargin: bg.width / 100 * 3
             }
             enabled: !privateProps.model.teleloopAssociating
             onPressed: privateProps.model.startTeleloopAssociation()
@@ -43,7 +43,7 @@ MenuColumn {
             text: privateProps.model.associatedTeleloopId ? qsTr("Associated") : qsTr("Not associated")
             anchors {
                 top: associate.bottom
-                topMargin: Math.round(bg.height / 100 * 20)
+                topMargin: bg.height / 100 * 20
                 horizontalCenter: parent.horizontalCenter
             }
             font.pixelSize: 15

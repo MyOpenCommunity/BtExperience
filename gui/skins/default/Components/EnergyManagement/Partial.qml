@@ -22,9 +22,9 @@ SvgImage {
         horizontalAlignment: Text.AlignLeft
         anchors {
             top: parent.top
-            topMargin: Math.round(parent.height / 100 * 5)
+            topMargin: parent.height / 100 * 5
             left: parent.left
-            leftMargin: Math.round(parent.width / 100 * 5)
+            leftMargin: parent.width / 100 * 5
         }
     }
 
@@ -37,7 +37,7 @@ SvgImage {
         horizontalAlignment: Text.AlignLeft
         anchors {
             top: firstLine.bottom
-            topMargin: Math.round(parent.height / 100 * 5)
+            topMargin: parent.height / 100 * 5
             left: firstLine.left
         }
     }
@@ -67,9 +67,9 @@ SvgImage {
         onClicked: load.resetTotal(partialId)
         anchors {
             bottom: parent.bottom
-            bottomMargin: Math.round(parent.height / 100 * 10)
+            bottomMargin: parent.height / 100 * 10
             right: parent.right
-            rightMargin: Math.round(parent.width / 100 * 4)
+            rightMargin: parent.width / 100 * 4
         }
     }
 

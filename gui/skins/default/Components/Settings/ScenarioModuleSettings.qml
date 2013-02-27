@@ -89,7 +89,7 @@ CANCEL if you wish to abort the operation.")
                     color: "white"
                     anchors {
                         left: parent.left
-                        leftMargin: Math.round(parent.width / 100 * 2)
+                        leftMargin: parent.width / 100 * 2
                         verticalCenter: parent.verticalCenter
                     }
                 }
@@ -100,7 +100,7 @@ CANCEL if you wish to abort the operation.")
                 Row {
                     anchors {
                         right: parent.right
-                        rightMargin: Math.round(parent.width / 100 * 2)
+                        rightMargin: parent.width / 100 * 2
                         verticalCenter: parent.verticalCenter
                     }
 

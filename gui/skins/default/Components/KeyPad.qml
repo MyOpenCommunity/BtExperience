@@ -49,7 +49,7 @@ SvgImage {
 
         source: "../images/common/keypad_display_background.svg"
         anchors.top: parent.top
-        anchors.topMargin: Math.round(keypad.height / 100 * 5)
+        anchors.topMargin: keypad.height / 100 * 5
         anchors.horizontalCenter: parent.horizontalCenter
 
         UbuntuLightText {
@@ -99,13 +99,13 @@ SvgImage {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
-                        anchors.leftMargin: Math.round(keypad.width / 100 * 11.95)
+                        anchors.leftMargin: keypad.width / 100 * 11.95
                     }
                     UbuntuMediumText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: iconFail.right
-                        anchors.leftMargin: Math.round(keypad.width / 100 * 11.95)
+                        anchors.leftMargin: keypad.width / 100 * 11.95
                         text: errorLabel
                         font.pixelSize: 15
                         color: "black"
@@ -125,13 +125,13 @@ SvgImage {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: parent.left
-                        anchors.leftMargin: Math.round(keypad.width / 100 * 11.95)
+                        anchors.leftMargin: keypad.width / 100 * 11.95
                     }
                     UbuntuMediumText {
                         anchors.top: parent.top
                         anchors.bottom: parent.bottom
                         anchors.left: iconCorrect.right
-                        anchors.leftMargin: Math.round(keypad.width / 100 * 11.95)
+                        anchors.leftMargin: keypad.width / 100 * 11.95
                         text: okLabel
                         font.pixelSize: 15
                         color: "black"
@@ -148,7 +148,7 @@ SvgImage {
 
         anchors {
             top: display.bottom
-            topMargin: Math.round(keypad.height / 100 * 5)
+            topMargin: keypad.height / 100 * 5
             left: parent.left
             right: parent.right
             bottom: parent.bottom

@@ -46,9 +46,9 @@ BasePage {
             spacing: page.width / 100 * 0.50
             anchors {
                 top: bottomBarBg.top
-                topMargin: Math.round(page.height / 100 * 1.2)
+                topMargin: page.height / 100 * 1.2
                 left: bottomBarBg.left
-                leftMargin: Math.round(page.width / 100 * 1.65)
+                leftMargin: page.width / 100 * 1.65
             }
 
             ButtonImageThreeStates {
@@ -145,9 +145,9 @@ BasePage {
             source: "images/common/bg_tempo_fullscreen.svg"
             anchors {
                 left: playerControl.right
-                leftMargin: Math.round(page.width / 100 * 2.6)
+                leftMargin: page.width / 100 * 2.6
                 right: controlAudio.left
-                rightMargin: Math.round(page.width / 100 * 12.5)
+                rightMargin: page.width / 100 * 12.5
                 verticalCenter: playerControl.verticalCenter
             }
 
@@ -186,7 +186,7 @@ BasePage {
             font.pixelSize: page.height / 100 * 2.4
             anchors {
                 left: imageSlider.right
-                leftMargin: Math.round(page.width / 100 * 0.5)
+                leftMargin: page.width / 100 * 0.5
                 verticalCenter: imageSlider.verticalCenter
             }
         }
@@ -196,7 +196,7 @@ BasePage {
             anchors {
                 top: playerControl.top
                 right: fullScreenToggle.left
-                rightMargin: Math.round(page.width / 100 * 1.1)
+                rightMargin: page.width / 100 * 1.1
             }
 
             isPlayerMute: page.player.mute
@@ -211,7 +211,7 @@ BasePage {
             anchors {
                 top: playerControl.top
                 right: bottomBarBg.right
-                rightMargin: Math.round(page.width / 100 * 1.65)
+                rightMargin: page.width / 100 * 1.65
             }
 
             defaultImageBg: "images/common/btn_45x35.svg"
@@ -250,7 +250,7 @@ BasePage {
         mute: page.player.mute
         anchors {
             bottom: bottomBarBg.top
-            bottomMargin: Math.round(page.height / 100 * 1)
+            bottomMargin: page.height / 100 * 1
             right: bottomBarBg.right
         }
     }

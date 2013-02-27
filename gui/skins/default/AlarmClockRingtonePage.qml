@@ -116,7 +116,7 @@ Page {
         anchors {
             horizontalCenter: bottomBg.horizontalCenter
             bottom: bottomBg.top
-            bottomMargin: Math.round(bg.height / 100 * 2.29)
+            bottomMargin: bg.height / 100 * 2.29
         }
     }
 
@@ -126,7 +126,7 @@ Page {
         anchors {
             horizontalCenter: bg.horizontalCenter
             top: bg.top
-            topMargin: Math.round(bg.height / 100 * 10.30)
+            topMargin: bg.height / 100 * 10.30
         }
     }
 
@@ -135,9 +135,9 @@ Page {
         source: "images/common/separator_vertical_1x370.svg"
         anchors {
             top: horizontalSeparator.bottom
-            topMargin: Math.round(bg.height / 100 * 1.57)
+            topMargin: bg.height / 100 * 1.57
             left: bg.left
-            leftMargin: Math.round(bg.width / 100 * 31.40)
+            leftMargin: bg.width / 100 * 31.40
         }
     }
 
@@ -147,9 +147,9 @@ Page {
         color: "white"
         anchors {
             left: bg.left
-            leftMargin: Math.round(bg.width / 100 * 3.92)
+            leftMargin: bg.width / 100 * 3.92
             bottom: horizontalSeparator.top
-            bottomMargin: Math.round(bg.height / 100 * 1.57)
+            bottomMargin: bg.height / 100 * 1.57
         }
     }
 
@@ -161,9 +161,9 @@ Page {
         color: "white"
         anchors {
             left: bg.left
-            leftMargin: Math.round(bg.width / 100 * 3.92)
+            leftMargin: bg.width / 100 * 3.92
             top: horizontalSeparator.bottom
-            topMargin: Math.round(bg.height / 100 * 1.57)
+            topMargin: bg.height / 100 * 1.57
         }
     }
 
@@ -172,9 +172,9 @@ Page {
         spacing: bg.height / 100 * 5
         anchors {
             left: bg.left
-            leftMargin: Math.round(bg.width / 100 * 4.71)
+            leftMargin: bg.width / 100 * 4.71
             top: signalText.bottom
-            topMargin: Math.round(bg.height / 100 * 5)
+            topMargin: bg.height / 100 * 5
         }
         Repeater {
             model: 2
@@ -197,9 +197,9 @@ Page {
         color: "white"
         anchors {
             left: bg.left
-            leftMargin: Math.round(bg.width / 100 * 3.92)
+            leftMargin: bg.width / 100 * 3.92
             top: choices.bottom
-            topMargin: Math.round(bg.height / 100 * 6)
+            topMargin: bg.height / 100 * 6
         }
     }
 
@@ -210,7 +210,7 @@ Page {
         anchors {
             horizontalCenter: choices.horizontalCenter
             top: volumeText.bottom
-            topMargin: Math.round(bg.height / 100 * 2)
+            topMargin: bg.height / 100 * 2
         }
         onMinusClicked: page.alarmClock.decrementVolume()
         onPlusClicked: page.alarmClock.incrementVolume()
@@ -230,7 +230,7 @@ Page {
         anchors {
             left: paginator.left
             top: horizontalSeparator.bottom
-            topMargin: Math.round(bg.height / 100 * 2)
+            topMargin: bg.height / 100 * 2
         }
     }
 
@@ -242,11 +242,11 @@ Page {
         itemSpacing: 25
         anchors {
             top: sourceText.bottom
-            topMargin: Math.round(bg.height / 100 * 5)
+            topMargin: bg.height / 100 * 5
             bottom: bg.bottom
-            bottomMargin: Math.round(bg.height / 100 * 2.92)
+            bottomMargin: bg.height / 100 * 2.92
             left: verticalSeparator.right
-            leftMargin: Math.round(bg.width / 100 * 3.92)
+            leftMargin: bg.width / 100 * 3.92
         }
         model: page.actualModel
 
@@ -363,11 +363,11 @@ Page {
         pressedImage: "images/common/freccia_dx_P.svg"
         anchors {
             top: horizontalSeparator.bottom
-            topMargin: Math.round(bg.height / 100 * 5.72)
+            topMargin: bg.height / 100 * 5.72
             left: undefined
             leftMargin: 0
             right: bg.right
-            rightMargin: Math.round(bg.width / 100 * 7.84)
+            rightMargin: bg.width / 100 * 7.84
         }
         onPressed: page.state = page.state === "" ? "amplifiers" : ""
     }
@@ -380,7 +380,7 @@ Page {
             horizontalCenter: parent.horizontalCenter
             horizontalCenterOffset: navigationBar.width / 2
             bottom: parent.bottom
-            bottomMargin: Math.round(bg.height / 100 * 2.29)
+            bottomMargin: bg.height / 100 * 2.29
         }
     }
 
@@ -391,7 +391,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: okButton.left
-            rightMargin: Math.round(bg.width / 100 * 4.00)
+            rightMargin: bg.width / 100 * 4.00
         }
     }
 
@@ -437,7 +437,7 @@ Page {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: bottomBg.right
-            rightMargin: Math.round(bg.width / 100 * 1.10)
+            rightMargin: bg.width / 100 * 1.10
         }
         onPressed: Stack.popPage()
     }
@@ -449,7 +449,7 @@ Page {
                 target: pageChanger
                 defaultImage: "images/common/alarm_clock/freccia_sx.svg"
                 pressedImage: "images/common/freccia_sx_P.svg"
-                anchors.leftMargin: Math.round(bg.width / 100 * 3.92)
+                anchors.leftMargin: bg.width / 100 * 3.92
                 anchors.rightMargin: 0
             }
             AnchorChanges {

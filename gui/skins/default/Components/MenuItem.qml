@@ -98,9 +98,9 @@ Item {
         source: iconStatusImage()
         anchors {
             top: parent.top
-            topMargin: Math.round(background.height / 100 * 18)
+            topMargin: background.height / 100 * 18
             left: parent.left
-            leftMargin: Math.round(background.width / 100 * 2)
+            leftMargin: background.width / 100 * 2
         }
     }
 
@@ -110,9 +110,9 @@ Item {
         property color textColor: "#2d2d2d"
         anchors {
             top: parent.top
-            topMargin: Math.round(background.height / 100 * 16)
+            topMargin: background.height / 100 * 16
             left: parent.left
-            leftMargin: Math.round(background.width / 100 * 9)
+            leftMargin: background.width / 100 * 9
             right: arrowRight.left
         }
         sourceComponent: labelComponent
@@ -146,9 +146,9 @@ Item {
         source: "../images/common/menu_column_item_arrow.svg"
         anchors {
             top: parent.top
-            topMargin: Math.round(background.height / 100 * 24)
+            topMargin: background.height / 100 * 24
             right: parent.right
-            rightMargin: Math.round(background.width / 100 * 3)
+            rightMargin: background.width / 100 * 3
         }
     }
 
@@ -205,7 +205,7 @@ Item {
         anchors {
             top: labelLoader.bottom
             bottom: parent.bottom
-            bottomMargin: Math.round(background.height / 100 * 10)
+            bottomMargin: background.height / 100 * 10
             left: boxInfo.visible ? boxInfo.right : labelLoader.left
             leftMargin: boxInfo.visible ? 5 : 0
         }

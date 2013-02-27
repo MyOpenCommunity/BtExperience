@@ -24,7 +24,7 @@ Item {
         defaultImage: itemObject === undefined ? "../../images/common/ico_messaggio_letto.svg" : (itemObject.isRead ? "../../images/common/ico_messaggio_letto.svg" : "../../images/common/ico_messaggio_non_letto.svg")
         pressedImage: itemObject === undefined ? "../../images/common/ico_messaggio_letto.svg" : (itemObject.isRead ? "../../images/common/ico_messaggio_letto.svg" : "../../images/common/ico_messaggio_non_letto.svg")
         imageAnchors.right: undefined
-        textAnchors.leftMargin: Math.round(bg.width / 100 * 8.70)
+        textAnchors.leftMargin: bg.width / 100 * 8.70
 
         onPressed: delegateClicked()
     }
@@ -34,7 +34,7 @@ Item {
 
         anchors {
             right: bg.right
-            rightMargin: Math.round(bg.width / 100 * 2.49)
+            rightMargin: bg.width / 100 * 2.49
             verticalCenter: bg.verticalCenter
         }
         source: "../../images/common/ico_apri_cartella.svg"

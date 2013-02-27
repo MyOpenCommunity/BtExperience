@@ -21,7 +21,7 @@ Image {
         text: qsTr("volume")
         anchors {
             top: parent.top
-            topMargin: Math.round(buttonSlider.height * 10 / 100)
+            topMargin: buttonSlider.height * 10 / 100
             horizontalCenter: parent.horizontalCenter
         }
     }
@@ -30,7 +30,7 @@ Image {
         id: buttons
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Math.round(buttonSlider.height * 10 / 100)
+        anchors.bottomMargin: buttonSlider.height * 10 / 100
         onPlusClicked: buttonSlider.plusClicked()
         onMinusClicked: buttonSlider.minusClicked()
     }

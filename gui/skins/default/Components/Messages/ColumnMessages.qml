@@ -34,9 +34,9 @@ MenuColumn {
         color: "gray"
         anchors {
             top: imageBg.top
-            topMargin: Math.round(imageBg.height / 100 * 2.65)
+            topMargin: imageBg.height / 100 * 2.65
             left: imageBg.left
-            leftMargin: Math.round(imageBg.width / 100 * 2.83)
+            leftMargin: imageBg.width / 100 * 2.83
         }
     }
 
@@ -48,13 +48,13 @@ MenuColumn {
 
         anchors {
             top: imageBg.top
-            topMargin: Math.round(imageBg.height / 100 * 10.62)
+            topMargin: imageBg.height / 100 * 10.62
             bottom: imageBg.bottom
-            bottomMargin: Math.round(imageBg.height / 100 * 2.65)
+            bottomMargin: imageBg.height / 100 * 2.65
             left: imageBg.left
-            leftMargin: Math.round(imageBg.width / 100 * 2.83)
+            leftMargin: imageBg.width / 100 * 2.83
             right: imageBg.right
-            rightMargin: Math.round(imageBg.width / 100 * 2.83)
+            rightMargin: imageBg.width / 100 * 2.83
         }
 
         delegate: ColumnMessagesDelegate {

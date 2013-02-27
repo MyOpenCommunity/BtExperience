@@ -34,7 +34,7 @@ MenuColumn {
                     left: parent.left
                     leftMargin: 7
                     bottom: parent.bottom
-                    bottomMargin: Math.round(parent.height / 100 * 7)
+                    bottomMargin: parent.height / 100 * 7
                 }
             }
 
@@ -52,7 +52,7 @@ MenuColumn {
                     right: parent.right
                     rightMargin: 7
                     bottom: parent.bottom
-                    bottomMargin: Math.round(parent.height / 100 * 7)
+                    bottomMargin: parent.height / 100 * 7
                 }
             }
         }

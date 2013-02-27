@@ -56,7 +56,7 @@ SvgImage {
                 elide: Text.ElideMiddle
                 anchors {
                     top: parent.top
-                    topMargin: Math.round(parent.height / 100 * 4)
+                    topMargin: parent.height / 100 * 4
                     left: parent.left
                     right: parent.right
                 }
@@ -70,7 +70,7 @@ SvgImage {
                 elide: Text.ElideMiddle
                 anchors {
                     bottom: parent.bottom
-                    bottomMargin: Math.round(parent.height / 100 * 4)
+                    bottomMargin: parent.height / 100 * 4
                     left: parent.left
                     right: parent.right
                 }
@@ -85,9 +85,9 @@ SvgImage {
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
-            leftMargin: Math.round(parent.width / 100 * 4)
+            leftMargin: parent.width / 100 * 4
             right: switchId.left
-            rightMargin: Math.round(parent.width / 100 * 2)
+            rightMargin: parent.width / 100 * 2
         }
     }
 
@@ -102,7 +102,7 @@ SvgImage {
         anchors {
             verticalCenter: parent.verticalCenter
             right: parent.right
-            rightMargin: Math.round(parent.width / 100 * 4)
+            rightMargin: parent.width / 100 * 4
         }
 
         status: 0

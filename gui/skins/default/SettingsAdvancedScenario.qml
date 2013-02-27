@@ -30,7 +30,7 @@ Page {
                 UbuntuLightText {
                     anchors {
                         left: parent.left
-                        leftMargin: Math.round(parent.width / 100 * 3)
+                        leftMargin: parent.width / 100 * 3
                         verticalCenter: parent.verticalCenter
                     }
                     font.pixelSize: 24
@@ -51,10 +51,10 @@ Page {
                 Row {
                     spacing: 3.5 / 100 * parent.width
                     anchors {
-                        leftMargin: Math.round(parent.width / 100 * 3)
+                        leftMargin: parent.width / 100 * 3
                         left: parent.left
                         top: parent.top
-                        topMargin: Math.round(parent.height / 100 * 6)
+                        topMargin: parent.height / 100 * 6
                     }
 
                     AdvancedScenarioDateTimeCondition {
@@ -101,7 +101,7 @@ Page {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: okButton.left
-                        rightMargin: Math.round(parent.width / 100 * 1)
+                        rightMargin: parent.width / 100 * 1
                     }
                 }
 
@@ -138,7 +138,7 @@ Page {
                     anchors {
                         verticalCenter: parent.verticalCenter
                         right: parent.right
-                        rightMargin: Math.round(parent.width / 100 * 1)
+                        rightMargin: parent.width / 100 * 1
                     }
                     onPressed: {
                         // The reset must be called outside the page, before showing it

@@ -54,9 +54,9 @@ Page {
         font.pixelSize: frameBg.height / 100 * 3.63
         anchors {
             top: bottomBarBg.top
-            topMargin: Math.round(frameBg.height / 100 * 1.81)
+            topMargin: frameBg.height / 100 * 1.81
             left: bottomBarBg.left
-            leftMargin: Math.round(frameBg.width / 100 * 2.48)
+            leftMargin: frameBg.width / 100 * 2.48
             right: duration.left
             rightMargin: 20
         }
@@ -72,9 +72,9 @@ Page {
         font.pixelSize: frameBg.height / 100 * 3.63
         anchors {
             top: bottomBarBg.top
-            topMargin: Math.round(frameBg.height / 100 * 1.81)
+            topMargin: frameBg.height / 100 * 1.81
             right: bottomBarBg.right
-            rightMargin: Math.round(frameBg.width / 100 * 2.48)
+            rightMargin: frameBg.width / 100 * 2.48
         }
     }
 
@@ -84,7 +84,7 @@ Page {
         source: "images/common/bg_tempo.svg"
         anchors {
             top: bottomBarBg.top
-            topMargin: Math.round(frameBg.height / 100 * 8.29)
+            topMargin: frameBg.height / 100 * 8.29
             horizontalCenter: bottomBarBg.horizontalCenter
         }
 
@@ -119,9 +119,9 @@ Page {
         spacing: frameBg.width / 100 * 0.58
         anchors {
             top: imageSlider.bottom
-            topMargin: Math.round(frameBg.height / 100 * 1.81)
+            topMargin: frameBg.height / 100 * 1.81
             left: bottomBarBg.left
-            leftMargin: Math.round(frameBg.width / 100 * 2.48)
+            leftMargin: frameBg.width / 100 * 2.48
         }
 
 
@@ -247,7 +247,7 @@ Page {
         anchors {
             top: playerControl.top
             left: playerControl.right
-            leftMargin: Math.round(frameBg.width / 100 * 1.90)
+            leftMargin: frameBg.width / 100 * 1.90
         }
 
         onClicked: privateProps.goToSourcePage()
@@ -257,7 +257,7 @@ Page {
         anchors {
             top: playerControl.top
             right: bottomBarBg.right
-            rightMargin: Math.round(frameBg.width / 100 * 2.48)
+            rightMargin: frameBg.width / 100 * 2.48
         }
         isPlayerMute: player.mediaPlayer.mute
         onMuteClicked: player.mediaPlayer.mute = !player.mediaPlayer.mute
@@ -268,7 +268,7 @@ Page {
     VolumePopup {
         anchors {
             bottom: bottomBarBg.top
-            bottomMargin: Math.round(frameBg.height / 100 * 2.85)
+            bottomMargin: frameBg.height / 100 * 2.85
             right: bottomBarBg.right
         }
         volume: player.mediaPlayer.volume

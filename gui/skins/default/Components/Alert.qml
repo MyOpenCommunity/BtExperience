@@ -21,7 +21,7 @@ Column {
             color: "white"
             anchors {
                 left: parent.left
-                leftMargin: Math.round(parent.width / 100 * 2)
+                leftMargin: parent.width / 100 * 2
                 verticalCenter: parent.verticalCenter
             }
         }
@@ -39,9 +39,9 @@ Column {
             wrapMode: Text.Wrap
             anchors {
                 right: parent.right
-                rightMargin: Math.round(parent.width / 100 * 2)
+                rightMargin: parent.width / 100 * 2
                 left: parent.left
-                leftMargin: Math.round(parent.width / 100 * 2)
+                leftMargin: parent.width / 100 * 2
             }
         }
     }
@@ -52,7 +52,7 @@ Column {
         Row {
             anchors {
                 right: parent.right
-                rightMargin: Math.round(parent.width / 100 * 2)
+                rightMargin: parent.width / 100 * 2
                 verticalCenter: parent.verticalCenter
             }
 

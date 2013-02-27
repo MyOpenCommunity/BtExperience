@@ -31,11 +31,11 @@ MenuColumn {
         text: column.dataModel.text
         anchors {
             top: imageBg.top
-            topMargin: Math.round(imageBg.height / 100 * 3.32)
+            topMargin: imageBg.height / 100 * 3.32
             left: imageBg.left
-            leftMargin: Math.round(imageBg.width / 100 * 2.83)
+            leftMargin: imageBg.width / 100 * 2.83
             right: imageBg.right
-            rightMargin: Math.round(imageBg.width / 100 * 2.83)
+            rightMargin: imageBg.width / 100 * 2.83
         }
     }
 
@@ -49,9 +49,9 @@ MenuColumn {
         pressedImage: "../../images/common/messaggio_ricevuto/ico_elimina_P.svg"
         anchors {
             bottom: imageBg.bottom
-            bottomMargin: Math.round(imageBg.height / 100 * 2.66)
+            bottomMargin: imageBg.height / 100 * 2.66
             right: imageBg.right
-            rightMargin: Math.round(imageBg.width / 100 * 2.83)
+            rightMargin: imageBg.width / 100 * 2.83
         }
 
         onPressed: {
@@ -70,9 +70,9 @@ MenuColumn {
         pressedImage: "../../images/common/messaggio_ricevuto/ico_rispondi_P.svg"
         anchors {
             bottom: imageBg.bottom
-            bottomMargin: Math.round(imageBg.height / 100 * 2.66)
+            bottomMargin: imageBg.height / 100 * 2.66
             right: deleteButton.left
-            rightMargin: Math.round(imageBg.width / 100 * 2.83)
+            rightMargin: imageBg.width / 100 * 2.83
         }
 
         onPressed: {

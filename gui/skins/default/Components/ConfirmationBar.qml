@@ -22,7 +22,7 @@ Item {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: okButton.left
-            rightMargin: Math.round(bottomBg.width / 100 * 1.00)
+            rightMargin: bottomBg.width / 100 * 1.00
         }
     }
 
@@ -38,7 +38,7 @@ Item {
         anchors {
             verticalCenter: bottomBg.verticalCenter
             right: bottomBg.right
-            rightMargin: Math.round(bottomBg.width / 100 * 1.00)
+            rightMargin: bottomBg.width / 100 * 1.00
         }
         onClicked: {
             if (EventManager.eventManager.scenarioRecording)

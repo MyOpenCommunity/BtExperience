@@ -27,9 +27,9 @@ MenuColumn {
             font.pixelSize: 15
             anchors {
                 top: parent.top
-                topMargin: Math.round(parent.height / 100 * 2)
+                topMargin: parent.height / 100 * 2
                 left: parent.left
-                leftMargin: Math.round(parent.width / 100 * 4)
+                leftMargin: parent.width / 100 * 4
             }
         }
 
@@ -72,7 +72,7 @@ MenuColumn {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: labelThreshold1.bottom
-                topMargin: Math.round(parent.height / 100 * 2)
+                topMargin: parent.height / 100 * 2
             }
         }
 
@@ -83,9 +83,9 @@ MenuColumn {
             font.pixelSize: 15
             anchors {
                 top: spinThreshold1.bottom
-                topMargin: Math.round(parent.height / 100 * 2)
+                topMargin: parent.height / 100 * 2
                 left: parent.left
-                leftMargin: Math.round(parent.width / 100 * 4)
+                leftMargin: parent.width / 100 * 4
             }
         }
 
@@ -129,7 +129,7 @@ MenuColumn {
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 top: labelThreshold2.bottom
-                topMargin: Math.round(parent.height / 100 * 2)
+                topMargin: parent.height / 100 * 2
             }
         }
     }

@@ -20,7 +20,7 @@ Page {
         id: window
         anchors {
             top: toolbar.bottom
-            topMargin: Math.round(parent.height / 100 * 5)
+            topMargin: parent.height / 100 * 5
             left: navigationBar.right
             leftMargin: 10
             right: rssPage.right

@@ -80,9 +80,9 @@ MenuColumn {
             id: paginator
             anchors {
                 top: realHeader.bottom
-                topMargin: Math.round(parent.height / 100 * 1.5)
+                topMargin: parent.height / 100 * 1.5
                 left: parent.left
-                leftMargin: Math.round(parent.width / 100 * 2.5)
+                leftMargin: parent.width / 100 * 2.5
                 right: parent.right
                 bottom: parent.bottom
             }
@@ -113,7 +113,7 @@ MenuColumn {
                     font.pixelSize: 16
                     anchors {
                         top: parent.top
-                        topMargin: Math.round(parent.height / 100 * 11)
+                        topMargin: parent.height / 100 * 11
                         left: spacer1.right
                     }
                 }
@@ -136,7 +136,7 @@ MenuColumn {
                     font.pixelSize: 16
                     anchors {
                         top: parent.top
-                        topMargin: Math.round(parent.height / 100 * 11)
+                        topMargin: parent.height / 100 * 11
                         left: spacer2.right
                     }
                 }
@@ -157,7 +157,7 @@ MenuColumn {
                     font.pixelSize: 13
                     anchors {
                         top: parent.top
-                        topMargin: Math.round(parent.height / 100 * 11)
+                        topMargin: parent.height / 100 * 11
                         left: spacer3.right
                     }
                 }
@@ -173,7 +173,7 @@ MenuColumn {
                     source: "../../images/common/icon_delete.svg"
                     anchors {
                         top: parent.top
-                        topMargin: Math.round(parent.height / 100 * 11)
+                        topMargin: parent.height / 100 * 11
                         left: spacer4.right
                     }
                 }
@@ -182,7 +182,7 @@ MenuColumn {
                     id: btnArea
                     anchors {
                         fill: parent
-                        leftMargin: Math.round(parent.width / 8 * 7)
+                        leftMargin: parent.width / 8 * 7
                     }
                     onPressed: modelList.remove(index)
                 }

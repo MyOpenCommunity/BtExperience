@@ -62,7 +62,7 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: bottomBarBg.left
-                leftMargin: Math.round(fullScreenBg.width / 100 * 2)
+                leftMargin: fullScreenBg.width / 100 * 2
             }
 
             onReleased: hidingTimer.restart()
@@ -82,7 +82,7 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: prevButton.right
-                leftMargin: Math.round(fullScreenBg.width / 100 * 0.5)
+                leftMargin: fullScreenBg.width / 100 * 0.5
             }
 
             ButtonImageThreeStates {
@@ -140,7 +140,7 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 left: playButtonItem.right
-                leftMargin: Math.round(fullScreenBg.width / 100 * 0.5)
+                leftMargin: fullScreenBg.width / 100 * 0.5
             }
 
             onReleased: hidingTimer.restart()
@@ -151,7 +151,7 @@ Page {
             id: photoTimeControl
             anchors {
                 left: nextButton.right
-                leftMargin: Math.round(fullScreenBg.width / 100 * 10)
+                leftMargin: fullScreenBg.width / 100 * 10
                 top: nextButton.top
             }
             spacing: fullScreenBg.width / 100 * 1
@@ -210,7 +210,7 @@ Page {
             anchors {
                 verticalCenter: bottomBarBg.verticalCenter
                 right: bottomBarBg.right
-                rightMargin: Math.round(fullScreenBg.width / 100 * 2)
+                rightMargin: fullScreenBg.width / 100 * 2
             }
 
             onPressed: Stack.popPage()
