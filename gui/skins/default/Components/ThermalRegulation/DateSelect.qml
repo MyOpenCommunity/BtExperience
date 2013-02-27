@@ -23,11 +23,14 @@ MenuColumn {
             color: "black"
             text: qsTr("until date")
             font.pixelSize: 15
+            elide: Text.ElideRight
             anchors {
                 top: parent.top
                 topMargin: 5
                 left: parent.left
                 leftMargin: 7
+                right: parent.right
+                rightMargin: 7
             }
         }
 
@@ -49,11 +52,14 @@ MenuColumn {
             color: "black"
             text: qsTr("until time")
             font.pixelSize: 15
+            elide: Text.ElideRight
             anchors {
                 top: column.dateVisible ? controlDate.bottom : parent.top
                 topMargin: 5
                 left: parent.left
                 leftMargin: 7
+                right: parent.right
+                rightMargin: 7
             }
         }
 
