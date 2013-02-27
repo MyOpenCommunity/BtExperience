@@ -14,6 +14,7 @@ class ConfigFile;
 class QDomNode;
 class QDomDocument;
 class AmplifierGroup;
+class SourceUpnpMedia;
 
 
 class BtObjectsPlugin : public QDeclarativeExtensionPlugin
@@ -43,6 +44,7 @@ private:
 	AmplifierGroup *general_amplifier;
 	HomeProperties home_properties;
 	bool is_upnp_source_available;
+	SourceUpnpMedia *upnp_sound_source;
 
 	void createObjects();
 	void parseConfig();

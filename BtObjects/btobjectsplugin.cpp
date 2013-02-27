@@ -225,6 +225,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 
 	general_amplifier = 0;
 	is_upnp_source_available = false;
+	upnp_sound_source = 0;
 	configurations = new ConfigFile(this);
 	global_models.setParent(this);
 	note_model.setParent(this);
@@ -261,6 +262,9 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	connect(&note_model, SIGNAL(persistItem(ItemInterface*)), this, SLOT(updateNotes()));
 	connect(&note_model, SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(updateNotes()));
 	connect(&note_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(updateNotes()));
+
+	if (!is_upnp_source_available && upnp_sound_source)
+		upnp_sound_source->setContainerUii(-1);
 
 	device::initDevices();
 	createFlagFile(CONF_LOADED);
@@ -1347,8 +1351,8 @@ void BtObjectsPlugin::setContainerForLocalSources(int container_uii)
 			// for UPnP sources, we must set the container only if
 			// linked in devices section in layout.xml
 			SourceUpnpMedia *s = qobject_cast<SourceUpnpMedia *>(o);
-			if (s && !is_upnp_source_available)
-				return;
+			if (s)
+				upnp_sound_source = s;
 
 			o->setContainerUii(container_uii);
 		}
@@ -1454,8 +1458,8 @@ void BtObjectsPlugin::parseMediaContainers(const QDomNode &container)
 			l->setContainerUii(media_uii);
 			// We need to check if the upnp source is linked in the devices
 			// section to later link it in the sound diffusion container.
-			SourceUpnpMedia *s = qobject_cast<SourceUpnpMedia *>(l);
-			if (s)
+			MediaDevice *s = qobject_cast<MediaDevice *>(l);
+			if (s && s->getSourceType() == SourceObject::Upnp)
 			{
 				qDebug() << "Found SourceUpnpMedia object in media section";
 				is_upnp_source_available = true;
