@@ -5,6 +5,7 @@
 #include "generic_functions.h" // EntryInfo
 
 #include <QAbstractListModel>
+#include <QUrl>
 
 class TreeBrowser;
 class DirectoryBrowserMemento;
@@ -25,7 +26,7 @@ class FileObject : public ObjectInterface
 		\ref logicalPath when the file is on the file system, it's different
 		when the file is read from an UPnP server.
 	*/
-	Q_PROPERTY(QString path READ getPath CONSTANT)
+	Q_PROPERTY(QUrl path READ getPath CONSTANT)
 
 	/*!
 		\brief User friendly path of a file.
@@ -57,7 +58,7 @@ public:
 
 	virtual QString getName() const;
 
-	QString getPath() const;
+	QUrl getPath() const;
 	QVariantList getLogicalPath() const;
 	FileType getFileType() const;
 	QVariantMap getMetadata() const;

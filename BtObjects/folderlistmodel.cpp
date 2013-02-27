@@ -74,9 +74,9 @@ QString FileObject::getName() const
 	return entry.name;
 }
 
-QString FileObject::getPath() const
+QUrl FileObject::getPath() const
 {
-	return entry.path;
+	return QUrl::fromUserInput(entry.path);
 }
 
 QVariantList FileObject::getLogicalPath() const
