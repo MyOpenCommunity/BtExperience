@@ -14,6 +14,15 @@ Page {
     property variant alarmClock: undefined
     property bool isNewAlarm: false
 
+    function backButtonClicked() {
+        if (isNewAlarm) {
+            objectModel.remove(alarmClock)
+            page.installPopup(cancelFeedback, { text: qsTr("Alarm not saved") })
+            return
+        }
+        Stack.popPage()
+    }
+
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
 
@@ -289,14 +298,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onPressed: {
-            if (isNewAlarm) {
-                objectModel.remove(alarmClock)
-                page.installPopup(cancelFeedback, { text: qsTr("Alarm not saved") })
-                return
-            }
-            Stack.popPage()
-        }
+        onPressed: backButtonClicked()
     }
 
     QtObject {
