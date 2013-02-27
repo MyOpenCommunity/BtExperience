@@ -45,16 +45,37 @@ Item {
             return currentPage > offset
         }
 
+        /**
+          * In the next 2 functions we may change offset and currentPage.
+          * The order we change them is important. Offset is not aliased,
+          * so it is not used externally to this component, but currentPage
+          * is aliased and used everywhere we need to (re)compute range.
+          * Changing the value of currentPage causes the range to change value,
+          * which in turn emits the rangeChanged signal.
+          * The rangeChanged signal causes a call to goToPage function.
+          * Inside goToPage we call updateWindow that works, but only if
+          * all variables it uses (currentPage, offset, numSlots, totalPages)
+          * have consistent values.
+          * If we change currentPage before changing offset, the call to the
+          * updateWindow function is done with the new currentPage value, but
+          * with the old offset value leading to weird behavior.
+          * If we change the offset value before, we call updateWindow with
+          * all new values and all works well.
+          * In bug #19850, for example, when navigating from page 1 to 2 or
+          * from last page to last to one, a button disappears because
+          * currentPage and offset have unconsistent values when updateWindow
+          * is called.
+          */
         function nextPage() {
-            currentPage += 1
             if (offset < numSlots -1)
                 offset += 1
+            currentPage += 1
         }
 
         function previousPage() {
-            currentPage -= 1
             if (offset > 2)
                 offset -= 1
+            currentPage -= 1
         }
 
         function isButtonVisible(index) {
