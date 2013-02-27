@@ -146,7 +146,6 @@ bool VDEBase::getMute() const
 
 void VDEBase::setMute(bool value)
 {
-	// TODO set value on device
 	if (mute == value)
 		return;
 	mute = value;
@@ -525,7 +524,6 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 			// if we arrived here directly is an autoswitch call, if we
 			// fell here from the case before it is a normal call
 			qDebug() << "Received VCT_(AUTO)_CALL";
-			// TODO: many many other things...but this should be enough for now.
 			if (isIpCall())
 				video_enabled = false;
 			else
@@ -786,13 +784,11 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 		{
 		case VideoDoorEntryDevice::INTERCOM_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::INTERCOM_CALL";
-			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
 			activateCall();
 			break;
 		case VideoDoorEntryDevice::PAGER_CALL:
 			qDebug() << "Received VideoDoorEntryDevice::PAGER_CALL";
-			// TODO: many many other things...but this should be enough for now.
 			emit incomingCall();
 			activateCall();
 			if (!pager_call)

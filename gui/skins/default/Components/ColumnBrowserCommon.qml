@@ -163,10 +163,6 @@ MenuColumn {
         elide: Text.ElideRight
     }
 
-    // TODO make an header
-    // in some browsers, like weblink one, there is an header to add elements;
-    // dynamically reduce elementsOnPage to make room for it!
-
     PaginatorOnBackground {
         id: paginator
         anchors {

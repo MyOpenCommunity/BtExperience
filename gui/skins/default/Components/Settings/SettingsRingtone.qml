@@ -15,37 +15,18 @@ MenuColumn {
         property int currentIndex: 0
     }
 
-
-    Column {
-        ControlLeftRightWithTitle {
-            title: qsTr("Ringtones")
-            text: privateProps.ringtones[privateProps.currentIndex].replace(/^.*[\\\/]/, '').split(".").shift() // some JS magic to extract file name
-            onLeftClicked: {
-                privateProps.currentIndex = (privateProps.currentIndex - 1 + privateProps.ringtones.length) % privateProps.ringtones.length
-                global.ringtoneManager.setRingtoneFromFilename(type, privateProps.ringtones[privateProps.currentIndex])
-                previewTimer.restart()
-            }
-            onRightClicked: {
-                privateProps.currentIndex = (privateProps.currentIndex + 1) % privateProps.ringtones.length
-                global.ringtoneManager.setRingtoneFromFilename(type, privateProps.ringtones[privateProps.currentIndex])
-                previewTimer.restart()
-            }
+    ControlLeftRightWithTitle {
+        title: qsTr("Ringtones")
+        text: privateProps.ringtones[privateProps.currentIndex].replace(/^.*[\\\/]/, '').split(".").shift() // some JS magic to extract file name
+        onLeftClicked: {
+            privateProps.currentIndex = (privateProps.currentIndex - 1 + privateProps.ringtones.length) % privateProps.ringtones.length
+            global.ringtoneManager.setRingtoneFromFilename(type, privateProps.ringtones[privateProps.currentIndex])
+            previewTimer.restart()
         }
-
-        ControlSlider {
-            property int volumePercentage: global.audioState.getVolume(AudioState.RingtoneVolume)
-            description: qsTr("Ringtone volume")
-            percentage: volumePercentage
-            onVolumePercentageChanged: global.audioState.setVolume(AudioState.RingtoneVolume, volumePercentage)
-            onPlusClicked: {
-                if (volumePercentage > 0)
-                    volumePercentage += 5
-            }
-            onMinusClicked: {
-                if (volumePercentage < 100)
-                    volumePercentage -= 5
-            }
-            onSliderClicked: volumePercentage = Math.round(desiredPercentage / 5) * 5
+        onRightClicked: {
+            privateProps.currentIndex = (privateProps.currentIndex + 1) % privateProps.ringtones.length
+            global.ringtoneManager.setRingtoneFromFilename(type, privateProps.ringtones[privateProps.currentIndex])
+            previewTimer.restart()
         }
     }
 

@@ -108,7 +108,6 @@ QList<ObjectPair> parseRadioSource(const QDomNode &xml_node)
 
 		SourceRadio *source = new SourceRadio(v.intValue("radio_num"), bt_global::add_device_to_cache(new RadioSourceDevice(v.value("where"))));
 		SourceObject *so = new SourceObject(v.value("descr"), source, SourceObject::RdsRadio);
-		// TODO station count
 		obj_list << ObjectPair(uii, so);
 	}
 	return obj_list;
@@ -233,8 +232,6 @@ QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multicha
 QList<ObjectPair> createLocalSources(bool is_multichannel, QList<QDomNode> multimedia, MediaDataModel * model)
 {
 	QList<ObjectPair> sources;
-
-	// TODO init local source/amplifier, see SoundDiffusionPage::SoundDiffusionPage
 
 	if (!(*bt_global::config)[SOURCE_ADDRESS].isEmpty() || !(*bt_global::config)[AMPLIFIER_ADDRESS].isEmpty())
 	{

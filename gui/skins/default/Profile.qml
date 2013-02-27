@@ -69,7 +69,6 @@ Page {
                 privateProps.actualFavorite.z = 0
                 privateProps.actualFavorite.state = ""
             }
-            // TODO gestire il focus?
             privateProps.actualFavorite = null
         }
 

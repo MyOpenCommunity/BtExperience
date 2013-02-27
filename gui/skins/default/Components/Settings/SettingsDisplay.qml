@@ -14,8 +14,6 @@ MenuColumn {
         function description(name) {
             if (name === qsTr("Brightness"))
                 return global.screenState.normalBrightness + " %"
-            else if (name === qsTr("Contrast"))
-                return global.screenState.contrast + " %"
 
             return ""
         }
@@ -44,7 +42,6 @@ MenuColumn {
         id: modelList
         Component.onCompleted: {
             modelList.append({"name": qsTr("Brightness"), "component": brightness, "type": "column"})
-            modelList.append({"name": qsTr("Contrast"), "component": contrast, "type": "column"})
             modelList.append({"name": qsTr("Calibration"), "component": "Calibration.qml", "type": "page"})
             modelList.append({"name": qsTr("Clean"), "component": "Clean.qml", "type": "page"})
         }
@@ -53,10 +50,5 @@ MenuColumn {
     Component {
         id: brightness
         Brightness {}
-    }
-
-    Component {
-        id: contrast
-        Contrast {}
     }
 }

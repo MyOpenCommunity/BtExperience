@@ -7,63 +7,65 @@ import Components 1.0
 MenuColumn {
     id: column
 
-    // using a ListView, so I have to hardcode dim
-    height: 450
-    width: 212
-
     onChildDestroyed: {
-        itemList.currentIndex = -1
+        paginator.currentIndex = -1
     }
 
-    ListModel {
-        id: modelList
+    ObjectModelSource {
+        id: sourceModel
+    }
 
-        Component.onCompleted: {
-            var types = [
-                        RingtoneManager.Alarm,
-                        RingtoneManager.Message,
-                        RingtoneManager.CCTVExternalPlace1,
-                        RingtoneManager.CCTVExternalPlace2,
-                        RingtoneManager.CCTVExternalPlace3,
-                        RingtoneManager.CCTVExternalPlace4,
-                        RingtoneManager.InternalIntercom,
-                        RingtoneManager.ExternalIntercom,
-                        RingtoneManager.IntercomFloorcall
-                    ]
-            var r = global.ringtoneManager
-            for (var i = 0; i < types.length; ++i) {
-                modelList.append(
-                            {
-                                name: r.descriptionFromType(types[i]),
-                                type: types[i],
-                                component: "SettingsRingtone.qml"
-                            })
+    ObjectModel {
+        id: objModel
+        source: sourceModel.model
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    Column {
+        ControlSlider {
+            property int volumePercentage: global.audioState.getVolume(AudioState.RingtoneVolume)
+            description: qsTr("Ringtone volume")
+            percentage: volumePercentage
+            onVolumePercentageChanged: global.audioState.setVolume(AudioState.RingtoneVolume, volumePercentage)
+            onPlusClicked: {
+                if (volumePercentage > 0)
+                    volumePercentage += 5
             }
+            onMinusClicked: {
+                if (volumePercentage < 100)
+                    volumePercentage -= 5
+            }
+            onSliderClicked: volumePercentage = Math.round(desiredPercentage / 5) * 5
+        }
+
+        PaginatorList {
+            id: paginator
+            currentIndex: -1
+            elementsOnPage: 6
+            onCurrentPageChanged: column.closeChild()
+            delegate: MenuItemDelegate {
+                itemObject: objModel.getObject(index)
+                name: global.ringtoneManager.descriptionFromType(itemObject.name)
+                hasChild: true
+                onClicked: column.loadColumn(settingsRingtone, name, undefined, {type: itemObject.name})
+            }
+            model: objModel
         }
     }
 
-    ListView {
-        id: itemList
-
-        anchors.fill: parent
-        currentIndex: -1
-        interactive: false
-
-        delegate: MenuItemDelegate {
-            name: model.name
-            hasChild: true
-            onClicked: column.loadColumn(nameToComponent(model.component), model.name, undefined, {type: model.type})
-        }
-
-        model: modelList
+    Component {
+        id: settingsRingtone
+        SettingsRingtone {}
     }
 
-    function nameToComponent(name) {
-        var component = Qt.createComponent(name)
-        // TODO: handle more states
-        if (component.status === Component.Ready) {
-            return component
-        }
-        console.log("Error on creating component for ringtone settings:" + component.errorString())
-    }
+    Component.onCompleted: sourceModel.init([RingtoneManager.Alarm,
+                                             RingtoneManager.Message,
+                                             RingtoneManager.CCTVExternalPlace1,
+                                             RingtoneManager.CCTVExternalPlace2,
+                                             RingtoneManager.CCTVExternalPlace3,
+                                             RingtoneManager.CCTVExternalPlace4,
+                                             RingtoneManager.InternalIntercom,
+                                             RingtoneManager.ExternalIntercom,
+                                             RingtoneManager.IntercomFloorcall
+                                            ])
 }
