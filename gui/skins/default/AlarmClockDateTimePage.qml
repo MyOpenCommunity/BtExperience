@@ -14,6 +14,15 @@ Page {
     property variant alarmClock: undefined
     property bool isNewAlarm: false
 
+    function backButtonClicked() {
+        if (isNewAlarm) {
+            objectModel.remove(alarmClock)
+            page.installPopup(cancelFeedback, { text: qsTr("Alarm not saved") })
+            return
+        }
+        Stack.popPage()
+    }
+
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
 
@@ -55,11 +64,12 @@ Page {
         text: qsTr("Alarm clock - date and time")
         font.pixelSize: 18
         color: "white"
+        elide: Text.ElideRight
         anchors {
-            left: bg.left
-            leftMargin: bg.width / 100 * 3.92
+            left: horizontalSeparator.left
             bottom: horizontalSeparator.top
             bottomMargin: bg.height / 100 * 1.57
+            right: horizontalSeparator.right
         }
     }
 
@@ -87,6 +97,8 @@ Page {
                 text: qsTr("activation")
                 font.pixelSize: 18
                 color: "white"
+                elide: Text.ElideRight
+                width: line.width
             }
 
             SvgImage {
@@ -168,9 +180,12 @@ Page {
                 text: qsTr("description")
                 font.pixelSize: 18
                 color: "white"
+                elide: Text.ElideRight
+                width: descriptionLine.width
             }
 
             SvgImage {
+                id: descriptionLine
                 source: "images/common/linea.svg"
                 width: 230
             }
@@ -289,14 +304,7 @@ Page {
             right: bottomBg.right
             rightMargin: bg.width / 100 * 1.10
         }
-        onPressed: {
-            if (isNewAlarm) {
-                objectModel.remove(alarmClock)
-                page.installPopup(cancelFeedback, { text: qsTr("Alarm not saved") })
-                return
-            }
-            Stack.popPage()
-        }
+        onPressed: backButtonClicked()
     }
 
     QtObject {

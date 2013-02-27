@@ -1,657 +1,522 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="it_IT">
+<TS version="2.0" language="it">
 <context>
     <name>ActionObject</name>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="355"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="361"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="386"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="437"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="452"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="459"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="467"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="480"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="513"/>
-        <source>OFF</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="356"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="362"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="387"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="416"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="421"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="460"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="514"/>
-        <source>ON</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="363"/>
-        <source>20%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="364"/>
-        <source>30%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="365"/>
-        <source>40%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="366"/>
-        <source>50%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="367"/>
-        <source>60%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="368"/>
-        <source>70%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="369"/>
-        <source>80%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="370"/>
-        <source>90%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="371"/>
-        <source>100%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="376"/>
         <source>1 min.</source>
-        <translation></translation>
+        <translation>1 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="377"/>
-        <source>2 min.</source>
-        <translation></translation>
+        <source>100%</source>
+        <translation>100%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="378"/>
-        <source>3 min.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="379"/>
-        <source>4 min.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="380"/>
-        <source>5 min.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="381"/>
         <source>15 min.</source>
-        <translation></translation>
+        <translation>15 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="388"/>
-        <source>Level</source>
-        <translation>Livello</translation>
+        <source>2 min.</source>
+        <translation>2 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="394"/>
-        <source>Up</source>
-        <translation>Su</translation>
+        <source>20%</source>
+        <translation>20%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="395"/>
-        <source>Down</source>
-        <translation>Giu</translation>
+        <source>3 min.</source>
+        <translation>3 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="396"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="404"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="508"/>
-        <source>Stop</source>
-        <translation>Stop</translation>
+        <source>30%</source>
+        <translation>30%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="402"/>
-        <source>Open</source>
-        <translation>Apri</translation>
+        <source>4 min.</source>
+        <translation>4 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="403"/>
-        <source>Close</source>
-        <translation>Chiudi</translation>
+        <source>40%</source>
+        <translation>40%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="409"/>
-        <source>On 1 sec.</source>
-        <translation>Accendi 1 sec.</translation>
+        <source>5 min.</source>
+        <translation>5 min.</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="410"/>
-        <source>On 2 sec.</source>
-        <translation>Accendi 2 sec.</translation>
+        <source>50%</source>
+        <translation>50%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="426"/>
-        <source>Scenario 1.4</source>
-        <translation></translation>
+        <source>60%</source>
+        <translation>60%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="431"/>
-        <source>Scenario 1.16</source>
-        <translation></translation>
+        <source>70%</source>
+        <translation>70%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="436"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="451"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="466"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="479"/>
-        <source>Antifreeze/thermal protection</source>
-        <translation>Protezione</translation>
+        <source>80%</source>
+        <translation>80%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="438"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="453"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="468"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="481"/>
-        <source>Manual Temperature</source>
-        <translation>Temperatura manuale</translation>
+        <source>90%</source>
+        <translation>90%</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="439"/>
-        <source>Heating scenario</source>
-        <translation>Scenario riscaldamento</translation>
+        <source>Activate Scenarios</source>
+        <translation>Attiva Scenari</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="440"/>
-        <source>Air-conditioning scenario</source>
-        <translation>Scenario aria condizionata</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="441"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="470"/>
-        <source>Heating Program</source>
-        <translation>Programma riscaldamento</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="442"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="471"/>
         <source>Air-conditioning program</source>
-        <translation>Programma aria condizionata</translation>
+        <translation>Programma condizionamento</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="443"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="472"/>
-        <source>Last program</source>
-        <translation>Ultimo programma</translation>
+        <source>Air-conditioning scenario</source>
+        <translation>Scenario condizionamento</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="444"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="473"/>
-        <source>Set the air conditioning mode</source>
-        <translation>Imposta modo aria condizionata</translation>
+        <source>Antifreeze/thermal protection</source>
+        <translation>Protezione termica/Antigelo</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="445"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="474"/>
-        <source>Set the heating mode</source>
-        <translation>Imposta modo riscaldamento</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="446"/>
-        <source>Last scenario</source>
-        <translation>Ultimo scenario</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="454"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="482"/>
         <source>Automatic</source>
         <translation>Automatico</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="461"/>
-        <source>Volume</source>
-        <translation></translation>
+        <source>Close</source>
+        <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="469"/>
-        <source>Timed manual Temperature</source>
-        <translation>Manuale temporizzato</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="483"/>
-        <source>Set the fan-coil speed</source>
-        <translation>Imposta velocità fan-coil</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="488"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="497"/>
-        <source>Start pressure button</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="489"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="496"/>
-        <source>Short pressure button</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="490"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="498"/>
-        <source>Release after extended pressure button</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="491"/>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="499"/>
-        <source>Extended pressure button</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="504"/>
-        <source>Activate Scenarios</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="505"/>
-        <source>Scenario OFF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="506"/>
-        <source>Increase level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/scenarioobjects.cpp" line="507"/>
         <source>Decrease level</source>
-        <translation type="unfinished"></translation>
+        <translation>Diminuisci livello</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <translation>Discesa</translation>
+    </message>
+    <message>
+        <source>Extended pressure button</source>
+        <translation>Pressione estesa del pulsante</translation>
+    </message>
+    <message>
+        <source>Heating Program</source>
+        <translation>Programma Riscaldamento</translation>
+    </message>
+    <message>
+        <source>Heating scenario</source>
+        <translation>Scenario riscaldamento</translation>
+    </message>
+    <message>
+        <source>Increase level</source>
+        <translation>Aumenta livello</translation>
+    </message>
+    <message>
+        <source>Last program</source>
+        <translation>Ultimo Programma</translation>
+    </message>
+    <message>
+        <source>Last scenario</source>
+        <translation>Ultimo Scenario</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <translation>Livello</translation>
+    </message>
+    <message>
+        <source>Manual Temperature</source>
+        <translation>Temperatura Manuale</translation>
+    </message>
+    <message>
+        <source>OFF</source>
+        <translation>OFF</translation>
+    </message>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+    <message>
+        <source>On 1 sec.</source>
+        <translation>On 1 sec.</translation>
+    </message>
+    <message>
+        <source>On 2 sec.</source>
+        <translation>On 2 sec.</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Apri</translation>
+    </message>
+    <message>
+        <source>Release after extended pressure button</source>
+        <translation>Rilascio pulsante dopo pressione estesa</translation>
+    </message>
+    <message>
+        <source>Scenario 1.16</source>
+        <translation>Scenario 1.16</translation>
+    </message>
+    <message>
+        <source>Scenario 1.4</source>
+        <translation>Scenario 1.4</translation>
+    </message>
+    <message>
+        <source>Scenario OFF</source>
+        <translation>OFF scenario</translation>
+    </message>
+    <message>
+        <source>Set the air conditioning mode</source>
+        <translation>Imposta modalità condizionamento</translation>
+    </message>
+    <message>
+        <source>Set the fan-coil speed</source>
+        <translation>Imposta velocità fan coil</translation>
+    </message>
+    <message>
+        <source>Set the heating mode</source>
+        <translation>Imposta modalità riscaldamento</translation>
+    </message>
+    <message>
+        <source>Short pressure button</source>
+        <translation>Pressione breve del pulsante</translation>
+    </message>
+    <message>
+        <source>Start pressure button</source>
+        <translation>Inzio pressione pulsante</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>Timed manual Temperature</source>
+        <translation>Temperatura manuale temporizzato</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <translation>salita</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>AddQuicklink</name>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="578"/>
-        <source>Profiles</source>
-        <translation>Profili</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="127"/>
-        <source>Add quicklink</source>
-        <translation>Aggiungi quicklink</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="140"/>
-        <source>Type:</source>
-        <translation>Tipo:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="569"/>
-        <source>Click to enter link...</source>
-        <translation>Clicca per inserire un link...</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="570"/>
-        <source>Click to enter name...</source>
-        <translation>Clicca per inserire un nome...</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="267"/>
         <source>ADD</source>
-        <translation>AGGIUNGI</translation>
+        <translation>Aggiungi</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="411"/>
-        <source>Save changes?</source>
-        <translation>Salvare le modifiche?</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="429"/>
-        <source>OK</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="466"/>
-        <source>CANCEL</source>
-        <translation>ANNULLA</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="45"/>
-        <source>camera</source>
-        <translation>videocamera</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="47"/>
-        <source>web page</source>
-        <translation>pagina web</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="49"/>
-        <source>web camera</source>
-        <translation>webcam</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="51"/>
-        <source>rss</source>
-        <translation>rss</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="53"/>
-        <source>weather</source>
-        <translation>tempo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="56"/>
-        <source>scenario</source>
-        <translation>scenario</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="45"/>
-        <source>Select existing camera:</source>
-        <translation>Seleziona videocamera:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="47"/>
-        <source>Select existing web page link:</source>
-        <translation>Seleziona pagina web:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="49"/>
-        <source>Select existing web camera:</source>
-        <translation>Seleziona webcam:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="51"/>
-        <source>Select existing rss link:</source>
-        <translation>Seleziona rss:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="53"/>
-        <source>Select existing weather forecast link:</source>
-        <translation>Seleziona previsioni del tempo:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="56"/>
-        <source>Select existing scenario:</source>
-        <translation>Seleziona scenario:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="46"/>
         <source>Add new camera:</source>
-        <translation>Aggiungi nuova videocamera:</translation>
+        <translation>Aggiungi nuova telecamera:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="48"/>
-        <source>Add new web page link:</source>
-        <translation>Aggiungi nuova pagina web:</translation>
+        <source>Add new rss link:</source>
+        <translation>Aggiungi nuovo link rss:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="50"/>
+        <source>Add new scenario:</source>
+        <translation>Aggiungi un nuovo scenario:</translation>
+    </message>
+    <message>
+        <source>Add new weather forecast link:</source>
+        <translation>Aggiungi un nuovo link del meteo:</translation>
+    </message>
+    <message>
         <source>Add new web camera:</source>
         <translation>Aggiungi nuova webcam:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="52"/>
-        <source>Add new rss link:</source>
-        <translation>Aggiungi nuovo rss:</translation>
+        <source>Add new web page link:</source>
+        <translation>Aggiungi nuovo link ad una pagina web:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="54"/>
-        <source>Add new weather forecast link:</source>
-        <translation>Aggiungi nuove previsioni del tempo:</translation>
+        <source>Add new web radio:</source>
+        <translation>Aggiungi una nuova web radio:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="57"/>
-        <source>Add new scenario:</source>
-        <translation>Aggiungi nuovo scenario:</translation>
+        <source>Add quicklink</source>
+        <translation>Aggiungi un quicklink:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="480"/>
-        <source>Edit quicklink properties</source>
-        <translation type="unfinished"></translation>
+        <source>camera</source>
+        <translation>Telecamera</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="481"/>
-        <source>Title:</source>
-        <translation type="unfinished"></translation>
+        <source>CANCEL</source>
+        <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="483"/>
-        <source>Address:</source>
-        <translation type="unfinished"></translation>
+        <source>Click to enter link...</source>
+        <translation>Premi per inserire un link...</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="574"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
+        <source>Click to enter name...</source>
+        <translation>Premi per inserire il nome...</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="576"/>
-        <source>Multimedia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="392"/>
         <source>Confirm deletion</source>
-        <translation type="unfinished"></translation>
+        <translation>Confermare l&apos;eliminazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="393"/>
+        <source>Do you want to remove the selected quicklink?/nName: %1/nAddress: %2</source>
+        <translation type="obsolete">Vuoi rimuovere il QuickLink selezionato / nNome: %1/nAddress:% 2</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Home</translation>
+    </message>
+    <message>
+        <source>Insert address</source>
+        <translation type="obsolete">Inserisci l&apos;indirizzo</translation>
+    </message>
+    <message>
+        <source>Insert description</source>
+        <translation type="obsolete">Inserire la descrizione</translation>
+    </message>
+    <message>
+        <source>Multimedia</source>
+        <translation>Multimediale</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profili</translation>
+    </message>
+    <message>
+        <source>rss</source>
+        <translation>Rss</translation>
+    </message>
+    <message>
+        <source>Save changes?</source>
+        <translation>Vuoi salvare le modifiche?</translation>
+    </message>
+    <message>
+        <source>scenario</source>
+        <translation>Scenario</translation>
+    </message>
+    <message>
+        <source>Select existing camera:</source>
+        <translation>Seleziona una telecamera esistente:</translation>
+    </message>
+    <message>
+        <source>Select existing rss link:</source>
+        <translation>Seleziona un rss esistente:</translation>
+    </message>
+    <message>
+        <source>Select existing scenario:</source>
+        <translation>Seleziona uno scenario esistente:</translation>
+    </message>
+    <message>
+        <source>Select existing weather forecast link:</source>
+        <translation>Seleziona un link rss meteo esistente:</translation>
+    </message>
+    <message>
+        <source>Select existing web camera:</source>
+        <translation>Seleziona una webcam esistente:</translation>
+    </message>
+    <message>
+        <source>Select existing web page link:</source>
+        <translation>Seleziona un link relativo alla pagina web tra quelli esistenti:</translation>
+    </message>
+    <message>
+        <source>Select existing web radio:</source>
+        <translation>Seleziona una web radio tra quelle esistenti:</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Tipo:</translation>
+    </message>
+    <message>
+        <source>weather</source>
+        <translation>Meteo</translation>
+    </message>
+    <message>
+        <source>web camera</source>
+        <translation>web camera</translation>
+    </message>
+    <message>
+        <source>web page</source>
+        <translation>pagina web</translation>
+    </message>
+    <message>
+        <source>web radio</source>
+        <translation>Web radio</translation>
+    </message>
+    <message>
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="58"/>
-        <source>web radio</source>
-        <translation type="unfinished"></translation>
+        <source>Edit quicklink properties</source>
+        <translation type="unfinished">Modifica le proprietà del quicklink</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="58"/>
-        <source>Select existing web radio:</source>
-        <translation type="unfinished"></translation>
+        <source>Title:</source>
+        <translation type="unfinished">Titolo:</translation>
     </message>
     <message>
-        <location filename="../skins/default/AddQuicklink.qml" line="59"/>
-        <source>Add new web radio:</source>
-        <translation type="unfinished"></translation>
+        <source>Address:</source>
+        <translation type="unfinished">Indirizzo:</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenario</name>
     <message>
-        <location filename="../skins/default/Components/Scenarios/AdvancedScenario.qml" line="31"/>
         <source>disabled</source>
-        <translation>disattivo</translation>
+        <translation>Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Scenarios/AdvancedScenario.qml" line="31"/>
         <source>enabled</source>
-        <translation>attivo</translation>
+        <translation>Abilitato</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioAction</name>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioAction.qml" line="12"/>
         <source>action</source>
-        <translation>azione</translation>
+        <translation>Azione</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioDateTimeCondition</name>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="12"/>
         <source>activation</source>
-        <translation>attivazione</translation>
+        <translation>Attivazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="23"/>
         <source>days</source>
-        <translation>giorni</translation>
+        <translation>Giorni</translation>
     </message>
     <message>
-        <source>M</source>
+        <source>Friday</source>
+        <translation type="obsolete">V</translation>
+    </message>
+    <message>
+        <source>Monday</source>
         <translation type="obsolete">L</translation>
     </message>
     <message>
-        <source>T</source>
+        <source>Saturday</source>
+        <translation type="obsolete">S</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation type="obsolete">D</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
         <translation type="obsolete">M</translation>
     </message>
     <message>
-        <source>W</source>
-        <translation type="obsolete">M</translation>
+        <source>time</source>
+        <translation>Ora</translation>
     </message>
     <message>
-        <source>F</source>
+        <source>Tuesday</source>
         <translation type="obsolete">G</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="71"/>
-        <source>time</source>
-        <translation type="unfinished">Ora</translation>
+        <source>Wednesday</source>
+        <translation type="obsolete">M</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="36"/>
         <source>M</source>
         <comment>Monday</comment>
-        <translation>L</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="37"/>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>M</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="38"/>
         <source>W</source>
         <comment>Wednesday</comment>
-        <translation>M</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="39"/>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>G</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="40"/>
         <source>F</source>
         <comment>Friday</comment>
-        <translation>V</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="41"/>
         <source>S</source>
         <comment>Saturday</comment>
-        <translation>S</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDateTimeCondition.qml" line="42"/>
         <source>S</source>
         <comment>Sunday</comment>
-        <translation>D</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioDeviceCondition</name>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="14"/>
+        <source>%</source>
+        <translation type="obsolete">%</translation>
+    </message>
+    <message>
         <source>device condition</source>
-        <translation>condizione scenario</translation>
+        <translation>Condizione Dispositivo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="41"/>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="52"/>
-        <source>ON</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="53"/>
-        <source>OFF</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="83"/>
         <source>Intensity</source>
         <translation>Intensità</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="86"/>
-        <source>Volume</source>
-        <translation></translation>
+        <source>OFF</source>
+        <translation>OFF</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="89"/>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+    <message>
         <source>Temperature</source>
         <translation>Temperatura</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/AdvancedScenarioDeviceCondition.qml" line="98"/>
+        <source>Volume</source>
+        <translation>Volume</translation>
+    </message>
+    <message>
         <source>ºC</source>
-        <translation></translation>
+        <translation>ºC</translation>
     </message>
 </context>
 <context>
     <name>AdvancedSplit</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="56"/>
-        <source>program</source>
-        <translation>programma</translation>
-    </message>
-    <message>
-        <source>morning</source>
-        <translation type="obsolete">mattino</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="69"/>
-        <source>modality</source>
-        <translation>modo</translation>
-    </message>
-    <message>
-        <source>warm</source>
-        <translation type="obsolete">riscalda</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="171"/>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="210"/>
         <source>fancoil</source>
-        <translation>fancoil</translation>
+        <translation>Fancoil</translation>
     </message>
     <message>
-        <source>high</source>
-        <translation type="obsolete">alta</translation>
+        <source>modality</source>
+        <translation>modalità</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="114"/>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="183"/>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="222"/>
+        <source>program</source>
+        <translation>Programma</translation>
+    </message>
+    <message>
         <source>swing</source>
-        <translation>swing</translation>
+        <translation>Swing</translation>
     </message>
     <message>
-        <source>disabled</source>
-        <translation type="obsolete">disattivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/AdvancedSplit.qml" line="153"/>
         <source>temperature</source>
-        <translation>temperatura</translation>
+        <translation>Temperatura</translation>
     </message>
     <message>
         <source>°C</source>
@@ -668,485 +533,378 @@ Address: %2</source>
 <context>
     <name>AlarmClock</name>
     <message>
-        <location filename="../../BtObjects/alarmclock.cpp" line="38"/>
-        <source>new alarm clock</source>
-        <translation type="unfinished"></translation>
+        <source>Click to enter name...</source>
+        <translation type="unfinished">Premi per inserire il nome...</translation>
     </message>
 </context>
 <context>
     <name>AlarmClockDateTimePage</name>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="16"/>
-        <source>Alarm settings</source>
-        <translation>Impostazioni sveglia</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="50"/>
-        <source>Alarm clock - date and time</source>
-        <translation>Sveglia - data e ora</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="82"/>
         <source>activation</source>
-        <translation>attivazione</translation>
+        <translation>Attivazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="93"/>
+        <source>Alarm clock - date and time</source>
+        <translation>Sveglia – data e ora</translation>
+    </message>
+    <message>
+        <source>Alarm settings</source>
+        <translation>Impostazioni allarmi</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Click to enter description...</source>
+        <translation type="obsolete">Premi per inserire la descrizione...</translation>
+    </message>
+    <message>
         <source>days</source>
-        <translation>giorni</translation>
+        <translation>Giorni</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="120"/>
-        <source>time</source>
-        <translation>Ora</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="143"/>
         <source>description</source>
-        <translation>descrizione</translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="176"/>
+        <source>MTWTFSS</source>
+        <translation>LMMGVSD</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Save changes?</source>
+        <translation>Vuoi salvare le modifiche?</translation>
+    </message>
+    <message>
+        <source>time</source>
+        <translation>Orario</translation>
+    </message>
+    <message>
+        <source>Only once</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Edit alarm name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="177"/>
         <source>New name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Click to enter description...</source>
-        <translation type="obsolete">Clicca per inserire la descrizione:</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="200"/>
-        <source>Save changes?</source>
-        <translation>Salvare le modifiche?</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="217"/>
-        <source>OK</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="227"/>
         <source>No name set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="243"/>
-        <source>CANCEL</source>
-        <translation>ANNULLA</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockDateTimePage.qml" line="259"/>
-        <source>MTWTFSS</source>
+        <source>Alarm not saved</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="22"/>
-        <source>Alarm settings</source>
-        <translation type="unfinished">Impostazioni sveglia</translation>
+        <source>%</source>
+        <translation type="obsolete">%</translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="105"/>
+        <source>Alarm settings</source>
+        <translation>Impostazioni allarmi</translation>
+    </message>
+    <message>
+        <source>Alarm signal settings</source>
+        <translation type="obsolete">Impostazioni del segnale di allarme</translation>
+    </message>
+    <message>
+        <source>beep</source>
+        <translation>Beep</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Save changes?</source>
+        <translation>Vuoi salvare le modifiche?</translation>
+    </message>
+    <message>
+        <source>Select a source:</source>
+        <translation>Seleziona una sorgente:</translation>
+    </message>
+    <message>
+        <source>Signal:</source>
+        <translation>Segnale:</translation>
+    </message>
+    <message>
+        <source>sound diffusion</source>
+        <translation>Diffusione Sonora</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volume</translation>
+    </message>
+    <message>
         <source>Alarm clock - sound settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="119"/>
-        <source>Signal:</source>
+        <source>Select an amplifier:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="182"/>
-        <source>Select a source:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="320"/>
-        <source>Save changes?</source>
-        <translation type="unfinished">Salvare le modifiche?</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="337"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="347"/>
         <source>No amplifier set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="351"/>
         <source>No source set</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="367"/>
-        <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="421"/>
-        <source>beep</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="423"/>
-        <source>sound diffusion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AlarmClockRingtonePage.qml" line="153"/>
-        <source>Volume</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>AlarmPopup</name>
-    <message>
-        <source>alarm!</source>
-        <translation type="obsolete">allarme!</translation>
-    </message>
-    <message>
-        <source>alarm log</source>
-        <translation type="obsolete">registro allarmi</translation>
-    </message>
-    <message>
-        <source>ignore</source>
-        <translation type="obsolete">ignora</translation>
     </message>
 </context>
 <context>
     <name>Alert</name>
     <message>
-        <source>warning</source>
-        <translation type="obsolete">attenzione</translation>
+        <source>Alert message goes here.</source>
+        <translation type="obsolete">Il messaggio di avviso va qui.</translation>
     </message>
     <message>
-        <location filename="../skins/default/components/Alert.qml" line="40"/>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Alert.qml" line="19"/>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Alert.qml" line="64"/>
-        <source>ok</source>
-        <translation type="unfinished">ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Alert.qml" line="78"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attenzione</translation>
     </message>
 </context>
 <context>
     <name>Amplifier</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/Amplifier.qml" line="17"/>
         <source>volume</source>
-        <translation>volume</translation>
-    </message>
-    <message>
-        <source>settings</source>
-        <translation type="obsolete">impostazioni</translation>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>AmplifierSettings</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="32"/>
-        <source>treble</source>
-        <translation>alti</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="40"/>
         <source>bass</source>
-        <translation>bassi</translation>
+        <translation>Bassi</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="57"/>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="62"/>
         <source>equalizer</source>
         <translation>equalizzatore</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="70"/>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="75"/>
         <source>loud</source>
-        <translation>loud</translation>
+        <translation>Loud</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="71"/>
-        <source>on</source>
-        <translation>on</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/SoundDiffusion/AmplifierSettings.qml" line="71"/>
         <source>off</source>
-        <translation>off</translation>
+        <translation>Off</translation>
+    </message>
+    <message>
+        <source>on</source>
+        <translation>On</translation>
+    </message>
+    <message>
+        <source>treble</source>
+        <translation>Alti</translation>
     </message>
 </context>
 <context>
     <name>Antintrusion</name>
     <message>
-        <location filename="../skins/default/Antintrusion.qml" line="10"/>
         <source>antintrusion</source>
-        <translation>antintrusione</translation>
+        <translation>antifurto</translation>
     </message>
     <message>
-        <location filename="../skins/default/Antintrusion.qml" line="31"/>
         <source>enter code</source>
-        <translation>inserisci il codice</translation>
-    </message>
-    <message>
-        <source>zone %1 - %2</source>
-        <translation type="obsolete">zona %1 - %2</translation>
+        <translation>inserire il codice</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionAlarms</name>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="43"/>
-        <source>type</source>
-        <translation>tipo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="57"/>
-        <source>zone</source>
-        <translation>zona</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="71"/>
         <source>date and time</source>
-        <translation>data e ora</translation>
+        <translation>Data e ora</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="184"/>
         <source>No Alarm Present</source>
-        <translation>Nessun allarme</translation>
+        <translation>Non ci sono allarmi</translation>
     </message>
     <message>
-        <source>page %1 of %2</source>
-        <translation type="obsolete">pagina %1 di %2</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionAlarms.qml" line="171"/>
         <source>remove all</source>
-        <translation type="unfinished">elimina tutto</translation>
+        <translation>Rimuovi tutti</translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>zone</source>
+        <translation>Zona</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionNames</name>
     <message>
-        <location filename="../skins/default/AntintrusionNames.qml" line="10"/>
-        <source>panic</source>
-        <translation>anti-panico</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AntintrusionNames.qml" line="11"/>
-        <source>intrusion detection</source>
-        <translation>intrusione</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AntintrusionNames.qml" line="12"/>
-        <source>technical</source>
-        <translation>tecnico</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/AntintrusionNames.qml" line="13"/>
         <source>anti-tampering</source>
         <translation>manomissione</translation>
+    </message>
+    <message>
+        <source>intrusion detection</source>
+        <translation>rilevamento intrusioni</translation>
+    </message>
+    <message>
+        <source>panic</source>
+        <translation>antipanico</translation>
+    </message>
+    <message>
+        <source>technical</source>
+        <translation>Tecnico</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionSystem</name>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="12"/>
         <source>alarm log</source>
-        <translation>registro allarmi</translation>
+        <translation>Registro Allarmi      </translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="90"/>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="292"/>
-        <source>modify zones</source>
-        <translation>imposta zone</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="90"/>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="163"/>
-        <source>wrong code</source>
-        <translation>codice errato</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="90"/>
-        <source>zone settings</source>
-        <translation>zone impostate</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="145"/>
-        <source>system</source>
-        <translation>systema</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="146"/>
-        <source>disabled</source>
-        <translation>disattivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="146"/>
-        <source>enabled</source>
-        <translation>attivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="162"/>
-        <source>system disabled</source>
-        <translation>sistema disattivato</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="161"/>
-        <source>enable system</source>
-        <translation>attiva sistema</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="161"/>
         <source>disable system</source>
-        <translation>disattiva sistema</translation>
+        <translation>disabilita il sistema</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="162"/>
-        <source>system enabled</source>
-        <translation>sistema attivato</translation>
+        <source>disabled</source>
+        <translation>Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="184"/>
+        <source>enable system</source>
+        <translation>attiva il sistema</translation>
+    </message>
+    <message>
+        <source>enabled</source>
+        <translation>Abilitato</translation>
+    </message>
+    <message>
+        <source>modify zones</source>
+        <translation>modifica le zone</translation>
+    </message>
+    <message>
         <source>scenario</source>
-        <translation>scenario</translation>
+        <translation>Scenario</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Antintrusion/AntintrusionSystem.qml" line="221"/>
+        <source>system</source>
+        <translation>Impianto</translation>
+    </message>
+    <message>
+        <source>system disabled</source>
+        <translation>sistema disabilitato</translation>
+    </message>
+    <message>
+        <source>system enabled</source>
+        <translation>sistema abilitato</translation>
+    </message>
+    <message>
+        <source>wrong code</source>
+        <translation>codice sbagliato</translation>
+    </message>
+    <message>
         <source>zone</source>
-        <translation>zona</translation>
+        <translation>Zona</translation>
+    </message>
+    <message>
+        <source>zone settings</source>
+        <translation>Parametri zona</translation>
     </message>
 </context>
 <context>
     <name>Appliance</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="41"/>
-        <source>since </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="73"/>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="88"/>
-        <source>force load</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="74"/>
         <source> minutes</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">minuti</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="107"/>
         <source>device</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Dispositivo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="123"/>
         <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <translation type="obsolete">Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="123"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation type="obsolete">Abilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Appliance.qml" line="158"/>
+        <source>force load</source>
+        <translation type="obsolete">Forza carico</translation>
+    </message>
+    <message>
         <source>instant consumption</source>
-        <translation type="unfinished">consumo istantaneo</translation>
+        <translation type="obsolete">consumi istantanei</translation>
+    </message>
+    <message>
+        <source>since </source>
+        <translation type="obsolete">da</translation>
     </message>
 </context>
 <context>
     <name>AudioPlayer</name>
     <message>
-        <location filename="../skins/default/AudioPlayer.qml" line="31"/>
         <source>Audio</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio</translation>
     </message>
     <message>
-        <location filename="../skins/default/AudioPlayer.qml" line="288"/>
         <source>Loop detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Rilevato loop</translation>
     </message>
     <message>
-        <location filename="../skins/default/AudioPlayer.qml" line="290"/>
         <source>No tunable web radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Web radio non sintonizzata</translation>
     </message>
 </context>
 <context>
     <name>Automation</name>
     <message>
-        <location filename="../skins/default/Automation.qml" line="7"/>
         <source>automation</source>
-        <translation type="unfinished"></translation>
+        <translation>Automazione</translation>
     </message>
 </context>
 <context>
     <name>BasicSplit</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/BasicSplit.qml" line="31"/>
         <source>program</source>
-        <translation>programma</translation>
+        <translation>Programma</translation>
     </message>
 </context>
 <context>
     <name>Brightness</name>
     <message>
-        <source>brightness adjustment</source>
-        <translation type="obsolete">regolazione luminosità</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/Brightness.qml" line="13"/>
         <source>brightness</source>
-        <translation>luminosità</translation>
-    </message>
-    <message>
-        <source>contrast</source>
-        <translation type="obsolete">contrasto</translation>
-    </message>
-</context>
-<context>
-    <name>BrowserIpRadioPage</name>
-    <message>
-        <source>multimedia</source>
-        <translation type="obsolete">multimedia</translation>
+        <translation>Luminosità</translation>
     </message>
 </context>
 <context>
     <name>BrowserPage</name>
     <message>
-        <location filename="../skins/default/BrowserPage.qml" line="29"/>
         <source>multimedia</source>
-        <translation>multimedia</translation>
+        <translation>Multimediale</translation>
     </message>
 </context>
 <context>
     <name>BtNetworkAccessManager</name>
     <message>
-        <location filename="../../browser/networkreply.cpp" line="9"/>
         <source>&lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
@@ -1162,100 +920,122 @@ Address: %2</source>
 &lt;/ul&gt;
 &lt;/body&gt;
 &lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
+&lt;title&gt;Problema nel caricamento della pagina&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Server non trovato&lt;/h1&gt;
+&lt;p&gt;Impossibile trovare il server in $SERVER. Si prega di riprovare&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Controllare che l&apos;indirizzo sia corretto e non siano stati fatti errori di battitura come ad esempio&lt;b&gt;ww.esempio.com&lt;/b&gt; al posto di &lt;b&gt;www.esempio.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;Se non è possibile caricare nessuna pagina, controllare la connessione di rete.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>BtNetworkReply</name>
+    <message>
+        <source>&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
+&lt;title&gt;Problem loading page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Server not found&lt;/h1&gt;
+&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;If you are unable to load any pages, check the network connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</source>
+        <translation>&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
+&lt;title&gt;Problema nel caricamento della pagina&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Server non trovato&lt;/h1&gt;
+&lt;p&gt;Impossibile trovare il server in $SERVER. Si prega di riprovare&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Controllare che l&apos;indirizzo sia corretto e non siano stati fatti errori di battitura come ad esempio&lt;b&gt;ww.esempio.com&lt;/b&gt; al posto di &lt;b&gt;www.esempio.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;Se non è possibile caricare nessuna pagina, controllare la connessione di rete.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>ButtonOkCancel</name>
     <message>
-        <location filename="../skins/default/Components/ButtonOkCancel.qml" line="19"/>
-        <source>ok</source>
-        <translation>ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ButtonOkCancel.qml" line="36"/>
         <source>cancel</source>
-        <translation>annulla</translation>
-    </message>
-</context>
-<context>
-    <name>ButtonOnOff</name>
-    <message>
-        <source>on</source>
-        <translation type="obsolete">on</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
-        <source>off</source>
-        <translation type="obsolete">off</translation>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
     <name>Calibration</name>
     <message>
-        <location filename="../skins/default/Calibration.qml" line="39"/>
-        <source>Click the crosshair</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Calibration.qml" line="92"/>
-        <location filename="../skins/default/Calibration.qml" line="115"/>
-        <source>ok</source>
-        <translation type="unfinished">ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Calibration.qml" line="142"/>
         <source>Click the button</source>
-        <translation type="unfinished"></translation>
+        <translation>Premi il bottone</translation>
+    </message>
+    <message>
+        <source>Click the crosshair</source>
+        <translation>Premere la croce</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
-        <location filename="../skins/default/ChangePassword.qml" line="13"/>
-        <location filename="../skins/default/ChangePassword.qml" line="33"/>
-        <source>Change password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="60"/>
-        <source>Insert old password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="95"/>
-        <source>Insert new password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="130"/>
-        <source>Repeat new password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="177"/>
-        <source>Wrong password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="185"/>
-        <source>Passwords don&apos;t match</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="195"/>
-        <source>ok</source>
-        <translation type="unfinished">ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ChangePassword.qml" line="216"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation>Cambia Password</translation>
+    </message>
+    <message>
+        <source>Insert new password:</source>
+        <translation>Inserire la nuova password:</translation>
+    </message>
+    <message>
+        <source>Insert old password:</source>
+        <translation>Inserire la vecchia password:</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Passwords don&apos;t match</source>
+        <translation>La password non corrisponde</translation>
+    </message>
+    <message>
+        <source>Repeat new password:</source>
+        <translation>Ripeti la nuova password:</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>Password errata </translation>
     </message>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
     <message>
-        <location filename="../skins/default/Components/ColumnBrowserCommon.qml" line="153"/>
         <source>Music folder</source>
         <translation>Cartella musica</translation>
     </message>
@@ -1263,237 +1043,150 @@ Address: %2</source>
 <context>
     <name>ColumnMessages</name>
     <message>
-        <location filename="../skins/default/Components/Messages/ColumnMessages.qml" line="32"/>
         <source> message</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggio</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Messages/ColumnMessages.qml" line="32"/>
         <source> messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Messages/ColumnMessages.qml" line="75"/>
         <source>remove all</source>
-        <translation type="unfinished">elimina tutto</translation>
+        <translation>Rimuovi tutti</translation>
     </message>
 </context>
 <context>
     <name>ConfirmationBar</name>
     <message>
-        <location filename="../skins/default/Components/ConfirmationBar.qml" line="19"/>
-        <source>Save scenario recording?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ConfirmationBar.qml" line="36"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ConsumptionBox</name>
-    <message>
-        <source>yearly cumulative consumption</source>
-        <translation type="obsolete">consumo cumulativo annuale</translation>
+        <translation>OK</translation>
     </message>
     <message>
-        <source>monthly cumulative consumption</source>
-        <translation type="obsolete">consumo cumulativo mensile</translation>
-    </message>
-    <message>
-        <source>daily cumulative consumption</source>
-        <translation type="obsolete">consumo cumulativo giornaliero</translation>
-    </message>
-    <message>
-        <source>yearly average consumption</source>
-        <translation type="obsolete">consumo medio annuale</translation>
-    </message>
-    <message>
-        <source>monthly average consumption</source>
-        <translation type="obsolete">consumo medio mensile</translation>
-    </message>
-    <message>
-        <source>daily average consumption</source>
-        <translation type="obsolete">consumo medio giornaliero</translation>
+        <source>Save scenario recording?</source>
+        <translation>Salvare la registrazione dello scenario?</translation>
     </message>
 </context>
 <context>
     <name>Contrast</name>
     <message>
-        <location filename="../skins/default/Components/Settings/Contrast.qml" line="11"/>
         <source>Contrast</source>
-        <translation type="unfinished">Contrasto</translation>
+        <translation>Contrasto</translation>
     </message>
 </context>
 <context>
     <name>ControlAlarmClock</name>
     <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="18"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="18"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="24"/>
-        <source>triggers at</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="26"/>
-        <source>repetition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="27"/>
-        <source>MTWTFSS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="44"/>
-        <source>ringtone</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="45"/>
         <source>beep</source>
-        <translation type="unfinished"></translation>
+        <translation>Beep</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="54"/>
         <source>DELETE</source>
-        <translation type="unfinished"></translation>
+        <translation>CANCELLA</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/ControlAlarmClock.qml" line="45"/>
+        <source>disabled</source>
+        <translation>Disabilitato</translation>
+    </message>
+    <message>
+        <source>enabled</source>
+        <translation>Abilitato</translation>
+    </message>
+    <message>
+        <source>MTWTFSS</source>
+        <translation>LMMGVSD</translation>
+    </message>
+    <message>
+        <source>repetition</source>
+        <translation>ripetizione</translation>
+    </message>
+    <message>
+        <source>ringtone</source>
+        <translation>Suoneria</translation>
+    </message>
+    <message>
         <source>sound diffusion</source>
-        <translation type="unfinished"></translation>
+        <translation>Diffusione Sonora</translation>
+    </message>
+    <message>
+        <source>triggers at</source>
+        <translation>innesca</translation>
     </message>
 </context>
 <context>
     <name>ControlBalance</name>
     <message>
-        <location filename="../skins/default/Components/ControlBalance.qml" line="11"/>
         <source>balance</source>
-        <translation>bilanciamento</translation>
-    </message>
-</context>
-<context>
-    <name>ControlBar</name>
-    <message>
-        <source>time</source>
-        <translation type="obsolete">Ora</translation>
-    </message>
-    <message>
-        <source>day</source>
-        <translation type="obsolete">giorno</translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translation type="obsolete">mese</translation>
-    </message>
-    <message>
-        <source>year</source>
-        <translation type="obsolete">anno</translation>
-    </message>
-    <message>
-        <location filename="../../build_arm/dist/arm/gui/skins/default/Components/EnergyManagement/ControlBar.qml" line="61"/>
-        <source></source>
-        <translation></translation>
+        <translation>Bilanciamento</translation>
     </message>
 </context>
 <context>
     <name>ControlCall</name>
     <message>
-        <location filename="../skins/default/Components/ControlCall.qml" line="70"/>
         <source>push to talk</source>
-        <translation type="unfinished"></translation>
+        <translation>premi per parlare</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ControlCall.qml" line="138"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>ControlChoices</name>
     <message>
         <source>volume</source>
-        <translation type="obsolete">volume</translation>
+        <translation type="obsolete">Volume</translation>
     </message>
 </context>
 <context>
     <name>ControlFMRadio</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/ControlFMRadio.qml" line="27"/>
         <source>radio FM</source>
-        <translation></translation>
+        <translation>radio FM</translation>
     </message>
 </context>
 <context>
     <name>ControlIPRadio</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/ControlIPRadio.qml" line="27"/>
         <source>IP radio</source>
-        <translation>radio IP</translation>
-    </message>
-</context>
-<context>
-    <name>ControlMinusPlus</name>
-    <message>
-        <source>title</source>
-        <translation type="obsolete">titolo</translation>
-    </message>
-    <message>
-        <source>label</source>
-        <translation type="obsolete">etichetta</translation>
-    </message>
-</context>
-<context>
-    <name>ControlMinusPlusOld</name>
-    <message>
-        <source>title</source>
-        <translation type="obsolete">titolo</translation>
-    </message>
-    <message>
-        <source>label</source>
-        <translation type="obsolete">etichetta</translation>
+        <translation>Radio IP</translation>
     </message>
 </context>
 <context>
     <name>ControlOnOff</name>
     <message>
-        <location filename="../skins/default/Components/ControlOnOff.qml" line="9"/>
-        <source>ON</source>
-        <translation></translation>
+        <source>OFF</source>
+        <translation>OFF</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ControlOnOff.qml" line="10"/>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
+    <name>ControlOnOffGroup</name>
+    <message>
         <source>OFF</source>
-        <translation></translation>
+        <translation type="obsolete">OFF</translation>
+    </message>
+    <message>
+        <source>ON</source>
+        <translation type="obsolete">ON</translation>
     </message>
 </context>
 <context>
     <name>ControlPopup</name>
     <message>
-        <location filename="../skins/default/Components/ControlPopup.qml" line="98"/>
-        <source>dismiss</source>
-        <translation>ignora</translation>
+        <source>confirm</source>
+        <translation>Conferma</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ControlPopup.qml" line="116"/>
-        <source>confirm</source>
-        <translation>conferma</translation>
+        <source>dismiss</source>
+        <translation>respingere</translation>
     </message>
 </context>
 <context>
     <name>ControlPullDown</name>
     <message>
-        <location filename="../skins/default/Components/ControlPullDown.qml" line="28"/>
         <source>Video settings</source>
         <translation>Impostazioni video</translation>
     </message>
@@ -1501,1287 +1194,1077 @@ Address: %2</source>
 <context>
     <name>ControlPullDownVideo</name>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="30"/>
         <source>Brightness</source>
         <translation>Luminosità</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="38"/>
+        <source>Color</source>
+        <translation>Colore</translation>
+    </message>
+    <message>
         <source>Contrast</source>
         <translation>Contrasto</translation>
-    </message>
-    <message>
-        <source>Saturation</source>
-        <translation type="obsolete">Saturazione</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlPullDownVideo.qml" line="46"/>
-        <source>Color</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ControlSetDateTime</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ControlSetDateTime.qml" line="9"/>
         <source>until date</source>
-        <translation type="unfinished"></translation>
+        <translation>fino alla data</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ControlSetDateTime.qml" line="10"/>
         <source>until time</source>
-        <translation type="unfinished"></translation>
+        <translation>fino</translation>
     </message>
 </context>
 <context>
     <name>ControlSlider</name>
     <message>
-        <location filename="../skins/default/Components/ControlSlider.qml" line="9"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>ControlSliderMute</name>
     <message>
-        <location filename="../skins/default/Components/ControlSliderMute.qml" line="9"/>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation>Volume</translation>
+    </message>
+</context>
+<context>
+    <name>ControlSwitchLoadManagement</name>
+    <message>
+        <source>Device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not Controlled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Controlled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not Enabled</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ControlTextImageCallManager</name>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="38"/>
-        <source>Incoming call from</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="74"/>
-        <source>Call in progress</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="82"/>
-        <source>No answer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="90"/>
         <source>Active call</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva la chiamata</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/ControlTextImageCallManager.qml" line="98"/>
+        <source>Call in progress</source>
+        <translation>Chiamata in corso</translation>
+    </message>
+    <message>
+        <source>Incoming call from</source>
+        <translation>Chiamata in arrivo da</translation>
+    </message>
+    <message>
         <source>Mute on</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva muto</translation>
+    </message>
+    <message>
+        <source>No answer</source>
+        <translation>Nessuna risposta</translation>
+    </message>
+    <message>
+        <source>Site #1</source>
+        <translation type="obsolete">Posto #1</translation>
+    </message>
+    <message>
+        <source>Teleloop</source>
+        <translation type="unfinished">Teleloop</translation>
     </message>
 </context>
 <context>
     <name>ControlTiming</name>
     <message>
-        <location filename="../skins/default/Components/Lighting/ControlTiming.qml" line="28"/>
-        <source>timer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Lighting/ControlTiming.qml" line="68"/>
         <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <translation>Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Lighting/ControlTiming.qml" line="68"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation>Abilitato</translation>
     </message>
     <message>
-        <source>minutes</source>
-        <translation type="obsolete">minuti</translation>
-    </message>
-    <message>
-        <source>seconds</source>
-        <translation type="obsolete">secondi</translation>
-    </message>
-</context>
-<context>
-    <name>ControlUpDown</name>
-    <message>
-        <source>title</source>
-        <translation type="obsolete">titolo</translation>
-    </message>
-    <message>
-        <source>label</source>
-        <translation type="obsolete">etichetta</translation>
-    </message>
-</context>
-<context>
-    <name>ControlUpDownReset</name>
-    <message>
-        <source>title</source>
-        <translation type="obsolete">titolo</translation>
-    </message>
-    <message>
-        <source>label</source>
-        <translation type="obsolete">etichetta</translation>
+        <source>timer</source>
+        <translation>Timer</translation>
     </message>
 </context>
 <context>
     <name>DateSelect</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/DateSelect.qml" line="24"/>
         <source>until date</source>
-        <translation type="unfinished"></translation>
+        <translation>fino alla data</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/DateSelect.qml" line="50"/>
         <source>until time</source>
-        <translation type="unfinished"></translation>
+        <translation>fino</translation>
     </message>
 </context>
 <context>
     <name>Devices</name>
     <message>
-        <location filename="../skins/default/Devices.qml" line="9"/>
         <source>Devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi</translation>
     </message>
 </context>
 <context>
     <name>Dimmer</name>
     <message>
-        <location filename="../skins/default/Components/Lighting/Dimmer.qml" line="14"/>
         <source>light intensity</source>
-        <translation type="unfinished">intensità luce</translation>
-    </message>
-    <message>
-        <source>timed turn off</source>
-        <translation type="obsolete">spegnimento temporizzato</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="obsolete">minuti</translation>
-    </message>
-    <message>
-        <source>seconds</source>
-        <translation type="obsolete">secondi</translation>
-    </message>
-</context>
-<context>
-    <name>DisableLoadPopup</name>
-    <message>
-        <source>120</source>
-        <translation type="obsolete">120</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="obsolete">minuti</translation>
+        <translation>intensità luminosa</translation>
     </message>
 </context>
 <context>
     <name>EditNote</name>
     <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="24"/>
+        <source>CANCEL</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
         <source>Note</source>
         <translation>Nota</translation>
     </message>
     <message>
-        <source>ok</source>
-        <translation type="obsolete">ok</translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translation type="obsolete">annulla</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="124"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EditNote.qml" line="137"/>
-        <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>EnergyData</name>
     <message>
-        <location filename="../../BtObjects/energydata.cpp" line="716"/>
-        <location filename="../../BtObjects/energydata.cpp" line="731"/>
-        <source>Jan</source>
-        <translation>Gen</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="716"/>
-        <location filename="../../BtObjects/energydata.cpp" line="731"/>
-        <source>Feb</source>
-        <translation>Feb</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="716"/>
-        <location filename="../../BtObjects/energydata.cpp" line="731"/>
-        <source>Mar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="717"/>
-        <location filename="../../BtObjects/energydata.cpp" line="732"/>
         <source>Apr</source>
-        <translation></translation>
+        <translation>Apr</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/energydata.cpp" line="717"/>
-        <location filename="../../BtObjects/energydata.cpp" line="732"/>
-        <source>May</source>
-        <translation>Mag</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="717"/>
-        <location filename="../../BtObjects/energydata.cpp" line="732"/>
-        <source>Jun</source>
-        <translation>Giu</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="718"/>
-        <location filename="../../BtObjects/energydata.cpp" line="733"/>
-        <source>Jul</source>
-        <translation>Lug</translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="718"/>
-        <location filename="../../BtObjects/energydata.cpp" line="733"/>
         <source>Aug</source>
         <translation>Ago</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/energydata.cpp" line="718"/>
-        <location filename="../../BtObjects/energydata.cpp" line="733"/>
-        <source>Sep</source>
-        <translation>Set</translation>
+        <source>Dec</source>
+        <translation>Dic</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/energydata.cpp" line="719"/>
-        <location filename="../../BtObjects/energydata.cpp" line="734"/>
+        <source>Feb</source>
+        <translation>Feb</translation>
+    </message>
+    <message>
+        <source>Jan</source>
+        <translation>Gen</translation>
+    </message>
+    <message>
+        <source>Jul</source>
+        <translation>Lug</translation>
+    </message>
+    <message>
+        <source>Jun</source>
+        <translation>Giu</translation>
+    </message>
+    <message>
+        <source>Mar</source>
+        <translation>Mar</translation>
+    </message>
+    <message>
+        <source>May</source>
+        <translation>Maggio</translation>
+    </message>
+    <message>
+        <source>Nov</source>
+        <translation>Nov</translation>
+    </message>
+    <message>
         <source>Oct</source>
         <translation>Ott</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/energydata.cpp" line="719"/>
-        <location filename="../../BtObjects/energydata.cpp" line="734"/>
-        <source>Nov</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/energydata.cpp" line="719"/>
-        <location filename="../../BtObjects/energydata.cpp" line="734"/>
-        <source>Dec</source>
-        <translation>Dic</translation>
+        <source>Sep</source>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDelegate</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDataDelegate.qml" line="117"/>
         <source>cumulative consumption</source>
-        <translation type="unfinished"></translation>
+        <translation>consumo cumulativo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDataDelegate.qml" line="227"/>
         <source>instant consumption</source>
-        <translation type="unfinished">consumo istantaneo</translation>
+        <translation>consumo istantaneo</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDetail</name>
     <message>
-        <location filename="../skins/default/EnergyDataDetail.qml" line="22"/>
         <source>energy consumption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>day</source>
-        <translation type="obsolete">giorno</translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translation type="obsolete">mese</translation>
-    </message>
-    <message>
-        <source>year</source>
-        <translation type="obsolete">anno</translation>
+        <translation type="unfinished">Energia assorbita</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataGraph</name>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="44"/>
-        <source>energy consumption</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="85"/>
-        <source>Overall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="116"/>
         <source>day</source>
         <translation>giorno</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="133"/>
-        <source>month</source>
-        <translation>mese</translation>
+        <source>day cumulative consumption</source>
+        <translation>consumo cumulativo giornaliero</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="150"/>
-        <source>year</source>
-        <translation>anno</translation>
+        <source>energy consumption</source>
+        <translation>Energia assorbita</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="375"/>
         <source>instant consumption</source>
         <translation>consumo istantaneo</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="416"/>
+        <source>month</source>
+        <translation>Mese</translation>
+    </message>
+    <message>
         <source>month cumulative consumption</source>
         <translation>consumo cumulativo mensile</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="498"/>
-        <source>year cumulative consumption</source>
-        <translation>consumo cumulativo annuale</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyDataGraph.qml" line="508"/>
-        <source>day cumulative consumption</source>
-        <translation>consumo cumulativo giornaliero</translation>
-    </message>
-</context>
-<context>
-    <name>EnergyDataOverview</name>
-    <message>
-        <source>day</source>
-        <translation type="obsolete">giorno</translation>
-    </message>
-    <message>
-        <source>month</source>
-        <translation type="obsolete">mese</translation>
+        <source>Overall</source>
+        <translation>Globale</translation>
     </message>
     <message>
         <source>year</source>
-        <translation type="obsolete">anno</translation>
+        <translation>Anno</translation>
     </message>
     <message>
-        <source>units</source>
-        <translation type="obsolete">unità</translation>
+        <source>year cumulative consumption</source>
+        <translation>consumo cumulativo annuale</translation>
     </message>
 </context>
 <context>
     <name>EnergyDateSelector</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="112"/>
-        <source>month</source>
-        <translation type="unfinished">mese</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="123"/>
-        <source>MM/yyyy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="157"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="175"/>
-        <source>year</source>
-        <translation type="unfinished">anno</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="158"/>
-        <source>yyyy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="166"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation>Giorno</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDateSelector.qml" line="167"/>
         <source>dd/MM/yyyy</source>
-        <translation type="unfinished"></translation>
+        <translation>dd/MM/yyyy</translation>
+    </message>
+    <message>
+        <source>MM/yyyy</source>
+        <translation>MM/yyyy</translation>
+    </message>
+    <message>
+        <source>month</source>
+        <translation>Mese</translation>
+    </message>
+    <message>
+        <source>year</source>
+        <translation>Anno</translation>
+    </message>
+    <message>
+        <source>yyyy</source>
+        <translation>yyyy</translation>
     </message>
 </context>
 <context>
     <name>EnergyDayGraph</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDayGraph.qml" line="182"/>
         <source>hour</source>
-        <translation type="unfinished"></translation>
+        <translation>Ora</translation>
     </message>
 </context>
 <context>
     <name>EnergyDayTable</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDayTable.qml" line="70"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDayTable.qml" line="116"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyDayTable.qml" line="163"/>
         <source>hour</source>
-        <translation type="unfinished"></translation>
+        <translation>Ora</translation>
     </message>
 </context>
 <context>
     <name>EnergyGlobalView</name>
     <message>
-        <location filename="../skins/default/EnergyGlobalView.qml" line="24"/>
         <source>energy consumption</source>
-        <translation type="unfinished"></translation>
+        <translation>Energia assorbita</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyGlobalView.qml" line="51"/>
         <source>Global View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vista globale</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyGlobalView.qml" line="74"/>
-        <source>value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyGlobalView.qml" line="91"/>
-        <source>€</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyGlobalView.qml" line="102"/>
         <source>units</source>
-        <translation type="unfinished">unità</translation>
+        <translation>Unità</translation>
+    </message>
+    <message>
+        <source>value</source>
+        <translation>Valore</translation>
+    </message>
+    <message>
+        <source>€</source>
+        <translation>€</translation>
     </message>
 </context>
 <context>
     <name>EnergyManagement</name>
     <message>
-        <location filename="../skins/default/EnergyManagement.qml" line="8"/>
         <source>Energy management</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestione energia</translation>
     </message>
 </context>
 <context>
     <name>EnergyManagementNames</name>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="14"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <source>cal</source>
+        <translation type="obsolete">cal</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="15"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiuso</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="16"/>
-        <source>Opened</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="17"/>
-        <source>Locked</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="18"/>
-        <source>ShortCircuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="19"/>
-        <source>GroundFail</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="20"/>
-        <source>Overtension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="23"/>
         <source>Consumption Management</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestione di consumo</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="26"/>
         <source>Electricity</source>
-        <translation type="unfinished"></translation>
+        <translation>Elettricità</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="27"/>
-        <source>Water</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="28"/>
         <source>Gas</source>
-        <translation type="unfinished"></translation>
+        <translation>Gas</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="29"/>
-        <source>HotWater</source>
-        <translation type="unfinished"></translation>
+        <source>GroundFail</source>
+        <translation>Guasto a terra</translation>
     </message>
     <message>
-        <location filename="../skins/default/EnergyManagementNames.qml" line="30"/>
         <source>Heat</source>
+        <translation>Riscaldamento</translation>
+    </message>
+    <message>
+        <source>HotWater</source>
+        <translation>Acqua calda</translation>
+    </message>
+    <message>
+        <source>kWh</source>
+        <translation type="obsolete">kWh</translation>
+    </message>
+    <message>
+        <source>l</source>
+        <translation type="obsolete">l</translation>
+    </message>
+    <message>
+        <source>Locked</source>
+        <translation type="obsolete">Bloccato</translation>
+    </message>
+    <message>
+        <source>Opened</source>
+        <translation>Aperto</translation>
+    </message>
+    <message>
+        <source>Overtension</source>
+        <translation>Sovratensione</translation>
+    </message>
+    <message>
+        <source>ShortCircuit</source>
+        <translation>Cortocircuito</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Sconosciuto</translation>
+    </message>
+    <message>
+        <source>Water</source>
+        <translation>Acqua</translation>
+    </message>
+    <message>
+        <source>Blocked</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>EnergyManagementSystem</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyManagementSystem.qml" line="36"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyManagementSystem.qml" line="72"/>
-        <source>systems supervision</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyManagementSystem.qml" line="73"/>
         <source>consumption/production</source>
-        <translation type="unfinished"></translation>
+        <translation>consumo/produzione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyManagementSystem.qml" line="63"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyManagementSystem.qml" line="74"/>
         <source>load management</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestione carichi</translation>
+    </message>
+    <message>
+        <source>systems supervision</source>
+        <translation>Supervisione Impianto</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthGraph</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthGraph.qml" line="91"/>
-        <source>select a date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthGraph.qml" line="131"/>
-        <source>dd/MM/yyyy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthGraph.qml" line="163"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthGraph.qml" line="348"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation>Giorno</translation>
+    </message>
+    <message>
+        <source>dd/MM/yyyy</source>
+        <translation>dd/MM/yyyy</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>select a date</source>
+        <translation>seleziona una data</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthTable</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthTable.qml" line="70"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthTable.qml" line="116"/>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyMonthTable.qml" line="170"/>
         <source>day</source>
-        <translation type="unfinished">giorno</translation>
+        <translation>Giorno</translation>
     </message>
 </context>
 <context>
     <name>EnergyOverview</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyOverview.qml" line="37"/>
         <source>Global View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vista globale</translation>
     </message>
 </context>
 <context>
     <name>EnergyYearGraph</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyYearGraph.qml" line="142"/>
         <source>no data available</source>
-        <translation type="unfinished"></translation>
+        <translation>nessun dato disponibile</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyYearGraph.qml" line="161"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>EnergyYearTable</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyYearTable.qml" line="67"/>
-        <source>month</source>
-        <translation type="unfinished">mese</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyYearTable.qml" line="133"/>
-        <source>objective</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/EnergyYearTable.qml" line="134"/>
         <source>delta</source>
-        <translation type="unfinished"></translation>
+        <translation>Delta</translation>
+    </message>
+    <message>
+        <source>month</source>
+        <translation>Mese</translation>
+    </message>
+    <message>
+        <source>objective</source>
+        <translation>obiettivo</translation>
     </message>
 </context>
 <context>
     <name>FavoriteEditPopup</name>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="114"/>
+        <source>Address goes here.</source>
+        <translation type="obsolete">L&apos;indirizzo va qui.</translation>
+    </message>
+    <message>
         <source>Address:</source>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo:</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="165"/>
-        <source>ok</source>
-        <translation type="unfinished">ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="178"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="51"/>
         <source>Edit quicklink properties</source>
+        <translation>Modifica le proprietà del quicklink</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Title goes here.</source>
+        <translation type="obsolete">Il titolo va qui.</translation>
+    </message>
+    <message>
+        <source>Title:</source>
+        <translation>Titolo:</translation>
+    </message>
+</context>
+<context>
+    <name>FavoritesBar</name>
+    <message>
+        <source>web page</source>
+        <translation type="unfinished">pagina web</translation>
+    </message>
+    <message>
+        <source>web camera</source>
+        <translation type="unfinished">web camera</translation>
+    </message>
+    <message>
+        <source>rss</source>
+        <translation type="unfinished">Rss</translation>
+    </message>
+    <message>
+        <source>weather</source>
+        <translation type="unfinished">Meteo</translation>
+    </message>
+    <message>
+        <source>web radio</source>
+        <translation type="unfinished">Web radio</translation>
+    </message>
+    <message>
+        <source>Edit quicklink properties</source>
+        <translation type="unfinished">Modifica le proprietà del quicklink</translation>
+    </message>
+    <message>
+        <source>Title:</source>
+        <translation type="unfinished">Titolo:</translation>
+    </message>
+    <message>
+        <source>Address:</source>
+        <translation type="unfinished">Indirizzo:</translation>
+    </message>
+    <message>
+        <source>No type selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/FavoriteEditPopup.qml" line="78"/>
-        <source>Title:</source>
+        <source>Name cannot be empty</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FeedbackPopup</name>
     <message>
-        <location filename="../skins/default/Components/Popup/FeedbackPopup.qml" line="20"/>
         <source>programming impossible</source>
+        <translation>Programmazione impossibile</translation>
+    </message>
+</context>
+<context>
+    <name>ForceDurationPopup</name>
+    <message>
+        <source>Force load</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>force load</source>
+        <translation type="unfinished">Forza carico</translation>
     </message>
 </context>
 <context>
     <name>GeneralAmbient</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/GeneralAmbient.qml" line="26"/>
-        <location filename="../skins/default/Components/SoundDiffusion/GeneralAmbient.qml" line="31"/>
         <source>source</source>
-        <translation type="unfinished">sorgente</translation>
-    </message>
-    <message>
-        <source>volume</source>
-        <translation type="obsolete">volume</translation>
+        <translation>Sorgente</translation>
     </message>
 </context>
 <context>
     <name>GlobalViewTable</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="63"/>
-        <source>line</source>
-        <translation type="unfinished"></translation>
+        <source></source>
+        <translation>---</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="79"/>
         <source>consumption</source>
-        <translation type="unfinished"></translation>
+        <translation>Consumo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="94"/>
-        <source>objective</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/GlobalViewTable.qml" line="108"/>
         <source>delta</source>
-        <translation type="unfinished"></translation>
+        <translation>Delta</translation>
+    </message>
+    <message>
+        <source>line</source>
+        <translation>Linea</translation>
+    </message>
+    <message>
+        <source>objective</source>
+        <translation>obiettivo</translation>
     </message>
 </context>
 <context>
     <name>HomePage</name>
     <message>
-        <location filename="../skins/default/HomePage.qml" line="243"/>
-        <source>rooms</source>
-        <translation type="unfinished">stanze</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/HomePage.qml" line="287"/>
-        <source>systems</source>
-        <translation type="unfinished">sistemi</translation>
-    </message>
-    <message>
-        <source>otpions</source>
-        <translation type="obsolete">ozpioni</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/HomePage.qml" line="258"/>
-        <source>options</source>
-        <translation type="unfinished">opzioni</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/HomePage.qml" line="302"/>
         <source>multimedia</source>
-        <translation type="unfinished">multimedia</translation>
+        <translation>Multimediale</translation>
+    </message>
+    <message>
+        <source>options</source>
+        <translation type="obsolete">Opzioni</translation>
+    </message>
+    <message>
+        <source>rooms</source>
+        <translation>Ambienti</translation>
+    </message>
+    <message>
+        <source>systems</source>
+        <translation type="obsolete">Sistemi</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished">Impostazioni</translation>
+    </message>
+    <message>
+        <source>functions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>InstantConsumption</name>
+    <message>
+        <source>Instant consumption</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>KeyPad</name>
     <message>
         <source>enter code</source>
-        <translation type="obsolete">inserisci il codice</translation>
-    </message>
-    <message>
-        <source>C</source>
-        <translation type="obsolete">C</translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translation type="obsolete">annulla</translation>
+        <translation type="obsolete">inserire il codice</translation>
     </message>
 </context>
 <context>
     <name>Lighting</name>
     <message>
-        <location filename="../skins/default/Lighting.qml" line="7"/>
         <source>lighting</source>
-        <translation type="unfinished">illuminazione</translation>
+        <translation>Illuminazione</translation>
     </message>
 </context>
 <context>
     <name>LightingNames</name>
     <message>
-        <location filename="../skins/default/LightingNames.qml" line="15"/>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="16"/>
-        <source>1 Minute</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="17"/>
-        <source>2 Minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="18"/>
-        <source>3 Minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="19"/>
-        <source>4 Minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="20"/>
-        <source>5 Minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="21"/>
-        <source>15 Minutes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="22"/>
-        <source>30 Seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/LightingNames.qml" line="23"/>
         <source>0.5 Seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>0,5 secondi</translation>
     </message>
-</context>
-<context>
-    <name>LoadDetail</name>
     <message>
-        <source>instant consumption</source>
-        <translation type="obsolete">consumo istantaneo</translation>
+        <source>1 Minute</source>
+        <translation>1 minuto</translation>
+    </message>
+    <message>
+        <source>15 Minutes</source>
+        <translation>15 minuti</translation>
+    </message>
+    <message>
+        <source>2 Minutes</source>
+        <translation>2 minuti</translation>
+    </message>
+    <message>
+        <source>3 Minutes</source>
+        <translation>3 minuti</translation>
+    </message>
+    <message>
+        <source>30 Seconds</source>
+        <translation>30 secondi</translation>
+    </message>
+    <message>
+        <source>4 Minutes</source>
+        <translation>4 minuti</translation>
+    </message>
+    <message>
+        <source>5 Minutes</source>
+        <translation>5 minuti</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Disattivo</translation>
     </message>
 </context>
 <context>
     <name>LoadDiagnostic</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="46"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiuso</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="48"/>
         <source>Open</source>
-        <translation type="unfinished">Apri</translation>
+        <translation>Aperto</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="50"/>
         <source>Open - Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Circuito aperto per blocco</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="52"/>
-        <source>Open - Short Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="54"/>
         <source>Open - Earth Fault</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciruito aperto per guasto a terra</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="56"/>
         <source>Open - Over Current</source>
-        <translation type="unfinished"></translation>
+        <translation>Ciruito aperto per sovratensione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadDiagnostic.qml" line="57"/>
+        <source>Open - Short Circuit</source>
+        <translation>Circuito aperto per cortocircuito</translation>
+    </message>
+    <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation>Sconosciuto</translation>
     </message>
 </context>
 <context>
     <name>LoadManagement</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/LoadManagement.qml" line="33"/>
         <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Disattivo</translation>
     </message>
 </context>
 <context>
     <name>MenuItem</name>
     <message>
-        <location filename="../skins/default/js/MenuItem.js" line="62"/>
         <source>°C</source>
-        <translation type="unfinished">°C</translation>
+        <translation>°C</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/MenuItem.js" line="79"/>
         <source>No amplifier set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/js/MenuItem.js" line="81"/>
         <source>No source set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/js/MenuItem.js" line="83"/>
         <source>No name set</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forced</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Closed</source>
+        <translation type="unfinished">Chiuso</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open - Block</source>
+        <translation type="unfinished">Circuito aperto per blocco</translation>
+    </message>
+    <message>
+        <source>Open - Short Circuit</source>
+        <translation type="unfinished">Circuito aperto per cortocircuito</translation>
+    </message>
+    <message>
+        <source>Open - Earth Fault</source>
+        <translation type="unfinished">Ciruito aperto per guasto a terra</translation>
+    </message>
+    <message>
+        <source>Open - Over Current</source>
+        <translation type="unfinished">Ciruito aperto per sovratensione</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation type="unfinished">Sconosciuto</translation>
     </message>
 </context>
 <context>
     <name>Messages</name>
     <message>
-        <location filename="../skins/default/Messages.qml" line="6"/>
         <source>messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi</translation>
     </message>
 </context>
 <context>
     <name>MessagesItems</name>
     <message>
-        <location filename="../skins/default/Components/Messages/MessagesItems.qml" line="28"/>
         <source>inbox</source>
-        <translation type="unfinished"></translation>
+        <translation>casella di posta</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Messages/MessagesItems.qml" line="37"/>
         <source>Received messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi ricevuti</translation>
     </message>
 </context>
 <context>
     <name>Multimedia</name>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="13"/>
-        <source>multimedia</source>
-        <translation type="unfinished">multimedia</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Multimedia.qml" line="116"/>
         <source>devices</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="117"/>
-        <source>web browser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Multimedia.qml" line="122"/>
-        <source>rss</source>
-        <translation type="unfinished">rss</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Multimedia.qml" line="125"/>
         <source>ip radio</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio IP</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="128"/>
+        <source>multimedia</source>
+        <translation>Multimediale</translation>
+    </message>
+    <message>
+        <source>rss</source>
+        <translation>Rss</translation>
+    </message>
+    <message>
         <source>weather</source>
-        <translation type="unfinished">tempo</translation>
+        <translation>Meteo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="119"/>
-        <source>web link</source>
-        <translation type="unfinished"></translation>
+        <source>web browser</source>
+        <translation>web browser</translation>
     </message>
     <message>
-        <location filename="../skins/default/Multimedia.qml" line="131"/>
         <source>web cam</source>
-        <translation type="unfinished"></translation>
+        <translation>Web Cam</translation>
     </message>
-</context>
-<context>
-    <name>MultimediaNames</name>
     <message>
-        <location filename="../skins/default/MultimediaNames.qml" line="10"/>
-        <source></source>
-        <translation></translation>
+        <source>web link</source>
+        <translation>Collegamenti Web</translation>
     </message>
 </context>
 <context>
     <name>NewImageCard</name>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="192"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="209"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
-        <location filename="../skins/default/NewImageCard.qml" line="223"/>
         <source>Save configuration changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvare le modifiche alla configurazione?</translation>
     </message>
 </context>
 <context>
-    <name>NewProfileCard</name>
+    <name>Pager</name>
     <message>
-        <source>CANCEL</source>
-        <translation type="obsolete">ANNULLA</translation>
-    </message>
-</context>
-<context>
-    <name>Page</name>
-    <message>
-        <source>zone %1 - %2</source>
-        <translation type="obsolete">zona %1 - %2</translation>
-    </message>
-</context>
-<context>
-    <name>PaginatorList</name>
-    <message>
-        <source>remove all</source>
-        <translation type="obsolete">elimina tutto</translation>
-    </message>
-</context>
-<context>
-    <name>PaginatorOnBackground</name>
-    <message>
-        <source>remove all</source>
-        <translation type="obsolete">elimina tutto</translation>
+        <source>pager</source>
+        <translation type="obsolete">cercapersone</translation>
     </message>
 </context>
 <context>
     <name>Partial</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Partial.qml" line="20"/>
+        <source>45.51 kWh</source>
+        <translation type="obsolete">45.51 kWh</translation>
+    </message>
+    <message>
         <source>partial </source>
+        <translation type="obsolete">Parziale</translation>
+    </message>
+    <message>
+        <source>reset</source>
+        <translation>Reset</translation>
+    </message>
+    <message>
+        <source>since 24/07/2012 18:35</source>
+        <translation type="obsolete">dal 24/07/2012 18:35</translation>
+    </message>
+    <message>
+        <source>Partial </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Partial.qml" line="65"/>
-        <source>reset</source>
-        <translation type="unfinished"></translation>
+        <source>since </source>
+        <translation type="unfinished">da</translation>
     </message>
 </context>
 <context>
     <name>PasswordInput</name>
     <message>
-        <location filename="../skins/default/Components/PasswordInput.qml" line="17"/>
-        <source>Insert security code</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/PasswordInput.qml" line="62"/>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>PeriodItem</name>
-    <message>
-        <source>year</source>
-        <translation type="obsolete">anno</translation>
+        <translation>Conferma</translation>
     </message>
     <message>
-        <source>month</source>
-        <translation type="obsolete">mese</translation>
-    </message>
-    <message>
-        <source>day</source>
-        <translation type="obsolete">giorno</translation>
+        <source>Insert security code</source>
+        <translation>Inserisci il codice di sicurezza</translation>
     </message>
 </context>
 <context>
     <name>PhotoPlayer</name>
     <message>
-        <location filename="../skins/default/PhotoPlayer.qml" line="215"/>
         <source>%1 seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 secondi</translation>
     </message>
 </context>
 <context>
     <name>PopupPage</name>
     <message>
-        <location filename="../skins/default/PopupPage.qml" line="66"/>
-        <location filename="../skins/default/PopupPage.qml" line="68"/>
         <source>zone</source>
-        <translation type="unfinished">zona</translation>
+        <translation>Zona</translation>
     </message>
 </context>
 <context>
     <name>PowerAmplifier</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="24"/>
-        <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <source>settings</source>
+        <translation>Impostazioni</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="33"/>
-        <location filename="../skins/default/Components/SoundDiffusion/PowerAmplifier.qml" line="38"/>
-        <source>settings</source>
-        <translation type="unfinished">impostazioni</translation>
+        <source>volume</source>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>PowerAmplifierPreset</name>
     <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="26"/>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="27"/>
-        <source>Dance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="28"/>
-        <source>Pop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="29"/>
-        <source>Rock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="30"/>
         <source>Classical</source>
-        <translation type="unfinished"></translation>
+        <translation>Classical</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="31"/>
-        <source>Techno</source>
-        <translation type="unfinished"></translation>
+        <source>Dance</source>
+        <translation>Dance</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="32"/>
-        <source>Party</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="33"/>
-        <source>Soft</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="34"/>
         <source>Full Bass</source>
-        <translation type="unfinished"></translation>
+        <translation>Full Bass</translation>
     </message>
     <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="35"/>
         <source>Full Treble</source>
-        <translation type="unfinished"></translation>
+        <translation>Full Treble</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normale</translation>
+    </message>
+    <message>
+        <source>Party</source>
+        <translation>Party</translation>
+    </message>
+    <message>
+        <source>Pop</source>
+        <translation>Pop</translation>
+    </message>
+    <message>
+        <source>Rock</source>
+        <translation>Rock</translation>
+    </message>
+    <message>
+        <source>Soft</source>
+        <translation>Soft</translation>
+    </message>
+    <message>
+        <source>Techno</source>
+        <translation>Techno</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
-        <source>profile</source>
-        <translation type="obsolete">profilo</translation>
-    </message>
-    <message>
-        <source>note</source>
-        <translation type="obsolete">note</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Profile.qml" line="381"/>
         <source>Add note</source>
-        <translation>Aggiungi nota</translation>
+        <translation>Aggiungi una nota</translation>
+    </message>
+    <message>
+        <source>Max notes limit reached</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../BtObjects/mediaobjects.cpp" line="262"/>
         <source>IP radio</source>
-        <translation type="unfinished">radio IP</translation>
+        <translation>Radio IP</translation>
     </message>
 </context>
 <context>
     <name>RoomModify</name>
     <message>
-        <location filename="../skins/default/Components/Settings/RoomModify.qml" line="13"/>
-        <source>Change card image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/RoomModify.qml" line="19"/>
-        <source>Card image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/RoomModify.qml" line="30"/>
         <source>Background image</source>
-        <translation type="unfinished"></translation>
+        <translation>Immagine di sfondo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/RoomModify.qml" line="24"/>
         <source>Change background image</source>
+        <translation>Cambia immagine di sfondo</translation>
+    </message>
+    <message>
+        <source>Change card image</source>
+        <translation>Cambia immagine delle card</translation>
+    </message>
+    <message>
+        <source>Card image</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
-        <location filename="../skins/default/Rooms.qml" line="13"/>
         <source>rooms</source>
-        <translation>stanze</translation>
+        <translation>Ambienti</translation>
     </message>
 </context>
 <context>
     <name>RssPage</name>
     <message>
-        <location filename="../skins/default/RssPage.qml" line="79"/>
         <source>No news to display</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna notizia da visualizzare</translation>
     </message>
     <message>
-        <location filename="../skins/default/RssPage.qml" line="105"/>
         <source>Rss load failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Caricamento Rss fallito</translation>
     </message>
 </context>
 <context>
     <name>ScenarioLink</name>
     <message>
-        <location filename="../skins/default/Components/ScenarioLink.qml" line="29"/>
         <source>Command sent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Comando inviato</translation>
     </message>
 </context>
 <context>
     <name>ScenarioModuleSettings</name>
     <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="13"/>
-        <source>stop programming</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="13"/>
-        <source>start programming</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="18"/>
-        <source>reset program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="55"/>
-        <source>programming impossible</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="68"/>
-        <source>Scenario configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="69"/>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="112"/>
-        <source>ok</source>
-        <translation type="unfinished">ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="125"/>
-        <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/ScenarioModuleSettings.qml" line="87"/>
         <source>Are you sure to reset the scenario?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro di voler ripristinare lo scenario?</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Se non hai cancellato lo scenario, andrai ad aggiungere le azioni allo scenario pre-esistente. Premere OK se si desidera iniziare la programmazione dello scenario, CANCEL se si desidera annullare l&apos;operazione.</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>programming impossible</source>
+        <translation>Programmazione impossibile</translation>
+    </message>
+    <message>
+        <source>reset program</source>
+        <translation>resettare il programma</translation>
+    </message>
+    <message>
+        <source>Scenario configuration</source>
+        <translation>Configurazione Scenari</translation>
+    </message>
+    <message>
+        <source>start programming</source>
+        <translation>iniziare la programmazione</translation>
+    </message>
+    <message>
+        <source>stop programming</source>
+        <translation>interrompere il programma</translation>
     </message>
 </context>
 <context>
     <name>Scenarios</name>
     <message>
-        <location filename="../skins/default/Scenarios.qml" line="8"/>
         <source>Scenarios</source>
-        <translation type="unfinished">Scenari</translation>
+        <translation>Scenari</translation>
     </message>
 </context>
 <context>
     <name>ScheduledScenario</name>
     <message>
-        <location filename="../skins/default/Components/Scenarios/ScheduledScenario.qml" line="11"/>
         <source>start</source>
-        <translation type="unfinished"></translation>
+        <translation>Avvia</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Scenarios/ScheduledScenario.qml" line="13"/>
         <source>stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ScreenSaverList</name>
-    <message>
-        <source>type</source>
-        <translation type="obsolete">tipo</translation>
-    </message>
-</context>
-<context>
-    <name>SelfTest</name>
-    <message>
-        <source>enabled</source>
-        <translation type="obsolete">attivo</translation>
+        <translation>Arresta</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
-        <source>settings</source>
-        <translation type="obsolete">impostazioni</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Settings.qml" line="10"/>
         <source>Settings</source>
         <translation>Impostazioni</translation>
     </message>
@@ -2789,73 +2272,68 @@ Address: %2</source>
 <context>
     <name>SettingsAdvancedScenario</name>
     <message>
-        <location filename="../skins/default/SettingsAdvancedScenario.qml" line="14"/>
         <source>Advanced scenario</source>
-        <translation type="unfinished"></translation>
+        <translation>Scenario Evoluto</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsAdvancedScenario.qml" line="98"/>
-        <source>save changes?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SettingsAdvancedScenario.qml" line="115"/>
-        <source>OK</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SettingsAdvancedScenario.qml" line="135"/>
         <source>CANCEL</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>save changes?</source>
+        <translation type="obsolete">salvare le modifiche?</translation>
+    </message>
+    <message>
+        <source>Save changes?</source>
+        <translation type="unfinished">Vuoi salvare le modifiche?</translation>
     </message>
 </context>
 <context>
     <name>SettingsAutoOpen</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsAutoOpen.qml" line="26"/>
-        <source>enable</source>
-        <translation type="unfinished"></translation>
+        <source>disable</source>
+        <translation type="obsolete">Disabilita</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsAutoOpen.qml" line="37"/>
-        <source>disable</source>
-        <translation type="unfinished"></translation>
+        <source>enable</source>
+        <translation type="obsolete">Abilita</translation>
     </message>
 </context>
 <context>
     <name>SettingsBrowser</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="25"/>
         <source>Change Home Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia la Home Page</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="36"/>
+        <source>Clear History</source>
+        <translation>Cancella la cronologia</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Disabilitato</translation>
+    </message>
+    <message>
+        <source>Enable history</source>
+        <translation>Abilita cronologia</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Abilitato</translation>
+    </message>
+    <message>
+        <source>Pressing ok will delete all browser history.\nContinue?</source>
+        <translation type="obsolete">Premendo OK andrai a cancellare la cronologia del browser.\n Vuoi continuare?</translation>
+    </message>
+    <message>
         <source>Insert new home page</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="44"/>
-        <source>Enable history</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="45"/>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="45"/>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="63"/>
-        <source>Clear History</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsBrowser.qml" line="68"/>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation type="unfinished"></translation>
@@ -2864,29 +2342,29 @@ Continue?</source>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsClocks.qml" line="24"/>
         <source>Add Clock</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi sveglia</translation>
     </message>
 </context>
 <context>
     <name>SettingsDateTime</name>
     <message>
-        <source>time</source>
-        <translation type="obsolete">Ora</translation>
+        <source>date</source>
+        <translation type="obsolete">Data</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="14"/>
+        <source>time</source>
+        <translation type="obsolete">Orario</translation>
+    </message>
+    <message>
         <source>Date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="15"/>
         <source>Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDateTime.qml" line="28"/>
         <source>Confirm operation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2894,379 +2372,297 @@ Continue?</source>
 <context>
     <name>SettingsDisplay</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="17"/>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="48"/>
         <source>Brightness</source>
-        <translation type="unfinished">Luminosità</translation>
+        <translation>Luminosità</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="50"/>
         <source>Calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>Calibrazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="51"/>
         <source>Clean</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulisci</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="19"/>
-        <location filename="../skins/default/Components/Settings/SettingsDisplay.qml" line="49"/>
         <source>Contrast</source>
-        <translation type="unfinished">Contrasto</translation>
+        <translation>Contrasto</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergy</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergy.qml" line="19"/>
-        <source>tariffs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergy.qml" line="37"/>
         <source>consumption goals</source>
-        <translation type="unfinished"></translation>
+        <translation>Obiettivo di consumo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergy.qml" line="55"/>
+        <source>tariffs</source>
+        <translation>Tariffe</translation>
+    </message>
+    <message>
         <source>thresholds</source>
-        <translation type="unfinished"></translation>
+        <translation>Soglie</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyGoalPanel</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalPanel.qml" line="33"/>
         <source>consumption goal</source>
-        <translation type="unfinished"></translation>
+        <translation>Consumi obbiettivo</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyGoalsLine</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="24"/>
-        <source>January</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="26"/>
-        <source>February</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="28"/>
-        <source>March</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="30"/>
         <source>April</source>
-        <translation type="unfinished"></translation>
+        <translation>Aprile</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="32"/>
-        <source>May</source>
-        <translation type="unfinished">Mag</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="34"/>
-        <source>June</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="36"/>
-        <source>July</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="38"/>
         <source>August</source>
-        <translation type="unfinished"></translation>
+        <translation>Agosto</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="40"/>
-        <source>September</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="42"/>
-        <source>October</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="44"/>
-        <source>November</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="46"/>
         <source>December</source>
-        <translation type="unfinished"></translation>
+        <translation>Dicembre</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyGoalsLine.qml" line="54"/>
+        <source>February</source>
+        <translation>Febbraio</translation>
+    </message>
+    <message>
         <source>goals enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>obiettivi abilitati</translation>
+    </message>
+    <message>
+        <source>January</source>
+        <translation>Gennaio</translation>
+    </message>
+    <message>
+        <source>July</source>
+        <translation>Luglio</translation>
+    </message>
+    <message>
+        <source>June</source>
+        <translation>Giugno</translation>
+    </message>
+    <message>
+        <source>March</source>
+        <translation>Marzo</translation>
+    </message>
+    <message>
+        <source>May</source>
+        <translation>Maggio</translation>
+    </message>
+    <message>
+        <source>November</source>
+        <translation>Novembre</translation>
+    </message>
+    <message>
+        <source>October</source>
+        <translation>Ottobre</translation>
+    </message>
+    <message>
+        <source>September</source>
+        <translation>Settembre</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
         <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <translation>Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
-        <source>threshold 1 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="14"/>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation>Abilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="20"/>
-        <source>threshold 2 %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="27"/>
         <source>threshold 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Soglia 1</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholds.qml" line="29"/>
+        <source>threshold 1 %1</source>
+        <translation>soglia 1 %1</translation>
+    </message>
+    <message>
         <source>threshold 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Soglia 2</translation>
+    </message>
+    <message>
+        <source>threshold 2 %1</source>
+        <translation>soglia 2 %2</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergySetThresholdsPanel</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholdsPanel.qml" line="26"/>
         <source>threshold 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Soglia 1</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergySetThresholdsPanel.qml" line="82"/>
         <source>threshold 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Soglia 2</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyThresholds</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyThresholds.qml" line="19"/>
         <source>alerts %1</source>
-        <translation type="unfinished"></translation>
+        <translation>avvisi %1</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyThresholds.qml" line="19"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsEnergyThresholds.qml" line="19"/>
         <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <translation>Disabilitato</translation>
+    </message>
+    <message>
+        <source>enabled</source>
+        <translation>Abilitato</translation>
     </message>
 </context>
 <context>
     <name>SettingsGenerals</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="64"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="81"/>
-        <source>Date &amp; Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="40"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="82"/>
-        <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="83"/>
-        <source>Display</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="84"/>
-        <source>International</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="26"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="85"/>
-        <source>Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="33"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="86"/>
         <source>Beep</source>
-        <translation type="unfinished"></translation>
+        <translation>Beep</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="28"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="35"/>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="30"/>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="37"/>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="42"/>
-        <source>Disconnected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="44"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Connesso</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsGenerals.qml" line="80"/>
+        <source>Date &amp; Time</source>
+        <translation>Data &amp; Ora</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Disabilitato</translation>
+    </message>
+    <message>
+        <source>Disconnected</source>
+        <translation>Scollegato</translation>
+    </message>
+    <message>
+        <source>Display</source>
+        <translation>Display</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Abilitato</translation>
+    </message>
+    <message>
         <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>International</source>
+        <translation>Internazionale</translation>
+    </message>
+    <message>
+        <source>Network</source>
+        <translation>Rete</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
     </message>
 </context>
 <context>
     <name>SettingsHandsFree</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHandsFree.qml" line="26"/>
-        <source>enable</source>
-        <translation type="unfinished"></translation>
+        <source>disable</source>
+        <translation type="obsolete">Disabilita</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHandsFree.qml" line="37"/>
-        <source>disable</source>
-        <translation type="unfinished"></translation>
+        <source>enable</source>
+        <translation type="obsolete">Abilita</translation>
     </message>
 </context>
 <context>
     <name>SettingsHistory</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHistory.qml" line="20"/>
-        <source>enable</source>
-        <translation type="unfinished"></translation>
+        <source>disable</source>
+        <translation>Disabilita</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHistory.qml" line="30"/>
-        <source>disable</source>
-        <translation type="unfinished"></translation>
+        <source>enable</source>
+        <translation>Abilita</translation>
     </message>
 </context>
 <context>
     <name>SettingsHome</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="37"/>
-        <source>skin home</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modify background image</source>
-        <translation type="obsolete">Modifica immagine di sfondo</translation>
-    </message>
-    <message>
-        <source>Add Quicklink</source>
-        <translation type="obsolete">Aggiungi quicklink</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="49"/>
-        <source>Change background image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="55"/>
         <source>Background image</source>
-        <translation type="unfinished"></translation>
+        <translation>Immagine di sfondo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="60"/>
+        <source>Change background image</source>
+        <translation>Cambia immagine di sfondo</translation>
+    </message>
+    <message>
+        <source>Quicklinks</source>
+        <translation>Quicklinks</translation>
+    </message>
+    <message>
+        <source>Reset background image</source>
+        <translation type="obsolete">Ripristina immagine di sfondo</translation>
+    </message>
+    <message>
+        <source>skin home</source>
+        <translation>Tema della pagina principale</translation>
+    </message>
+    <message>
         <source>Restore background image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="89"/>
         <source>Confirm operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="90"/>
         <source>Do you want to restore background to default value?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="69"/>
-        <location filename="../skins/default/Components/Settings/SettingsHome.qml" line="75"/>
-        <source>Quicklinks</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsHomeDelete</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHomeDelete.qml" line="20"/>
-        <source>Rename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsHomeDelete.qml" line="28"/>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsHomeDelete.qml" line="50"/>
-        <source>Confirm deletion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsHomeDelete.qml" line="51"/>
         <source>Are you sure to delete the selected quicklink?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro di voler eliminare il quicklink selezionato?</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Confermare l&apos;eliminazione</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Elimina</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Rinomina</translation>
     </message>
 </context>
 <context>
     <name>SettingsHomeQuicklinks</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsHomeQuicklinks.qml" line="28"/>
         <source>Add Quicklink</source>
-        <translation type="unfinished">Aggiungi quicklink</translation>
+        <translation>Aggiungi quicklink</translation>
     </message>
 </context>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="31"/>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="41"/>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="46"/>
         <source>Images</source>
+        <translation>Immagini</translation>
+    </message>
+    <message>
+        <source>Last used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="51"/>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="61"/>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="66"/>
-        <source>Custom Images</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="131"/>
         <source>Confirm operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsImageBrowser.qml" line="132"/>
         <source>Do you want to change actual image with the one selected?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3274,309 +2670,293 @@ Continue?</source>
 <context>
     <name>SettingsInternational</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsInternational.qml" line="72"/>
-        <source>text language</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsInternational.qml" line="85"/>
         <source>keyboard language</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingua della tastiera</translation>
     </message>
     <message>
-        <source>temperature</source>
-        <translation type="obsolete">temperatura</translation>
+        <source>text language</source>
+        <translation>Lingua dei testi</translation>
     </message>
 </context>
 <context>
     <name>SettingsItems</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="118"/>
-        <source>Home</source>
-        <translation>Home</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="119"/>
-        <source>General</source>
-        <translation>Generale</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="42"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="121"/>
-        <source>Profiles</source>
-        <translation>Profili</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="52"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="123"/>
-        <source>Rooms</source>
-        <translation>Stanze</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="47"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="125"/>
-        <source>Systems</source>
-        <translation>Sistemi</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="37"/>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="126"/>
         <source>Alarm Clock</source>
         <translation>Sveglia</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="127"/>
-        <source>Multimedia</source>
-        <translation type="unfinished"></translation>
+        <source>General</source>
+        <translation>Generale</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsItems.qml" line="128"/>
+        <source>Home</source>
+        <translation>Home</translation>
+    </message>
+    <message>
+        <source>Multimedia</source>
+        <translation>Multimediale</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profili</translation>
+    </message>
+    <message>
         <source>Ringtones</source>
+        <translation>Suonerie</translation>
+    </message>
+    <message>
+        <source>Rooms</source>
+        <translation>Ambienti</translation>
+    </message>
+    <message>
+        <source>Systems</source>
+        <translation type="obsolete">Sistemi</translation>
+    </message>
+    <message>
+        <source>Functions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsMultimedia</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsMultimedia.qml" line="55"/>
+        <source>Add Quicklink</source>
+        <translation>Aggiungi quicklink</translation>
+    </message>
+    <message>
         <source>Browser</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsMultimedia.qml" line="66"/>
-        <source>Add Quicklink</source>
-        <translation type="unfinished">Aggiungi quicklink</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsMultimediaQuicklinks</name>
-    <message>
-        <source>Add Quicklink</source>
-        <translation type="obsolete">Aggiungi quicklink</translation>
+        <translation>Browser</translation>
     </message>
 </context>
 <context>
     <name>SettingsNames</name>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="13"/>
-        <source>DHCP</source>
-        <translation type="unfinished"></translation>
+        <source>British pound £</source>
+        <translation type="obsolete">Sterlina £</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="17"/>
+        <source>Clear</source>
+        <translation>Chiaro</translation>
+    </message>
+    <message>
         <source>Connect</source>
-        <translation type="unfinished"></translation>
+        <translation>Connetti</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="18"/>
-        <source>Disconnect</source>
-        <translation type="unfinished"></translation>
+        <source>Dark</source>
+        <translation>Scuro</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="21"/>
-        <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <source>Date and Time</source>
+        <translation type="obsolete">Data e ora</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="22"/>
-        <source>Disabled</source>
-        <translation type="unfinished"></translation>
+        <source>DHCP</source>
+        <translation>DHCP</translation>
     </message>
     <message>
-        <source>12h</source>
-        <translation type="obsolete">12h</translation>
-    </message>
-    <message>
-        <source>24h</source>
-        <translation type="obsolete">24h</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SettingsNames.qml" line="40"/>
-        <location filename="../skins/default/SettingsNames.qml" line="43"/>
-        <source>Enable</source>
-        <translation>Abilita</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SettingsNames.qml" line="39"/>
-        <location filename="../skins/default/SettingsNames.qml" line="44"/>
         <source>Disable</source>
         <translation>Disabilita</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="25"/>
-        <location filename="../skins/default/SettingsNames.qml" line="30"/>
-        <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <source>Disabled</source>
+        <translation>Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="26"/>
-        <location filename="../skins/default/SettingsNames.qml" line="31"/>
+        <source>Disconnect</source>
+        <translation>Disconnetti</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation>Abilita</translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation>Abilitato</translation>
+    </message>
+    <message>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Inglese</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="27"/>
-        <location filename="../skins/default/SettingsNames.qml" line="32"/>
+        <source>English (GB)</source>
+        <translation type="obsolete">Inglese (GB)</translation>
+    </message>
+    <message>
+        <source>Euro €</source>
+        <translation type="obsolete">Euro €</translation>
+    </message>
+    <message>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Francese</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="35"/>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <source>GMT +1</source>
+        <translation type="obsolete">GMT +1</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="36"/>
-        <source>Dark</source>
-        <translation type="unfinished"></translation>
+        <source>GMT +2</source>
+        <translation type="obsolete">GMT +2</translation>
     </message>
     <message>
-        <location filename="../skins/default/SettingsNames.qml" line="10"/>
+        <source>GMT -1</source>
+        <translation type="obsolete">GMT -1</translation>
+    </message>
+    <message>
+        <source>GMT -2</source>
+        <translation type="obsolete">GMT -2</translation>
+    </message>
+    <message>
+        <source>GMT 0</source>
+        <translation type="obsolete">GMT 0</translation>
+    </message>
+    <message>
+        <source>Image</source>
+        <translation type="obsolete">Immagine</translation>
+    </message>
+    <message>
+        <source>Italian</source>
+        <translation>Italiano</translation>
+    </message>
+    <message>
+        <source>Japanese yen ¥</source>
+        <translation type="obsolete">Yen Giapponese ¥</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">Nessuno</translation>
+    </message>
+    <message>
+        <source>Pressing ok will cause a device reboot in a few moments.\nContinue?</source>
+        <translation type="obsolete">Premendo OK il dispositivo verrà riavviato subito.\nContinuare?</translation>
+    </message>
+    <message>
+        <source>Rectangles</source>
+        <translation type="obsolete">Rettangoli</translation>
+    </message>
+    <message>
+        <source>Slideshow</source>
+        <translation type="obsolete">Slideshow</translation>
+    </message>
+    <message>
+        <source>Static IP address</source>
+        <translation>Indirizzo IP statico</translation>
+    </message>
+    <message>
+        <source>Swiss franc</source>
+        <translation type="obsolete">Swiss Franc</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="obsolete">Testo</translation>
+    </message>
+    <message>
+        <source>U.S. dollar $</source>
+        <translation type="obsolete">Dollaro $</translation>
+    </message>
+    <message>
         <source>Pressing ok will cause a device reboot in a few moments.
 Continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SettingsNames.qml" line="14"/>
-        <source>Static IP address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="85"/>
-        <source>network state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="100"/>
-        <source>IP configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="101"/>
-        <source>DHCP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="123"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="168"/>
-        <source>MAC address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="127"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="172"/>
-        <source>IP address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="131"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="179"/>
-        <source>Subnet mask</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="135"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="186"/>
-        <source>Gateway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="86"/>
-        <source>Disconnected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="86"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Connesso</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="101"/>
-        <source>Static</source>
-        <translation type="unfinished"></translation>
+        <source>DHCP</source>
+        <translation>DHCP</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="124"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="128"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="132"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="136"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="140"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="144"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="169"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <source>Disconnected</source>
+        <translation>Scollegato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="139"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="193"/>
+        <source>Gateway</source>
+        <translation>Gateway</translation>
+    </message>
+    <message>
+        <source>IP address</source>
+        <translation>Indirizzo IP</translation>
+    </message>
+    <message>
+        <source>IP configuration</source>
+        <translation>Configurazione IP</translation>
+    </message>
+    <message>
+        <source>MAC address</source>
+        <translation>Indirizzo Mac</translation>
+    </message>
+    <message>
+        <source>network state</source>
+        <translation>Stato della rete</translation>
+    </message>
+    <message>
         <source>Primary DNS</source>
-        <translation type="unfinished"></translation>
+        <translation>DNS primario</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="143"/>
-        <location filename="../skins/default/Components/Settings/SettingsNetwork.qml" line="200"/>
         <source>Secondary DNS</source>
-        <translation type="unfinished"></translation>
+        <translation>DNS secondario</translation>
+    </message>
+    <message>
+        <source>Static</source>
+        <translation>Statico</translation>
+    </message>
+    <message>
+        <source>Subnet mask</source>
+        <translation>Subnet mask</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Sconosciuto</translation>
     </message>
 </context>
 <context>
     <name>SettingsPassword</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsPassword.qml" line="12"/>
         <source>Change password</source>
+        <translation>Cambia Password</translation>
+    </message>
+    <message>
+        <source>Incorrect password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsProfile</name>
     <message>
-        <source>Modify card image</source>
-        <translation type="obsolete">Modifica immagine della carta</translation>
-    </message>
-    <message>
-        <source>Modify background image</source>
-        <translation type="obsolete">Modifica immagine di sfondo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="35"/>
         <source>Add Quicklink</source>
         <translation>Aggiungi quicklink</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="13"/>
-        <source>Change card image</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="30"/>
         <source>Background image</source>
-        <translation type="unfinished"></translation>
+        <translation>Immagine di sfondo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="24"/>
         <source>Change background image</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia immagine di sfondo</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="19"/>
+        <source>Change card image</source>
+        <translation>Cambia immagine delle card</translation>
+    </message>
+    <message>
         <source>Card image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="45"/>
         <source>Restore background image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="70"/>
         <source>Confirm operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsProfile.qml" line="71"/>
         <source>Do you want to restore background to default value?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3584,15 +2964,21 @@ Continue?</source>
 <context>
     <name>SettingsRingtone</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsRingtone.qml" line="20"/>
         <source>Ringtones</source>
+        <translation type="unfinished">Suonerie</translation>
+    </message>
+    <message>
+        <source>Ringtone volume</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsSkin</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSkin.qml" line="42"/>
+        <source>Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?</source>
+        <translation type="obsolete">Premendo OK il dispositivo verrà riavviato subito.\nNon premere il touch fino al riavvio.\nContinuare?</translation>
+    </message>
+    <message>
         <source>Pressing ok will cause a device reboot in a few moments.
 Please, do not use the touch till it is restarted.
 Continue?</source>
@@ -3602,290 +2988,212 @@ Continue?</source>
 <context>
     <name>SettingsSystems</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="31"/>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="98"/>
+        <source>Energy</source>
+        <translation>Energia</translation>
+    </message>
+    <message>
         <source>Scenarios</source>
         <translation>Scenari</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="36"/>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="100"/>
-        <source>Energy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="26"/>
-        <location filename="../skins/default/Components/Settings/SettingsSystems.qml" line="102"/>
-        <source>VDE</source>
-        <translation type="unfinished"></translation>
+        <source>Video Door Entry</source>
+        <translation>Videocitofonia</translation>
     </message>
 </context>
 <context>
     <name>SettingsTeleloop</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsTeleloop.qml" line="25"/>
         <source>Associate</source>
-        <translation type="unfinished"></translation>
+        <translation>Associa</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsTeleloop.qml" line="43"/>
         <source>Associated</source>
-        <translation type="unfinished"></translation>
+        <translation>Associato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsTeleloop.qml" line="43"/>
         <source>Not associated</source>
-        <translation type="unfinished"></translation>
+        <translation>non associato</translation>
     </message>
 </context>
 <context>
     <name>SettingsVDE</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="32"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="96"/>
+        <source>auto open</source>
+        <translation>Apri porta</translation>
+    </message>
+    <message>
         <source>hands free</source>
-        <translation type="unfinished"></translation>
+        <translation>Mani Libere</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="34"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="40"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="46"/>
+        <source>Ringtone exclusion</source>
+        <translation>Esclusione della suoneria</translation>
+    </message>
+    <message>
+        <source>Teleloop</source>
+        <translation>Teleloop</translation>
+    </message>
+    <message>
         <source>Enabled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Abilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="36"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="42"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="48"/>
         <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="38"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="116"/>
-        <source>auto open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="50"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="155"/>
-        <source>Teleloop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="52"/>
         <source>Associated</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Associato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="54"/>
         <source>Not associated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="44"/>
-        <location filename="../skins/default/Components/Settings/SettingsVDE.qml" line="136"/>
-        <source>Ringtone exclusion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">non associato</translation>
     </message>
 </context>
 <context>
     <name>SettingsVdeMute</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVdeMute.qml" line="26"/>
-        <source>enable</source>
-        <translation type="unfinished"></translation>
+        <source>disable</source>
+        <translation type="obsolete">Disabilita</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVdeMute.qml" line="37"/>
-        <source>disable</source>
-        <translation type="unfinished"></translation>
+        <source>enable</source>
+        <translation type="obsolete">Abilita</translation>
     </message>
 </context>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="27"/>
-        <source>Firmware version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="28"/>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="32"/>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="37"/>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="42"/>
-        <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="31"/>
-        <source>Kernel version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="45"/>
-        <source>Multimedia source address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="35"/>
-        <source>Internal unit address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/Settings/SettingsVersion.qml" line="40"/>
         <source>External unit associated</source>
-        <translation type="unfinished"></translation>
+        <translation>Posto esterno associato</translation>
     </message>
-</context>
-<context>
-    <name>SideBar</name>
     <message>
-        <source>instant consumption</source>
-        <translation type="obsolete">consumo istantaneo</translation>
+        <source>Firmware version</source>
+        <translation>Versione firmware</translation>
+    </message>
+    <message>
+        <source>Internal unit address</source>
+        <translation>Indirizzo Posto Interno</translation>
+    </message>
+    <message>
+        <source>Kernel version</source>
+        <translation>Versione kernel</translation>
+    </message>
+    <message>
+        <source>Multimedia source address</source>
+        <translation>Indirizzo sorgente multimediale</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <translation>Sconosciuto</translation>
     </message>
 </context>
 <context>
     <name>SimpleScenario</name>
     <message>
-        <location filename="../skins/default/Components/Scenarios/SimpleScenario.qml" line="9"/>
         <source>activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Attiva</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/Scenarios/SimpleScenario.qml" line="24"/>
         <source>Command sent</source>
-        <translation type="unfinished"></translation>
+        <translation>Comando inviato</translation>
     </message>
 </context>
 <context>
     <name>SoundAmbient</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SoundAmbient.qml" line="46"/>
-        <location filename="../skins/default/Components/SoundDiffusion/SoundAmbient.qml" line="52"/>
         <source>source</source>
-        <translation type="unfinished">sorgente</translation>
+        <translation>Sorgente</translation>
     </message>
 </context>
 <context>
     <name>SoundDiffusion</name>
     <message>
-        <source>sound system</source>
-        <translation type="obsolete">diffusione sonora</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/SoundDiffusion.qml" line="8"/>
         <source>Sound System</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SoundSourceItem</name>
-    <message>
-        <source>source</source>
-        <translation type="obsolete">sorgente</translation>
+        <translation>Diffusione sonora</translation>
     </message>
 </context>
 <context>
     <name>SourceControl</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="18"/>
-        <source>source</source>
-        <translation type="unfinished">sorgente</translation>
+        <source>browse</source>
+        <translation>Sfoglia</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="19"/>
         <source>no active source</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">nessuna sorgente attiva</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="25"/>
-        <source>source change</source>
-        <translation type="unfinished">cambia sorgente</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="150"/>
-        <source>saved IP radios</source>
-        <translation type="unfinished">radio IP memorizzate</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="163"/>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="207"/>
-        <source>no title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="178"/>
-        <source>browse</source>
-        <translation type="unfinished">browse</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/SoundDiffusion/SourceControl.qml" line="208"/>
         <source>no album</source>
-        <translation type="unfinished"></translation>
+        <translation>nessun album</translation>
     </message>
-</context>
-<context>
-    <name>SourceSelection</name>
     <message>
-        <source>source change</source>
-        <translation type="obsolete">cambia sorgente</translation>
+        <source>no title</source>
+        <translation>nessun titolo</translation>
     </message>
     <message>
         <source>saved IP radios</source>
-        <translation type="obsolete">radio IP memorizzate</translation>
+        <translation>radio IP salvate</translation>
     </message>
     <message>
-        <source>browse</source>
-        <translation type="obsolete">browse</translation>
+        <source>source</source>
+        <translation>Sorgente</translation>
+    </message>
+    <message>
+        <source>source change</source>
+        <translation>sorgente cambiata</translation>
     </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
     <message>
-        <location filename="../../BtObjects/splitbasicscenario.h" line="54"/>
         <source>off</source>
-        <translation type="unfinished">off</translation>
-    </message>
-</context>
-<context>
-    <name>SplitBasicScenario</name>
-    <message>
-        <source>off</source>
-        <translation type="obsolete">off</translation>
+        <translation>Off</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoBtest</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="16"/>
-        <source>reset</source>
-        <translation type="unfinished"></translation>
+        <source> days</source>
+        <translation type="obsolete">giorni</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="29"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="76"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="29"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="76"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="63"/>
         <source>check</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Verifica</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="106"/>
+        <source>disabled</source>
+        <translation type="obsolete">Disabilitato</translation>
+    </message>
+    <message>
+        <source>enabled</source>
+        <translation type="obsolete">Abilitato</translation>
+    </message>
+    <message>
+        <source>reset</source>
+        <translation type="obsolete">Reset</translation>
+    </message>
+    <message>
         <source>Test every</source>
+        <translation>Esegui il test ogni</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished">Automatico</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoBtest.qml" line="107"/>
+        <source>Test Circuit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Breaker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 days</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3893,363 +3201,234 @@ Continue?</source>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="15"/>
-        <source>reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="28"/>
         <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <translation type="obsolete">Disabilitato</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoMenu.qml" line="28"/>
         <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <translation type="obsolete">Abilitato</translation>
+    </message>
+    <message>
+        <source>reset</source>
+        <translation type="obsolete">Reset</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished">Automatico</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="16"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="64"/>
+        <source>check</source>
+        <translation type="obsolete">Verifica</translation>
+    </message>
+    <message>
+        <source>disabled</source>
+        <translation type="obsolete">Disabilitato</translation>
+    </message>
+    <message>
+        <source>enabled</source>
+        <translation type="obsolete">Abilitato</translation>
+    </message>
+    <message>
         <source>reset</source>
+        <translation type="obsolete">Reset</translation>
+    </message>
+    <message>
+        <source>Automatic</source>
+        <translation type="unfinished">Automatico</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="93"/>
-        <source>disabled</source>
-        <translation type="unfinished">disattivo</translation>
+        <source>open</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="29"/>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="93"/>
-        <source>enabled</source>
-        <translation type="unfinished">attivo</translation>
+        <source>close</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/StopAndGoPlus.qml" line="80"/>
-        <source>check</source>
+        <source>Check Faults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabled</source>
+        <translation type="unfinished">Abilitato</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Supervision</name>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="39"/>
-        <source>load diagnostic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="91"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Chiuso</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="93"/>
+        <source>load diagnostic</source>
+        <translation>Diagnostica carichi</translation>
+    </message>
+    <message>
         <source>Open</source>
-        <translation type="unfinished">Apri</translation>
+        <translation type="obsolete">Apri</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="95"/>
         <source>Open - Block</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Circuito aperto per blocco</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="97"/>
-        <source>Open - Short Circuit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="99"/>
         <source>Open - Earth Fault</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ciruito aperto per guasto a terra</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="101"/>
         <source>Open - Over Current</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ciruito aperto per sovratensione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/EnergyManagement/Supervision.qml" line="102"/>
+        <source>Open - Short Circuit</source>
+        <translation type="obsolete">Circuito aperto per cortocircuito</translation>
+    </message>
+    <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Sconosciuto</translation>
     </message>
 </context>
 <context>
     <name>Systems</name>
     <message>
-        <source>antintrusion</source>
-        <translation type="obsolete">antintrusione</translation>
-    </message>
-    <message>
-        <source>temperature control</source>
-        <translation type="obsolete">termoregolazione</translation>
-    </message>
-    <message>
-        <source>lighting</source>
-        <translation type="obsolete">illuminazione</translation>
-    </message>
-    <message>
-        <source>sound diffusion system</source>
-        <translation type="obsolete">diffusione sonora</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Systems.qml" line="13"/>
         <source>systems</source>
-        <translation>sistemi</translation>
+        <translation type="obsolete">Sistemi</translation>
+    </message>
+    <message>
+        <source>functions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>TextDialog</name>
     <message>
-        <location filename="../skins/default/Components/TextDialog.qml" line="26"/>
-        <source>Scenario configuration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/TextDialog.qml" line="45"/>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/TextDialog.qml" line="73"/>
-        <source>ok</source>
-        <translation type="unfinished">ok</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/TextDialog.qml" line="86"/>
         <source>cancel</source>
-        <translation type="unfinished">annulla</translation>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Se non hai cancellato lo scenario, andrai ad aggiungere le azioni allo scenario pre-esistente. Premere OK se si desidera iniziare la programmazione dello scenario, CANCEL se si desidera annullare l&apos;operazione.</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Scenario configuration</source>
+        <translation>Configurazione Scenari</translation>
     </message>
 </context>
 <context>
     <name>ThermalControlUnit</name>
     <message>
-        <source>unsaved changes. continue?</source>
-        <translation type="obsolete">modifiche non salvate. continuare?</translation>
+        <source>duration</source>
+        <translation>Tempo</translation>
+    </message>
+    <message>
+        <source>mode</source>
+        <translation>Modalità</translation>
+    </message>
+    <message>
+        <source>next program</source>
+        <translation>programma successivo</translation>
+    </message>
+    <message>
+        <source>next scenario</source>
+        <translation>scenario successivo</translation>
+    </message>
+    <message>
+        <source>season</source>
+        <translation>Stagione</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>temperatura impostata</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.\nIf you choose ok they will be lost.\nContinue?</source>
+        <translation type="obsolete">Ci sono modifiche non salvate in corso.\nSe si sceglie OK saranno persi.\nContinuare?</translation>
     </message>
     <message>
         <source>°C</source>
         <translation type="obsolete">°C</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="159"/>
-        <source>season</source>
-        <translation>funzionamento</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="174"/>
-        <source>mode</source>
-        <translation>modalità</translation>
-    </message>
-    <message>
-        <source>valid until</source>
-        <translation type="obsolete">attivo fino al</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="243"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="321"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="360"/>
-        <source>next program</source>
-        <translation>programma successivo</translation>
-    </message>
-    <message>
-        <source>programs</source>
-        <translation type="obsolete">programma</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="192"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="284"/>
-        <source>temperature set</source>
-        <translation>temperatura impostata</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="273"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="279"/>
-        <source>duration</source>
-        <translation>durata</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="386"/>
-        <source>next scenario</source>
-        <translation>scenario successivo</translation>
-    </message>
-    <message>
-        <source>scenarios</source>
-        <translation type="obsolete">scenari</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlUnit.qml" line="72"/>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="165"/>
         <source>Weekly</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="169"/>
         <source>Weekday</source>
-        <translation>Feriale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="173"/>
         <source>Holiday</source>
-        <translation>Festivo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="175"/>
         <source>Antifreeze</source>
-        <translation>Antigelo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="178"/>
         <source>Manual</source>
-        <translation>Manuale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="179"/>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="339"/>
         <source>Timed Manual</source>
-        <translation>Manuale temporizzato</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../BtObjects/thermalobjects.cpp" line="349"/>
         <source>Scenarios</source>
         <translation type="unfinished">Scenari</translation>
     </message>
 </context>
 <context>
-    <name>ThermalControlUnitDate</name>
-    <message>
-        <source>data</source>
-        <translation type="obsolete">data</translation>
-    </message>
-    <message>
-        <source>mesi</source>
-        <translation type="obsolete">mesi</translation>
-    </message>
-    <message>
-        <source>giorni</source>
-        <translation type="obsolete">day</translation>
-    </message>
-    <message>
-        <source>settembre</source>
-        <translation type="obsolete">september</translation>
-    </message>
-    <message>
-        <source>novembre</source>
-        <translation type="obsolete">november</translation>
-    </message>
-    <message>
-        <source>dicembre</source>
-        <translation type="obsolete">december</translation>
-    </message>
-    <message>
-        <source>26</source>
-        <translation type="obsolete">26</translation>
-    </message>
-    <message>
-        <source>27</source>
-        <translation type="obsolete">27</translation>
-    </message>
-    <message>
-        <source>ottobre</source>
-        <translation type="obsolete">october</translation>
-    </message>
-    <message>
-        <source>gennaio</source>
-        <translation type="obsolete">january</translation>
-    </message>
-    <message>
-        <source>28</source>
-        <translation type="obsolete">28</translation>
-    </message>
-    <message>
-        <source>29</source>
-        <translation type="obsolete">29</translation>
-    </message>
-    <message>
-        <source>30</source>
-        <translation type="obsolete">30</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlUnitTime</name>
-    <message>
-        <source>ore</source>
-        <translation type="obsolete">hour</translation>
-    </message>
-    <message>
-        <source>minuti</source>
-        <translation type="obsolete">minuti</translation>
-    </message>
-    <message>
-        <source>26</source>
-        <translation type="obsolete">26</translation>
-    </message>
-    <message>
-        <source>27</source>
-        <translation type="obsolete">27</translation>
-    </message>
-    <message>
-        <source>28</source>
-        <translation type="obsolete">28</translation>
-    </message>
-    <message>
-        <source>29</source>
-        <translation type="obsolete">29</translation>
-    </message>
-    <message>
-        <source>30</source>
-        <translation type="obsolete">30</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlledProbe</name>
     <message>
-        <source>unsaved changes. continue?</source>
-        <translation type="obsolete">modifiche non salvate. continuare?</translation>
+        <source>fancoil speed</source>
+        <translation>Velocità del fancoil</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>modalità</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>temperatura impostata</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.\nIf you choose ok they will be lost.\nContinue?</source>
+        <translation type="obsolete">Ci sono modifiche non salvate in corso.\nSe si sceglie OK saranno persi.\nContinuare?</translation>
     </message>
     <message>
         <source>°C</source>
         <translation type="obsolete">°C</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="84"/>
-        <source>modes</source>
-        <translation>modalità</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="113"/>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="182"/>
-        <source>fancoil speed</source>
-        <translation>velocità fancoil</translation>
-    </message>
-    <message>
-        <source>fan coil speed</source>
-        <translation type="obsolete">velocità fancoil</translation>
-    </message>
-    <message>
-        <source>high</source>
-        <translation type="obsolete">alta</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="166"/>
-        <source>temperature set</source>
-        <translation>temperatura impostata</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalControlledProbe.qml" line="37"/>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
@@ -4259,144 +3438,108 @@ Continue?</source>
 <context>
     <name>ThermalNames</name>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="10"/>
-        <source>summer</source>
-        <translation>estate</translation>
+        <source></source>
+        <translation>--</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="11"/>
-        <source>winter</source>
-        <translation>inverno</translation>
+        <source>antifreeze</source>
+        <translation>Antigelo</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="17"/>
-        <source>timed manual</source>
-        <translation>manuale temporizzato</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="18"/>
-        <source>weekly programs</source>
-        <translation>programmi settimanali</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="19"/>
-        <source>scenario</source>
-        <translation>scenario</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="21"/>
-        <source>weekday</source>
-        <translation>feriale</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="20"/>
-        <source>holiday</source>
-        <translation>festivo</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="24"/>
-        <location filename="../skins/default/ThermalNames.qml" line="55"/>
         <source>auto</source>
-        <translation>auto</translation>
+        <translation>Auto</translation>
     </message>
     <message>
-        <source>--</source>
-        <translation type="obsolete">--</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="31"/>
-        <location filename="../skins/default/ThermalNames.qml" line="47"/>
-        <source>Off</source>
-        <translation>Off</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="32"/>
-        <source>Heating</source>
-        <translation>Riscaldamento</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="33"/>
-        <source>Cooling</source>
-        <translation>Raffreddamento</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="34"/>
-        <source>Fan</source>
-        <translation>Ventilato</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="35"/>
-        <source>Dry</source>
-        <translation>Asciutto</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="36"/>
-        <location filename="../skins/default/ThermalNames.qml" line="39"/>
         <source>Automatic</source>
         <translation>Automatico</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="40"/>
-        <source>Low</source>
-        <translation>Basso</translation>
+        <source>Cooling</source>
+        <translation>Raffrescamento</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="41"/>
-        <source>Medium</source>
-        <translation>Medio</translation>
+        <source>Dry</source>
+        <translation>Deumidificatore</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="42"/>
+        <source>Fan</source>
+        <translation>Ventilatore</translation>
+    </message>
+    <message>
+        <source>Heating</source>
+        <translation>Riscaldamento</translation>
+    </message>
+    <message>
         <source>High</source>
-        <translation>Alto</translation>
+        <translation>High</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="43"/>
-        <source>Silent</source>
-        <translation>Silenzioso</translation>
+        <source>holiday</source>
+        <translation>Festivo</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="48"/>
-        <source>On</source>
-        <translation>On</translation>
+        <source>Low</source>
+        <translation>Bassa</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="52"/>
-        <source>min</source>
-        <translation>min</translation>
+        <source>manual</source>
+        <translation>Manuale</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="53"/>
+        <source>max</source>
+        <translation>Max</translation>
+    </message>
+    <message>
         <source>med</source>
         <translation>med</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="54"/>
-        <source>max</source>
-        <translation>max</translation>
+        <source>Medium</source>
+        <translation>Media</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="15"/>
-        <location filename="../skins/default/ThermalNames.qml" line="25"/>
-        <source>antifreeze</source>
-        <translation>antigelo</translation>
+        <source>min</source>
+        <translation>min</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="16"/>
-        <location filename="../skins/default/ThermalNames.qml" line="26"/>
-        <source>manual</source>
-        <translation>manuale</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/ThermalNames.qml" line="14"/>
-        <location filename="../skins/default/ThermalNames.qml" line="27"/>
         <source>off</source>
-        <translation>off</translation>
+        <translation>Off</translation>
     </message>
     <message>
-        <location filename="../skins/default/ThermalNames.qml" line="32"/>
-        <source></source>
-        <translation></translation>
+        <source>On</source>
+        <translation>On</translation>
+    </message>
+    <message>
+        <source>scenario</source>
+        <translation>Scenario</translation>
+    </message>
+    <message>
+        <source>Silent</source>
+        <translation>Tacito</translation>
+    </message>
+    <message>
+        <source>summer</source>
+        <translation>Estivo</translation>
+    </message>
+    <message>
+        <source>timed manual</source>
+        <translation>Manuale temporizzato</translation>
+    </message>
+    <message>
+        <source>weekday</source>
+        <translation>Giorni feriali</translation>
+    </message>
+    <message>
+        <source>weekly programs</source>
+        <translation>Programmi settimanali</translation>
+    </message>
+    <message>
+        <source>winter</source>
+        <translation>Inverno</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4409,264 +3552,211 @@ Continue?</source>
 <context>
     <name>ThermalRegulation</name>
     <message>
-        <location filename="../skins/default/ThermalRegulation.qml" line="7"/>
         <source>temperature control</source>
-        <translation>termoregolazione</translation>
+        <translation>Termoregolazione</translation>
     </message>
 </context>
 <context>
     <name>ThermalRegulationItems</name>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="108"/>
         <source>Air Conditioning</source>
-        <translation>Aria condizionata</translation>
+        <translation>Climatizzazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="112"/>
-        <source>Not Controlled Probes</source>
-        <translation>Sonde non controllate</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/Components/ThermalRegulation/ThermalRegulationItems.qml" line="116"/>
         <source>External Probes</source>
         <translation>Sonde esterne</translation>
     </message>
+    <message>
+        <source>Not Controlled Probes</source>
+        <translation>Sonde non controllate</translation>
+    </message>
 </context>
 <context>
-    <name>ThermalRegulator</name>
+    <name>Time</name>
     <message>
-        <source>°C</source>
-        <translation type="obsolete">°C</translation>
+        <source>format</source>
+        <translation type="obsolete">Formato</translation>
+    </message>
+</context>
+<context>
+    <name>Timezone</name>
+    <message>
+        <source>time zone</source>
+        <translation type="obsolete">Fuso orario</translation>
     </message>
 </context>
 <context>
     <name>VideoCamera</name>
     <message>
-        <location filename="../skins/default/VideoCamera.qml" line="105"/>
-        <source>stairlight</source>
-        <translation type="unfinished"></translation>
+        <source>CAMERA EXTERNAL PLACE #1</source>
+        <translation type="obsolete">CAMERA ESTERNA #1</translation>
     </message>
     <message>
-        <location filename="../skins/default/VideoCamera.qml" line="122"/>
         <source>door lock</source>
-        <translation type="unfinished"></translation>
+        <translation>Serratura</translation>
     </message>
     <message>
-        <location filename="../skins/default/VideoCamera.qml" line="140"/>
+        <source>stairlight</source>
+        <translation>Luce scala</translation>
+    </message>
+    <message>
         <source>volume</source>
-        <translation type="unfinished">volume</translation>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntry</name>
     <message>
-        <location filename="../skins/default/VideoDoorEntry.qml" line="8"/>
         <source>video door entry</source>
-        <translation type="unfinished"></translation>
+        <translation>Videocitofonia</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntryItems</name>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/VideoDoorEntryItems.qml" line="60"/>
         <source>intercom</source>
-        <translation type="unfinished"></translation>
+        <translation>Intercom</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/VideoDoorEntryItems.qml" line="62"/>
         <source>pager</source>
-        <translation type="unfinished"></translation>
+        <translation>cercapersone</translation>
     </message>
     <message>
-        <location filename="../skins/default/Components/VideoDoorEntry/VideoDoorEntryItems.qml" line="58"/>
         <source>video control</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntryNames</name>
-    <message>
-        <location filename="../skins/default/VideoDoorEntryNames.qml" line="8"/>
-        <source></source>
-        <translation></translation>
+        <translation>Videocontrollo</translation>
     </message>
 </context>
 <context>
     <name>VideoPlayer</name>
     <message>
-        <location filename="../skins/default/VideoPlayer.qml" line="279"/>
         <source>Loop detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Rilevato loop</translation>
     </message>
 </context>
 <context>
     <name>VolumeGeneral</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/VolumeGeneral.qml" line="21"/>
         <source>volume</source>
-        <translation>volume</translation>
+        <translation>Volume</translation>
     </message>
 </context>
 <context>
     <name>VolumePopup</name>
     <message>
-        <location filename="../skins/default/Components/SoundDiffusion/VolumePopup.qml" line="24"/>
         <source>mute</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WeatherInfoPage</name>
-    <message>
-        <source>multimedia</source>
-        <translation type="obsolete">multimedia</translation>
+        <translation>muto</translation>
     </message>
 </context>
 <context>
     <name>browsermain</name>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="177"/>
         <source>Authentication required</source>
-        <translation type="unfinished"></translation>
+        <translation>Richiesta autenticazione</translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="178"/>
-        <source>User name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/browsermain.qml" line="180"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>Password</translation>
     </message>
     <message>
-        <location filename="../skins/default/browsermain.qml" line="198"/>
-        <source>Untrusted SSL connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../skins/default/browsermain.qml" line="200"/>
         <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa connessione non è attendibile. Vuoi continuare?</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Connessione SSL non attendibile</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Nome Utente</translation>
     </message>
 </context>
 <context>
     <name>popup</name>
     <message>
-        <location filename="../skins/default/js/popup.js" line="27"/>
-        <source>ANTINTRUSION</source>
-        <translation>ANTINTRUSIONE</translation>
+        <source>activated</source>
+        <translation>Attivo</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="37"/>
-        <source>More info</source>
-        <translation>Maggiori informazioni</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/js/popup.js" line="38"/>
-        <location filename="../skins/default/js/popup.js" line="64"/>
-        <location filename="../skins/default/js/popup.js" line="165"/>
-        <location filename="../skins/default/js/popup.js" line="194"/>
-        <location filename="../skins/default/js/popup.js" line="223"/>
-        <location filename="../skins/default/js/popup.js" line="250"/>
-        <source>Ignore</source>
-        <translation>Ignora</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/js/popup.js" line="57"/>
-        <source>SUPERVISION</source>
-        <translation>SUPERVISIONE</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/js/popup.js" line="63"/>
-        <location filename="../skins/default/js/popup.js" line="164"/>
-        <location filename="../skins/default/js/popup.js" line="193"/>
-        <location filename="../skins/default/js/popup.js" line="249"/>
-        <source>Show</source>
-        <translation>Visualizza</translation>
-    </message>
-    <message>
-        <location filename="../skins/default/js/popup.js" line="85"/>
         <source>ALARM CLOCK</source>
         <translation>SVEGLIA</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="91"/>
-        <source>Stop</source>
-        <translation>Stop</translation>
+        <source>ANTINTRUSION</source>
+        <translation>ANTINTRUSIONE</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="92"/>
-        <source>Postpone</source>
-        <translation>Rimanda</translation>
+        <source>available</source>
+        <translation>Disponibile</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="129"/>
-        <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
+        <source>Close</source>
+        <translation>Chiudi</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="132"/>
-        <source>activated</source>
-        <translation>attivato</translation>
+        <source>Command sent</source>
+        <translation>Comando inviato</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="158"/>
-        <location filename="../skins/default/js/popup.js" line="187"/>
-        <location filename="../skins/default/js/popup.js" line="243"/>
         <source>ENERGY MANAGEMENT</source>
-        <translation>GESTIONE ENERGETICA</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../skins/default/js/popup.js" line="161"/>
-        <source>Threshold %n exceeded</source>
-        <translation>
-            <numerusform>Soglia %n superata</numerusform>
-            <numerusform></numerusform>
-        </translation>
+        <translation>GESTIONE ENERGIA</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="190"/>
+        <source>Energy Monthly Report</source>
+        <translation>Rapporto energia mensile</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignora</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MESSAGGI</translation>
+    </message>
+    <message>
         <source>Monthly goal reached</source>
         <translation>Obiettivo mensile raggiunto</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="216"/>
-        <source>MESSAGES</source>
-        <translation>MESSAGGI</translation>
+        <source>More info</source>
+        <translation>Maggiori informazioni</translation>
     </message>
     <message numerus="yes">
-        <location filename="../skins/default/js/popup.js" line="219"/>
         <source>new message(s)</source>
-        <translation>
-            <numerusform>nuovi messaggi</numerusform>
+        <translation type="unfinished">
+            <numerusform>nuovo(i) messaggio(i)</numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="222"/>
+        <source>Postpone</source>
+        <translation>Rinvia</translation>
+    </message>
+    <message>
         <source>Read</source>
         <translation>Leggi</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="245"/>
-        <source>Energy Monthly Report</source>
-        <translation>Report energetico mensile</translation>
+        <source>SCENARIO</source>
+        <translation>SCENARIO</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="246"/>
-        <source>available</source>
-        <translation>disponibile</translation>
+        <source>Show</source>
+        <translation>Mostra</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="131"/>
-        <source>Command sent</source>
-        <translation type="unfinished"></translation>
+        <source>Stop</source>
+        <translation>Arresta</translation>
     </message>
     <message>
-        <location filename="../skins/default/js/popup.js" line="135"/>
-        <source>Close</source>
-        <translation type="unfinished">Chiudi</translation>
+        <source>SUPERVISION</source>
+        <translation>Supervisione</translation>
+    </message>
+    <message numerus="yes">
+        <source>Threshold %n exceeded</source>
+        <translation type="unfinished">
+            <numerusform>Soglia %n superata</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 </TS>

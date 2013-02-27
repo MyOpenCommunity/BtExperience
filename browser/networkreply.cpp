@@ -6,7 +6,7 @@
 namespace
 {
 	// the explicit newlines are to make the string readable in Qt Linguist
-	QString error_page = QT_TRANSLATE_NOOP("BtNetworkAccessManager",
+	const char *error_page = QT_TRANSLATE_NOOP("BtNetworkReply",
 		"<html>\n"
 		"<head>\n"
 		"<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>\n"
@@ -154,14 +154,22 @@ void BtNetworkReply::handleError(QNetworkReply::NetworkError error_code)
 {
 	setError(error_code, errorString());
 
-	// if the error response does not ahve any content, use a pre-defined error page
+	// if the error response does not have any content, use a pre-defined error page
 	if (buffer.isEmpty())
 	{
-		QString temp = error_page;
+		QString temp = tr(error_page), encoded;
 
 		temp.replace("$SERVER", reply->request().url().host());
 
-		buffer = temp.toUtf8();
+		for (int i = 0; i < temp.size(); ++i)
+		{
+			if (temp[i] < 128)
+				encoded.append(temp[i]);
+			else
+				encoded.append(QString("&#%1;").arg(temp[i].unicode()));
+		}
+
+		buffer = encoded.toUtf8();
 	}
 
 	emit error(error_code);
