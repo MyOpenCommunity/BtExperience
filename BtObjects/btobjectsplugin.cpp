@@ -519,6 +519,7 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdSwitchboard:
 			obj_list = parseSwitchboard(xml_obj);
+			vde.append(obj_list);
 			break;
 		case ObjectInterface::IdPager:
 			pager = true;
