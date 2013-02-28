@@ -40,7 +40,7 @@ MenuColumn {
             boxInfoState: MenuItem.boxInfoState(itemObject)
             boxInfoText: MenuItem.boxInfoText(itemObject)
             hasChild: MenuItem.hasChild(itemObject)
-            onDelegateClicked: element.loadColumn(appliance, itemObject.name, itemObject)
+            onDelegateTouched: element.loadColumn(appliance, itemObject.name, itemObject)
             Component.onCompleted: Script.requestLoadStatus(itemObject)
             Component.onDestruction: Script.stopLoadRequests(itemObject)
         }

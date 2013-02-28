@@ -26,14 +26,12 @@ MenuColumn {
         id: paginator
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
-            editable: true
             status: MenuItem.status(itemObject)
             hasChild: MenuItem.hasChild(itemObject)
             boxInfoState: MenuItem.boxInfoState(itemObject)
             boxInfoText: MenuItem.boxInfoText(itemObject)
-            onClicked: {
-                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
-            }
+            editable: true
+            onDelegateClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
         }
         model: objectModel
         onCurrentPageChanged: column.closeChild()

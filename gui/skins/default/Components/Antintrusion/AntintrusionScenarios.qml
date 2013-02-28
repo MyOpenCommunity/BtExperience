@@ -30,12 +30,11 @@ MenuColumn {
         }
 
         delegate: MenuItemDelegate {
-            editable: true
             itemObject: scenariosModel.getObject(index)
-
             selectOnClick: false // we don't want to break the binding for currentIndex
             description: itemObject.description
-            onClicked: column.scenarioSelected(itemObject)
+            editable: true
+            onDelegateClicked: column.scenarioSelected(itemObject)
         }
 
         model: scenariosModel

@@ -35,7 +35,7 @@ MenuColumn {
             hasChild: true
             enabled: Script.mediaItemEnabled(itemObject, restoredItem)
             onEnabledChanged: if (!Script.mediaItemMounted(itemObject)) column.closeChild()
-            onDelegateClicked: pagList._openColumn(itemObject, false)
+            onDelegateTouched: pagList._openColumn(itemObject, false)
         }
 
         model: modelList

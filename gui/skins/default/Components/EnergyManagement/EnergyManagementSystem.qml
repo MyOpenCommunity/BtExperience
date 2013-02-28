@@ -83,7 +83,7 @@ MenuColumn {
             name: model.name
             hasChild: true
             enabled: model.name === qsTr("load management") ? loadManagementModel.count > 0 : true
-            onClicked: element.loadColumn(model.component, model.name)
+            onDelegateTouched: element.loadColumn(model.component, model.name)
         }
         model: listModel
     }

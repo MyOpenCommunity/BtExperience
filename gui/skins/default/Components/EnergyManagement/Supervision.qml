@@ -65,7 +65,7 @@ MenuColumn {
                 description: Script.description(itemObject)
                 status: Script.status(itemObject)
                 hasChild: Script.hasChild(itemObject)
-                onDelegateClicked: {
+                onDelegateTouched: {
                     privateProps.currentIndex = -1
                     element.loadColumn(mapping.getComponent(itemObject.objectId), name, itemObject)
                 }

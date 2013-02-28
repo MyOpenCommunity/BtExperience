@@ -25,17 +25,12 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
-            editable: true
-
             status: Script.status(itemObject)
-
             hasChild: true
             boxInfoState: Script.boxInfoState(itemObject)
             boxInfoText: Script.boxInfoText(itemObject)
-
-            onClicked: {
-                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
-            }
+            editable: true
+            onDelegateClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, objectModel.getObject(model.index))
         }
         model: objectModel
 
