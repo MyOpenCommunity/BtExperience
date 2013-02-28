@@ -28,7 +28,7 @@ MenuColumn {
             itemObject: listModel.getObject(index)
             name: pageObject.names.get('LANGUAGE', itemObject.name)
             hasChild: false
-            onClicked: textLanguageChanged(itemObject.name)
+            onDelegateTouched: textLanguageChanged(itemObject.name)
         }
         model: listModel
     }

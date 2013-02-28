@@ -98,7 +98,7 @@ MenuColumn {
                 itemObject: quicklinksModel.getObject(index)
                 name: itemObject.description
                 hasChild: true
-                onDelegateClicked: {
+                onDelegateTouched: {
                     privateProps.currentIndex = -1
                     column.loadColumn(multimediaComponent, name, itemObject)
                 }

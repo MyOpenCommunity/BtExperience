@@ -47,7 +47,7 @@ MenuColumn {
                 itemObject: objModel.getObject(index)
                 name: global.ringtoneManager.descriptionFromType(itemObject.name)
                 hasChild: true
-                onClicked: column.loadColumn(settingsRingtone, name, undefined, {type: itemObject.name})
+                onDelegateTouched: column.loadColumn(settingsRingtone, name, undefined, {type: itemObject.name})
             }
             model: objModel
         }

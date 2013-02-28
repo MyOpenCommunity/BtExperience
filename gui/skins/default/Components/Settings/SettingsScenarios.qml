@@ -50,8 +50,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: scenariosModule.getObject(index)
             hasChild: true
-
-            onClicked: openColumn(itemObject)
+            onDelegateTouched: openColumn(itemObject)
         }
 
         function openColumn(itemObject) {

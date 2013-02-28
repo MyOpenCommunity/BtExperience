@@ -44,7 +44,7 @@ MenuColumn {
             itemObject: profilesModel.getObject(index)
             hasChild: true
             name: itemObject.description
-            onClicked: openColumn(itemObject)
+            onDelegateTouched: openColumn(itemObject)
         }
 
         function openColumn(itemObject) {

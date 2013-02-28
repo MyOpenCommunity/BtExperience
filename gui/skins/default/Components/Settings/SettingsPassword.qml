@@ -20,7 +20,7 @@ MenuColumn {
 
             delegate: MenuItemDelegate {
                 name: model.name
-                onClicked: {
+                onDelegateTouched: {
                     // asks for password only when changing value
                     if (global.passwordEnabled === value)
                         return

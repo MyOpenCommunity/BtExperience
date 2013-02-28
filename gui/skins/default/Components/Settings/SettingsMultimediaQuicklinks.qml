@@ -28,9 +28,9 @@ MenuColumn {
         onCurrentPageChanged: column.closeChild()
         delegate: MenuItemDelegate {
             id: delegate
-            editable: true
             itemObject: quicklinksModel.getObject(index)
             hasChild: true
+            editable: true
             onDelegateClicked: column.loadColumn(renameDeleteItem, name, itemObject)
         }
         model: quicklinksModel

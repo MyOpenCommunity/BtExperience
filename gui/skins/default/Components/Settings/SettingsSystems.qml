@@ -63,8 +63,7 @@ MenuColumn {
             name: model.name
             hasChild: model.component !== undefined
                       && model.component !== null
-
-            onClicked: {
+            onDelegateTouched: {
                 if (model.name !== "")
                     column.loadColumn(model.component, model.name)
             }
