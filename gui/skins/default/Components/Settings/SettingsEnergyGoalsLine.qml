@@ -71,7 +71,7 @@ MenuColumn {
                     description: dataModel.goals[index].toFixed(dataModel.decimals) + " " + dataModel.cumulativeUnit
                     hasChild: true
                     isSelected: privateProps.currentIndex === index
-                    onClicked: {
+                    onTouched: {
                         privateProps.currentIndex = index
                         column.loadColumn(panelComponent, privateProps.getMonthName(index), dataModel, {monthIndex: index})
                     }

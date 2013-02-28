@@ -25,7 +25,7 @@ MenuColumn {
             name: qsTr("Add Clock")
             isSelected: privateProps.currentIndex === 1
 
-            onClicked: {
+            onTouched: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 var a = myHomeModels.createAlarmClock()

@@ -19,7 +19,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("enable")
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 global.keepingHistory = true
@@ -29,7 +29,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("disable")
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 global.keepingHistory = false

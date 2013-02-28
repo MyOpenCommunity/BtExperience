@@ -18,7 +18,7 @@ MenuColumn {
     Column {
         MenuItem {
             name: qsTr("Rename")
-            onClicked: {
+            onTouched: {
                 pageObject.installPopup(quicklinkEditComponent)
                 pageObject.popupLoader.item.favoriteItem = column.dataModel
             }
@@ -26,7 +26,7 @@ MenuColumn {
 
         MenuItem {
             name: qsTr("Delete")
-            onClicked: pageObject.installPopup(deleteConfirmDialog)
+            onTouched: pageObject.installPopup(deleteConfirmDialog)
         }
     }
 

@@ -23,7 +23,7 @@ MenuColumn {
         MenuItem {
             id: homePageItem
             name: qsTr("Change Home Page")
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.closeChild()
@@ -45,7 +45,7 @@ MenuColumn {
             description: global.keepingHistory ? qsTr("Enabled") : qsTr("Disabled")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(historyComponent, name)
@@ -61,7 +61,7 @@ MenuColumn {
         MenuItem {
             id: clearHistoryItem
             name: qsTr("Clear History")
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 column.closeChild()

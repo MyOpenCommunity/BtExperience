@@ -38,7 +38,7 @@ MenuColumn {
             description: pageObject.names.get('SKIN', homeProperties.skin)
             hasChild: true
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(skin, name)
@@ -49,7 +49,7 @@ MenuColumn {
             name: qsTr("Change background image")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel, {homeCustomization: true})
@@ -59,7 +59,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("Restore background image")
             isSelected: privateProps.currentIndex === 3
-            onClicked: {
+            onTouched: {
                 privateProps.currentIndex = -1
                 pageObject.installPopup(okCancelDialogRestore)
             }
@@ -69,7 +69,7 @@ MenuColumn {
             name: qsTr("Quicklinks")
             isSelected: privateProps.currentIndex === 4
             hasChild: true
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
                 column.loadColumn(quicklinks, qsTr("Quicklinks"))

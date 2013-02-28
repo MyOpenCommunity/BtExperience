@@ -27,7 +27,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("Add Quicklink")
             enabled: quicklinksModel.count < 7
-            onClicked: {
+            onTouched: {
                 column.closeChild()
                 Stack.pushPage("AddQuicklink.qml", {"homeCustomization": true})
             }

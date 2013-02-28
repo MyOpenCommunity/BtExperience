@@ -19,7 +19,7 @@ MenuColumn {
             name: qsTr("tariffs")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
 
@@ -37,7 +37,7 @@ MenuColumn {
             name: qsTr("consumption goals")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
 
@@ -55,7 +55,7 @@ MenuColumn {
             name: qsTr("thresholds")
             hasChild: true
             isSelected: privateProps.currentIndex === 3
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 column.loadColumn(thresholdsComponent, name)
