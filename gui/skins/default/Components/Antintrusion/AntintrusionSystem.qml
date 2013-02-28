@@ -136,6 +136,11 @@ MenuColumn {
         }
     }
 
+    ObjectModel {
+        id: alarmsModel
+        source: privateProps.model.alarms
+    }
+
     Column {
         id: antintrusionColumn
         MenuItem {
@@ -172,11 +177,6 @@ MenuColumn {
             onClicked: privateProps.showAlarmLog()
             boxInfoState: numberOfAlarms > 0 ? "warning" : ""
             boxInfoText: numberOfAlarms
-
-            ObjectModel {
-                id: alarmsModel
-                source: privateProps.model.alarms
-            }
         }
         MenuItem {
             id: scenarioItem
