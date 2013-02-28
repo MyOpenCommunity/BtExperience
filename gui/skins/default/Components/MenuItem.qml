@@ -31,6 +31,7 @@ Item {
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)
     signal released(variant itemReleased)
+    signal touched(variant itemTouched)
     signal editCompleted()
 
     // 'virtual' function to reimplement pressAndHold behaviour in derived components
@@ -214,11 +215,20 @@ Item {
     BeepingMouseArea {
         id: mousearea
         anchors.fill: parent
-        pressAndHoldEnabled: true
+        pressAndHoldEnabled: menuItem.editable
         onHeld: if (menuItem.editable) { startEdit() }
         onClicked: menuItem.clicked(menuItem)
-        onPressed: menuItem.pressed(menuItem)
+        onPressed: {
+            touchTimer.restart()
+            menuItem.pressed(menuItem)
+        }
         onReleased: menuItem.released(menuItem)
+
+        Timer {
+            id: touchTimer
+            interval: 50
+            onTriggered: menuItem.touched(menuItem)
+        }
     }
 
 
