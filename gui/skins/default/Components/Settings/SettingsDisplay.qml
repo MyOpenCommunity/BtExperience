@@ -25,8 +25,7 @@ MenuColumn {
             name: model.name
             hasChild: model.type === "column"
             description: privateProps.description(model.name)
-
-            onClicked: {
+            onDelegateTouched: {
                 if (model.type === "column")
                     column.loadColumn(model.component, model.name)
                 else

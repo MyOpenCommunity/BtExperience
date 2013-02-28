@@ -47,7 +47,7 @@ MenuColumn {
                 name: itemObject ? itemObject.description : ""
                 description: itemObject ? MenuItem.description(itemObject) : ""
                 status: itemObject ? MenuItem.status(itemObject) : -1
-                onClicked: {
+                onDelegateTouched: {
                     privateProps.currentIndex = -1
                     column.loadColumn(controlAlarmClockComponent, itemObject.description, itemObject)
                 }

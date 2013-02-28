@@ -18,7 +18,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             name: pageObject.names.get('CONFIG', modelData)
             isSelected: platform.lanConfig === modelData
-            onClicked: {
+            onDelegateTouched: {
                 platform.lanConfig = modelData
                 column.closeColumn()
             }

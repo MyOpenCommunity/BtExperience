@@ -29,7 +29,7 @@ MenuColumn {
             itemObject: listModel.getObject(index)
             name: pageObject.names.get('KEYBOARD', itemObject.name)
             hasChild: false
-            onClicked: keyboardLayoutChanged(itemObject.name)
+            onDelegateTouched: keyboardLayoutChanged(itemObject.name)
         }
         model: listModel
     }

@@ -34,7 +34,7 @@ MenuColumn {
             itemObject: roomsModel.getObject(index)
             name: itemObject.description
             hasChild: true
-            onClicked: openColumn(itemObject)
+            onDelegateTouched: openColumn(itemObject)
         }
         model: roomsModel
     }

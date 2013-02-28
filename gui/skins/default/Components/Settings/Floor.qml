@@ -57,7 +57,7 @@ MenuColumn {
             itemObject: floorsModel.getObject(index)
             name: itemObject.description
             hasChild: true
-            onClicked: openColumn(itemObject)
+            onDelegateTouched: openColumn(itemObject)
         }
 
         model: floorsModel
