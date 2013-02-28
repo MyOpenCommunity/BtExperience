@@ -55,16 +55,16 @@ void PlatformSettings::apply()
 		t = t.addSecond(-t.second()); // resetting seconds to zero
 		dev->setDateTime(to_apply[BT_DATE].toDate(), t);
 	}
-
-	if (to_apply[BT_TIME] != current[BT_TIME])
+	else if (to_apply[BT_TIME] != current[BT_TIME])
 	{
 		BtTime t = to_apply[BT_TIME].value<BtTime>();
 		t = t.addSecond(-t.second()); // resetting seconds to zero
 		dev->setTime(t);
 	}
-
-	if (to_apply[BT_DATE] != current[BT_DATE])
+	else if (to_apply[BT_DATE] != current[BT_DATE])
+	{
 		dev->setDate(to_apply[BT_DATE].toDate());
+	}
 
 	current = to_apply;
 
