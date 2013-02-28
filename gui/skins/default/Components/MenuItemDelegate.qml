@@ -6,12 +6,12 @@ MenuItem {
 
     property bool selectOnClick: true
     property variant itemObject
-    name: itemObject.name
 
     signal delegateClicked(int index)
 
-    onEditCompleted: itemObject.name = name
+    name: itemObject.name
 
+    onEditCompleted: itemObject.name = name
     onClicked: {
         // Avoid destroy and recreate the items if the element is already selected
         if (itemDelegate.ListView.isCurrentItem)
