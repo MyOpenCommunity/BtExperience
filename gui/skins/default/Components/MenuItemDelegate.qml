@@ -8,6 +8,7 @@ MenuItem {
     property variant itemObject
 
     signal delegateClicked(int index)
+    signal delegateTouched(int index)
 
     name: itemObject.name
 
@@ -16,10 +17,17 @@ MenuItem {
         // Avoid destroy and recreate the items if the element is already selected
         if (itemDelegate.ListView.isCurrentItem)
             return
-
         if (selectOnClick)
             itemDelegate.ListView.view.currentIndex = model.index
         itemDelegate.delegateClicked(model.index)
+    }
+    onTouched: {
+        // Avoid destroy and recreate the items if the element is already selected
+        if (itemDelegate.ListView.isCurrentItem)
+            return
+        if (selectOnClick)
+            itemDelegate.ListView.view.currentIndex = model.index
+        itemDelegate.delegateTouched(model.index)
     }
 
     // See the comment on MenuItem about the states use.
