@@ -28,18 +28,11 @@ MenuColumn {
             status: Script.status(itemObject)
             hasChild: Script.hasChild(itemObject)
             // multi general ambient is not present in the layout file, so it
-            // must not be editable
+            // must not be editable; please, also note that only one event
+            // between clicked and touched may be fired by a MenuItemDelegate
             editable: itemObject.objectId === ObjectInterface.IdMultiGeneral ? false : true
-            onDelegateClicked: {
-                if (itemObject.objectId !== ObjectInterface.IdMultiGeneral)
-                    return
-                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
-            }
-            onDelegateTouched: {
-                if (itemObject.objectId === ObjectInterface.IdMultiGeneral)
-                    return
-                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
-            }
+            onDelegateClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            onDelegateTouched: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
         }
 
         model: objectModel
