@@ -58,7 +58,7 @@ MenuColumn {
                 description: column.dataModel.presetDescription
                 hasChild: true
                 isSelected: privateProps.currentIndex === 0
-                onClicked: {
+                onTouched: {
                     column.loadColumn(amplifierEqualizer, qsTr("equalizer"), column.dataModel)
                     if (privateProps.currentIndex !== 0)
                         privateProps.currentIndex = 0
@@ -71,7 +71,7 @@ MenuColumn {
                 description: column.dataModel.loud ? qsTr("on") : qsTr("off")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
-                onClicked: {
+                onTouched: {
                     column.loadColumn(loudness, qsTr("loud"), column.dataModel)
                     if (privateProps.currentIndex !== 1)
                         privateProps.currentIndex = 1

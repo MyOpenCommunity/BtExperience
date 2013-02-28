@@ -46,7 +46,7 @@ MenuColumn {
             name: qsTr("source")
             description: itemObject === undefined ? "" : itemObject.name
             hasChild: true
-            onClicked: {
+            onTouched: {
                 privateProps.currentIndex = 1
                 itemList.currentIndex = -1
                 column.loadColumn(sourceControl, qsTr("source"), column.dataModel)

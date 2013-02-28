@@ -20,7 +20,7 @@ MenuColumn {
             property variant itemObject: sourceModel.model.getObject(index)
             enabled: Script.mediaItemEnabled(itemObject)
             name: itemObject.name
-            onClicked: column.sourceSelected(itemObject)
+            onTouched: column.sourceSelected(itemObject)
         }
         onCurrentPageChanged: column.closeChild()
     }

@@ -22,7 +22,7 @@ MenuColumn {
         description: column.dataModel.currentSource === null ? sourceModel.model.getObject(0).name : column.dataModel.currentSource.name
         hasChild: true
         isSelected: privateProps.currentIndex === 0
-        onClicked: {
+        onTouched: {
             if (privateProps.currentIndex !== 0)
                 privateProps.currentIndex = 0
             column.loadColumn(sourceList, qsTr("source change"))
@@ -166,7 +166,7 @@ MenuColumn {
                 name: qsTr("saved IP radios")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
-                onClicked: {
+                onTouched: {
                     if (privateProps.currentIndex !== 1)
                         privateProps = 1
                     column.loadColumn(radioList, name, ipRadioColumn.objModel)
@@ -196,7 +196,7 @@ MenuColumn {
                 isSelected: privateProps.currentIndex === 1
                 enabled: Script.mediaItemEnabled(objModel)
                 onEnabledChanged: column.closeChild()
-                onClicked: {
+                onTouched: {
                     if (privateProps.currentIndex !== 1)
                         privateProps.currentIndex = 1
                     var comp = objModel.sourceType === SourceObject.Upnp ? upnpBrowser : directoryBrowser

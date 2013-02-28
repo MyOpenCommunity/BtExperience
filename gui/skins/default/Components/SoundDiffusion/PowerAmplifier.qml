@@ -34,7 +34,7 @@ MenuColumn {
         anchors.top: volumeSlider.bottom
         name: qsTr("settings")
         hasChild: true
-        onClicked: {
+        onTouched: {
             if (!isSelected)
                 isSelected = true
             column.loadColumn(amplifierSettings, qsTr("settings"), column.dataModel)
