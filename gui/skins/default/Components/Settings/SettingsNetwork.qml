@@ -87,7 +87,7 @@ MenuColumn {
             hasChild: true
             isSelected: privateProps.currentIndex === 1
             status: privateProps.model.lanStatus ? 1 : 0
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(networkState, name)
@@ -101,7 +101,7 @@ MenuColumn {
             description: privateProps.model.lanConfig === PlatformSettings.Dhcp   ? qsTr("DHCP") : qsTr("Static")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(ipConfigurations, name)

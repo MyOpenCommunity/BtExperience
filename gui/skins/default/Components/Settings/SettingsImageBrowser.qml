@@ -33,7 +33,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 1
             hasChild: true
 
-            onClicked: {
+            onTouched: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 column._isStock = true
@@ -53,7 +53,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 2
             hasChild: true
 
-            onClicked: {
+            onTouched: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 2
                 column._isStock = false

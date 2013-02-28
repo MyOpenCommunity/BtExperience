@@ -97,7 +97,7 @@ MenuColumn {
             description: privateProps.description(name)
             hasChild: true
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
 
@@ -117,7 +117,7 @@ MenuColumn {
             description: privateProps.description(name)
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
 
@@ -137,7 +137,7 @@ MenuColumn {
             description: privateProps.description(name)
             hasChild: true
             isSelected: privateProps.currentIndex === 3
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 column.loadColumn(vdeMuteComponent, name)
@@ -156,7 +156,7 @@ MenuColumn {
             description: privateProps.description(name)
             hasChild: true
             isSelected: privateProps.currentIndex === 4
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 4)
                     privateProps.currentIndex = 4
                 column.loadColumn(teleloopComponent, name)

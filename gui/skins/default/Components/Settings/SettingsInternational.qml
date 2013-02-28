@@ -73,7 +73,7 @@ MenuColumn {
             description: pageObject.names.get('LANGUAGE', global.guiSettings.language)
             hasChild: true
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(textLanguage, name)
@@ -86,7 +86,7 @@ MenuColumn {
             description: pageObject.names.get('KEYBOARD', global.keyboardLayout)
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(keyboardLanguage, name)

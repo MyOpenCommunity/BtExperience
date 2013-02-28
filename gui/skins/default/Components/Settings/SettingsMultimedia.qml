@@ -65,7 +65,7 @@ MenuColumn {
     Column {
         MenuItem {
             name: qsTr("Add Quicklink")
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2) {
                     privateProps.currentIndex = 2
                     if (column.child)
@@ -81,7 +81,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 1
             hasChild: true
             visible: browserLink.count > 0
-            onClicked: {
+            onTouched: {
                 paginator.currentIndex = -1
                 privateProps.currentIndex = 1
                 column.loadColumn(browserComponent, name)
