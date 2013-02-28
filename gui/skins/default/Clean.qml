@@ -14,6 +14,7 @@ BasePage {
 
         UbuntuMediumText {
             text: page.remaining
+            font.pixelSize: 48
             color: "white"
             anchors.centerIn: bg
             anchors.verticalCenterOffset: -bg.height / 4
