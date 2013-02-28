@@ -20,9 +20,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: radioModel.getObject(index)
             editable: true
-            onDelegateClicked: {
-                column.dataModel.startPlay(radios(radioModel), index, radioModel.count)
-            }
+            onDelegateClicked: column.dataModel.startPlay(radios(radioModel), index, radioModel.count)
         }
 
         model: radioModel

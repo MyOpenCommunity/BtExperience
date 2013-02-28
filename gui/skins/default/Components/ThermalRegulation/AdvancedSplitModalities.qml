@@ -15,7 +15,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             name: model.name
             selectOnClick: false
-            onClicked: {
+            onDelegateTouched: {
                 dataModel.mode = type
                 column.closeColumn()
             }

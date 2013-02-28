@@ -18,7 +18,7 @@ MenuColumn {
             itemObject: objectModel.getObject(index)
             name: itemObject.name
             selectOnClick: true
-            onDelegateClicked: {
+            onDelegateTouched: {
                 column.dataModel.preset = index + objectModel.range[0]
                 column.closeColumn()
             }

@@ -24,14 +24,22 @@ MenuColumn {
         id: paginator
 
         delegate: MenuItemDelegate {
-            // multi general ambient is not present in the layout file, so it
-            // must not be editable
-            editable: itemObject.objectId === ObjectInterface.IdMultiGeneral ? false : true
             itemObject: objectModel.getObject(index)
             status: Script.status(itemObject)
             hasChild: Script.hasChild(itemObject)
-            onClicked:
+            // multi general ambient is not present in the layout file, so it
+            // must not be editable
+            editable: itemObject.objectId === ObjectInterface.IdMultiGeneral ? false : true
+            onDelegateClicked: {
+                if (itemObject.objectId !== ObjectInterface.IdMultiGeneral)
+                    return
                 column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            }
+            onDelegateTouched: {
+                if (itemObject.objectId === ObjectInterface.IdMultiGeneral)
+                    return
+                column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            }
         }
 
         model: objectModel

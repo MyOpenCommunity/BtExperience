@@ -29,12 +29,12 @@ MenuColumn {
         elementsOnPage: elementsOnMenuPage
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
-            editable: true
             selectOnClick: itemObject.objectId === ObjectInterface.IdSplitBasicScenario ||
                            itemObject.objectId === ObjectInterface.IdSplitAdvancedScenario
             description: Script.description(itemObject)
             hasChild: Script.hasChild(itemObject)
-            onClicked: {
+            editable: true
+            onDelegateClicked: {
                 if (itemObject.objectId === ObjectInterface.IdSplitBasicScenario ||
                         itemObject.objectId === ObjectInterface.IdSplitAdvancedScenario)
                     column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)

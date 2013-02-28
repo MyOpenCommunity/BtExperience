@@ -74,11 +74,10 @@ MenuColumn {
 
             elementsOnPage: elementsOnMenuPage - 4
             delegate: MenuItemDelegate {
-                editable: true
                 itemObject: objectModel.getObject(index)
-
                 status: Script.status(itemObject)
                 hasChild: Script.hasChild(itemObject)
+                editable: true
                 onDelegateClicked: {
                     privateProps.currentIndex = -1
                     column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject);
