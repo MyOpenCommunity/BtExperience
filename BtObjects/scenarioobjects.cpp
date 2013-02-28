@@ -151,6 +151,7 @@ void updateAdvancedScenario(QDomNode node, AdvancedScenario *item)
 	}
 
 	setTextChild(scen, "days", QString::number(item->getDays()));
+	setTextChild(scen, "status", QString::number(item->isEnabled()));
 }
 
 
@@ -851,6 +852,8 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 
 	Q_ASSERT_X(action_obj, "AdvancedScenario::AdvancedScenario", "The action object is mandatory!");
 	action_obj->setParent(this);
+
+	connect(this, SIGNAL(enabledChanged()), this, SIGNAL(persistItem()));
 }
 
 void AdvancedScenario::enableObject()
