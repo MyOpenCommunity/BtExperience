@@ -57,7 +57,7 @@ MenuColumn {
             description: dataModel.programName
             hasChild: true
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(programListSplit, name, dataModel)
@@ -74,7 +74,7 @@ MenuColumn {
             }
             hasChild: true
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(advancedSplitModalities, name, dataModel)

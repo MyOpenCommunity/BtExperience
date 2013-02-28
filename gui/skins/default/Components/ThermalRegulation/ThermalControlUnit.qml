@@ -158,7 +158,7 @@ MenuColumn {
             hasChild: true
             name: qsTr("season")
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 var s = privateProps.pendingSeason
@@ -173,7 +173,7 @@ MenuColumn {
             hasChild: true
             name: qsTr("mode")
             isSelected: privateProps.currentIndex === 2
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 var m = privateProps.pendingModality

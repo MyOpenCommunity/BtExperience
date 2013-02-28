@@ -30,7 +30,7 @@ MenuColumn {
             description: dataModel.program.name
             hasChild: true
             isSelected: privateProps.currentIndex === 1
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(programListSplit, name, dataModel)

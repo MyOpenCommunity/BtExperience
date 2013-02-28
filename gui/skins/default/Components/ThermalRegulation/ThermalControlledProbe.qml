@@ -86,7 +86,7 @@ MenuColumn {
             // we can change mode on 99 zones central units, so make mode menu visible
             visible: is99zones
 
-            onClicked: {
+            onTouched: {
                 if (!modalityItem.isSelected)
                     modalityItem.isSelected = true
                 var m = privateProps.pendingModality
