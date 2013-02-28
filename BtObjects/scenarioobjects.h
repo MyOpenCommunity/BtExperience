@@ -399,7 +399,7 @@ private slots:
 
 private:
 	bool enabled;
-	int days;
+	int days, gui_days;
 	DeviceConditionObject *device_obj;
 	TimeConditionObject *time_obj;
 	ActionObject *action_obj;

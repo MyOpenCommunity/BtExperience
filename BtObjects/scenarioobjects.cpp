@@ -831,7 +831,7 @@ AdvancedScenario::AdvancedScenario(DeviceConditionObject *device, TimeConditionO
 {
 	name = description;
 	enabled = _enabled;
-	days = _days;
+	gui_days = days = _days;
 	action_obj = action;
 	device_obj = device;
 	time_obj = time;
@@ -881,7 +881,7 @@ bool AdvancedScenario::isDayEnabled(int day) const
 	else
 		day -= 1;
 
-	return days & (1 << day);
+	return gui_days & (1 << day);
 }
 
 void AdvancedScenario::setDayEnabled(int day, bool enabled)
@@ -896,16 +896,16 @@ void AdvancedScenario::setDayEnabled(int day, bool enabled)
 		day -= 1;
 
 	if (enabled)
-		days |= (1 << day);
+		gui_days |= (1 << day);
 	else
-		days &= ~(1 << day);
+		gui_days &= ~(1 << day);
 
 	emit daysChanged();
 }
 
 int AdvancedScenario::getDays() const
 {
-	return days;
+	return gui_days;
 }
 
 QObject *AdvancedScenario::getDeviceCondition() const
@@ -936,6 +936,7 @@ void AdvancedScenario::save()
 		time_obj->save();
 	if (device_obj)
 		device_obj->save();
+	days = gui_days;
 
 	emit persistItem();
 }
@@ -946,6 +947,9 @@ void AdvancedScenario::reset()
 		time_obj->reset();
 	if (device_obj)
 		device_obj->reset();
+	gui_days = days;
+
+	emit daysChanged();
 }
 
 void AdvancedScenario::timeConditionSatisfied()

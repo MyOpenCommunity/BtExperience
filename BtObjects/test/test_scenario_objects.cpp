@@ -253,7 +253,7 @@ void TestScenarioAdvanced::testWeekdays()
 		QVERIFY(!obj.isDayEnabled(i));
 	}
 
-	obj.days = 64; // sunday
+	obj.days = obj.gui_days = 64; // sunday
 	QVERIFY(obj.isDayEnabled(0));
 	QVERIFY(obj.isDayEnabled(7));
 	ao.setParent(0);
