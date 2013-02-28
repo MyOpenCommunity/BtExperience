@@ -39,7 +39,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("Global View")
             hasChild: true
-            onClicked: Stack.goToPage("EnergyGlobalView.qml")
+            onTouched: Stack.goToPage("EnergyGlobalView.qml")
 
             enabled: {
                 for (var i = 0; i < energiesCounters.count; i += 1) {

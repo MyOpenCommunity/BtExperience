@@ -31,7 +31,7 @@ MenuColumn {
             boxInfoState: numberOfMessages > 0 ? "info" : ""
             boxInfoText: numberOfMessages
 
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(columnMessages, qsTr("Received messages"))

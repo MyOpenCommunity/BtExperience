@@ -174,7 +174,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 1
             name: column.alarmLogTitle
             hasChild: true
-            onClicked: privateProps.showAlarmLog()
+            onTouched: privateProps.showAlarmLog()
             boxInfoState: numberOfAlarms > 0 ? "warning" : ""
             boxInfoText: numberOfAlarms
         }
@@ -183,7 +183,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 2
             name: qsTr("scenario")
             hasChild: true
-            onClicked: {
+            onTouched: {
                 column.loadColumn(antinstrusionScenarios, name, privateProps.model.scenarios)
                 if (privateProps.currentIndex != 2)
                     privateProps.currentIndex = 2

@@ -7,7 +7,7 @@ MenuColumn {
     id: column
     MenuItem {
         name: qsTr("activate")
-        onClicked: {
+        onTouched: {
             column.dataModel.activate()
             pageObject.installPopup(feedback)
         }

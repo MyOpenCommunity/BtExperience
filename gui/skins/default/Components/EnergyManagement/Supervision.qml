@@ -41,7 +41,7 @@ MenuColumn {
             isSelected: privateProps.currentIndex === 1
             hasChild: true
             visible: loadDiagnosticModel.count > 0
-            onClicked: {
+            onTouched: {
                 paginator.currentIndex = -1
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1

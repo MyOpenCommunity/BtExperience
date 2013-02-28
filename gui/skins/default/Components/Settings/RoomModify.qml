@@ -13,7 +13,7 @@ MenuColumn {
             name: qsTr("Change card image")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.loadColumn(settingsImageBrowser, qsTr("Card image"), column.dataModel, {isCard: true})
@@ -24,7 +24,7 @@ MenuColumn {
             name: qsTr("Change background image")
             isSelected: privateProps.currentIndex === 2
             hasChild: true
-            onClicked: {
+            onTouched: {
                 if (privateProps.currentIndex !== 2)
                     privateProps.currentIndex = 2
                 column.loadColumn(settingsImageBrowser, qsTr("Background image"), column.dataModel)

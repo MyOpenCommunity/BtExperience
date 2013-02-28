@@ -11,12 +11,12 @@ MenuColumn {
     Column {
         MenuItem {
             name: privateProps.isProgramming ? qsTr("stop programming") : qsTr("start programming")
-            onClicked: privateProps.startClicked()
+            onTouched: privateProps.startClicked()
         }
 
         MenuItem {
             name: qsTr("reset program")
-            onClicked: privateProps.deleteProgram()
+            onTouched: privateProps.deleteProgram()
         }
     }
 
