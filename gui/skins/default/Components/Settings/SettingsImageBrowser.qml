@@ -78,7 +78,7 @@ MenuColumn {
                 hasChild: true
                 enabled: Script.mediaItemEnabled(itemObject)
                 onEnabledChanged: column.closeChild()
-                onDelegateClicked: {
+                onDelegateTouched: {
                     privateProps.currentIndex = -1
                     column._isStock = false
                     var upnp = itemObject.sourceType === SourceObject.Upnp;

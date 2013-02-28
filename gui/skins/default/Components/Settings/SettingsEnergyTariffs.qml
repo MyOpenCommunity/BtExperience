@@ -21,7 +21,7 @@ MenuColumn {
             itemObject: energiesRates.getObject(index)
             hasChild: true
             description: itemObject.rate.toFixed(itemObject.displayDecimals) + " " + itemObject.currencySymbol + "/" + itemObject.measureUnit
-            onClicked: column.loadColumn(setTariffsComponent, itemObject.name, itemObject)
+            onDelegateTouched: column.loadColumn(setTariffsComponent, itemObject.name, itemObject)
         }
 
         onCurrentPageChanged: column.closeChild()

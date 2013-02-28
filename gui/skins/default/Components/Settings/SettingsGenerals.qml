@@ -85,7 +85,7 @@ MenuColumn {
             hasChild: model.component !== undefined
                       && model.component !== null
 
-            onClicked: {
+            onDelegateTouched: {
                 if (model.name !== "Date & Time")
                     column.loadColumn(model.component, qsTr(model.name))
                 else {

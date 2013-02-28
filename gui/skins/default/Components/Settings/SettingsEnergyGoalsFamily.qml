@@ -20,7 +20,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: energiesCounters.getObject(index)
             hasChild: true
-            onClicked: column.loadColumn(thresholdsComponent, itemObject.name, itemObject)
+            onDelegateTouched: column.loadColumn(thresholdsComponent, itemObject.name, itemObject)
         }
 
         onCurrentPageChanged: column.closeChild()

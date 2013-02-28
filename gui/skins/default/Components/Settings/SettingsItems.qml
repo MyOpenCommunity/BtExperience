@@ -84,7 +84,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             name: model.name
             hasChild: true
-            onClicked: column.loadColumn(model.component, model.name)
+            onDelegateTouched: column.loadColumn(model.component, model.name)
         }
 
         model: modelList
