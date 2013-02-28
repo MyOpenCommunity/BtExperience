@@ -61,7 +61,7 @@ MenuColumn {
             status: -1
             name: model.name
             hasChild: true
-            onClicked: {
+            onDelegateTouched: {
                 if (itemObject.type === "object")
                     column.loadColumn(itemObject.component, itemObject.name, itemObject.object)
                 else

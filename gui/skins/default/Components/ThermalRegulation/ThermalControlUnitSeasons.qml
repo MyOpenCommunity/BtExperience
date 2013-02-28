@@ -21,7 +21,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
-            onClicked: {
+            onDelegateTouched: {
                 var clickedItem = modelList.get(index)
                 column.seasonSelected(clickedItem.type)
                 column.closeColumn()

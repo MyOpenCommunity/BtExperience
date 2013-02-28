@@ -35,7 +35,7 @@ MenuColumn {
             itemObject: modelList.getObject(index)
             description: Script.description(itemObject)
             hasChild: Script.hasChild(itemObject)
-            onClicked: {
+            onDelegateTouched: {
                 var oid = itemObject.objectId
                 if (oid === ObjectInterface.IdThermalControlUnit99)
                     column.loadColumn(thermalControlUnit, itemObject.name, itemObject)

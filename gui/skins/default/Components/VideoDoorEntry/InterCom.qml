@@ -18,10 +18,10 @@ MenuColumn {
         id: paginator
 
         delegate: MenuItemDelegate {
-            editable: true
             itemObject: extPlaceModel.getObject(index)
             selectOnClick: false
             hasChild: true
+            editable: true
             onDelegateClicked: {
                 column.loadColumn(talk, itemObject.name, modelList.getObject(0), {"intercom": itemObject})
             }

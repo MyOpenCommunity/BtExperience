@@ -29,7 +29,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             itemObject: modalitiesModel.getObject(index)
-            onClicked: {
+            onDelegateTouched: {
                 column.modalitySelected(itemObject)
                 column.closeColumn()
             }

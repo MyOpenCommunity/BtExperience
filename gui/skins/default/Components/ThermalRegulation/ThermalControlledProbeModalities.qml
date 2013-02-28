@@ -27,7 +27,7 @@ MenuColumn {
 
         delegate: MenuItemDelegate {
             name: model.name
-            onClicked: {
+            onDelegateTouched: {
                 var clickedItem = modelList.get(index)
                 column.modalitySelected(clickedItem.type)
                 column.closeColumn()

@@ -22,7 +22,7 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: listModel.getObject(index)
             name: itemObject.name
-            onClicked: {
+            onDelegateTouched: {
                 column.programSelected(itemObject)
                 column.closeColumn()
             }

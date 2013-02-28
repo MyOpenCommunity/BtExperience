@@ -28,7 +28,7 @@ MenuColumn {
         elementsOnPage: elementsOnMenuPage
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
-            onClicked: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
+            onDelegateTouched: column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
             description: Script.description(itemObject)
             hasChild: Script.hasChild(itemObject)
             boxInfoState: Script.boxInfoState(itemObject)
