@@ -14,6 +14,8 @@ MenuItem {
 
     onEditCompleted: itemObject.name = name
     onClicked: {
+        if (!itemDelegate.editable) // only touches, no clicks
+            return
         // Avoid destroy and recreate the items if the element is already selected
         if (itemDelegate.ListView.isCurrentItem)
             return
@@ -22,6 +24,8 @@ MenuItem {
         itemDelegate.delegateClicked(model.index)
     }
     onTouched: {
+        if (itemDelegate.editable) // only clicks, no touches
+            return
         // Avoid destroy and recreate the items if the element is already selected
         if (itemDelegate.ListView.isCurrentItem)
             return
