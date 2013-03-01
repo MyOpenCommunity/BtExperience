@@ -7,6 +7,7 @@ Column {
     id: control
 
     property alias text: leftText.text
+    property alias repetitionWithSlowFastClicks: buttonPlus.repetitionWithSlowFastClicks
 
     signal plusClicked
     signal plusClickedSlow
@@ -59,6 +60,7 @@ Column {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         repetitionOnHold: true
+        repetitionWithSlowFastClicks: buttonPlus.repetitionWithSlowFastClicks
         onClicked: control.minusClicked()
         onClickedFast: control.minusClickedFast()
         onClickedSlow: control.minusClickedSlow()
