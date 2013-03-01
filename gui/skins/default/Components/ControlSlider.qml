@@ -25,9 +25,12 @@ SvgImage {
             topMargin: buttonSlider.height / 100 * 5
             left: parent.left
             leftMargin: buttonSlider.width / 100 * 3.30
+            right: percentageLabel.left
+            rightMargin: buttonSlider.width / 100 * 3.30
         }
 
         text: qsTr("volume")
+        elide: Text.ElideRight
         font.pixelSize: 15
         color: "#444546"
     }
