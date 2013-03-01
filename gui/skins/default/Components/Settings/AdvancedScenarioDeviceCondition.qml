@@ -128,8 +128,10 @@ Column {
                 }
 
                 text: spinItem.representValues(scenarioDeviceObject.rangeValues, scenarioDeviceObject.type)
-                onMinusClicked: scenarioDeviceObject.conditionDown()
-                onPlusClicked: scenarioDeviceObject.conditionUp()
+                onMinusClickedSlow: scenarioDeviceObject.conditionDown()
+                onMinusClickedFast: scenarioDeviceObject.conditionDown()
+                onPlusClickedSlow: scenarioDeviceObject.conditionUp()
+                onPlusClickedFast: scenarioDeviceObject.conditionUp()
             }
         }
     }

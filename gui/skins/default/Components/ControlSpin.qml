@@ -5,9 +5,15 @@ import Components.Text 1.0
 
 Column {
     id: control
+
     property alias text: leftText.text
+
     signal plusClicked
+    signal plusClickedSlow
+    signal plusClickedFast
     signal minusClicked
+    signal minusClickedSlow
+    signal minusClickedFast
 
     ButtonImageThreeStates {
         id: buttonPlus
@@ -20,6 +26,8 @@ Column {
         pressedImage: "../images/common/ico_piu_P.svg"
         repetitionOnHold: true
         onClicked: control.plusClicked()
+        onClickedFast: control.plusClickedFast()
+        onClickedSlow: control.plusClickedSlow()
     }
 
     SvgImage {
@@ -52,5 +60,7 @@ Column {
         pressedImage: "../images/common/ico_meno_P.svg"
         repetitionOnHold: true
         onClicked: control.minusClicked()
+        onClickedFast: control.minusClickedFast()
+        onClickedSlow: control.minusClickedSlow()
     }
 }
