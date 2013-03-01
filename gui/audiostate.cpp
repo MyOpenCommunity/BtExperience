@@ -98,6 +98,8 @@ namespace
 	QString scs_source_on     = "/usr/local/bin/Audio-SCS_Multimedia.sh";
 	QString vde_audio_on      = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_silent.sh";
 	QString vde_audio_off     = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
+	QString intercom_audio_on      = "/usr/local/bin/HwBsp-D-Audio-Intercom_silent.sh";
+	QString intercom_audio_off     = "/usr/local/bin/HwBsp-D-Audio-Intercom_off_silent.sh";
 }
 
 #define VOLUME_MIN 0
@@ -285,9 +287,12 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case Ringtone:
 		break;
 	case ScsVideoCall:
-	case ScsIntercomCall:
 		if(new_state != AudioState::Mute)
 			smartExecute_synch(vde_audio_off);
+		break;
+	case ScsIntercomCall:
+		if(new_state != AudioState::Mute)
+			smartExecute_synch(intercom_audio_off);
 		break;
 	case Mute:
 		setZlMute(false);
@@ -331,7 +336,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "870C");
 			if (current_volume != InvalidVolume)
 				setHardwareVolume(current_volume, volumes[current_volume]);
-			smartExecute_synch(vde_audio_on);
+			smartExecute_synch(intercom_audio_on);
 		}
 		break;
 	case LocalPlaybackMute:
