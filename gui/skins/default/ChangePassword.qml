@@ -172,17 +172,8 @@ Page {
                         }
 
                         Component {
-                            id: wrongPasswordFeedback
+                            id: passwordFeedback
                             FeedbackPopup {
-                                text: qsTr("Wrong password")
-                                isOk: false
-                            }
-                        }
-
-                        Component {
-                            id: unmatchPasswordFeedback
-                            FeedbackPopup {
-                                text: qsTr("Passwords don't match")
                                 isOk: false
                             }
                         }
@@ -196,11 +187,15 @@ Page {
                             font.pixelSize: 14
                             onPressed: {
                                 if (global.password !== oldPasswordInput.text) {
-                                    page.installPopup(wrongPasswordFeedback)
+                                    page.installPopup(passwordFeedback, { text: qsTr("Wrong password") })
                                     return
                                 }
                                 if (newPasswordInput.text !== repeatPasswordInput.text) {
-                                    page.installPopup(unmatchPasswordFeedback)
+                                    page.installPopup(passwordFeedback, { text: qsTr("Passwords don't match") })
+                                    return
+                                }
+                                if (newPasswordInput.text === "") {
+                                    page.installPopup(passwordFeedback, { text: qsTr("New password is empty") })
                                     return
                                 }
                                 global.password = newPasswordInput.text
