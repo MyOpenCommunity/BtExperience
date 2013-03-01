@@ -95,7 +95,7 @@ Column {
                     return values[0] + ' - ' + values[1] + "%"
 
                 if (type === DeviceConditionObject.Probe || type === DeviceConditionObject.ExternalProbe || type === DeviceConditionObject.Temperature)
-                    return values[0] + qsTr("\272C")
+                    return values[0].toFixed(1) + qsTr("\272C")
 
                 return ''
             }
