@@ -329,6 +329,8 @@ public:
 public slots:
 	void conditionUp();
 	void conditionDown();
+	void conditionUpHeld();
+	void conditionDownHeld();
 
 signals:
 	void onOffChanged();

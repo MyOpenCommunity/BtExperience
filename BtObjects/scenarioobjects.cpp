@@ -808,6 +808,16 @@ void DeviceConditionObject::conditionDown()
 	device_cond->Down();
 }
 
+void DeviceConditionObject::conditionUpHeld()
+{
+	device_cond->UpHeld();
+}
+
+void DeviceConditionObject::conditionDownHeld()
+{
+	device_cond->DownHeld();
+}
+
 void DeviceConditionObject::save()
 {
 	device_cond->save();
