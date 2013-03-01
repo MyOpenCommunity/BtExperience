@@ -50,8 +50,8 @@ SvgImage {
         defaultImage: "../images/common/ico_meno.svg"
         pressedImage: "../images/common/ico_meno_P.svg"
         repetitionOnHold: true
-        largeInterval: slowClickInterval
-        smallInterval: fastClickInterval
+        slowInterval: slowClickInterval
+        fastInterval: fastClickInterval
         onClicked: minusClicked()
         anchors {
             bottom: parent.bottom
@@ -70,8 +70,8 @@ SvgImage {
         defaultImage: "../images/common/ico_piu.svg"
         pressedImage: "../images/common/ico_piu_P.svg"
         repetitionOnHold: true
-        largeInterval: slowClickInterval
-        smallInterval: fastClickInterval
+        slowInterval: slowClickInterval
+        fastInterval: fastClickInterval
         onClicked: plusClicked()
         anchors {
             bottom: parent.bottom

@@ -24,8 +24,8 @@ SvgImage {
 
     property alias repetitionOnHold: area.repetitionEnabled // enable repetition when pressed
     property alias repetitionTriggered: area.repetitionTriggered
-    property alias largeInterval: area.largeInterval
-    property alias smallInterval: area.smallInterval
+    property alias slowInterval: area.slowInterval
+    property alias fastInterval: area.fastInterval
 
     signal clicked
     signal pressed

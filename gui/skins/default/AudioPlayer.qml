@@ -134,8 +134,8 @@ Page {
             defaultImage: "images/common/ico_previous_track.svg"
             pressedImage: "images/common/ico_previous_track_P.svg"
             repetitionOnHold: true
-            largeInterval: 500
-            smallInterval: 350
+            slowInterval: 500
+            fastInterval: 350
 
             onClicked: {
                 if (repetitionTriggered) {
@@ -222,8 +222,8 @@ Page {
             defaultImage: "images/common/ico_next_track.svg"
             pressedImage: "images/common/ico_next_track_P.svg"
             repetitionOnHold: true
-            largeInterval: 500
-            smallInterval: 350
+            slowInterval: 500
+            fastInterval: 350
 
             onClicked: {
                 // seek enabled only for audio
