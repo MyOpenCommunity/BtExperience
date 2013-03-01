@@ -38,8 +38,10 @@ MenuColumn {
                 if (itemObject.objectId === ObjectInterface.IdSplitBasicScenario ||
                         itemObject.objectId === ObjectInterface.IdSplitAdvancedScenario)
                     column.loadColumn(mapping.getComponent(itemObject.objectId), itemObject.name, itemObject)
-                else
+                else {
+                    resetSelection()
                     itemObject.apply()
+                }
             }
         }
         model: objectModel

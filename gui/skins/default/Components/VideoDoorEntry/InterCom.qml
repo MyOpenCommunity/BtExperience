@@ -22,9 +22,7 @@ MenuColumn {
             selectOnClick: false
             hasChild: true
             editable: true
-            onDelegateClicked: {
-                column.loadColumn(talk, itemObject.name, modelList.getObject(0), {"intercom": itemObject})
-            }
+            onDelegateClicked: column.loadColumn(talk, itemObject.name, modelList.getObject(0), {"intercom": itemObject})
         }
 
         ObjectModel {

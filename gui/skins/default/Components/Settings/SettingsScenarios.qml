@@ -17,9 +17,7 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    onChildDestroyed: {
-        paginator.currentIndex = -1
-    }
+    onChildDestroyed: paginator.currentIndex = -1
 
     // needed for menu navigation
     function targetsKnown() {
@@ -50,11 +48,12 @@ MenuColumn {
         delegate: MenuItemDelegate {
             itemObject: scenariosModule.getObject(index)
             hasChild: true
-            onDelegateTouched: openColumn(itemObject)
+            onDelegateTouched: openColumn(itemObject, resetSelection)
         }
 
-        function openColumn(itemObject) {
+        function openColumn(itemObject, resetCallback) {
             if (itemObject.objectId === ObjectInterface.IdAdvancedScenario) {
+                resetCallback()
                 itemObject.reset()
                 Stack.pushPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
             }

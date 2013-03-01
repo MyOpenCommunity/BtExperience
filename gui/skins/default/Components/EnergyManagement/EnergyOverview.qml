@@ -29,7 +29,10 @@ MenuColumn {
                 // Energy data system is the only one that requires more than one page,
                 // with properties set: this is a shortcut to avoid complicating
                 // the code a lot.
-                onDelegateTouched: Stack.pushPage("EnergyDataDetail.qml", {"family": itemObject})
+                onDelegateTouched: {
+                    resetSelection()
+                    Stack.pushPage("EnergyDataDetail.qml", {"family": itemObject})
+                }
             }
 
             model: energiesFamilies

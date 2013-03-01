@@ -28,8 +28,10 @@ MenuColumn {
             onDelegateTouched: {
                 if (model.type === "column")
                     column.loadColumn(model.component, model.name)
-                else
+                else {
+                    resetSelection()
                     Stack.pushPage(model.component)
+                }
             }
         }
 
