@@ -31,18 +31,22 @@ SvgImage {
     signal pressed
     signal released
     signal touched
+    signal clickedSlow
+    signal clickedFast
 
     source: defaultImageBg
 
     RepetitionMouseArea {
         id: area
         anchors.fill: parent
-        onClicked: bg.clicked()
         onPressed: {
             touchTimer.restart()
             bg.pressed()
         }
         onReleased: bg.released()
+        onClicked: bg.clicked()
+        onClickedSlow: bg.clickedSlow()
+        onClickedFast: bg.clickedFast()
         visible: bg.enabled
 
         Timer {
