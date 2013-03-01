@@ -10,14 +10,18 @@ Item {
 
     property string title
     property string value
-    property bool readOnly: true
     property string inputMask
 
-    signal accepted
+    signal modifyIp
 
     SvgImage {
         id: bg
         source: "../images/common/menu_column_item_bg.svg";
+    }
+
+    BeepingMouseArea {
+        anchors.fill: parent
+        onPressed: control.modifyIp()
     }
 
     UbuntuLightText {
@@ -31,42 +35,14 @@ Item {
         color:  "#2d2d2d"
     }
 
-    Loader {
-        id: valueLoader
+    UbuntuLightText {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: control.bottom
         anchors.bottomMargin: 5
-        sourceComponent: control.readOnly ? simpleLabelComponent : editableLabelComponent
-    }
-
-    Component {
-        id: simpleLabelComponent
-        UbuntuLightText {
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            text: control.value
-            font.pixelSize: 14
-            color:  "#626262"
-        }
-    }
-
-    // TODO: we can do better, loading the TextInput only when the user clicks on
-    // the input field.
-    Component {
-        id: editableLabelComponent
-        UbuntuLightTextInput {
-            text: control.value
-            inputMask: control.inputMask
-            horizontalAlignment: Text.AlignHCenter
-            onAccepted: acceptValue()
-            onActiveFocusChanged: if (!activeFocus) acceptValue()
-            font.pixelSize: 14
-            color:  "#626262"
-
-            function acceptValue() {
-                control.value = text
-                control.accepted()
-            }
-        }
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        text: control.value
+        font.pixelSize: 14
+        color:  "#626262"
     }
 }

@@ -4,6 +4,7 @@ import "../../js/logging.js" as Log
 import "../../js/Stack.js" as Stack
 import "../../js/EventManager.js" as EventManager
 import Components 1.0
+import Components.Text 1.0
 
 
 MenuColumn {
@@ -169,39 +170,74 @@ MenuColumn {
                     value: privateProps.model.mac || qsTr("Unknown")
                 }
                 ControlTitleValue {
+                    id: value1
+
+                    function saveValue(newValue) {
+                        privateProps.model.address = newValue
+                    }
+
                     title: qsTr("IP address")
                     value: privateProps.model.address
-                    readOnly: false
-                    inputMask: '000.000.000.000'
-                    onAccepted: privateProps.model.address = value
+                    onModifyIp: {
+                        if (value !== "")
+                            pageObject.installPopup(editIpAddress, {originalAddress: value, object: value1})
+                    }
                 }
                 ControlTitleValue {
+                    id: value2
+
+                    function saveValue(newValue) {
+                        privateProps.model.subnet = newValue
+                    }
+
                     title: qsTr("Subnet mask")
                     value: privateProps.model.subnet
-                    readOnly: false
-                    inputMask: '000.000.000.000'
-                    onAccepted: privateProps.model.subnet = value
+                    onModifyIp: {
+                        if (value !== "")
+                            pageObject.installPopup(editIpAddress, {originalAddress: value, object: value2})
+                    }
                 }
                 ControlTitleValue {
+                    id: value3
+
+                    function saveValue(newValue) {
+                        privateProps.model.gateway = newValue
+                    }
+
                     title: qsTr("Gateway")
                     value: privateProps.model.gateway
-                    readOnly: false
-                    inputMask: '000.000.000.000'
-                    onAccepted: privateProps.model.gateway = value
+                    onModifyIp: {
+                        if (value !== "")
+                            pageObject.installPopup(editIpAddress, {originalAddress: value, object: value3})
+                    }
                 }
                 ControlTitleValue {
+                    id: value4
+
+                    function saveValue(newValue) {
+                        privateProps.model.dns1 = newValue
+                    }
+
                     title: qsTr("Primary DNS")
                     value: privateProps.model.dns1
-                    readOnly: false
-                    inputMask: '000.000.000.000'
-                    onAccepted: privateProps.model.dns1 = value
+                    onModifyIp: {
+                        if (value !== "")
+                            pageObject.installPopup(editIpAddress, {originalAddress: value, object: value4})
+                    }
                 }
                 ControlTitleValue {
+                    id: value5
+
+                    function saveValue(newValue) {
+                        privateProps.model.dns2 = newValue
+                    }
+
                     title: qsTr("Secondary DNS")
                     value: privateProps.model.dns2
-                    readOnly: false
-                    inputMask: '000.000.000.000'
-                    onAccepted: privateProps.model.dns2 = value
+                    onModifyIp: {
+                        if (value !== "")
+                            pageObject.installPopup(editIpAddress, {originalAddress: value, object: value5})
+                    }
                 }
                 ButtonOkCancel {
                     onOkClicked: {
@@ -211,6 +247,138 @@ MenuColumn {
                     onCancelClicked: {
                         privateProps.model.reset()
                         column.closeColumn()
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: editIpAddress
+        Column {
+            id: editPopup
+            property string originalAddress
+            property variant object
+
+            signal closePopup
+
+            spacing: 2
+
+            SvgImage {
+                id: editBg
+                source: "../../images/scenarios/bg_testo.svg"
+                height: 80
+
+                Row {
+                    spacing: 5
+                    anchors.centerIn: parent
+
+                    IpFieldInput {
+                        id: field1
+                        anchors {
+                            top: parent.top
+                            topMargin: parent.height / 100 * 10
+                        }
+                        width: editBg.width/ 6
+                        text: editPopup.originalAddress.split('.')[0]
+                        containerWidget: editPopup
+
+                        onSkipField: field2.focus = true
+                    }
+
+                    UbuntuMediumText {
+                        font.pixelSize: 20
+                        text: "."
+                        anchors.bottom: parent.bottom
+                    }
+
+                    IpFieldInput {
+                        id: field2
+                        anchors {
+                            top: parent.top
+                            topMargin: parent.height / 100 * 10
+                        }
+                        width: editBg.width/ 6
+                        text: editPopup.originalAddress.split('.')[1]
+                        containerWidget: editPopup
+
+                        onSkipField: field3.focus = true
+                    }
+
+                    UbuntuMediumText {
+                        font.pixelSize: 20
+                        text: "."
+                        anchors.bottom: parent.bottom
+                    }
+
+                    IpFieldInput {
+                        id: field3
+                        anchors {
+                            top: parent.top
+                            topMargin: parent.height / 100 * 10
+                        }
+                        width: editBg.width/ 6
+                        text: editPopup.originalAddress.split('.')[2]
+                        containerWidget: editPopup
+
+                        onSkipField: field4.focus = true
+                    }
+
+                    UbuntuMediumText {
+                        font.pixelSize: 20
+                        text: "."
+                        anchors.bottom: parent.bottom
+                    }
+
+                    IpFieldInput {
+                        id: field4
+                        anchors {
+                            top: parent.top
+                            topMargin: parent.height / 100 * 10
+                        }
+                        width: editBg.width/ 6
+                        text: editPopup.originalAddress.split('.')[3]
+                        containerWidget: editPopup
+
+                        onSkipField: field1.focus = true
+                    }
+                }
+            }
+
+            SvgImage {
+                source: "../../images/scenarios/bg_ok_annulla.svg"
+
+                Row {
+                    anchors {
+                        right: parent.right
+                        rightMargin: parent.width / 100 * 2
+                        verticalCenter: parent.verticalCenter
+                    }
+
+                    ButtonThreeStates {
+                        defaultImage: "../../images/common/btn_99x35.svg"
+                        pressedImage: "../../images/common/btn_99x35_P.svg"
+                        selectedImage: "../../images/common/btn_99x35_S.svg"
+                        shadowImage: "../../images/common/btn_shadow_99x35.svg"
+                        text: qsTr("ok")
+                        font.pixelSize: 14
+                        enabled: field1.validInput && field2.validInput &&
+                                 field3.validInput && field4.validInput
+                        onTouched: {
+                            editPopup.object.saveValue(field1.text + "." + field2.text +
+                                                       "." + field3.text + "." + field4.text)
+                            editPopup.closePopup()
+                        }
+                    }
+
+                    ButtonThreeStates {
+                        defaultImage: "../../images/common/btn_99x35.svg"
+                        pressedImage: "../../images/common/btn_99x35_P.svg"
+                        selectedImage: "../../images/common/btn_99x35_S.svg"
+                        shadowImage: "../../images/common/btn_shadow_99x35.svg"
+                        text: qsTr("cancel")
+                        font.pixelSize: 14
+                        onTouched: editPopup.closePopup()
                     }
                 }
             }
