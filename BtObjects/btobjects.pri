@@ -16,7 +16,6 @@ HEADERS += \
 	folderlistmodel.h \
 	globalmodels.h \
 	gstmediaplayer.h \
-	hardware.h \
 	homeproperties.h \
 	imagesaver.h \
 	iteminterface.h \
@@ -96,7 +95,6 @@ SOURCES += \
 	folderlistmodel.cpp \
 	globalmodels.cpp \
 	gstmediaplayer.cpp \
-	hardware.cpp \
 	homeproperties.cpp \
 	imagesaver.cpp \
 	iteminterface.cpp \

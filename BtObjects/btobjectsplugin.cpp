@@ -13,7 +13,6 @@
 #include "multimediaplayer.h"
 #include "mediaplayer.h"
 #include "xml_functions.h"
-#include "hardware.h"
 #include "platform.h"
 #include "platform_device.h"
 #include "folderlistmodel.h"
@@ -645,7 +644,6 @@ void BtObjectsPlugin::createObjects()
 		objmodel << createIntercom(intercom, pager);
 	}
 
-	objmodel << new HardwareSettings;
 	objmodel << new PlatformSettings(bt_global::add_device_to_cache(new PlatformDevice));
 
 	// the following objects are used as collectors of signals from other objects
@@ -1596,8 +1594,6 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 		"unable to create a ThermalControlledProbeFancoil instance");
 	qmlRegisterUncreatableType<PlatformSettings>(uri, 1, 0, "PlatformSettings",
 		"unable to create a PlatformSettings instance");
-	qmlRegisterUncreatableType<HardwareSettings>(uri, 1, 0, "HardwareSettings",
-		"unable to create a HardwareSettings instance");
 	qmlRegisterUncreatableType<AntintrusionAlarm>(uri, 1, 0, "AntintrusionAlarm",
 		"unable to create an AntintrusionAlarm instance");
 	qmlRegisterUncreatableType<FileObject>(uri, 1, 0, "FileObject",

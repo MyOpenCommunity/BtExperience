@@ -56,8 +56,7 @@ public:
 	enum ObjectId
 	{
 		IdAntintrusionSystem = 1,
-		IdHardwareSettings,
-		IdMultiChannelSoundDiffusionSystem,
+		IdMultiChannelSoundDiffusionSystem = 3,
 		IdSoundAmplifier,
 		IdSoundAmplifierGeneral,
 		IdPowerAmplifier,

@@ -66,8 +66,6 @@ QtObject {
             return Qt.createComponent("ThermalRegulation/ThermalNotControlledProbe.qml")
         case ObjectInterface.IdThermalExternalProbe:
             return Qt.createComponent("ThermalRegulation/ThermalNotControlledProbe.qml")
-        case ObjectInterface.IdHardwareSettings:
-            return Qt.createComponent("Settings/Brightness.qml")
         case ObjectInterface.IdMultiGeneral:
             return Qt.createComponent("SoundDiffusion/GeneralAmbient.qml")
         case ObjectInterface.IdMultiChannelSoundAmbient:
