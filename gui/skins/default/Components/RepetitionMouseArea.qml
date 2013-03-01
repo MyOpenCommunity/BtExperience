@@ -5,6 +5,7 @@ BeepingMouseArea {
 
     property bool repetitionEnabled: false
     property bool repetitionTriggered: clickTimer.activations > 1
+    property bool repetitionWithSlowFastClicks: false
     property int slowInterval: 350
     property int fastInterval: 100
 
@@ -36,11 +37,15 @@ BeepingMouseArea {
         onTriggered: {
             if (activations++ === 5)
                 interval = fastInterval
-            mouseArea.clicked(mouseArea)
-            if (interval === fastInterval)
-                mouseArea.clickedFast(mouseArea)
-            else
-                mouseArea.clickedSlow(mouseArea)
+            if (repetitionWithSlowFastClicks) {
+                if (interval === fastInterval)
+                    mouseArea.clickedFast(mouseArea)
+                else
+                    mouseArea.clickedSlow(mouseArea)
+            }
+            else {
+                mouseArea.clicked(mouseArea)
+            }
         }
     }
 }
