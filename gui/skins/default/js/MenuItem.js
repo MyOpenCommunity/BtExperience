@@ -70,6 +70,9 @@ function description(itemObject) {
     case ObjectInterface.IdThermalControlledProbe:
     case ObjectInterface.IdThermalControlledProbeFancoil:
         var probeStatus = itemObject.probeStatus
+        var setPoint = itemObject.setpoint
+        var localOffset = itemObject.localOffset
+
         // show 'protection' or 'off'
         if (probeStatus === ThermalControlledProbe.Antifreeze ||
                 probeStatus === ThermalControlledProbe.Off) {
@@ -79,10 +82,10 @@ function description(itemObject) {
         // no special state, show setpoint (if in manual) and local offset
         if (probeStatus === ThermalControlledProbe.Manual ||
                 probeStatus === ThermalControlledProbe.Auto) {
-            descr += (itemObject.setpoint / 10).toFixed(1) + qsTr("°C")
+            descr += (setPoint / 10).toFixed(1) + qsTr("°C")
         }
         if (!_isProbeOffsetZero(itemObject))
-            descr += " " + _getOffsetRepresentation(itemObject.localOffset)
+            descr += " " + _getOffsetRepresentation(localOffset)
         descr += " " + pageObject.names.get('PROBE_STATUS', probeStatus)
         break
     case ObjectInterface.IdThermalControlUnit99:

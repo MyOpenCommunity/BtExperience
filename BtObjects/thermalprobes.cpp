@@ -78,6 +78,7 @@ ThermalControlledProbe::ThermalControlledProbe(QString _name, QString _key, Ther
 	setpoint = (getMinimumManualTemperature() + getMaximumManualTemperature()) / 2;
 	dev = d;
 	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+	connect(control_unit, SIGNAL(currentModalityIdChanged()), this, SIGNAL(probeStatusChanged()));
 }
 
 QString ThermalControlledProbe::getObjectKey() const
