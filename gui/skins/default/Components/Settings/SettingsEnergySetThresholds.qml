@@ -11,13 +11,15 @@ MenuColumn {
 
     Column {
         ControlSwitch {
-            text: qsTr("threshold 1 %1").arg(status === 0 ? qsTr("enabled") : qsTr("disabled"))
+            upperText: qsTr("threshold 1")
+            text: qsTr("%1").arg(status === 0 ? qsTr("enabled") : qsTr("disabled"))
             status: dataModel.thresholdEnabled[0] === true ? 0 : 1
             onPressed: dataModel.thresholdEnabled = [!dataModel.thresholdEnabled[0], dataModel.thresholdEnabled[1]]
         }
 
         ControlSwitch {
-            text: qsTr("threshold 2 %1").arg(status === 0 ? qsTr("enabled") : qsTr("disabled"))
+            upperText: qsTr("threshold 2")
+            text: qsTr("%1").arg(status === 0 ? qsTr("enabled") : qsTr("disabled"))
             status: dataModel.thresholdEnabled[1] === true ? 0 : 1
             onPressed: dataModel.thresholdEnabled = [dataModel.thresholdEnabled[0], !dataModel.thresholdEnabled[1]]
         }

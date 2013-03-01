@@ -26,7 +26,10 @@ SvgImage {
             topMargin: 5
             left: parent.left
             leftMargin: 7
+            right: parent.right
+            rightMargin: 7
         }
+        elide: Text.ElideRight
     }
 
     UbuntuLightText {
@@ -36,10 +39,13 @@ SvgImage {
             verticalCenter: rightButton.verticalCenter
             left: parent.left
             leftMargin: 7
+            right: rightButton.left
+            rightMargin: 7
         }
         font.pixelSize: 15
         color: "white"
         text: control.text
+        elide: Text.ElideRight
     }
 
     ButtonImageThreeStates {

@@ -107,6 +107,7 @@ Page {
                         right: parent.right
                         rightMargin: 10
                     }
+                    elide: Text.ElideMiddle
                 }
 
                 UbuntuLightText {

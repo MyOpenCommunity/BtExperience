@@ -62,9 +62,14 @@ SvgImage {
 
     UbuntuLightText {
         id: label
+
         color: "black"
         anchors.centerIn: parent
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
         wrapMode: Text.WordWrap
+        width: parent.width / 100 * 90
+        elide: Text.ElideRight
     }
 
     SvgImage {

@@ -20,10 +20,13 @@ Image {
             topMargin: 5
             left: parent.left
             leftMargin: 7
+            right: percentageLabel.left
+            rightMargin: 7
         }
         font.pixelSize: 15
         color: "#444546"
         text: controlBalance.description
+        elide: Text.ElideRight
     }
 
     UbuntuLightText {

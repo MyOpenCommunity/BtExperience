@@ -338,6 +338,7 @@ Page {
             height: bg.height / 100 * 5.72
             text: itemObject === undefined ? "" : itemObject.name
             font.pixelSize: 16
+            elide: Text.ElideMiddle
         }
     }
 

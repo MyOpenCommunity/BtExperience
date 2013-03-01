@@ -30,12 +30,12 @@ Column {
             font.pixelSize: 24
             text: "ANTINTRUSIONE"
             anchors {
-                top: parent.top
-                bottom: parent.bottom
-                left: parent.left
+                fill: parent
                 leftMargin: parent.width / 100 * 2.27
+                rightMargin: parent.width / 100 * 2.27
             }
             verticalAlignment: Text.AlignVCenter
+            elide: Text.ElideRight
         }
     }
 
@@ -51,6 +51,8 @@ Column {
             color: "white"
             font.pixelSize: 18
             text: "Zona 4 'persiane'"
+            width: parent.width / 100 * 90
+            elide: Text.ElideRight
             anchors {
                 centerIn: bgBody
                 verticalCenterOffset: -bgTitle.height / 100 * 28.09
@@ -63,6 +65,8 @@ Column {
             color: "white"
             font.pixelSize: 18
             text: "14:27 - 10/09/2012"
+            width: parent.width / 100 * 90
+            elide: Text.ElideRight
             anchors {
                 centerIn: bgBody
                 verticalCenterOffset: 0
@@ -75,6 +79,8 @@ Column {
             color: "white"
             font.pixelSize: 18
             text: "Manomissione"
+            width: parent.width / 100 * 90
+            elide: Text.ElideRight
             anchors {
                 centerIn: bgBody
                 verticalCenterOffset: bgTitle.height / 100 * 28.09

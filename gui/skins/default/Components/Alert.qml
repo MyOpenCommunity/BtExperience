@@ -22,8 +22,11 @@ Column {
             anchors {
                 left: parent.left
                 leftMargin: parent.width / 100 * 2
+                right: parent.right
+                rightMargin: parent.width / 100 * 2
                 verticalCenter: parent.verticalCenter
             }
+            elide: Text.ElideRight
         }
     }
 
@@ -38,11 +41,12 @@ Column {
             text: "Alert message goes here."
             wrapMode: Text.Wrap
             anchors {
-                right: parent.right
-                rightMargin: parent.width / 100 * 2
                 left: parent.left
                 leftMargin: parent.width / 100 * 2
+                right: parent.right
+                rightMargin: parent.width / 100 * 2
             }
+            elide: Text.ElideRight
         }
     }
 

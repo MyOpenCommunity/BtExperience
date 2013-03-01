@@ -24,6 +24,7 @@ Item {
             left: parent.left
             verticalCenter: radioBg.verticalCenter
         }
+        width: parent.width / 100 * 90
         elide: Text.ElideRight
     }
 

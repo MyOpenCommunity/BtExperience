@@ -32,6 +32,8 @@ SvgImage {
             left: parent.left
             leftMargin: 7
         }
+        width: parent.width / 100 * 90
+        elide: Text.ElideRight
     }
 
     UbuntuLightText {
@@ -46,6 +48,8 @@ SvgImage {
             left: parent.left
             leftMargin: 7
         }
+        width: parent.width / 100 * 90
+        elide: Text.ElideRight
     }
 
     UbuntuLightText {
@@ -59,6 +63,8 @@ SvgImage {
             left: parent.left
             leftMargin: 7
         }
+        width: parent.width / 100 * 90
+        elide: Text.ElideRight
     }
 
     UbuntuLightText {
@@ -72,6 +78,8 @@ SvgImage {
             left: parent.left
             leftMargin: 7
         }
+        width: parent.width / 100 * 90
+        elide: Text.ElideRight
     }
 
     ButtonImageThreeStates {

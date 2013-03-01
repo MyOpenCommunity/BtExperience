@@ -23,7 +23,10 @@ SvgImage {
             topMargin: 5
             left: parent.left
             leftMargin: 7
+            right: parent.right
+            rightMargin: 7
         }
+        elide: Text.ElideMiddle
     }
 
     ControlLeftRight {

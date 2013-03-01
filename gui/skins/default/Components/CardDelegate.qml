@@ -77,6 +77,7 @@ Item {
             left: bg.left
             right: bg.right
         }
+        elide: Text.ElideRight
     }
 
     BeepingMouseArea {
