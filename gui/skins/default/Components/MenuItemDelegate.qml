@@ -10,6 +10,11 @@ MenuItem {
     signal delegateClicked(int index)
     signal delegateTouched(int index)
 
+    function resetSelection() {
+        itemDelegate.ListView.view.currentIndex = -1
+        column.closeChild()
+    }
+
     name: itemObject.name
 
     onEditCompleted: itemObject.name = name
