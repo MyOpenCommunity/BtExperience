@@ -27,14 +27,19 @@ MenuColumn {
                 if (privateProps.currentIndex !== 1)
                     privateProps.currentIndex = 1
                 column.closeChild()
-                installPopup(popupEditUrl)
-                pageObject.popupLoader.item.setInitialText(global.homePageUrl)
+                pageObject.installPopup(popupEditUrl)
             }
             Component {
                 id: popupEditUrl
-                EditNote {
+                FavoriteEditPopup {
                     title: qsTr("Insert new home page")
-                    onOkClicked: global.homePageUrl = text
+                    topInputLabel: qsTr("New URL:")
+                    topInputText: global.homePageUrl
+                    bottomVisible: false
+
+                    function okClicked() {
+                        global.homePageUrl = topInputText
+                    }
                 }
             }
         }
