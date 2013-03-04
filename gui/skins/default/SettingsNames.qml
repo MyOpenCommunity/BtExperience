@@ -25,6 +25,15 @@ QtObject {
         container['LANGUAGE']["it"] = qsTr("Italian")
         container['LANGUAGE']["en"] = qsTr("English")
         container['LANGUAGE']["fr"] = qsTr("French")
+        container['LANGUAGE']["de"] = qsTr("German")
+        container['LANGUAGE']["nl"] = qsTr("Flemish")
+        container['LANGUAGE']["es"] = qsTr("Spanish")
+        container['LANGUAGE']["pt"] = qsTr("Portuguese")
+        container['LANGUAGE']["el"] = qsTr("Greek")
+        container['LANGUAGE']["ru"] = qsTr("Russian")
+        container['LANGUAGE']["tr"] = qsTr("Turkish")
+        container['LANGUAGE']["pl"] = qsTr("Polish")
+        container['LANGUAGE']["zh"] = qsTr("Simplified Chinese")
 
         container['KEYBOARD'] = []
         container['KEYBOARD']["it_bticino"] = qsTr("Italian")
