@@ -55,6 +55,7 @@ MenuColumn {
             if (itemObject.objectId === ObjectInterface.IdAdvancedScenario) {
                 resetCallback()
                 itemObject.reset()
+                column.closeChild()
                 Stack.pushPage("SettingsAdvancedScenario.qml",  {"scenarioObject": itemObject})
             }
             else

@@ -12,7 +12,6 @@ MenuItem {
 
     function resetSelection() {
         itemDelegate.ListView.view.currentIndex = -1
-        column.closeChild()
     }
 
     name: itemObject.name

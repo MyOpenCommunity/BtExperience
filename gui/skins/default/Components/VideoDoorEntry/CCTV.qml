@@ -23,6 +23,7 @@ MenuColumn {
             editable: true
             onDelegateClicked: {
                 resetSelection()
+                column.closeChild()
                 cctvModel.getObject(0).cameraOn(itemObject)
             }
         }

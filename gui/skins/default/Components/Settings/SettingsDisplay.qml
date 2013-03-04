@@ -30,6 +30,7 @@ MenuColumn {
                     column.loadColumn(model.component, model.name)
                 else {
                     resetSelection()
+                    column.closeChild()
                     Stack.pushPage(model.component)
                 }
             }

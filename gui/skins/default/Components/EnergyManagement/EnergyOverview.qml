@@ -31,6 +31,7 @@ MenuColumn {
                 // the code a lot.
                 onDelegateTouched: {
                     resetSelection()
+                    element.closeChild()
                     Stack.pushPage("EnergyDataDetail.qml", {"family": itemObject})
                 }
             }
