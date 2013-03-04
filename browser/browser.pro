@@ -19,7 +19,7 @@ maliit {
     DEFINES += BT_MALIIT
 }
 
-INCLUDEPATH += ./common_files ../gui ../BtObjects ../BtObjects/ts
+INCLUDEPATH += ./common_files ../gui ../BtObjects ../BtObjects/ts ../BtObjects/devices
 DEPENDPATH += . devices ../gui ../BtObjects ../BtObjects/ts
 LIBS += -lssl
 
@@ -37,6 +37,14 @@ INSTALLS += target
 SOURCES += \
     browser.cpp \
     ../BtObjects/configfile.cpp \
+    ../BtObjects/iteminterface.cpp \
+    ../BtObjects/linkinterface.cpp \
+    ../BtObjects/medialink.cpp \
+    ../BtObjects/devices/device.cpp \
+    ../BtObjects/ts/devices_cache.cpp \
+    ../BtObjects/ts/frame_classes.cpp \
+    ../BtObjects/ts/frame_functions.cpp \
+    ../BtObjects/ts/openclient.cpp \
     ../BtObjects/ts/signalshandler.cpp \
     ../BtObjects/ts/xml_functions.cpp \
     ../gui/applicationcommon.cpp \
@@ -45,12 +53,20 @@ SOURCES += \
     ../gui/guisettings.cpp \
     ../gui/imagereader.cpp \
     ../gui/inputcontextwrapper.cpp \
-	networkmanager.cpp \
-	networkreply.cpp \
+    networkmanager.cpp \
+    networkreply.cpp \
     browserproperties.cpp
 
 HEADERS += \
     ../BtObjects/configfile.h \
+    ../BtObjects/iteminterface.h \
+    ../BtObjects/linkinterface.h \
+    ../BtObjects/medialink.h \
+    ../BtObjects/devices/device.h \
+    ../BtObjects/ts/devices_cache.h \
+    ../BtObjects/ts/frame_classes.h \
+    ../BtObjects/ts/frame_functions.h \
+    ../BtObjects/ts/openclient.h \
     ../BtObjects/ts/signalshandler.h \
     ../BtObjects/ts/xml_functions.h \
     ../gui/applicationcommon.h \
@@ -59,6 +75,7 @@ HEADERS += \
     ../gui/guisettings.h \
     ../gui/imagereader.h \
     ../gui/inputcontextwrapper.h \
-	networkmanager.h \
-	networkreply.h \
+    networkmanager.h \
+    networkreply.h \
     browserproperties.h
+

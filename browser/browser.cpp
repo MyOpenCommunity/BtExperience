@@ -10,6 +10,7 @@
 #include "imagereader.h"
 #include "main.h"
 #include "networkmanager.h"
+#include "medialink.h"
 
 
 // Start definitions required by libcommon
@@ -25,6 +26,12 @@ char *ssl_certificate_path = NULL;
 
 QHash<GlobalField, QString> *bt_global::config;
 
+void registerTypes(const char *uri)
+{
+	qmlRegisterType<ImageReader>(uri, 1, 0, "ImageReader");
+	qmlRegisterUncreatableType<MediaLink>(uri, 1, 0, "MediaLink", "unable to create a MediaLink instance");
+}
+
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
@@ -34,8 +41,7 @@ int main(int argc, char *argv[])
 
 	qDebug() << "***** BtBrowser start! *****";
 
-	qmlRegisterType<ImageReader>("BtExperience", 1, 0, "ImageReader");
-
+	registerTypes("BtExperience");
 	BrowserProperties global(app_logger);
 	if (argc > 1)
 		global.setUrlString(argv[1]);
