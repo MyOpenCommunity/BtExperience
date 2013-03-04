@@ -12,6 +12,7 @@ Column {
     ControlMinusPlus {
         title: qsTr("Force load")
         text: format(loadWithCU.forceDuration)
+        fastClickInterval: 50
         onMinusClicked: loadWithCU.decreaseForceDuration()
         onPlusClicked: loadWithCU.increaseForceDuration()
         Component.onCompleted: loadWithCU.resetForceDuration()

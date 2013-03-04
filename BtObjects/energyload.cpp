@@ -363,16 +363,18 @@ void EnergyLoadManagementWithControlUnit::stopForcing()
 void EnergyLoadManagementWithControlUnit::decreaseForceDuration()
 {
 	if (force_duration - LoadsDevice::FORCE_DURATION_STEP < LoadsDevice::FORCE_DURATION_MIN)
-		return;
-	force_duration -= LoadsDevice::FORCE_DURATION_STEP;
+		force_duration = LoadsDevice::FORCE_DURATION_MAX;
+	else
+		force_duration -= LoadsDevice::FORCE_DURATION_STEP;
 	emit forceDurationChanged();
 }
 
 void EnergyLoadManagementWithControlUnit::increaseForceDuration()
 {
 	if (force_duration + LoadsDevice::FORCE_DURATION_STEP > LoadsDevice::FORCE_DURATION_MAX)
-		return;
-	force_duration += LoadsDevice::FORCE_DURATION_STEP;
+		force_duration = LoadsDevice::FORCE_DURATION_MIN;
+	else
+		force_duration += LoadsDevice::FORCE_DURATION_STEP;
 	emit forceDurationChanged();
 }
 
