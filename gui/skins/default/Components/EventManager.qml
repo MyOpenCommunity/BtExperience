@@ -160,12 +160,12 @@ Item {
         target: null
         onIncomingCall: privateProps.addNotification({"type": Script.VCT_INCOMING_CALL})
         onCallAnswered: {
+            if (vctConnection.target.teleloop)
+                global.audioState.enableState(AudioState.Teleloop)
             if (vctConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpVideoCall)
             else
                 global.audioState.enableState(AudioState.ScsVideoCall)
-            if (vctConnection.target.teleloop)
-                global.audioState.enableState(AudioState.Teleloop)
         }
         onCallEnded: {
             global.audioState.disableState(AudioState.VdeRingtone)
@@ -204,12 +204,12 @@ Item {
         onCallAnswered: {
             global.audioState.disableState(AudioState.SenderPagerCall)
             global.audioState.disableState(AudioState.ReceiverPagerCall)
+            if (intercomConnection.target.teleloop)
+                global.audioState.enableState(AudioState.Teleloop)
             if (intercomConnection.target.isIpCall)
                 global.audioState.enableState(AudioState.IpIntercomCall)
             else
                 global.audioState.enableState(AudioState.ScsIntercomCall)
-            if (intercomConnection.target.teleloop)
-                global.audioState.enableState(AudioState.Teleloop)
         }
         onCallEnded: {
             global.audioState.disableState(AudioState.VdeRingtone)
