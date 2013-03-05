@@ -10,6 +10,8 @@ Column {
 
     UbuntuMediumText {
         text: qsTr("action")
+        width: line.width
+        elide: Text.ElideRight
         font.pixelSize: 18
         color: "white"
     }
@@ -21,12 +23,16 @@ Column {
 
     UbuntuLightText {
         text: scenarioAction.target
+        width: line.width
+        elide: Text.ElideRight
         font.pixelSize: 14
         color: "white"
     }
 
     UbuntuLightText {
         text: scenarioAction.description
+        width: line.width
+        elide: Text.ElideRight
         font.pixelSize: 14
         color: "white"
     }

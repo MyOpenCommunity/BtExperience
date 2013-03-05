@@ -10,6 +10,8 @@ Column {
 
     UbuntuMediumText {
         text: qsTr("activation")
+        width: line.width / 100 * 90
+        elide: Text.ElideRight
         font.pixelSize: 18
         color: "white"
     }
@@ -21,6 +23,8 @@ Column {
 
     UbuntuLightText {
         text: qsTr("days")
+        width: line.width / 100 * 90
+        elide: Text.ElideRight
         font.pixelSize: 14
         color: "white"
     }
@@ -69,6 +73,8 @@ Column {
             spacing: column.spacing
             UbuntuLightText {
                 text: qsTr("time")
+                width: parent.width / 100 * 90
+                elide: Text.ElideRight
                 font.pixelSize: 14
                 color: "white"
             }

@@ -12,6 +12,8 @@ Column {
 
     UbuntuMediumText {
         text: qsTr("device condition")
+        width: line.width
+        elide: Text.ElideRight
         font.pixelSize: 18
         color: "white"
 
@@ -24,6 +26,8 @@ Column {
     UbuntuLightText {
         id: deviceDescription
         text: scenarioDeviceObject.description
+        width: line.width
+        elide: Text.ElideRight
         font.pixelSize: 14
         color: "white"
     }
