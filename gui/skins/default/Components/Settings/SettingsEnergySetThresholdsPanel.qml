@@ -143,8 +143,11 @@ MenuColumn {
 
         onCancelClicked: column.closeColumn()
         onOkClicked: {
-            dataModel.thresholds = [spinThreshold1.intPart + spinThreshold1.decPart / int_decimals,
-                                    spinThreshold2.intPart + spinThreshold2.decPart / int_decimals]
+            dataModel.thresholds = [
+                        spinThreshold1.intPart + spinThreshold1.decPart / int_decimals,
+                        spinThreshold2.intPart + spinThreshold2.decPart / int_decimals
+                    ]
+
             column.closeColumn()
         }
     }

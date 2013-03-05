@@ -1115,16 +1115,11 @@ int EnergyData::getThresholdLevel() const
 
 void EnergyData::setThresholds(QVariantList _thresholds)
 {
-	if (_thresholds == thresholds)
-		return;
-
 	// set to device
 	for (int i = 0; i < 2; ++i)
-		if (thresholds_enabled[i].toBool())
+		if (_thresholds[i] != thresholds[i])
 			dev->setThresholdValue(i, _thresholds[i].toDouble() * unit_conversion);
-
-	thresholds = _thresholds;
-	emit thresholdsChanged(thresholds);
+	// signal is emitted when receiving new values from device
 }
 
 QVariantList EnergyData::getThresholds() const
