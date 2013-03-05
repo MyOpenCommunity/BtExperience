@@ -441,7 +441,7 @@ private:
 	QTimer trim_cache;
 
 	// current consumption thresholds
-	QVariantList thresholds;
+	QVariantList thresholds, last_thresholds;
 	int threshold_level;
 	QVariantList thresholds_enabled;
 

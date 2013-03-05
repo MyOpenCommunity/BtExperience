@@ -285,6 +285,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	goal_exceeded = false;
 	goal_month_check = -1;
 	thresholds = QVariantList() << 0.0 << 0.0;
+	last_thresholds = QVariantList() << 0.0 << 0.0;
 	threshold_level = 0;
 
 	decimals = getEnergyType() == Electricity ? 2 : 0;
@@ -299,7 +300,7 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	connect(&trim_cache, SIGNAL(timeout()), this, SLOT(trimCache()));
 
 #if TEST_ENERGY_DATA
-	thresholds = QVariantList() << 2.2 << 3.80;
+	last_thresholds = thresholds = QVariantList() << 2.2 << 3.80;
 
 	automatic_updates.setInterval(5000);
 	connect(&automatic_updates, SIGNAL(timeout()), this, SLOT(testAutomaticUpdates()));
@@ -384,7 +385,7 @@ int EnergyData::getRateDecimals() const
 void EnergyData::setThresholdEnabled(QVariantList enabled)
 {
 	for (int i = 0; i < 2; ++i)
-		if (thresholds[i].toDouble() * unit_conversion < 1)
+		if (last_thresholds[i].toDouble() * unit_conversion < 1)
 			enabled[i] = false;
 
 	if (enabled == thresholds_enabled)
@@ -393,7 +394,7 @@ void EnergyData::setThresholdEnabled(QVariantList enabled)
 	// update device thresholds
 	for (int i = 0; i < 2; ++i)
 		if (enabled[i] != thresholds_enabled[i])
-			dev->setThresholdValue(i, enabled[i].toBool() ? thresholds[i].toDouble() * unit_conversion : 0);
+			dev->setThresholdValue(i, enabled[i].toBool() ? last_thresholds[i].toDouble() * unit_conversion : 0);
 
 	thresholds_enabled = enabled;
 	emit thresholdEnabledChanged(thresholds_enabled);
@@ -949,10 +950,14 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 			// when disabling threshold we get back a threshold value of 0.0: ignore it
 			// so we have the previous value in case the user re-enables the threshold;
 			// the disabled state is update when receiving DIM_THRESHOLD_STATE
-			if (value != 0.0 && thresholds[index] != value)
+			if (value != 0.0 && last_thresholds[index] != value)
+			{
+				last_thresholds[index] = value;
+				emit thresholdsChanged(thresholds);
+			}
+			if (thresholds[index] != value)
 			{
 				thresholds[index] = value;
-				emit thresholdsChanged(thresholds);
 			}
 		}
 			break;
@@ -1124,7 +1129,7 @@ void EnergyData::setThresholds(QVariantList _thresholds)
 
 QVariantList EnergyData::getThresholds() const
 {
-	return thresholds;
+	return last_thresholds;
 }
 
 
