@@ -27,7 +27,7 @@
 
 #define CPU_FREQ_DEVICE    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq"
 #define CPU_CLOCK_IDLE    300000
-#define CPU_CLOCK_ACTIVE  800000
+#define CPU_CLOCK_ACTIVE  1000000
 
 #define BROWSER_HISTORY_SIZE 10
 

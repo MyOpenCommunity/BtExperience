@@ -73,6 +73,7 @@ bool GstMediaPlayer::isInstanceRunning()
 
 bool GstMediaPlayer::play(QRect rect, QString track)
 {
+	system("/etc/init.d/loadmodule-rc-nostatic restart");
 	video_rect = rect;
 
 	return runMPlayer(QList<QString>()
@@ -109,6 +110,7 @@ bool GstMediaPlayer::runMPlayer(const QList<QString> &args)
 
 void GstMediaPlayer::quit()
 {
+	system("/etc/init.d/loadmodule-rc restart");
 	if (gstreamer_proc->state() == QProcess::Running)
 	{
 		gstreamer_proc->terminate();
