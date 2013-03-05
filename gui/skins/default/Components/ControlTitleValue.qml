@@ -28,17 +28,25 @@ Item {
         text: control.title
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: control.top
-        anchors.topMargin: 5
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: control.top
+            topMargin: 5
+        }
+        elide: Text.ElideRight
+        width: bg.width / 100 * 90
         font.pixelSize: 14
         color:  "#2d2d2d"
     }
 
     UbuntuLightText {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: control.bottom
-        anchors.bottomMargin: 5
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: control.bottom
+            bottomMargin: 5
+        }
+        elide: Text.ElideRight
+        width: bg.width / 100 * 90
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         text: control.value
