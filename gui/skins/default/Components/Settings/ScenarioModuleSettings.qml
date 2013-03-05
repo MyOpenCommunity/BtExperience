@@ -90,8 +90,11 @@ CANCEL if you wish to abort the operation.")
                     anchors {
                         left: parent.left
                         leftMargin: parent.width / 100 * 2
+                        right: parent.right
+                        rightMargin: parent.width / 100 * 2
                         verticalCenter: parent.verticalCenter
                     }
+                    elide: Text.ElideRight
                 }
             }
             SvgImage {
