@@ -203,6 +203,7 @@ Page {
         }
 
         function showEditBox(favorite) {
+            unselectObj()
             installPopup(popup, {favoriteItem: favorite.itemObject})
         }
 
