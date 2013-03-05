@@ -18,9 +18,12 @@ SvgImage {
     UbuntuMediumText {
         id: label
         text: qsTr("programming impossible")
+        elide: Text.ElideRight
         anchors {
             left: icon.right
             leftMargin: parent.width / 100 * 2
+            right: parent.right
+            rightMargin: parent.width / 100 * 2
             verticalCenter: parent.verticalCenter
         }
         font.pixelSize: 18

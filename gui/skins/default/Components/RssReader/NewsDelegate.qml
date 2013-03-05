@@ -58,6 +58,7 @@ Item {
         UbuntuLightText {
             id: titleText
             text: title; width: parent.width; wrapMode: Text.WordWrap
+            elide: Text.ElideRight
             font { bold: true; pixelSize: 16 }
             textFormat: Text.RichText
             color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
@@ -68,6 +69,7 @@ Item {
             id: descriptionText
             width: parent.width; text: description
             wrapMode: Text.WordWrap
+            elide: Text.ElideRight
             textFormat: Text.RichText
             color: homeProperties.skin === HomeProperties.Clear ? "#434343" :
                                                                   "#FFFFFF"

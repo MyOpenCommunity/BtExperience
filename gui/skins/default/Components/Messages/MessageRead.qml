@@ -29,6 +29,7 @@ MenuColumn {
         font.pixelSize: 20
 
         text: column.dataModel.text
+        elide: Text.ElideRight
         anchors {
             top: imageBg.top
             topMargin: imageBg.height / 100 * 3.32
