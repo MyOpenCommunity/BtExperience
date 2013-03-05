@@ -395,6 +395,7 @@ Item {
                 text: model.modelData.label
                 font.capitalization: Font.AllUppercase
                 width: columnPrototype.width
+                elide: Text.ElideRight
                 color: "white"
                 font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter

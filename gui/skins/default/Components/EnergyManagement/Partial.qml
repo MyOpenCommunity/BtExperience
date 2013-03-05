@@ -40,6 +40,8 @@ SvgImage {
             topMargin: parent.height / 100 * 5
             left: firstLine.left
         }
+        elide: Text.ElideRight
+        width: parent.width / 100 * 90
     }
 
     UbuntuLightText {

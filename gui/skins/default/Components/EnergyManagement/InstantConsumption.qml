@@ -35,6 +35,8 @@ SvgImage {
             left: parent.left
             leftMargin: parent.width / 100 * 5
         }
+        elide: Text.ElideRight
+        width: parent.width / 100 * 90
     }
 
     QtObject {
