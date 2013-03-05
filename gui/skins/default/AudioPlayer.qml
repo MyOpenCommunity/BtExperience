@@ -67,7 +67,7 @@ Page {
         id: duration
 
         text: player.mediaPlayer.currentTime + " / " + player.mediaPlayer.totalTime
-        color: "gray"
+        color: "#323232"
         horizontalAlignment: Text.AlignRight
         font.pixelSize: frameBg.height / 100 * 3.63
         anchors {

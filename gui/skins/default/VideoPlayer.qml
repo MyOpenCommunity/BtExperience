@@ -181,7 +181,7 @@ BasePage {
             id: time
 
             text: page.player.currentTime + " / " + page.player.totalTime
-            color: "gray"
+            color: "#323232"
             horizontalAlignment: Text.AlignRight
             font.pixelSize: page.height / 100 * 2.4
             anchors {

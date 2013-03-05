@@ -13,7 +13,7 @@ SvgImage {
 
     UbuntuLightText {
         text: qsTr("Instant consumption")
-        color: "gray"
+        color: "#323232"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         anchors {
