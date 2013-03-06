@@ -485,7 +485,7 @@ Page {
                             top: closeButton.bottom
                             topMargin: delegate.height / 100 * 5
                         }
-                        color: "gray"
+                        color: "#323232"
                         font.pixelSize: 15
                         wrapMode: Text.Wrap
                         text: delegate.text

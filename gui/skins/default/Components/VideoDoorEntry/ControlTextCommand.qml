@@ -30,7 +30,7 @@ SvgImage {
             leftMargin: 11
         }
         font.pixelSize: 14
-        color: "gray"
+        color: "#323232"
         text: control.text
     }
 

@@ -47,7 +47,7 @@ SvgImage {
         text: qsTr("volume")
         elide: Text.ElideRight
         font.pixelSize: 14
-        color: "gray"
+        color: "#323232"
     }
 
     UbuntuLightText {

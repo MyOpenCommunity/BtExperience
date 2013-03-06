@@ -18,7 +18,7 @@ SvgImage {
 
     // the label on the left
     property string text: "premi per parlare"
-    property color textColor: "gray"
+    property color textColor: "#323232"
     property color pressedTextColor: "white"
 
     // images for button background

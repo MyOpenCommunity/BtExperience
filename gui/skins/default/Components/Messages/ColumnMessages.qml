@@ -31,7 +31,7 @@ MenuColumn {
 
         text: theModel.count === 0 ? "" : theModel.count + (theModel.count === 1 ? qsTr(" message") : qsTr(" messages"))
         verticalAlignment: Text.AlignVCenter
-        color: "gray"
+        color: "#323232"
         anchors {
             top: imageBg.top
             topMargin: imageBg.height / 100 * 2.65

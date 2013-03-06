@@ -17,7 +17,7 @@ SvgImage {
         id: firstLine
 
         text: qsTr("Partial ") + (element.partialId + 1) // expects periodTotals are zero-based
-        color: "gray"
+        color: "#323232"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         anchors {
@@ -32,7 +32,7 @@ SvgImage {
         id: since
 
         text: privateProps.computeSince(load.periodTotals[partialId])
-        color: "gray"
+        color: "#323232"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         anchors {
