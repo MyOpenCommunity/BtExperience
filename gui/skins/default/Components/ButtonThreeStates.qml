@@ -26,6 +26,7 @@ SvgImage {
     signal clicked(variant mouse)
     signal held(variant mouse)
     signal pressed(variant mouse)
+    signal released(variant mouse)
     signal touched
 
     source: defaultImage
@@ -41,6 +42,7 @@ SvgImage {
             touchTimer.restart()
             bg.pressed(mouse)
         }
+        onReleased: bg.released(mouse)
 
         Timer {
             id: touchTimer

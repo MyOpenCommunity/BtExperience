@@ -1,5 +1,6 @@
 CCTV 1.0 CCTV.qml
 ControlCallManager 1.0 ControlCallManager.qml
+ControlImageCommand 1.0 ControlImageCommand.qml
 ControlPullDownVideo 1.0 ControlPullDownVideo.qml
 ControlTextCommand 1.0 ControlTextCommand.qml
 ControlTextImageCallManager 1.0 ControlTextImageCallManager.qml

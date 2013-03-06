@@ -34,17 +34,17 @@ SvgImage {
         text: control.text
     }
 
-    ButtonThreeStates {
+    ButtonImageThreeStates {
         id: button
 
-        text: qsTr("ON")
-        defaultImage: "../../images/common/btn_66x35.svg"
-        pressedImage: "../../images/common/btn_66x35_P.svg"
+        defaultImageBg: "../../images/common/btn_66x35.svg"
+        pressedImageBg: "../../images/common/btn_66x35_P.svg"
         shadowImage: "../../images/common/btn_shadow_66x35.svg"
+        defaultImage: "../../images/common/ico_cancelletto.svg"
+        pressedImage: "../../images/common/ico_cancelletto_P.svg"
         onClicked: control.clicked()
         onPressed: control.pressed()
         onReleased: control.released()
-        font.pixelSize: 16
         anchors {
             bottom: parent.bottom
             bottomMargin: 12

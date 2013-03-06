@@ -116,7 +116,7 @@ Page {
         }
     }
 
-    ControlTextCommand {
+    ControlImageCommand {
         id: controlLock
 
         text: qsTr("door lock")
