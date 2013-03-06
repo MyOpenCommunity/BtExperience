@@ -169,7 +169,7 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 
 AutomationLight::AutomationLight(QString name, QString key, QTime time, LightingDevice *d, int _myid) :
-	Light(name, key, time, FixedTimingDisabled, time.isValid(), d)
+	Light(name, key, time, FixedTimingDisabled, time.isValid(), true /*id=3001 is a PP*/, d)
 {
 	setAutoTurnOff(time.isValid());
 	myid = _myid;

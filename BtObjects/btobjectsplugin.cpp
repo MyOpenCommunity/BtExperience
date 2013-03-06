@@ -175,6 +175,7 @@ namespace
 	// used in configuration file (defined here)
 	enum ParserConstants
 	{
+		IdDimmer = 2001,
 		IdDimmer100 = 2002,
 		IdLight = 2003,
 		IdEnergyElectricity = 6105,
@@ -344,7 +345,7 @@ void BtObjectsPlugin::createObjects()
 		case IdLight:
 			obj_list = parseLight(xml_obj);
 			break;
-		case ObjectInterface::IdDimmerFixed:
+		case IdDimmer:
 			obj_list = parseDimmer(xml_obj);
 			break;
 		case IdDimmer100:

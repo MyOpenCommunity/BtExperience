@@ -17,9 +17,9 @@ void TestObjectModel::init()
 	dev1 = new DimmerDevice("1");
 	dev2 = AmplifierDevice::createDevice("22");
 
-	light1 = new Light("light1", "1", QTime(), Light::FixedTimingDisabled, true, dev1);
-	light2 = new Light("light2", "2", QTime(), Light::FixedTimingDisabled, true, dev1);
-	light3 = new Light("light3", "3", QTime(), Light::FixedTimingDisabled, true, dev1);
+	light1 = new Light("light1", "1", QTime(), Light::FixedTimingDisabled, true, true, dev1);
+	light2 = new Light("light2", "2", QTime(), Light::FixedTimingDisabled, true, true, dev1);
+	light3 = new Light("light3", "3", QTime(), Light::FixedTimingDisabled, true, true, dev1);
 
 	amplifier1 = new Amplifier(2, "amplifier1", dev2);
 	amplifier2 = new Amplifier(3, "amplifier1", dev2);
@@ -66,7 +66,7 @@ void TestObjectModel::testFilterObjectId()
 	qApp->processEvents();
 	ts.clearSignals();
 
-	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustom);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustomPP);
 
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);
@@ -106,7 +106,7 @@ void TestObjectModel::testFilterObjectKey()
 	qApp->processEvents();
 	ts.clearSignals();
 
-	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustom
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustomPP
 					     << "objectKey" << "2");
 
 	QCOMPARE(obj->getCount(), 1);
@@ -132,10 +132,10 @@ void TestObjectModel::testFilterObjectKey()
 	QVariantMap filter;
 
 	// sets filters to select alarm clocks objects
-	filter["objectId"] = ObjectInterface::IdLightCustom;
+	filter["objectId"] = ObjectInterface::IdLightCustomPP;
 	filter["objectKey"] = "1";
 	filters << filter;
-	filter["objectId"] = ObjectInterface::IdLightCustom;
+	filter["objectId"] = ObjectInterface::IdLightCustomPP;
 	filter["objectKey"] = "2";
 	filters << filter;
 
@@ -167,7 +167,7 @@ void TestObjectModel::testMultipleFilter()
 	qApp->processEvents();
 	ts.clearSignals();
 
-	obj->setFilters(ObjectModelFilters() << "objectKey" << "2" << "objectId" << ObjectInterface::IdLightCustom <<
+	obj->setFilters(ObjectModelFilters() << "objectKey" << "2" << "objectId" << ObjectInterface::IdLightCustomPP <<
 			ObjectModelFilters() << "objectKey" << "3" << "objectId" << ObjectInterface::IdSoundAmplifier);
 
 	QCOMPARE(obj->getCount(), 2);
@@ -191,7 +191,7 @@ void TestObjectModel::testComplexFilter()
 
 	ObjectTester ts(obj, SIGNAL(countChanged()));
 
-	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustom);
+	obj->setFilters(ObjectModelFilters() << "objectId" << ObjectInterface::IdLightCustomPP);
 
 	QCOMPARE(obj->getCount(), 3);
 	QCOMPARE(obj->rowCount(), 3);

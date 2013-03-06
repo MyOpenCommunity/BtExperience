@@ -121,7 +121,7 @@ public:
 		FixedTimingSeconds0_5
 	};
 
-	Light(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, LightingDevice *d);
+	Light(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, bool point_to_point, LightingDevice *d);
 
 	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
@@ -161,6 +161,7 @@ protected:
 	bool ectime;
 	bool autoTurnOff;
 	int hours, minutes, seconds;
+	bool point_to_point;
 
 private:
 	ChoiceList *ftimes;
@@ -226,7 +227,7 @@ class Dimmer : public Light
 	Q_PROPERTY(int percentage READ getPercentage WRITE setPercentage NOTIFY percentageChanged)
 
 public:
-	Dimmer(QString name, QString key, FixedTimingType ftime, DimmerDevice *d);
+	Dimmer(QString name, QString key, FixedTimingType ftime, bool point_to_point, DimmerDevice *d);
 
 	virtual int getObjectId() const;
 	virtual int getPercentage() const;
@@ -264,7 +265,7 @@ protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
-	Dimmer(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, DimmerDevice *d);
+	Dimmer(QString name, QString key, QTime ctime, FixedTimingType ftime, bool ectime, bool point_to_point, DimmerDevice *d);
 
 	void setBroken(bool broken);
 
@@ -359,7 +360,7 @@ class Dimmer100 : public Dimmer
 	Q_PROPERTY(int stepAmount READ getStepAmount WRITE setStepAmount NOTIFY stepAmountChanged)
 
 public:
-	Dimmer100(QString name, QString key, QTime ctime, Light::FixedTimingType ftime, bool ectime, Dimmer100Device *d, int onspeed, int offspeed);
+	Dimmer100(QString name, QString key, QTime ctime, Light::FixedTimingType ftime, bool ectime, bool point_to_point, Dimmer100Device *d, int onspeed, int offspeed);
 
 	virtual int getObjectId() const;
 

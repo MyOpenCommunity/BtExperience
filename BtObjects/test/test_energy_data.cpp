@@ -1124,22 +1124,66 @@ void TestEnergyData::testDuplicateGraphRequests5()
 
 void TestEnergyData::testSetEnableThresholds()
 {
+	obj->setThresholdEnabled(QVariantList() << false << false);
 	obj->setThresholds(QVariantList() << 0.0 << 0.125);
-	// nothing sent (initial state is disabled)
+	// non-zero threshold enables correspondent threshold flag
+	dev->setThresholdValue(1, 125);
 	compareClientCommand();
+	// device update
+	obj->last_thresholds[1] = obj->thresholds[1] = 0.125;
+	obj->thresholds_enabled[1] = true;
 
 	obj->setThresholdEnabled(QVariantList() << true << true);
-	// only non-zero threshold is set as actually enabled
-	dev->setThresholdValue(1, 125);
+	// nothing sent (first threshold is zero)
 	compareClientCommand();
 
 	obj->setThresholds(QVariantList() << 0.250 << 0.500);
+	dev->setThresholdValue(0, 250);
 	dev->setThresholdValue(1, 500);
 	compareClientCommand();
+	// device update
+	obj->last_thresholds[0] = obj->thresholds[0] = 0.250;
+	obj->thresholds_enabled[0] = true;
+	obj->last_thresholds[1] = obj->thresholds[1] = 0.500;
+	obj->thresholds_enabled[1] = true;
+
+	obj->setThresholdEnabled(QVariantList() << false << false);
+	// on disabling sends zero
+	dev->setThresholdValue(0, 0);
+	dev->setThresholdValue(1, 0);
+	compareClientCommand();
+	// device update
+	obj->thresholds[0] = 0;
+	obj->thresholds_enabled[0] = false;
+	obj->thresholds[1] = 0;
+	obj->thresholds_enabled[1] = false;
 
 	obj->setThresholdEnabled(QVariantList() << true << true);
+	// on reenabling sends old values
+	dev->setThresholdValue(0, 250);
+	dev->setThresholdValue(1, 500);
+	compareClientCommand();
+	// device update
+	obj->last_thresholds[0] = obj->thresholds[0] = 0.250;
+	obj->thresholds_enabled[0] = true;
+	obj->last_thresholds[1] = obj->thresholds[1] = 0.500;
+	obj->thresholds_enabled[1] = true;
+
+	obj->setThresholdEnabled(QVariantList() << false << true);
+	// on disabling sends zero
+	dev->setThresholdValue(0, 0);
+	compareClientCommand();
+	// device update
+	obj->thresholds[0] = 0;
+	obj->thresholds_enabled[0] = false;
+
+	obj->setThresholdEnabled(QVariantList() << true << true);
+	// on reenabling sends old values
 	dev->setThresholdValue(0, 250);
 	compareClientCommand();
+	// device update
+	obj->last_thresholds[0] = obj->thresholds[0] = 0.250;
+	obj->thresholds_enabled[0] = true;
 }
 
 void TestEnergyData::testReceiveThresholdValue()

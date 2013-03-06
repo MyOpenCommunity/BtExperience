@@ -84,17 +84,11 @@ public:
 		IdEnergies,
 		IdAlarmClockNotifier,
 
-		// used internally
-		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
-		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
 		// from configuration file
 		// scenarios
 		IdSimpleScenario = 1001, //!< Scenario unit
 		IdScenarioModule = 1002, //!< Scenario module
 		IdScenarioPlus = 1003, //!< Scenario plus
-		// lights
-		IdDimmerFixed = 2001, //!< 10-level dimmer
-		IdLightGroup = 2004, //!< A set of lights
 		// automation
 		IdAutomation2 = 3002, //!< A simple 2-states automation actuator (Fan,watering, controlled socket)
 		IdAutomation3 = 3000, //!< A 3-states automation actuator (Curtain, garage, shutter, gate)
@@ -176,14 +170,29 @@ public:
 
 		IdMessages = 17000,
 
+		// used internally
+		IdDimmerGroup = 100, //!< Group of lights containing only dimmer objects
+		IdDimmer100Group = 101, //!< group of lights containing only 100-level dimmer objects
+
+		// lights
+		IdLightGroup = 2004, //!< A set of lights
+
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
 		// are defined inside the anonymous namespace contained in
 		// btobjectsplugin.cpp file
-		IdDimmer100Custom = 10012002, //!< 100-level dimmer with custom time
-		IdDimmer100Fixed = 10022002, //!< 100-level dimmer with fixed time
-		IdLightCustom = 10012003, //!< A simple light actuator with custom time
-		IdLightFixed = 10022003, //!< A simple light actuator with fixed time
+		IdDimmerFixedPP = 10012001, //!< 10-level dimmer (PP)
+		IdDimmerFixedAMBGRGEN = 10022001, //!< 10-level dimmer (AMB, GEN, GR)
+		IdDimmer100FixedPP = 10012002, //!< 100-level dimmer with fixed time (PP)
+		IdDimmer100FixedAMBGRGEN = 10022002, //!< 100-level dimmer with fixed time (AMB, GEN, GR)
+		IdDimmer100CustomPP = 10032002, //!< 100-level dimmer with custom time (PP)
+		IdDimmer100CustomAMBGRGEN = 10042002, //!< 100-level dimmer with custom time (AMB, GEN, GR)
+		IdLightFixedPP = 10012003, //!< A simple light actuator with fixed time (PP)
+		IdLightFixedAMBGRGEN = 10022003, //!< A simple light actuator with fixed time (AMB, GEN, GR)
+		IdLightCustomPP = 10032003, //!< A simple light actuator with custom time (PP)
+		IdLightCustomAMBGRGEN = 10042003, //!< A simple light actuator with custom time (AMB, GEN, GR)
+			CidLightAMBGRGEN = 2004,
+
 		IdAmbientAmplifier = 11001000,
 		IdAmplifierGeneral,
 		IdIpRadioSource,

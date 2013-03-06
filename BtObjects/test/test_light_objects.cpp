@@ -21,8 +21,8 @@ void TestLight::init()
 
 	LightingDevice *d = new LightingDevice("3", NOT_PULL);
 
-	obj = new Light("", "", QTime(), Light::FixedTimingDisabled, true, d);
-	obj_ftime = new Light("", "", QTime(), Light::FixedTimingDisabled, false, d);
+	obj = new Light("", "", QTime(), Light::FixedTimingDisabled, true, true, d);
+	obj_ftime = new Light("", "", QTime(), Light::FixedTimingDisabled, false, true, d);
 	dev = new LightingDevice("3", NOT_PULL, 1);
 }
 
@@ -160,8 +160,8 @@ void TestDimmer::init()
 
 	DimmerDevice *d = new DimmerDevice("3", NOT_PULL);
 
-	obj = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, true, d);
-	obj_ftime = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, false, d);
+	obj = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, true, true, d);
+	obj_ftime = new Dimmer("", "", QTime(), Light::FixedTimingDisabled, false, true, d);
 	dev = new DimmerDevice("3", NOT_PULL, 1);
 
 	QCOMPARE((signed int)(obj_ftime->getFTime()), -1);
@@ -250,8 +250,8 @@ void TestDimmer100::init()
 
 	Dimmer100Device *d = new Dimmer100Device("3", NOT_PULL);
 
-	obj = new Dimmer100("", "", QTime(), Light::FixedTimingDisabled, true, d, 255, 255);
-	obj_ftime = new Dimmer100("", "", QTime(), Light::FixedTimingDisabled, false, d, 255, 255);
+	obj = new Dimmer100("", "", QTime(), Light::FixedTimingDisabled, true, true, d, 255, 255);
+	obj_ftime = new Dimmer100("", "", QTime(), Light::FixedTimingDisabled, false, true, d, 255, 255);
 	dev = new Dimmer100Device("3", NOT_PULL, 1);
 
 	initObjects(dev, obj, obj_ftime);
