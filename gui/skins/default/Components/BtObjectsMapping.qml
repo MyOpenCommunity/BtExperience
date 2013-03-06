@@ -13,15 +13,17 @@ QtObject {
     function getComponent(objectId) {
         //console.log("getComponent(): " + objectId)
         switch (objectId) {
-        case ObjectInterface.IdLightCustom:
+        case ObjectInterface.IdLightFixedPP:
+        case ObjectInterface.IdLightFixedAMBGRGEN:
+        case ObjectInterface.IdLightCustomPP:
+        case ObjectInterface.IdLightCustomAMBGRGEN:
             return Qt.createComponent("Lighting/Light.qml")
-        case ObjectInterface.IdLightFixed:
-            return Qt.createComponent("Lighting/Light.qml")
-        case ObjectInterface.IdDimmerFixed:
-            return Qt.createComponent("Lighting/Dimmer.qml")
-        case ObjectInterface.IdDimmer100Custom:
-            return Qt.createComponent("Lighting/Dimmer.qml")
-        case ObjectInterface.IdDimmer100Fixed:
+        case ObjectInterface.IdDimmerFixedPP:
+        case ObjectInterface.IdDimmerFixedAMBGRGEN:
+        case ObjectInterface.IdDimmer100CustomPP:
+        case ObjectInterface.IdDimmer100CustomAMBGRGEN:
+        case ObjectInterface.IdDimmer100FixedPP:
+        case ObjectInterface.IdDimmer100FixedAMBGRGEN:
             return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdLightGroup:
         case ObjectInterface.IdDimmerGroup:

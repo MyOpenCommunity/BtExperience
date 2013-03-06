@@ -4,14 +4,21 @@
 
 function status(itemObject) {
     switch (itemObject.objectId) {
-    case ObjectInterface.IdLightFixed:
-    case ObjectInterface.IdLightCustom:
-    case ObjectInterface.IdDimmerFixed:
-    case ObjectInterface.IdDimmer100Fixed:
-    case ObjectInterface.IdDimmer100Custom:
+    case ObjectInterface.IdLightFixedPP:
+    case ObjectInterface.IdLightCustomPP:
+    case ObjectInterface.IdDimmerFixedPP:
+    case ObjectInterface.IdDimmer100FixedPP:
+    case ObjectInterface.IdDimmer100CustomPP:
     case ObjectInterface.IdSoundAmplifier:
     case ObjectInterface.IdPowerAmplifier:
         return itemObject.active === true ? 1 : 0
+
+    case ObjectInterface.IdLightFixedAMBGRGEN:
+    case ObjectInterface.IdLightCustomAMBGRGEN:
+    case ObjectInterface.IdDimmerFixedAMBGRGEN:
+    case ObjectInterface.IdDimmer100FixedAMBGRGEN:
+    case ObjectInterface.IdDimmer100CustomAMBGRGEN:
+        return -1
 
     case ObjectInterface.IdMultiChannelSoundAmbient:
     case ObjectInterface.IdMonoChannelSoundAmbient:
@@ -161,10 +168,14 @@ function description(itemObject) {
 
 function boxInfoState(itemObject) {
     switch (itemObject.objectId) {
-    case ObjectInterface.IdDimmerFixed:
-    case ObjectInterface.IdDimmer100Fixed:
-    case ObjectInterface.IdDimmer100Custom:
+    case ObjectInterface.IdDimmerFixedPP:
+    case ObjectInterface.IdDimmer100FixedPP:
+    case ObjectInterface.IdDimmer100CustomPP:
         return "info"
+    case ObjectInterface.IdDimmerFixedAMBGRGEN:
+    case ObjectInterface.IdDimmer100FixedAMBGRGEN:
+    case ObjectInterface.IdDimmer100CustomAMBGRGEN:
+        return ""
     case ObjectInterface.IdThermalControlledProbe:
     case ObjectInterface.IdThermalControlledProbeFancoil:
     case ObjectInterface.IdThermalExternalProbe:
@@ -188,13 +199,17 @@ function boxInfoState(itemObject) {
 
 function boxInfoText(itemObject) {
     switch (itemObject.objectId) {
-    case ObjectInterface.IdDimmerFixed:
-    case ObjectInterface.IdDimmer100Fixed:
-    case ObjectInterface.IdDimmer100Custom:
+    case ObjectInterface.IdDimmerFixedPP:
+    case ObjectInterface.IdDimmer100FixedPP:
+    case ObjectInterface.IdDimmer100CustomPP:
         if (itemObject.active)
             return itemObject.percentage + "%"
         else
             return "-"
+    case ObjectInterface.IdDimmerFixedAMBGRGEN:
+    case ObjectInterface.IdDimmer100FixedAMBGRGEN:
+    case ObjectInterface.IdDimmer100CustomAMBGRGEN:
+        return ""
     case ObjectInterface.IdThermalControlledProbe:
     case ObjectInterface.IdThermalControlledProbeFancoil:
     case ObjectInterface.IdThermalExternalProbe:

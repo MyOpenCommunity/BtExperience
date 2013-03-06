@@ -16,8 +16,13 @@ SvgImage {
 
         function isCustomTime() {
             var oid = itemObject.objectId
-            if (oid === ObjectInterface.IdDimmer100Custom || oid === ObjectInterface.IdLightCustom)
+
+            if (oid === ObjectInterface.IdDimmer100CustomPP ||
+                    oid === ObjectInterface.IdDimmer100CustomAMBGRGEN ||
+                    oid === ObjectInterface.IdLightCustomPP ||
+                    oid === ObjectInterface.IdLightCustomAMBGRGEN)
                 return true
+
             return false
         }
     }
