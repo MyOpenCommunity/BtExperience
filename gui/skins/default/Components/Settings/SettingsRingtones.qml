@@ -28,11 +28,11 @@ MenuColumn {
             percentage: volumePercentage
             onVolumePercentageChanged: global.audioState.setVolume(AudioState.RingtoneVolume, volumePercentage)
             onPlusClicked: {
-                if (volumePercentage > 0)
+                if (volumePercentage >= 0 && volumePercentage < 100)
                     volumePercentage += 5
             }
             onMinusClicked: {
-                if (volumePercentage < 100)
+                if (volumePercentage > 0 && volumePercentage <= 100)
                     volumePercentage -= 5
             }
             onSliderClicked: volumePercentage = Math.round(desiredPercentage / 5) * 5
