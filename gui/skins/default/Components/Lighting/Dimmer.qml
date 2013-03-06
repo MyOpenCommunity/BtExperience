@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 
 MenuColumn {
@@ -6,7 +7,10 @@ MenuColumn {
         id: column
 
         ControlOnOff {
-            status: dataModel.active
+            status: dataModel.objectId === ObjectInterface.IdDimmerFixedPP ||
+                    dataModel.objectId === ObjectInterface.IdDimmer100CustomPP ||
+                    dataModel.objectId === ObjectInterface.IdDimmer100FixedPP ?
+                        dataModel.active : -1
             onClicked: dataModel.active = newStatus
         }
 
