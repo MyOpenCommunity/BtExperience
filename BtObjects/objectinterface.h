@@ -91,6 +91,8 @@ public:
 		IdScenarioPlus = 1003, //!< Scenario plus
 		// automation
 		IdAutomation2 = 3002, //!< A simple 2-states automation actuator (Fan,watering, controlled socket)
+			CidAutomation2Normal = 3008, //!< A simple 2-states automation actuator with state info
+			CidAutomation2GEN =  3015, //!< A simple 2-states automation actuator without state info
 		IdAutomation3 = 3000, //!< A 3-states automation actuator (Curtain, garage, shutter, gate)
 		IdAutomation3Safe = 3007, //!< A 3-states automation actuator (Safe Mode)
 			CidAutomation3OpenClose = 3000,
@@ -197,6 +199,8 @@ public:
 		IdAmplifierGeneral,
 		IdIpRadioSource,
 
+		IdAutomation2Normal=30023008,
+		IdAutomation2GEN=30023015,
 		IdAutomation3OpenClose = 30003000,
 		IdAutomation3OpenCloseSafe = 30073000,
 		IdAutomation3UpDown = 30003001,
