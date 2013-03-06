@@ -61,6 +61,8 @@ MenuColumn {
             case ObjectInterface.IdSplitAdvancedGenericCommandGroup:
                 dataModel.apply()
                 return
+            case ObjectInterface.IdLoadDiagnostic:
+                return
             }
 
             column.columnClicked()

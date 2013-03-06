@@ -65,6 +65,18 @@ function status(itemObject) {
         default:
             return 3
         }
+
+    case ObjectInterface.IdLoadDiagnostic:
+        switch (itemObject.loadStatus) {
+        case EnergyLoadDiagnostic.Unknown:
+            return 0
+        case EnergyLoadDiagnostic.Ok:
+            return 1
+        case EnergyLoadDiagnostic.Warning:
+            return 2
+        case EnergyLoadDiagnostic.Critical:
+            return 3
+        }
     }
 
     return -1
@@ -240,6 +252,7 @@ function hasChild(itemObject) {
     case ObjectInterface.IdEnergyData:
     case ObjectInterface.IdSplitBasicGenericCommandGroup:
     case ObjectInterface.IdSplitAdvancedGenericCommandGroup:
+    case ObjectInterface.IdLoadDiagnostic:
         return false
     }
     return true
