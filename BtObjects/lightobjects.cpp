@@ -25,15 +25,15 @@ namespace
 			|| first == ObjectInterface::IdLightCustomAMBGRGEN || second == ObjectInterface::IdLightCustomAMBGRGEN)
 			return ObjectInterface::IdLightFixedAMBGRGEN;
 
+		if (first == ObjectInterface::IdDimmerFixedPP || second == ObjectInterface::IdDimmerFixedPP
+			|| first == ObjectInterface::IdDimmerFixedAMBGRGEN || second == ObjectInterface::IdDimmerFixedAMBGRGEN)
+			return ObjectInterface::IdDimmerFixedAMBGRGEN;
+
 		if (first == ObjectInterface::IdDimmer100FixedPP || second == ObjectInterface::IdDimmer100FixedPP
 			|| first == ObjectInterface::IdDimmer100FixedAMBGRGEN || second == ObjectInterface::IdDimmer100FixedAMBGRGEN
 			|| first == ObjectInterface::IdDimmer100CustomPP || second == ObjectInterface::IdDimmer100CustomPP
 			|| first == ObjectInterface::IdDimmer100CustomAMBGRGEN || second == ObjectInterface::IdDimmer100CustomAMBGRGEN)
 			return ObjectInterface::IdDimmer100FixedAMBGRGEN;
-
-		if (first == ObjectInterface::IdDimmerFixedPP || second == ObjectInterface::IdDimmerFixedPP
-			|| first == ObjectInterface::IdDimmerFixedAMBGRGEN || second == ObjectInterface::IdDimmerFixedAMBGRGEN)
-			return ObjectInterface::IdDimmerFixedAMBGRGEN;
 
 		Q_ASSERT_X(false, "findDumberObject", qPrintable(QString("Invalid light types (%1, %2) in light group").arg(first).arg(second)));
 
