@@ -287,16 +287,16 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	case Ringtone:
 		break;
 	case ScsVideoCall:
-		if(new_state != AudioState::Mute)
+		if (new_state != AudioState::Mute)
 			smartExecute_synch(vde_audio_off);
 		break;
 	case ScsIntercomCall:
-		if(new_state != AudioState::Mute)
+		if (new_state != AudioState::Mute)
 			smartExecute_synch(intercom_audio_off);
 		break;
 	case Mute:
 		setZlMute(false);
-		if(new_state != AudioState::ScsVideoCall && new_state != AudioState::ScsIntercomCall)
+		if (new_state != AudioState::ScsVideoCall && new_state != AudioState::ScsIntercomCall)
 			smartExecute_synch(vde_audio_off);
 		break;
 	default:
@@ -322,7 +322,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 			setHardwareVolume(current_volume, volumes[current_volume]);
 		break;
 	case ScsVideoCall:
-		if(old_state != AudioState::Mute)
+		if (old_state != AudioState::Mute)
 		{
 			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "8A0C");
 			if (current_volume != InvalidVolume)
@@ -331,7 +331,7 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		}
 		break;
 	case ScsIntercomCall:
-		if(old_state != AudioState::Mute)
+		if (old_state != AudioState::Mute)
 		{
 			smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380050" << "WR" << "044D" << "870C");
 			if (current_volume != InvalidVolume)

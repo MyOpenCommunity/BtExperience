@@ -183,7 +183,7 @@ void GstMediaPlayer::mplayerFinished(int exit_code, QProcess::ExitStatus exit_st
 			emit gstPlayerDone();
 			return;
 		}
-		else if(exit_code == 1) //signal received
+		else if (exit_code == 1) //signal received
 		{
 			emit gstPlayerStopped();
 			return;
