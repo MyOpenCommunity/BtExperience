@@ -22,6 +22,8 @@
 #include <QDeclarativeView>
 #include <QtDeclarative>
 
+#include <devicelghal.h>
+
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
 
@@ -263,7 +265,7 @@ void GlobalProperties::initAudio()
 		}
 
 		// enable sound diffusion source
-		smartExecute_synch("/usr/local/bin/difson_carrier.sh");
+		if (!hal_set_difson_carriers()) qDebug() << "\nError setting difson carriers\n";
 	}
 }
 
