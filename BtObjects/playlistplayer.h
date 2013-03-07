@@ -69,6 +69,8 @@ signals:
 
 protected slots:
 	virtual void updateCurrent();
+	virtual void updateCurrentLocal();
+	virtual void updateCurrentUpnp();
 
 protected:
 	bool checkLoop();

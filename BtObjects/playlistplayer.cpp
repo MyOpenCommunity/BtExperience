@@ -30,10 +30,10 @@ PlayListPlayer::PlayListPlayer(QObject *parent) :
 	upnp_state = 0;
 	local_state = 0;
 	local_list = new FileListManager;
-	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+	connect(local_list, SIGNAL(currentFileChanged()), SLOT(updateCurrentLocal()));
 
 	upnp_list = new UPnpListManager(UPnPListModel::getXmlDevice());
-	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrent()));
+	connect(upnp_list, SIGNAL(currentFileChanged()), SLOT(updateCurrentUpnp()));
 	connect(MountWatcher::instance(), SIGNAL(directoryUnmounted(QString,MountPoint::MountType)),
 		this, SLOT(directoryUnmounted(QString)));
 
@@ -276,6 +276,18 @@ void PlayListPlayer::reset()
 		current = current_name = QString();
 		emit currentChanged();
 	}
+}
+
+void PlayListPlayer::updateCurrentLocal()
+{
+	if (actual_list == local_list)
+		updateCurrent();
+}
+
+void PlayListPlayer::updateCurrentUpnp()
+{
+	if (actual_list == upnp_list)
+		updateCurrent();
 }
 
 void PlayListPlayer::updateCurrent()
