@@ -32,10 +32,13 @@ ControlCallManager {
             topMargin: 7
             left: parent.left
             leftMargin: 11
+            right: callImage.left
+            rightMargin: 11
         }
         font.pixelSize: 12
         color: "white"
         text: qsTr("Incoming call from")
+        elide: Text.ElideRight
     }
 
     UbuntuMediumText {
@@ -46,10 +49,13 @@ ControlCallManager {
             topMargin: 1
             left: parent.left
             leftMargin: 11
+            right: callImage.left
+            rightMargin: 11
         }
         font.pixelSize: 14
         color: "white"
         text: "Site #1"
+        elide: Text.ElideRight
     }
 
     SvgImage {

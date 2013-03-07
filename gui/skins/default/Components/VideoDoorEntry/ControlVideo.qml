@@ -53,8 +53,13 @@ SvgImage {
         font.pixelSize: 16
         color: "white"
         anchors {
-            centerIn: statusBar
+            left: statusBar.left
+            leftMargin: 10
+            right: nextButton.left
+            rightMargin: 10
+            verticalCenter: statusBar.verticalCenter
         }
+        elide: Text.ElideRight
     }
 
     ButtonImageThreeStates {
@@ -67,9 +72,9 @@ SvgImage {
         pressedImage: "../../images/common/ico_cicla_P.svg"
         onPressed: nextClicked()
         anchors {
-            right: video.right
-            rightMargin: 6
-            bottom: video.bottom
+            right: statusBar.right
+            rightMargin: 10
+            bottom: statusBar.bottom
             bottomMargin: 7
         }
     }

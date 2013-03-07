@@ -31,11 +31,14 @@ Page {
                     anchors {
                         left: parent.left
                         leftMargin: parent.width / 100 * 3
+                        right: parent.right
+                        rightMargin: parent.width / 100 * 3
                         verticalCenter: parent.verticalCenter
                     }
                     font.pixelSize: 24
                     color: "white"
                     text: scenarioObject.name
+                    elide: Text.ElideRight
                 }
             }
 

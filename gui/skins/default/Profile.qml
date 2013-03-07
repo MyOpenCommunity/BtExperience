@@ -376,6 +376,7 @@ Page {
                         font.pixelSize: 16
                         color: "white"
                         text: profilePage.profile.description
+                        elide: Text.ElideRight
                     }
                 }
 

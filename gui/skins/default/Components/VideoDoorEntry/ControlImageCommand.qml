@@ -28,10 +28,13 @@ SvgImage {
             verticalCenter: parent.verticalCenter
             left: parent.left
             leftMargin: 11
+            right: button.left
+            rightMargin: 11
         }
         font.pixelSize: 14
         color: "#323232"
         text: control.text
+        elide: Text.ElideRight
     }
 
     ButtonImageThreeStates {
