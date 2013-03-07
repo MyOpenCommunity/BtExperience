@@ -128,10 +128,6 @@
 	<obj cid="14268" id="14268" brightness="128" color="128" contrast="128">
 		<ist uii="30405" />   
 	</obj>
-	<!-- help icon enable -->
-	<obj cid="14009" id="14009">
-		<ist uii="30406" enable="1" />
-	</obj>
 	<!-- alarm clock -->
 	<obj cid="14201" id="14201" enabled="0" type="0" days="0" hour="0" minutes="0" source_type="0" >
 		<ist uii="30501" enabled="0" type="0" volume="1" descr="Beep" hour="13" minutes="30"/>
