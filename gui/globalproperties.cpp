@@ -22,7 +22,9 @@
 #include <QDeclarativeView>
 #include <QtDeclarative>
 
+#if !defined(BT_HARDWARE_X11)
 #include <devicelghal.h>
+#endif
 
 #define LAZY_UPDATE_INTERVAL 2000
 #define LAZY_UPDATE_COUNT 2
@@ -264,8 +266,10 @@ void GlobalProperties::initAudio()
 				this, SLOT(updateCpuFrequency()));
 		}
 
+#if !defined(BT_HARDWARE_X11)
 		// enable sound diffusion source
 		if (!hal_set_difson_carriers()) qDebug() << "\nError setting difson carriers\n";
+#endif
 	}
 }
 

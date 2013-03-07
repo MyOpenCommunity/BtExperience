@@ -17,7 +17,10 @@ include(../config.pri)
 INCLUDEPATH += ./common_files ../../stackopen/liblghal
 INCLUDEPATH += ../BtObjects ../BtObjects/ts ../BtObjects/devices
 DEPENDPATH += ../BtObjects ../BtObjects/ts ../BtObjects/devices
-LIBS += -lssl -L../bin/$${HARDWARE}/BtObjects -lbtobjects -L../../stackopen/liblghal -llghal
+LIBS += -lssl -L../bin/$${HARDWARE}/BtObjects -lbtobjects
+isArm() {
+    LIBS += -L../../stackopen/liblghal -llghal
+}
 
 !mac {
     # '\$\$' outputs $$ to the Makefile, make transforms $$ into a single $, then you need a backslash for the shell
