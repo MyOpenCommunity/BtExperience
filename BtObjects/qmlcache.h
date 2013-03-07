@@ -29,31 +29,31 @@
 
 	Firstly, declare a pointer to QMLCache.
 
-	\verbatim
+	\code
 	class QMLCache;
 
 	...
 
 	private:
 		QMLCache *cache;
-	\endverbatim
+	\endcode
 
 	Declare instance variable only if you have to. The QMLCache can either trace C++ model values
 	(they are called original values) and QML values.
 
 	Secondly, import qmlcache.h file and create an instance using the object the cache is in as parent.
 
-	\verbatim
+	\code
 	#include "qmlcache.h"
 
 	...
 
 	cache = new QMLCache(this);
-	\endverbatim
+	\endcode
 
 	Moreover, define some int constants to trace relevant object state.
 
-	\verbatim
+	\code
 	// constants for QMLCache
 	const int QML_ALARM_TYPE = 1;
 	const int QML_DESCRIPTION = 2;
@@ -61,11 +61,11 @@
 	const int QML_HOUR = 4;
 	const int QML_MINUTE = 5;
 	const int QML_VOLUME = 6;
-	\endverbatim
+	\endcode
 
 	Once constants are in place, set C++ model values in the cache (this registers traced values, too).
 
-	\verbatim
+	\code
 	switch(type)
 	{
 	case 1:
@@ -81,30 +81,30 @@
 	cache->setOriginalValue(QML_MINUTE, minute);
 	cache->setOriginalValue(QML_AMPLIFIER, Converter<Amplifier>::asQVariant(0));
 	cache->setOriginalValue(QML_VOLUME, 0);
-	\endverbatim
+	\endcode
 
 	Keep in mind that some values are parsed and set after the object is constructed. In this case,
 	call apply when the object state is fully updated. If you don't do this you will have a fake
 	value inside QML cache (in the example above, volume is set to zero: this is hardly right).
 
-	\verbatim
+	\code
 	alarm->setVolume(v.intValue("volume"));
 
 	...
 
 	alarm->apply();
-	\endverbatim
+	\endcode
 
 	Then, connect the qmlValueChanged and persistItemRequested signals.
 
-	\verbatim
+	\code
 	connect(cache, SIGNAL(qmlValueChanged(int,QVariant)), this, SLOT(qmlValueChanged(int,QVariant)));
 	connect(cache, SIGNAL(persistItemRequested()), this, SLOT(persistItem()));
-	\endverbatim
+	\endcode
 
 	Of course, you need to implement the connected slot.
 
-	\verbatim
+	\code
 	void AlarmClock::qmlValueChanged(int key, QVariant value)
 	{
 		Q_UNUSED(value);
@@ -133,12 +133,12 @@
 			qWarning() << __PRETTY_FUNCTION__ << "an unknown key (" << key << ") has arrived";
 		}
 	}
-	\endverbatim
+	\endcode
 
 	The next task is to implement reset and apply methods. Remember to use them at proper times
 	in QML code.
 
-	\verbatim
+	\code
 	void AlarmClock::reset()
 	{
 		cache->reset();
@@ -148,11 +148,11 @@
 	{
 		cache->apply();
 	}
-	\endverbatim
+	\endcode
 
 	Lastly, implement proper get and set methods.
 
-	\verbatim
+	\code
 	AlarmClock::AlarmClockType AlarmClock::getAlarmType() const
 	{
 		return static_cast<AlarmClock::AlarmClockType>(cache->getQMLValue(QML_ALARM_TYPE).toInt());
@@ -189,7 +189,7 @@
 		if (getSource() != new_value)
 			cache->setQMLValue(QML_SOURCE, Converter<SourceObject>::asQVariant(new_value));
 	}
-	\endverbatim
+	\endcode
 
 	Now you are ready to code the QML part.
 
