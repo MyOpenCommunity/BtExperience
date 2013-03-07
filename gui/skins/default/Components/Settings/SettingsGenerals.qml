@@ -44,13 +44,6 @@ MenuColumn {
                     return qsTr("Disabled")
             }
 
-            if (item === "Help icon") {
-                if (global.guiSettings.helpIcon)
-                    return qsTr("Enabled")
-                else
-                    return qsTr("Disabled")
-            }
-
             if (item === "Network") {
                 if (objectModel.getObject(0).connectionStatus === PlatformSettings.Down)
                     return qsTr("Disconnected")
@@ -115,7 +108,6 @@ MenuColumn {
             modelList.append({"name": QT_TR_NOOP("International"), "component": settingsInternational})
             modelList.append({"name": QT_TR_NOOP("Password"), "component": settingsPassword})
             modelList.append({"name": QT_TR_NOOP("Beep"), "component": settingsBeep})
-            modelList.append({"name": QT_TR_NOOP("Help icon"), "component": settingsHelpIcon})
         }
     }
 
@@ -152,10 +144,5 @@ MenuColumn {
     Component {
         id: settingsBeep
         SettingsBeep {}
-    }
-
-    Component {
-        id: settingsHelpIcon
-        SettingsHelpIcon {}
     }
 }

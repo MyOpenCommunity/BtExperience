@@ -2,10 +2,11 @@ AdvancedScenarioAction 1.0 AdvancedScenarioAction.qml
 AdvancedScenarioDateTimeCondition 1.0 AdvancedScenarioDateTimeCondition.qml
 AdvancedScenarioDeviceCondition 1.0 AdvancedScenarioDeviceCondition.qml
 Brightness 1.0 Brightness.qml
+Contrast 1.0 Contrast.qml
 ControlAlarmClock 1.0 ControlAlarmClock.qml
+DaylightSavingTime 1.0 DaylightSavingTime.qml
 Floor 1.0 Floor.qml
 IPConfigurations 1.0 IPConfigurations.qml
-IpFieldInput 1.0 IpFieldInput.qml
 KeyboardLanguage 1.0 KeyboardLanguage.qml
 NetworkState 1.0 NetworkState.qml
 RoomModify 1.0 RoomModify.qml
@@ -29,7 +30,6 @@ SettingsEnergyTariffs 1.0 SettingsEnergyTariffs.qml
 SettingsEnergyThresholds 1.0 SettingsEnergyThresholds.qml
 SettingsGenerals 1.0 SettingsGenerals.qml
 SettingsHandsFree 1.0 SettingsHandsFree.qml
-SettingsHelpIcon 1.0 SettingsHelpIcon.qml
 SettingsHistory 1.0 SettingsHistory.qml
 SettingsHome 1.0 SettingsHome.qml
 SettingsHomeDelete 1.0 SettingsHomeDelete.qml
@@ -48,8 +48,10 @@ SettingsRingtones 1.0 SettingsRingtones.qml
 SettingsScenarios 1.0 SettingsScenarios.qml
 SettingsSkin 1.0 SettingsSkin.qml
 SettingsSystems 1.0 SettingsSystems.qml
-SettingsTeleloop 1.0 SettingsTeleloop.qml
 SettingsVDE 1.0 SettingsVDE.qml
 SettingsVdeMute 1.0 SettingsVdeMute.qml
+SettingsTeleloop 1.0 SettingsTeleloop.qml
 SettingsVersion 1.0 SettingsVersion.qml
 TextLanguage 1.0 TextLanguage.qml
+Time 1.0 Time.qml
+Timezone 1.0 Timezone.qml

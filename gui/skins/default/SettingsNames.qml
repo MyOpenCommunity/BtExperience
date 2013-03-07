@@ -55,10 +55,6 @@ QtObject {
         container['BEEP'][true] = qsTr("Enabled")
         container['BEEP'][false] = qsTr("Disabled")
 
-        container['HELP_ICON'] = []
-        container['HELP_ICON'][true] = qsTr("Enabled")
-        container['HELP_ICON'][false] = qsTr("Disabled")
-
         container['BROWSER_HISTORY'] = []
         container['BROWSER_HISTORY'][true] = qsTr("Enabled")
         container['BROWSER_HISTORY'][false] = qsTr("Disabled")
