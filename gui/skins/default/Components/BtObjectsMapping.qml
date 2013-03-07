@@ -29,9 +29,11 @@ QtObject {
         case ObjectInterface.IdDimmerGroup:
         case ObjectInterface.IdDimmer100Group:
             return Qt.createComponent("Lighting/LightGroup.qml")
-        case ObjectInterface.IdAutomation2:
+        case ObjectInterface.IdAutomation2Normal:
         case ObjectInterface.IdAutomationContact:
             return Qt.createComponent("Automation/Automation2.qml")
+        case ObjectInterface.IdAutomation2GEN:
+            return Qt.createComponent("Automation/Automation2GEN.qml")
         case ObjectInterface.IdAutomation3OpenClose:
             return Qt.createComponent("Automation/Automation3OpenClose.qml")
         case ObjectInterface.IdAutomation3OpenCloseSafe:

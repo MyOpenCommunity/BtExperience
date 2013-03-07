@@ -24,6 +24,7 @@ function status(itemObject) {
     case ObjectInterface.IdMonoChannelSoundAmbient:
         return itemObject.hasActiveAmplifier
 
+    case ObjectInterface.IdAutomation2GEN:
     case ObjectInterface.IdAutomationGroup2:
     case ObjectInterface.IdAutomationVDE:
     case ObjectInterface.IdAutomationDoor:
@@ -35,7 +36,7 @@ function status(itemObject) {
     case ObjectInterface.IdAutomationGroup3UpDown:
         return -1
 
-    case ObjectInterface.IdAutomation2:
+    case ObjectInterface.IdAutomation2Normal:
     case ObjectInterface.IdAutomation3:
     case ObjectInterface.IdAutomation3Safe:
     case ObjectInterface.IdAutomationContact:

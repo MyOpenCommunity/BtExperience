@@ -41,13 +41,27 @@ QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
+		int cid = v.intValue("cid");
 
 		QString where = v.value("where");
 		PullMode pul = v.intValue("pul") ? PULL : NOT_PULL;
 		QTime time = id == ObjectInterface::IdAutomationDoor ? v.timeValue("time") : QTime();
-
-		LightingDevice *d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
-		obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, id));
+		LightingDevice *d;
+		switch (cid)
+		{
+		case ObjectInterface::CidAutomation2Normal:
+			d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
+			obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, ObjectInterface::IdAutomation2Normal));
+			break;
+		case ObjectInterface::CidAutomation2GEN:
+			d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
+			obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, ObjectInterface::IdAutomation2GEN));
+			break;
+		default:
+			d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
+			obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, id));
+			break;
+		}
 	}
 
 	return obj_list;
