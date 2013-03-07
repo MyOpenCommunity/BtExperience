@@ -37,8 +37,7 @@ namespace
 		VolumeAlert = 14263,
 		PlayerAlert = 14264,
 		MessagesAlert = 14265,
-		ScenarioRecordingAlert = 14266,
-		HelpIcon = 14009
+		ScenarioRecordingAlert = 14266
 	};
 
 	// Sets a language on the GUI; the GUI must be restarted for changes to have effect
@@ -82,7 +81,6 @@ GuiSettings::GuiSettings(QObject *parent) :
 	QDomDocument conf = configurations->getConfiguration(CONF_FILE);
 
 	beep = false;
-	help_icon = false;
 	energy_threshold_beep = false;
 	energy_popup = false;
 	burglar_alarm_alert = false;
@@ -151,9 +149,6 @@ void GuiSettings::parseSettings()
 		case ScenarioRecordingAlert:
 			scenario_recording_alert = parseEnableFlag(xml_obj);
 			break;
-		case HelpIcon:
-			help_icon = parseEnableFlag(xml_obj);
-			break;
 		}
 	}
 }
@@ -220,21 +215,6 @@ void GuiSettings::setBeep(bool b)
 
 	beep = b;
 	emit beepChanged();
-}
-
-bool GuiSettings::getHelpIcon() const
-{
-	return help_icon;
-}
-
-void GuiSettings::setHelpIcon(bool new_value)
-{
-	if (new_value == help_icon)
-		return;
-
-	help_icon = new_value;
-	emit helpIconChanged();
-	setSettingsEnableFlag(HelpIcon, help_icon);
 }
 
 bool GuiSettings::getEnergyThresholdBeep() const

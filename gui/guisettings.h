@@ -27,11 +27,6 @@ class GuiSettings : public QObject
 	Q_PROPERTY(bool beep READ getBeep WRITE setBeep NOTIFY beepChanged)
 
 	/*!
-		\brief Sets or gets the help toolbar icon status.
-	*/
-	Q_PROPERTY(bool helpIcon READ getHelpIcon WRITE setHelpIcon NOTIFY helpIconChanged)
-
-	/*!
 		\brief Sets or gets energy threshold beep status.
 	*/
 	Q_PROPERTY(bool energyThresholdBeep READ getEnergyThresholdBeep WRITE setEnergyThresholdBeep NOTIFY energyThresholdBeepChanged)
@@ -106,8 +101,6 @@ public:
 	void setHomeBgImage(QString new_value);
 	bool getBeep() const;
 	void setBeep(bool beep);
-	bool getHelpIcon() const;
-	void setHelpIcon(bool new_value);
 	bool getEnergyThresholdBeep() const;
 	void setEnergyThresholdBeep(bool enable);
 	bool getEnergyPopup() const;
@@ -139,7 +132,6 @@ signals:
 	void languageChanged();
 	void homeBgImageChanged();
 	void beepChanged();
-	void helpIconChanged();
 	void energyThresholdBeepChanged();
 	void energyPopupChanged();
 	void burglarAlarmAlertChanged();
@@ -162,7 +154,6 @@ private:
 	ConfigFile *configurations;
 	QString language;
 	bool beep;
-	bool help_icon;
 	bool energy_threshold_beep;
 	bool energy_popup;
 	bool burglar_alarm_alert;

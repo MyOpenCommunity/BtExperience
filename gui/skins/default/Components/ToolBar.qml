@@ -378,7 +378,7 @@ Item {
             property string helpUrl: "localhost"
 
             height: toolbar_top.height
-            visible: global.guiSettings.helpIcon
+            visible: true // on ToolbarButton visible property is binded to quantity
             defaultImage: homeProperties.skin === HomeProperties.Clear ?
                               "../images/toolbar/help_online.svg" :
                               "../images/toolbar/help_online_p.svg"
