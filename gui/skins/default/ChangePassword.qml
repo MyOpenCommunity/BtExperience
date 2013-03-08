@@ -83,11 +83,13 @@ Page {
                                 containerWidget: mainPanel
                             }
                             MouseArea {
+                                id: oldPasswordInputArea
                                 anchors.fill: parent
-                                onPressed: {
+                                function setFocus() {
                                     oldPasswordInput.forceActiveFocus()
                                     oldPasswordInput.openSoftwareInputPanel()
                                 }
+                                onPressed: setFocus()
                             }
                         }
 
@@ -175,6 +177,12 @@ Page {
                             id: passwordFeedback
                             FeedbackPopup {
                                 isOk: false
+                                onClosePopup: {
+                                    oldPasswordInput.text = ""
+                                    newPasswordInput.text = ""
+                                    repeatPasswordInput.text = ""
+                                    oldPasswordInputArea.setFocus()
+                                }
                             }
                         }
 
