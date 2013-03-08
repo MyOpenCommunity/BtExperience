@@ -3,11 +3,12 @@ import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
-
 import "../../js/MediaItem.js" as Script
+
 
 MenuColumn {
     id: column
+
     property string imagesPath: "../../images/"
 
     width: 212
@@ -66,7 +67,7 @@ MenuColumn {
         function sourceSelected(sourceObj) {
             updateSourceItem(sourceObj)
 
-            if (column.dataModel.objectId == ObjectInterface.IdMultiGeneral)
+            if (column.dataModel.objectId === ObjectInterface.IdMultiGeneral)
                 sourceObj.setActiveGeneral(column.dataModel.area)
             else
                 sourceObj.setActive(column.dataModel.area)
