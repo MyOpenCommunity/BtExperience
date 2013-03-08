@@ -29,22 +29,43 @@ Column {
     }
 
     SvgImage {
-        source: "../../images/common/bg_on-off.svg"
+        source: "../../images/common/panel_212x50.svg"
+
+        ButtonThreeStates {
+            id: buttonCancel
+
+            defaultImage: "../../images/common/btn_99x35.svg"
+            pressedImage: "../../images/common/btn_99x35_P.svg"
+            shadowImage: "../../images/common/btn_shadow_99x35.svg"
+            text: qsTr("cancel")
+            font.capitalization: Font.AllUppercase
+            font.pixelSize: 15
+            onClicked: control.closePopup()
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                leftMargin: 7
+            }
+        }
 
         ButtonThreeStates {
             id: buttonForce
 
-            defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
-            pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
-            shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
-            text: qsTr("force load")
+            defaultImage: "../../images/common/btn_99x35.svg"
+            pressedImage: "../../images/common/btn_99x35_P.svg"
+            shadowImage: "../../images/common/btn_shadow_99x35.svg"
+            text: qsTr("force")
             font.capitalization: Font.AllUppercase
             font.pixelSize: 15
             onClicked: {
                 loadWithCU.forceOn(loadWithCU.forceDuration)
                 control.closePopup()
             }
-            anchors.centerIn: parent
+            anchors {
+                verticalCenter: parent.verticalCenter
+                right: parent.right
+                rightMargin: 7
+            }
         }
     }
 }
