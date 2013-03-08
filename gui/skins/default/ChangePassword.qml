@@ -3,16 +3,29 @@ import Components 1.0
 import Components.Popup 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
+import "js/EventManager.js" as EventManager
 
 
 Page {
     id: page
 
+    property variant names: translations
+
     source: homeProperties.homeBgImage
     showSystemsButton: false
     text: qsTr("Change password")
 
-    Component.onCompleted: oldPasswordInput.forceActiveFocus()
+    Component.onCompleted: oldPasswordInputArea.setFocus()
+
+    function alertOkClicked() {
+        global.password = newPasswordInput.text
+        EventManager.eventManager.notificationsEnabled = false
+        Stack.backToHome({state: "pageLoading"})
+    }
+
+    Names {
+        id: translations
+    }
 
     Pannable {
         anchors.fill: parent
@@ -206,8 +219,10 @@ Page {
                                     page.installPopup(passwordFeedback, { text: qsTr("New password is empty") })
                                     return
                                 }
-                                global.password = newPasswordInput.text
-                                Stack.popPage()
+                                oldPasswordInput.focus = false
+                                newPasswordInput.focus = false
+                                repeatPasswordInput.focus = false
+                                page.showAlert(page, page.names.get('REBOOT', 0))
                             }
                         }
 

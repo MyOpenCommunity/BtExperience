@@ -328,7 +328,8 @@ void GlobalProperties::parseSettings()
 			settings->setBeep(parseEnableFlag(xml_obj));
 			break;
 		case Password:
-			parsePassword(xml_obj, &password, &password_enabled);
+			password = (*bt_global::config)[USER_PASSWORD];
+			password_enabled = (*bt_global::config)[USER_PASSWORD_ENABLED] == "1" ? true : false;
 			screen_state->setPasswordEnabled(password_enabled);
 			break;
 		case Brightness:
@@ -774,8 +775,8 @@ void GlobalProperties::setPassword(QString _password)
 		return;
 	password = _password;
 	emit passwordChanged();
-	::setPassword(configurations->getConfiguration(SETTINGS_FILE), Password, password, password_enabled);
-	configurations->saveConfiguration(SETTINGS_FILE);
+	::setConfValue(configurations->getConfiguration(CONF_FILE), "generale/password/pwd", password);
+	configurations->saveConfiguration(CONF_FILE);
 }
 
 QString GlobalProperties::getPassword() const
@@ -790,8 +791,8 @@ void GlobalProperties::setPasswordEnabled(bool enabled)
 	password_enabled = enabled;
 	screen_state->setPasswordEnabled(enabled);
 	emit passwordEnabledChanged();
-	::setPassword(configurations->getConfiguration(SETTINGS_FILE), Password, password, password_enabled);
-	configurations->saveConfiguration(SETTINGS_FILE);
+	::setConfValue(configurations->getConfiguration(CONF_FILE), "generale/password/enabled", QString::number(password_enabled));
+	configurations->saveConfiguration(CONF_FILE);
 }
 
 bool GlobalProperties::isPasswordEnabled() const

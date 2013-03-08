@@ -3,6 +3,7 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Popup 1.0
 import "../../js/Stack.js" as Stack
+import "../../js/EventManager.js" as EventManager
 
 
 MenuColumn {
@@ -16,10 +17,10 @@ MenuColumn {
 
         PaginatorList {
             id: paginator
-            currentIndex: global.passwordEnabled
 
             delegate: MenuItemDelegate {
                 name: model.name
+                selectOnClick: false
                 onDelegateTouched: {
                     // asks for password only when changing value
                     if (global.passwordEnabled === value)
@@ -42,22 +43,32 @@ MenuColumn {
         }
     }
 
+    function alertOkClicked() {
+        global.passwordEnabled = privateProps.pass
+        EventManager.eventManager.notificationsEnabled = false
+        Stack.backToHome({state: "pageLoading"})
+    }
+
+    QtObject {
+        id: privateProps
+
+        property bool pass
+    }
+
     Component {
         id: passwordInput
         PasswordInput {
             property bool newValue
             onPasswordConfirmed: {
-                var passOk = true
-                if (global.password === password)
-                    global.passwordEnabled = newValue
-                else {
-                    // reset view state
-                    paginator.currentIndex = global.passwordEnabled
-                    passOk = false
+                if (global.password === password) {
+                    privateProps.pass = newValue
+                    pageObject.closePopup()
+                    pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
+                    return
                 }
+
                 pageObject.closePopup()
-                if (!passOk)
-                    feedbackTimer.start()
+                feedbackTimer.start()
             }
         }
     }
@@ -76,6 +87,5 @@ MenuColumn {
     Component.onCompleted: {
         modelList.append({"value": false, "name": pageObject.names.get('PASSWORD', false)})
         modelList.append({"value": true, "name": pageObject.names.get('PASSWORD', true)})
-        paginator.currentIndex = global.passwordEnabled
     }
 }

@@ -59,6 +59,8 @@ void parseConfFile()
 	config[DATE_FORMAT] = getDeviceValue(root, "generale/clock/dateformat", QString::number(EUROPEAN_DATE));
 	config[MODEL] = getDeviceValue(root, "generale/modello");
 	config[NAME] = getDeviceValue(root, "generale/nome");
+	config[USER_PASSWORD] = getDeviceValue(root, "generale/password/pwd");
+	config[USER_PASSWORD_ENABLED] = getDeviceValue(root, "generale/password/enabled");
 
 	config[SOURCE_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_mmaddress");
 	config[AMPLIFIER_ADDRESS] = getDeviceValue(root, "scs/coordinate_scs/my_aaddress");
