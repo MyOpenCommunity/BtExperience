@@ -32,6 +32,8 @@ Item {
         function opacityAnimationFinished() {
             if (privateObj.pendingComponent !== undefined) // we have a pending component to create
                 createComponent()
+            if (itemLoader.opacity === 0)
+                itemLoader.height = 0
         }
 
         function createComponent() {
