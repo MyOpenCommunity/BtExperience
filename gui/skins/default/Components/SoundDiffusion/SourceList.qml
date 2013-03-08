@@ -15,12 +15,12 @@ MenuColumn {
         id: paginator
         elementsOnPage: 8
         model: sourceModel.model
-        delegate: MenuItem {
+        delegate: MenuItemDelegate {
             id: sourceDelegate
             property variant itemObject: sourceModel.model.getObject(index)
             enabled: Script.mediaItemEnabled(itemObject)
             name: itemObject.name
-            onTouched: column.sourceSelected(itemObject)
+            onDelegateTouched: column.sourceSelected(itemObject)
         }
         onCurrentPageChanged: column.closeChild()
     }
