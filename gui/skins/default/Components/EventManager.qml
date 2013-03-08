@@ -579,10 +579,16 @@ Item {
         }
 
         function goalReaching(energyDevice) {
+            var s = global.screenState.state
             global.screenState.enableState(ScreenState.Normal)
-            var p = privateProps.preparePopupPage(false)
-            // adds goal alarm
-            p.addGoalReachedPopup(energyDevice)
+            // rings the bell
+            global.ringtoneManager.playRingtone(global.extraPath + "10/drin2.wav", AudioState.Ringtone)
+            // opens popup only if we are below normal screen state
+            if (s < ScreenState.Normal) {
+                var p = privateProps.preparePopupPage(false)
+                // adds goal alarm
+                p.addGoalReachedPopup(energyDevice)
+            }
         }
 
         function unreadMessagesUpdate() {

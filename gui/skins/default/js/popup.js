@@ -193,6 +193,19 @@ function addGoalReachedPopup(device) {
     data["confirmText"] = qsTr("Show")
     data["dismissText"] = qsTr("Ignore")
 
+    // we can only have one goal popup (less recents are discarded)
+    var tmp = []
+    for (var i = 0; i < _thresholdGoalPopups.length; ++i) {
+        var p = _thresholdGoalPopups[i]
+        if (p["_kind"] === "goal_reached") // removes old goal popups
+            continue
+        tmp.push(p)
+    }
+
+    _thresholdGoalPopups = []
+    for (var j = 0; j < tmp.length; ++j)
+        _thresholdGoalPopups.push(tmp[j])
+
     _thresholdGoalPopups.push(data)
 
     return highestPriorityPopup()
