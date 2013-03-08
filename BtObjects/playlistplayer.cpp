@@ -347,14 +347,12 @@ AudioVideoPlayer::AudioVideoPlayer(QObject *parent) :
 
 void AudioVideoPlayer::prevTrack()
 {
-	user_track_change_request = true;
 	resetLoopCheck();
 	previous();
 }
 
 void AudioVideoPlayer::nextTrack()
 {
-	user_track_change_request = true;
 	resetLoopCheck();
 	next();
 }
@@ -472,8 +470,6 @@ void AudioVideoPlayer::play()
 
 	default_info["meta_title"] = getCurrentName();
 	default_info["stream_title"] = getCurrentName();
-
-	user_track_change_request = true;
 
 	// force player restart for single-file lists
 	if (media_player->getCurrentSource() == getCurrent())

@@ -41,6 +41,7 @@ MultiMediaPlayer::MultiMediaPlayer(QObject *parent) :
 	mediaplayer_output_mode = MediaPlayer::OutputAll;
 	volume = 100;
 	mute = false;
+	is_changing_track = false;
 
 	connect(player, SIGNAL(mplayerStarted()), SLOT(mplayerStarted()));
 	connect(player, SIGNAL(mplayerResumed()), SLOT(mplayerResumed()));
@@ -292,6 +293,7 @@ void MultiMediaPlayer::setCurrentSource(QString source)
 		{
 			if (player->isPlaying())
 			{
+				is_changing_track = true;
 				player->play(source, 0, static_cast<MediaPlayer::OutputMode>(mediaplayer_output_mode));
 			}
 			else if (player->isPaused())
@@ -379,6 +381,11 @@ void MultiMediaPlayer::mplayerStopped()
 	{
 		is_releasing_device = false;
 		setPlayerState(OutputDeviceReleased);
+		return;
+	}
+	if (is_changing_track)
+	{
+		is_changing_track = false;
 		return;
 	}
 	if (player_state == Paused || player_state == AboutToPause || player_state == OutputDeviceReleased)

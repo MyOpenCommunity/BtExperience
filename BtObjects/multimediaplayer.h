@@ -220,7 +220,7 @@ private:
 	bool is_video_track;
 	// true when the player is stopped to release output devices
 	// but reported state must remain Paused
-	bool is_releasing_device;
+	bool is_releasing_device, is_changing_track;
 	QTimer *info_poll_timer;
 	QRect video_rect;
 

@@ -430,7 +430,7 @@ void TestMultiMediaPlayer::testSetSource()
 	QVERIFY(compareInfo(info, f5_info));
 	last_time = info["current_time"];
 
-	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QVERIFY(!state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
 
 	QVERIFY(waitTrackInfo());
@@ -450,7 +450,7 @@ void TestMultiMediaPlayer::testSetSource()
 	QVERIFY(compareInfo(info, a4_info));
 	last_time = info["current_time"];
 
-	QVERIFY(state_changed->waitForSignal(TIMEOUT));
+	QVERIFY(!state_changed->waitForSignal(TIMEOUT));
 	QCOMPARE(player->getPlayerState(), MultiMediaPlayer::Playing);
 
 	QVERIFY(waitTrackInfo());
