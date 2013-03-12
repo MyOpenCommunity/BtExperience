@@ -2,17 +2,17 @@ import QtQuick 1.1
 
 Item {
     id: itemLoader
-    property variant item: undefined
+    property Item item: null
     property alias duration: opacityanimation.duration
     height: 0
 
     function setComponent(component, properties) {
-        if (item === undefined && component === undefined) // nothing to do
+        if (item === null && component === undefined) // nothing to do
             return
 
         privateObj.pendingComponent = component
         privateObj.pendingProperties = (properties === undefined ? {} : properties)
-        if (item === undefined)
+        if (item === null)
             privateObj.createComponent()
         else
             itemLoader.opacity = 0 // the createComponent is called after the opacity animation ends
@@ -22,6 +22,11 @@ Item {
         privateObj.pendingComponent = undefined
         privateObj.pendingProperties = undefined
         itemLoader.opacity = 0
+        // Properly destroy the item; if someone outside relies on item to be
+        // null after this function, we are breaking their assumptions.
+        // Also, in createComponent() we need to check for null-ness anyway,
+        // since at start the item is already null.
+        itemLoader.item.destroy()
     }
 
     QtObject {
@@ -37,7 +42,7 @@ Item {
         }
 
         function createComponent() {
-            if (itemLoader.item !== undefined) // we have to destroy the old item
+            if (itemLoader.item !== null) // we have to destroy the old item
                 itemLoader.item.destroy()
 
             itemLoader.opacity = 1
