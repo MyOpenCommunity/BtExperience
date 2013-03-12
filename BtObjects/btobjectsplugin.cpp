@@ -790,17 +790,19 @@ QPair<QDomNode, QString> BtObjectsPlugin::findNodeForUii(int uii) const
 
 bool BtObjectsPlugin::objectLinkWithPosition(ItemInterface *obj)
 {
-	for (int i = 0; i < media_model.getCount(); ++i)
+	// we want to check only rooms and profiles
+	for (int i = 0; i < profile_model.getCount(); ++i)
 	{
-		Container *c = qobject_cast<Container *>(media_model.getObject(i));
+		Container *c = qobject_cast<Container *>(profile_model.getObject(i));
+		if (c->getUii() == obj->getContainerUii())
+			return true;
+	}
 
-		switch (c->getContainerId())
-		{
-		case Container::IdRooms:
-		case Container::IdProfile:
-			if (c->getContainerUii() == obj->getContainerUii())
-				return true;
-		}
+	for (int i = 0; i < room_model.getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(room_model.getObject(i));
+		if (c->getUii() == obj->getContainerUii())
+			return true;
 	}
 
 	return false;
