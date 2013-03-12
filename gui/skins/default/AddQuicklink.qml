@@ -127,11 +127,13 @@ Page {
         text: qsTr("Add quicklink")
         font.pixelSize: 18
         color: "white"
+        elide: Text.ElideRight
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 3.92
             bottom: horizontalSeparator.top
             bottomMargin: bg.height / 100 * 1.57
+            right: horizontalSeparator.right
         }
     }
 
@@ -140,11 +142,14 @@ Page {
         text: qsTr("Type:")
         font.pixelSize: 16
         color: "white"
+        elide: Text.ElideRight
         anchors {
             left: bg.left
             leftMargin: bg.width / 100 * 3.92
             top: horizontalSeparator.bottom
             topMargin: bg.height / 100 * 1.57
+            right: verticalSeparator.left
+            rightMargin: 10 // fixed is ok, just avoid being too close
         }
     }
 
