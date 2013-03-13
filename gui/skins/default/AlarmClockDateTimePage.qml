@@ -23,6 +23,15 @@ Page {
         Stack.popPage()
     }
 
+    function homeButtonClicked() {
+        if (isNewAlarm) {
+            objectModel.remove(alarmClock)
+            page.installPopup(homeFeedback, { text: qsTr("Alarm not saved") })
+            return
+        }
+        Stack.backToHome()
+    }
+
     text: qsTr("Alarm settings")
     source : homeProperties.homeBgImage
 
@@ -287,6 +296,14 @@ Page {
         FeedbackPopup {
             isOk: false
             onClosePopup: Stack.popPage()
+        }
+    }
+
+    Component {
+        id: homeFeedback
+        FeedbackPopup {
+            isOk: false
+            onClosePopup: Stack.backToHome()
         }
     }
 
