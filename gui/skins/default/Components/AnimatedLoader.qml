@@ -4,6 +4,7 @@ Item {
     id: itemLoader
     property Item item: null
     property alias duration: opacityanimation.duration
+    width: 0
     height: 0
 
     function setComponent(component, properties) {
@@ -37,8 +38,10 @@ Item {
         function opacityAnimationFinished() {
             if (privateObj.pendingComponent !== undefined) // we have a pending component to create
                 createComponent()
-            if (itemLoader.opacity === 0)
+            if (itemLoader.opacity === 0) {
                 itemLoader.height = 0
+                itemLoader.width = 0
+            }
         }
 
         function createComponent() {
@@ -47,6 +50,7 @@ Item {
 
             itemLoader.opacity = 1
             itemLoader.item = privateObj.pendingComponent.createObject(itemLoader, privateObj.pendingProperties)
+            itemLoader.width = item.width
             itemLoader.height = item.height
             privateObj.pendingComponent = undefined
             privateObj.pendingProperties = undefined

@@ -11,28 +11,25 @@ MenuColumn {
 
     property string imagesPath: "../../images/"
 
-    width: 212
-    height: sourceSelect.height + itemLoader.height
-
     SourceModel { id: sourceModel }
 
-    MenuItem {
-        id: sourceSelect
-        anchors.top: parent.top
-        name: qsTr("source")
-        description: column.dataModel.currentSource === null ? sourceModel.model.getObject(0).name : column.dataModel.currentSource.name
-        hasChild: true
-        isSelected: privateProps.currentIndex === 0
-        onTouched: {
-            if (privateProps.currentIndex !== 0)
-                privateProps.currentIndex = 0
-            column.loadColumn(sourceList, qsTr("source change"))
+    Column {
+        MenuItem {
+            id: sourceSelect
+            name: qsTr("source")
+            description: column.dataModel.currentSource === null ? sourceModel.model.getObject(0).name : column.dataModel.currentSource.name
+            hasChild: true
+            isSelected: privateProps.currentIndex === 0
+            onTouched: {
+                if (privateProps.currentIndex !== 0)
+                    privateProps.currentIndex = 0
+                column.loadColumn(sourceList, qsTr("source change"))
+            }
         }
-    }
 
-    AnimatedLoader {
-        id: itemLoader
-        anchors.bottom: parent.bottom
+        AnimatedLoader {
+            id: itemLoader
+        }
     }
 
     QtObject {
