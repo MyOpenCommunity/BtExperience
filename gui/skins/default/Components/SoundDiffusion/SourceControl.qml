@@ -315,10 +315,13 @@ MenuColumn {
     Connections {
         target: dataModel
         onCurrentSourceChanged: {
-            if (column.dataModel.currentSource)
+            if (column.dataModel.currentSource) {
                 privateProps.updateSourceItem(column.dataModel.currentSource)
-            else
+            }
+            else {
+                column.closeChild()
                 itemLoader.destroyComponent()
+            }
         }
     }
 
