@@ -29,6 +29,12 @@ MenuColumn {
     }
 
     ObjectModel {
+        id: pagerModel
+        containers: [systemsModel.systemUii]
+        filters: [{objectId: ObjectInterface.IdPager}]
+    }
+
+    ObjectModel {
         id: cctvPlaceModel
         containers: [systemsModel.systemUii]
         source: cctvModel.getObject(0).externalPlaces
@@ -58,7 +64,7 @@ MenuColumn {
                 modelList.append({"name": qsTr("video control"), "component": cctv})
             if (intercomPlaceModel.count > 0)
                 modelList.append({"name": qsTr("intercom"), "component": intercom})
-            if (intercomModel.count > 0 && intercomModel.getObject(0).pagerConfigured)
+            if (pagerModel.count > 0)
                 modelList.append({"name": qsTr("pager"), "component": pager})
         }
     }

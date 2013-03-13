@@ -93,6 +93,21 @@ QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node)
 	return parseExternalPlace(xml_node, ObjectInterface::IdSwitchboard);
 }
 
+QList<ObjectPair> parsePager(const QDomNode &xml_node)
+{
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		obj_list << ObjectPair(uii, new Pager);
+	}
+	return obj_list;
+}
+
 
 ExternalPlace::ExternalPlace(const QString &_name, int _object_id, const QString &_where)
 {

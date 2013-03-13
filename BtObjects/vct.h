@@ -22,9 +22,22 @@ QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node);
 QList<ObjectPair> parseInternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseExternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node);
+QList<ObjectPair> parseStaircaseLight(const QDomNode &xml_node);
+QList<ObjectPair> parsePager(const QDomNode &xml_node);
 
 ObjectInterface *createCCTV(QList<ObjectPair> places);
 ObjectInterface *createIntercom(QList<ObjectPair> places, bool pager);
+
+
+// Almost empty class, we only need the id for the GUI, the rest is handled by
+// Intercom class
+class Pager: public ObjectInterface
+{
+	Q_OBJECT
+public:
+	Pager() { }
+	virtual int getObjectId() const { return ObjectInterface::IdPager; }
+};
 
 
 /*!

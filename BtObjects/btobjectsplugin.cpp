@@ -523,6 +523,7 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdPager:
 			pager = true;
+			obj_list = parsePager(xml_obj);
 			break;
 
 		case ObjectInterface::IdRadioSource:
