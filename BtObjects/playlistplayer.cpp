@@ -380,6 +380,7 @@ void AudioVideoPlayer::resume()
 
 void AudioVideoPlayer::restart()
 {
+	user_track_change_request = true;
 	play();
 }
 
