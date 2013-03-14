@@ -139,6 +139,19 @@ function description(itemObject) {
     case ObjectInterface.IdEnergyData:
         descr = itemObject.familyName
         break
+    case ObjectInterface.IdLoadDiagnostic:
+        switch (itemObject.loadStatus) {
+        case EnergyLoadDiagnostic.Ok:
+            descr = qsTr("Ok")
+            break
+        case EnergyLoadDiagnostic.Warning:
+            descr = qsTr("Warning")
+            break
+        case EnergyLoadDiagnostic.Critical:
+            descr = qsTr("Danger")
+            break
+        }
+        break
 
     case ObjectInterface.IdStopAndGo:
     case ObjectInterface.IdStopAndGoPlus:
@@ -165,6 +178,7 @@ function description(itemObject) {
         default:
             descr = qsTr("Unknown")
         }
+        break
     case ObjectInterface.IdSplitBasicScenario:
     case ObjectInterface.IdSplitAdvancedScenario:
         if (itemObject.temperatureEnabled) {
