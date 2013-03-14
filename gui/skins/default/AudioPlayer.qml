@@ -230,8 +230,15 @@ Page {
                 if (repetitionTriggered) {
                     player.mediaPlayer.seek(10)
                 }
-                else
+                else {
                     player.mediaPlayer.nextTrack()
+                    // We want to go to previous track within 5 seconds
+                    // in the CURRENT track, not 5 seconds globally.
+                    // We should really connect to a "new song" signal from the
+                    // underlying C++ player, but we don't have a suitable signal,
+                    // so let's do it by hand
+                    goToPrevTrack.restart()
+                }
             }
         }
     }

@@ -135,7 +135,12 @@ BasePage {
                 pressedImage: "images/common/ico_next_track_P.svg"
 
                 onReleased: hidingTimer.restart()
-                onPressed: page.player.nextTrack()
+                onPressed: {
+                    page.player.nextTrack()
+                    // We should really connect to a "new video" signal from the
+                    // underlying C++ player, but we don't have a suitable signal
+                    goToPrevTrack.restart()
+                }
             }
         }
 
