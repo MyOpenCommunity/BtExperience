@@ -26,7 +26,10 @@ Item {
     property int status: -1
     property bool hasChild: false
     property alias backgroundImage: background.source
+    // if false, item is grayed out
     property bool enabled: true
+    // mouse interaction is enabled
+    property bool clickable: true
 
     signal clicked(variant itemClicked)
     signal pressed(variant itemPressed)
@@ -217,6 +220,7 @@ Item {
     BeepingMouseArea {
         id: mousearea
         anchors.fill: parent
+        visible: menuItem.clickable
         pressAndHoldEnabled: menuItem.editable
         onHeld: if (menuItem.editable) { startEdit() }
         onClicked: menuItem.clicked(menuItem)

@@ -28,8 +28,9 @@ MenuColumn {
 
             currentIndex: -1
             onCurrentPageChanged: element.closeChild()
-            delegate: MenuItemDelegate {
-                itemObject: listModel.getObject(index)
+            delegate: MenuItem {
+                property variant itemObject: listModel.getObject(index)
+                clickable: false
                 status: MenuItem.status(itemObject)
                 hasChild: MenuItem.hasChild(itemObject)
                 description: MenuItem.description(itemObject)
