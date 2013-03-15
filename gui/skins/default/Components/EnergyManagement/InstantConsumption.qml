@@ -7,7 +7,6 @@ SvgImage {
     id: control
 
     property variant load
-    property bool showCurrency
 
     source: "../../images/common/bg_on-off.svg"
 
@@ -25,7 +24,7 @@ SvgImage {
     }
 
     UbuntuLightText {
-        text: privateProps.getConsumptionText(showCurrency, load.consumption, load.currentUnit, load.expense, load.rate)
+        text: privateProps.getConsumptionText(load.consumption, load.currentUnit)
         color: "white"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
@@ -42,19 +41,11 @@ SvgImage {
     QtObject {
         id: privateProps
 
-        function getConsumptionText(showCurrency, consumption, currentUnit, expense, rate) {
-            if (showCurrency) {
-                if (expense === 0)
-                    return "--"
-                else
-                    return expense + " " + rate.currencySymbol
-            }
-            else {
-                if (consumption === 0)
-                    return "--"
-                else
-                    return consumption + " " + currentUnit
-            }
+        function getConsumptionText(consumption, currentUnit) {
+            if (consumption === 0)
+                return "--"
+            else
+                return consumption + " " + currentUnit
         }
     }
 }

@@ -64,7 +64,6 @@ MenuColumn {
         Column {
             InstantConsumption {
                 load: element.dataModel
-                showCurrency: unitSelectorItem.showCurrency
             }
 
             Partial {
@@ -116,7 +115,6 @@ MenuColumn {
 
             InstantConsumption {
                 load: element.dataModel
-                showCurrency: unitSelectorItem.showCurrency
             }
 
             Partial {
