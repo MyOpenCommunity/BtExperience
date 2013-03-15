@@ -54,8 +54,8 @@ namespace
 	void setZlVolume(int volume)
 	{
 		// 0 -> mute (not used in this function)
-		// 1-100 -> 0 -> 80 (0x50)
-		QString scaled_volume = QString::number(volume * 80 / 100, 16);
+		// 1-100 -> 0 -> 88 (0x58)
+		QString scaled_volume = QString::number(volume * 88 / 100, 16);
 		scaled_volume = QString("%1").arg(scaled_volume, 4, '0');
 		smartExecute_synch("zl38005_ioctl", QStringList() << "/dev/zl380051" << "WR" << "046B" << scaled_volume);
 	}
