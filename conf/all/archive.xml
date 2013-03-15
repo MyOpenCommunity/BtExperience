@@ -620,6 +620,6 @@
 		<ist uii="9022" descr="Switchboard 1" />
 	</obj>
 	<obj id="10059" cid="10059" descr="Pager" dev="4">
-		<ist uii="13" />
+		<ist uii="9023" />
 	</obj>
 </archive>
