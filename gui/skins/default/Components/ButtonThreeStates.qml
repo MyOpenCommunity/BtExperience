@@ -23,10 +23,15 @@ SvgImage {
     property bool enabled: true
     property int status: 0 // 0 - up, 1 - down
 
+    // normal clicked event; if you want to react on press events, use the touched()
+    // signal
     signal clicked(variant mouse)
     signal held(variant mouse)
+    // normal press and release events on button
     signal pressed(variant mouse)
     signal released(variant mouse)
+    // allows the button to react on press events but also showing the 'pressed'
+    // image
     signal touched
 
     source: defaultImage
