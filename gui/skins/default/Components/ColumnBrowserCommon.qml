@@ -237,6 +237,11 @@ MenuColumn {
             }
         }
         onRangeChanged: paginator.goToPage(theModel.range[0] / paginator.elementsOnPage + 1)
+        onEmptyDirectory: {
+            console.log("Empty directory")
+            feedbackTimer.stop()
+            column.state = "emptyDirectory"
+        }
     }
 
     Timer {
@@ -244,6 +249,33 @@ MenuColumn {
         interval: 1000
         onTriggered: state = "loading"
     }
+
+    UbuntuMediumText {
+        id: emptyDirectoryFeedback
+        text: qsTr("Empty directory")
+        width: imageBg.width - imageBg.width / 100 * 10
+        anchors.centerIn: imageBg
+        font.pixelSize: 24
+        elide: Text.ElideRight
+        visible: false
+        horizontalAlignment: Text.AlignHCenter
+
+        Timer {
+            id: emptyDirectoryTimer
+            interval: 2000
+            onTriggered: column.state = ""
+        }
+
+        states: [
+            State {
+                name: "emptyDirectoryShown"
+                PropertyChanges { target: emptyDirectoryTimer; running: true }
+                PropertyChanges { target: emptyDirectoryFeedback; visible: true }
+            }
+        ]
+    }
+
+
 
     SvgImage {
         id: loadingIndicator
@@ -273,6 +305,13 @@ MenuColumn {
             name: "loading"
             PropertyChanges { target: paginator; visible: false }
             PropertyChanges { target: loadingIndicator; state: "indicatorShown" }
+        },
+        State {
+            name: "emptyDirectory"
+            PropertyChanges { target: paginator; visible: false }
+            PropertyChanges { target: emptyDirectoryFeedback; state: "emptyDirectoryShown" }
+            PropertyChanges { target: backButton; visible: false }
+            PropertyChanges { target: caption; visible: false }
         }
     ]
 }
