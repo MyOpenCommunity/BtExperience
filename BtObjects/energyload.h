@@ -300,15 +300,21 @@ class EnergyLoadManagementWithControlUnit : public EnergyLoadManagement
 	Q_OBJECT
 
 	/*!
-		\brief Whether the load is active or not
+		\brief Whether the load receives current or not.
 
-		If the load has been disabled (for excessive load) by the control unit, it can
-		be enabled by calling \ref forceOn()
+		If the load has been detached for excessive load by the control unit, it can
+		be enabled by calling \ref forceOn().
 	*/
 	Q_PROPERTY(bool loadEnabled READ getLoadEnabled NOTIFY loadEnabledChanged)
 
 	/*!
-		\brief Whether the load has been forced by calling \ref forceOn()
+		\brief Whether the load has been forced.
+
+		Forcing a load means removing it from the control of the control unit,
+		so it will always receive current. Note that in a case the load can be
+		both detached and forced: if the load is forced but after detaching
+		all other loads the consumption is still too high, the CU will detach
+		this load anyway.
 
 		Call \ref stopForcing() to stop forcing the load to on.
 	*/
