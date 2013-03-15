@@ -31,7 +31,7 @@
 	</obj>
 	<!-- lock (gate + door) VDE -->
 	<obj cid="3005" id="3008" dev="2" where="11" descr="1 State Actuator" type="1">
-		<ist uii="21" descr="Lock vde 21" device="2" addresses="1" />
+		<ist uii="21" descr="Lock vde 21" device="2" where="1" />
 	</obj>
 	<!-- 2 states -->
 	<obj cid="3008" id="3002" descr="Fan" where="11" pul="0">

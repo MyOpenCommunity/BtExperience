@@ -21,7 +21,7 @@ QList<ObjectPair> parseAutomationVDE(const QDomNode &obj)
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		QString where = v.value("dev") + v.value("addresses");
+		QString where = v.value("dev") + v.value("where");
 
 		VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice(where));
 		obj_list << ObjectPair(uii, new AutomationVDE(v.value("descr"), d));
