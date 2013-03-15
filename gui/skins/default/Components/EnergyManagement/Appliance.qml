@@ -38,6 +38,22 @@ MenuColumn {
         Column {
             ControlSwitchLoadManagement {
                 loadWithCU: element.dataModel
+                visible: element.dataModel.loadEnabled
+            }
+
+            SvgImage {
+                source: "../../images/common/panel_212x50.svg"
+                visible: !element.dataModel.loadEnabled
+
+                ButtonThreeStates {
+                    anchors.centerIn: parent
+                    text: qsTr("Force load")
+                    defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
+                    pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
+                    selectedImage: "../../images/common/btn_apriporta_ok_on.svg"
+                    shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
+                    onTouched: element.dataModel.forceOn()
+                }
             }
         }
     }
@@ -80,6 +96,22 @@ MenuColumn {
         Column {
             ControlSwitchLoadManagement {
                 loadWithCU: element.dataModel
+                visible: element.dataModel.loadEnabled
+            }
+
+            SvgImage {
+                source: "../../images/common/panel_212x50.svg"
+                visible: !element.dataModel.loadEnabled
+
+                ButtonThreeStates {
+                    anchors.centerIn: parent
+                    text: qsTr("Force load")
+                    defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
+                    pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
+                    selectedImage: "../../images/common/btn_apriporta_ok_on.svg"
+                    shadowImage: "../../images/common/ombra_btn_apriporta_ok_on.svg"
+                    onTouched: element.dataModel.forceOn()
+                }
             }
 
             InstantConsumption {

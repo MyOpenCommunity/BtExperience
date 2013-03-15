@@ -49,11 +49,11 @@ function status(itemObject) {
 
     case ObjectInterface.IdLoadWithControlUnit:
         if (itemObject.loadEnabled && itemObject.loadForced)
-            return 3
-        else if (itemObject.loadEnabled && !itemObject.loadForced)
+            return 4 // green empty
+        else if (itemObject.loadEnabled)
             return 1
         else
-            return 0
+            return 3
 
     case ObjectInterface.IdStopAndGo:
     case ObjectInterface.IdStopAndGoPlus:
@@ -126,15 +126,18 @@ function description(itemObject) {
 
     case ObjectInterface.IdLoadWithControlUnit:
         if (itemObject.hasControlUnit) {
-            if (itemObject.loadEnabled && itemObject.loadForced)
-                descr =  qsTr("Forced")
-            else if (itemObject.consumption > 0)
-                descr = itemObject.consumption + " " + itemObject.currentUnit
+            // we need to check !loadEnabled first because we may have !loadEnabled
+            // AND loadForced true at the same time.
+            if (!itemObject.loadEnabled) {
+                descr = qsTr("Load detached")
+            }
+            else if (itemObject.loadEnabled && itemObject.loadForced) {
+                descr =  qsTr("Control disabled")
+            }
+            else if (itemObject.loadEnabled) {
+                descr = qsTr("Control enabled")
+            }
         }
-        break
-    case ObjectInterface.IdLoadWithoutControlUnit:
-        if (itemObject.consumption > 0)
-            descr = itemObject.consumption + " " + itemObject.currentUnit
         break
     case ObjectInterface.IdEnergyData:
         descr = itemObject.familyName
@@ -214,12 +217,6 @@ function boxInfoState(itemObject) {
                 itemObject.currentModalityId === ThermalControlUnit.IdTimedManual)
             return "info"
         break
-    case ObjectInterface.IdLoadWithControlUnit:
-        if (itemObject.hasControlUnit) {
-            if (itemObject.loadEnabled && itemObject.loadForced)
-                return "warning"
-            return "info"
-        }
     }
     return ""
 }
@@ -248,13 +245,6 @@ function boxInfoText(itemObject) {
                 itemObject.currentModalityId === ThermalControlUnit.IdTimedManual)
             return (itemObject.currentModality.temperature / 10).toFixed(1) + "°C"
         break
-    case ObjectInterface.IdLoadWithControlUnit:
-    case ObjectInterface.IdLoadWithoutControlUnit:
-        if (itemObject.hasControlUnit) {
-            if (itemObject.loadEnabled)
-                return "1"
-            return "0"
-        }
     }
     return ""
 }

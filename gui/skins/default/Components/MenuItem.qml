@@ -74,6 +74,8 @@ Item {
             return base + "menu_column_item_warning_led.svg"
         else if (menuItem.status === 3)
             return base + "menu_column_item_alarm_led.svg"
+        else if (menuItem.status === 4)
+            return base + "menu_column_item_disabled_led.svg"
     }
 
     SvgImage {

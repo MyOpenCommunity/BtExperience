@@ -15,9 +15,9 @@ ControlSwitch {
         }
     }
 
-    upperText: qsTr("Device")
-    text: loadWithCU.loadEnabled ? (loadWithCU.loadForced ? qsTr("Not Controlled") : qsTr("Controlled")) : qsTr("Not Enabled")
+    upperText: qsTr("Control")
+    text: loadWithCU.loadForced ? qsTr("Disabled") : qsTr("Enabled")
     pixelSize: 14
-    onPressed: loadWithCU.loadEnabled ? (loadWithCU.loadForced ? loadWithCU.stopForcing() : pageObject.installPopup(forceDurationPopup)) : loadWithCU.forceOn()
-    status: loadWithCU.loadEnabled ? !loadWithCU.loadForced : 1
+    onPressed: loadWithCU.loadForced ? loadWithCU.stopForcing() : pageObject.installPopup(forceDurationPopup)
+    status: loadWithCU.loadForced
 }
