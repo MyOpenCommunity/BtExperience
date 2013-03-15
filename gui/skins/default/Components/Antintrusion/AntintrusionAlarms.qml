@@ -207,6 +207,9 @@ MenuColumn {
             id: noAlarmText
             z: 1
             anchors.centerIn: parent
+            width: parent.width - parent.width / 100 * 10
+            elide: Text.ElideRight
+            horizontalAlignment: Text.AlignHCenter
             text: qsTr("No Alarm Present")
             font.pixelSize: 24
             visible: modelList.count === 0
