@@ -1,5 +1,7 @@
 #include "imagesaver.h"
 
+#include "generic_functions.h"
+
 #include <QtDebug>
 #include <QNetworkRequest>
 #include <QNetworkReply>
@@ -18,13 +20,8 @@ int computeMaxId(QString no_id_name)
 	QFileInfo file_info(no_id_name);
 	QDir save_dir = file_info.absolutePath();
 	QStringList search_list;
-	// in the specification, only jpg and png types are possible, but
-	// image_files defined in generic_functions.cpp manages gif and jpeg, too;
-	// going with our filter
-	search_list << search_path + ".jpg";
-	search_list << search_path + ".png";
-	search_list << search_path + ".gif";
-	search_list << search_path + ".jpeg";
+	foreach (QString extension, getFileExtensions(EntryInfo::IMAGE))
+		search_list << search_path + extension;
 	QStringList file_list = save_dir.entryList(search_list);
 	unsigned int max_oid = 0;
 	foreach (QString name, file_list) {
@@ -36,7 +33,6 @@ int computeMaxId(QString no_id_name)
 	}
 	return max_oid;
 }
-
 
 QString computeSaveFilePath(QString no_id_name, int id)
 {
@@ -50,19 +46,18 @@ void cleanOldFiles(QString id_name, int id)
 {
 	QString search_path = id_name.mid(id_name.lastIndexOf("/") + 1);
 	search_path = search_path.left(search_path.lastIndexOf("_"));
-	search_path.append(QString("_*"));
-	search_path.append(id_name.mid(id_name.lastIndexOf(".")));
+	search_path.append(QString("_*.*"));
 
 	QStringList survivors;
-	QString survivor;
+	QString survivor_base;
 	for (int i = 0; i < MAX_CUSTOMIZED_IMAGES_PROFILE; ++i)
 	{
-		survivor = id_name.mid(id_name.lastIndexOf("/") + 1);
-		survivor = survivor.left(survivor.lastIndexOf("_"));
-		survivor.append(QString("_%1").arg(id - i));
-		survivor.append(id_name.mid(id_name.lastIndexOf(".")));
+		survivor_base = id_name.mid(id_name.lastIndexOf("/") + 1);
+		survivor_base = survivor_base.left(survivor_base.lastIndexOf("_"));
+		survivor_base.append(QString("_%1.").arg(id - i));
 
-		survivors << survivor;
+		foreach (QString extension, getFileExtensions(EntryInfo::IMAGE))
+			survivors << survivor_base + extension;
 	}
 
 	QFileInfo file_info(id_name);
@@ -76,7 +71,6 @@ void cleanOldFiles(QString id_name, int id)
 		save_dir.remove(name);
 	}
 }
-
 
 
 unsigned int ImageSaver::progressive_id = 0;
