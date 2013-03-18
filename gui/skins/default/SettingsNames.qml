@@ -26,7 +26,7 @@ QtObject {
         container['LANGUAGE']["en"] = qsTr("English")
         container['LANGUAGE']["fr"] = qsTr("French")
         container['LANGUAGE']["de"] = qsTr("German")
-        container['LANGUAGE']["nl"] = qsTr("Flemish")
+        container['LANGUAGE']["nl"] = qsTr("Dutch")
         container['LANGUAGE']["es"] = qsTr("Spanish")
         container['LANGUAGE']["pt"] = qsTr("Portuguese")
         container['LANGUAGE']["el"] = qsTr("Greek")
