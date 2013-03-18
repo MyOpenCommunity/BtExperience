@@ -22,22 +22,22 @@ namespace
 		if (first == ObjectInterface::IdLightFixedPP || second == ObjectInterface::IdLightFixedPP
 			|| first == ObjectInterface::IdLightFixedAMBGRGEN || second == ObjectInterface::IdLightFixedAMBGRGEN
 			|| first == ObjectInterface::IdLightCustomPP || second == ObjectInterface::IdLightCustomPP
-			|| first == ObjectInterface::IdLightCustomAMBGRGEN || second == ObjectInterface::IdLightCustomAMBGRGEN)
-			return ObjectInterface::IdLightFixedAMBGRGEN;
+			|| first == ObjectInterface::IdLightCustomAMBGRGEN || second == ObjectInterface::IdLightCustomAMBGRGEN
+			|| first == ObjectInterface::IdDimmerFixedAMBGRGEN || second == ObjectInterface::IdDimmerFixedAMBGRGEN
+			|| first == ObjectInterface::IdDimmer100FixedAMBGRGEN || second == ObjectInterface::IdDimmer100FixedAMBGRGEN
+			|| first == ObjectInterface::IdDimmer100CustomAMBGRGEN || second == ObjectInterface::IdDimmer100CustomAMBGRGEN)
+			return ObjectInterface::IdLightFixedPP;
 
-		if (first == ObjectInterface::IdDimmerFixedPP || second == ObjectInterface::IdDimmerFixedPP
-			|| first == ObjectInterface::IdDimmerFixedAMBGRGEN || second == ObjectInterface::IdDimmerFixedAMBGRGEN)
-			return ObjectInterface::IdDimmerFixedAMBGRGEN;
+		if (first == ObjectInterface::IdDimmerFixedPP || second == ObjectInterface::IdDimmerFixedPP)
+			return ObjectInterface::IdDimmerFixedPP;
 
 		if (first == ObjectInterface::IdDimmer100FixedPP || second == ObjectInterface::IdDimmer100FixedPP
-			|| first == ObjectInterface::IdDimmer100FixedAMBGRGEN || second == ObjectInterface::IdDimmer100FixedAMBGRGEN
-			|| first == ObjectInterface::IdDimmer100CustomPP || second == ObjectInterface::IdDimmer100CustomPP
-			|| first == ObjectInterface::IdDimmer100CustomAMBGRGEN || second == ObjectInterface::IdDimmer100CustomAMBGRGEN)
-			return ObjectInterface::IdDimmer100FixedAMBGRGEN;
+			|| first == ObjectInterface::IdDimmer100CustomPP || second == ObjectInterface::IdDimmer100CustomPP)
+			return ObjectInterface::IdDimmer100FixedPP;
 
 		Q_ASSERT_X(false, "findDumberObject", qPrintable(QString("Invalid light types (%1, %2) in light group").arg(first).arg(second)));
 
-		return -1;
+		return ObjectInterface::IdLightFixedPP; // this I'm sure it can be used by all lights
 	}
 
 	template<class Tr, class Ts>
@@ -180,13 +180,13 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 
 		switch (dumber_type)
 		{
-		case ObjectInterface::IdLightFixedAMBGRGEN:
+		case ObjectInterface::IdLightFixedPP:
 			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<Light *>(items)));
 			break;
-		case ObjectInterface::IdDimmerFixedAMBGRGEN:
+		case ObjectInterface::IdDimmerFixedPP:
 			obj_list << ObjectPair(uii, new DimmerGroup(descr, convertQObjectList<Dimmer *>(items)));
 			break;
-		case ObjectInterface::IdDimmer100FixedAMBGRGEN:
+		case ObjectInterface::IdDimmer100FixedPP:
 			obj_list << ObjectPair(uii, new Dimmer100Group(descr, convertQObjectList<Dimmer100 *>(items)));
 			break;
 		}
