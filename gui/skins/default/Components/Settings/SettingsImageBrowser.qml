@@ -137,6 +137,7 @@ MenuColumn {
                 var path = item.path + ""
                 if (path.indexOf("file:///") === 0)
                     path = path.slice(7)
+
                 if (column.isCard) {
                     if (column._isStock)
                         column.dataModel.cardImage = path
@@ -144,11 +145,19 @@ MenuColumn {
                         Stack.pushPage("NewImageCard.qml", {containerWithCard: column.dataModel, fullImage: path, newFilename: "images/card/bg_" + column.dataModel.uii})
                 }
                 else if (column.homeCustomization) {
-                    global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", path, "images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                    if (column._isStock)
+                        homeProperties.homeBgImage = path
+                    else
+                        global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", path, "images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 }
                 else {
-                    var newFilename = "images/background/bg_" + column.dataModel.uii
-                    global.saveInCustomDirIfNeeded(column.dataModel, "image", path, newFilename, Qt.size(global.mainWidth, global.mainHeight))
+                    if (column._isStock) {
+                        column.dataModel.image = path
+                    }
+                    else {
+                        var newFilename = "images/background/bg_" + column.dataModel.uii
+                        global.saveInCustomDirIfNeeded(column.dataModel, "image", path, newFilename, Qt.size(global.mainWidth, global.mainHeight))
+                    }
                 }
             }
         }
