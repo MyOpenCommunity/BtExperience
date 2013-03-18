@@ -100,6 +100,8 @@ namespace
 	QString vde_audio_off     = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
 	QString intercom_audio_on      = "/usr/local/bin/HwBsp-D-Audio-Intercom_silent.sh";
 	QString intercom_audio_off     = "/usr/local/bin/HwBsp-D-Audio-Intercom_off_silent.sh";
+	QString pager_mic_on = "/usr/local/bin/HwBsp-D-Audio-Find-MicToScs_silent.sh";
+	QString pager_speaker_on = "/usr/local/bin/HwBsp-D-Audio-Find-ScsToSpeaker_silent.sh";
 }
 
 #define VOLUME_MIN 0
@@ -337,6 +339,22 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 			if (current_volume != InvalidVolume)
 				setHardwareVolume(current_volume, volumes[current_volume]);
 			smartExecute_synch(intercom_audio_on);
+		}
+		break;
+	case SenderPagerCall:
+		if (old_state != AudioState::Mute)
+		{
+			if (current_volume != InvalidVolume)
+				setHardwareVolume(current_volume, volumes[current_volume]);
+			smartExecute_synch(pager_mic_on);
+		}
+		break;
+	case ReceiverPagerCall:
+		if (old_state != AudioState::Mute)
+		{
+			if (current_volume != InvalidVolume)
+				setHardwareVolume(current_volume, volumes[current_volume]);
+			smartExecute_synch(pager_speaker_on);
 		}
 		break;
 	case LocalPlaybackMute:
