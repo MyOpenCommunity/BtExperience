@@ -22,7 +22,6 @@ QList<ObjectPair> parseVdeCamera(const QDomNode &xml_node);
 QList<ObjectPair> parseInternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseExternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node);
-QList<ObjectPair> parseStaircaseLight(const QDomNode &xml_node);
 QList<ObjectPair> parsePager(const QDomNode &xml_node);
 
 ObjectInterface *createCCTV(QList<ObjectPair> places);
