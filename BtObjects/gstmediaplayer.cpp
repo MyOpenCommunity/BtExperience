@@ -96,7 +96,7 @@ bool GstMediaPlayer::runMPlayer(const QList<QString> &args)
 
 	QString global_player_executable = qApp->applicationDirPath() + "/gstmediaplayer";
 
-	qDebug() << "About to start mplayer exec (" << global_player_executable << ") with args: " << args;
+	qDebug() << "About to start gstreamer exec (" << global_player_executable << ") with args: " << args;
 	gstreamer_proc->start(global_player_executable, args);
 	paused = really_paused = false;
 
@@ -112,9 +112,9 @@ void GstMediaPlayer::quit()
 	if (gstreamer_proc->state() == QProcess::Running)
 	{
 		gstreamer_proc->terminate();
-		qDebug("MediaPlayer::quit() waiting for mplayer to quit...");
+		qDebug("GstMediaPlayer::quit() waiting for gstreamer to quit...");
 		if (!gstreamer_proc->waitForFinished(300))
-			qWarning() << "Couldn't terminate mplayer";
+			qWarning() << "Couldn't terminate gstreamer";
 	}
 }
 
@@ -175,7 +175,7 @@ void GstMediaPlayer::mplayerFinished(int exit_code, QProcess::ExitStatus exit_st
 	}
 	else
 	{
-		qDebug("[AUDIO] mplayer exited, with code %d", exit_code);
+		qDebug("[VIDEO] gstreamer exited, with code %d", exit_code);
 		if (exit_code == 0) //end of song
 		{
 			emit gstPlayerDone();
@@ -193,7 +193,8 @@ void GstMediaPlayer::mplayerError(QProcess::ProcessError error)
 {
 	int idx = gstreamer_proc->metaObject()->indexOfEnumerator("ProcessError");
 	QMetaEnum e = gstreamer_proc->metaObject()->enumerator(idx);
-	qDebug() << "[AUDIO] mplayer_proc raised an error: " << "'" << e.key(error) << "'";
+	qDebug() << "[VIDEO] gstreamer_proc raised an error: " << "'" << e.key(error) << "'" << "ProcessError" << error
+			 << "exitCode:" << gstreamer_proc->exitCode();
 }
 
 void GstMediaPlayer::execCmd(QString command)
