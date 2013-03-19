@@ -1,278 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.0" language="tr">
 <context>
     <name>ActionObject</name>
     <message>
         <source>1 min.</source>
-        <translation>1 min.</translation>
+        <translation>1 dak.</translation>
     </message>
     <message>
         <source>100%</source>
-        <translation>100%</translation>
+        <translation>1</translation>
     </message>
     <message>
         <source>15 min.</source>
-        <translation>15 min.</translation>
+        <translation>15 dak.</translation>
     </message>
     <message>
         <source>2 min.</source>
-        <translation>2 min.</translation>
+        <translation>2 dak.</translation>
     </message>
     <message>
         <source>20%</source>
-        <translation>20%</translation>
+        <translation>0.2</translation>
     </message>
     <message>
         <source>3 min.</source>
-        <translation>3 min.</translation>
+        <translation>3 dak.</translation>
     </message>
     <message>
         <source>30%</source>
-        <translation>30%</translation>
+        <translation>0.3</translation>
     </message>
     <message>
         <source>4 min.</source>
-        <translation>4 min.</translation>
+        <translation>4 dk.</translation>
     </message>
     <message>
         <source>40%</source>
-        <translation>40%</translation>
+        <translation>0.4</translation>
     </message>
     <message>
         <source>5 min.</source>
-        <translation>5 min.</translation>
+        <translation>5 dak.</translation>
     </message>
     <message>
         <source>50%</source>
-        <translation>50%</translation>
+        <translation>0.5</translation>
     </message>
     <message>
         <source>60%</source>
-        <translation>60%</translation>
+        <translation>0.6</translation>
     </message>
     <message>
         <source>70%</source>
-        <translation>70%</translation>
+        <translation>0.7</translation>
     </message>
     <message>
         <source>80%</source>
-        <translation>80%</translation>
+        <translation>0.8</translation>
     </message>
     <message>
         <source>90%</source>
-        <translation>90%</translation>
+        <translation>0.9</translation>
     </message>
     <message>
         <source>Activate Scenarios</source>
-        <translation>Activate Scenarios </translation>
+        <translation>Senaryolar etkinleştir </translation>
     </message>
     <message>
         <source>Air-conditioning program</source>
-        <translation>Air-conditioning program</translation>
+        <translation>Klima programı</translation>
     </message>
     <message>
         <source>Air-conditioning scenario</source>
-        <translation>Air-conditioning scenario</translation>
+        <translation>Klima senaryosu</translation>
     </message>
     <message>
         <source>Antifreeze/thermal protection</source>
-        <translation>Antifreeze/thermal protection</translation>
+        <translation>Antifriz/termal koruma</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
+        <translation>Otomatik</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Decrease level</source>
-        <translation>Decrease level</translation>
+        <translation>Seviye azalt</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Down</translation>
+        <translation>Aşağı</translation>
     </message>
     <message>
         <source>Extended pressure button</source>
-        <translation>Extended pressure button</translation>
+        <translation>Butona uzun süre basılması</translation>
     </message>
     <message>
         <source>Heating Program</source>
-        <translation>Heating Program</translation>
+        <translation>Isıtma Programı</translation>
     </message>
     <message>
         <source>Heating scenario</source>
-        <translation>Heating scenario</translation>
+        <translation>Isıtma senaryosu</translation>
     </message>
     <message>
         <source>Increase level</source>
-        <translation>Increase level</translation>
+        <translation>Seviye artır</translation>
     </message>
     <message>
         <source>Last program</source>
-        <translation>Last Program</translation>
+        <translation>Son Program</translation>
     </message>
     <message>
         <source>Last scenario</source>
-        <translation>Last Scenario</translation>
+        <translation>Son Senaryo</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Level</translation>
+        <translation>Seviye</translation>
     </message>
     <message>
         <source>Manual Temperature</source>
-        <translation>Manual Temperature</translation>
+        <translation>Manuel Sıcaklık</translation>
     </message>
     <message>
         <source>OFF</source>
-        <translation>OFF</translation>
+        <translation>OFF (KAPALI)</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>ON</translation>
+        <translation>ON (AÇIK)</translation>
     </message>
     <message>
         <source>On 1 sec.</source>
-        <translation>On 1 sec.</translation>
+        <translation>1 s. boyunca</translation>
     </message>
     <message>
         <source>On 2 sec.</source>
-        <translation>On 2 sec.</translation>
+        <translation>2 s. boyunca</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <source>Release after extended pressure button</source>
-        <translation>Release after extended pressure button</translation>
+        <translation>Butona uzun süre basmadan sonra bırakılması</translation>
     </message>
     <message>
         <source>Scenario 1.16</source>
-        <translation>Scenario 1.16</translation>
+        <translation>Senaryo 1.16</translation>
     </message>
     <message>
         <source>Scenario 1.4</source>
-        <translation>Scenario 1.4</translation>
+        <translation>Senaryo 1.4</translation>
     </message>
     <message>
         <source>Scenario OFF</source>
-        <translation>Scenario OFF</translation>
+        <translation>Senaryo OFF</translation>
     </message>
     <message>
         <source>Set the air conditioning mode</source>
-        <translation>Set the air conditioning mode</translation>
+        <translation>Havalandırma modunu ayarlayın</translation>
     </message>
     <message>
         <source>Set the fan-coil speed</source>
-        <translation>Set the fan-coil speed</translation>
+        <translation>Fan bobini hızını ayarlayın</translation>
     </message>
     <message>
         <source>Set the heating mode</source>
-        <translation>Set the heating mode</translation>
+        <translation>Isıtma modunu ayarlayın</translation>
     </message>
     <message>
         <source>Short pressure button</source>
-        <translation>Short pressure button</translation>
+        <translation>Butona kısa süre basılması</translation>
     </message>
     <message>
         <source>Start pressure button</source>
-        <translation>Start pressure button</translation>
+        <translation>Butona basma başlangıcı</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Durdur</translation>
     </message>
     <message>
         <source>Timed manual Temperature</source>
-        <translation>Timed manual temperature</translation>
+        <translation>Zamanlanmış manuel sıcaklık</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation>Up</translation>
+        <translation>Yukarı</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>AddQuicklink</name>
     <message>
-        <source>ADD</source>
-        <translation>ADD</translation>
-    </message>
-    <message>
         <source>Add new camera:</source>
-        <translation>Add new camera:</translation>
+        <translation>Yeni kamera ekleyin:</translation>
     </message>
     <message>
         <source>Add new rss link:</source>
-        <translation>Add new rss link:</translation>
+        <translation>Yeni rss bağlantısı ekleyin:</translation>
     </message>
     <message>
         <source>Add new scenario:</source>
-        <translation>Add new scenario:</translation>
+        <translation>Yeni senaryo ekleyin:</translation>
     </message>
     <message>
         <source>Add new weather forecast link:</source>
-        <translation>Add new weather forecast link:</translation>
+        <translation>Yeni hava durumu bağlantısı ekleyin:</translation>
     </message>
     <message>
         <source>Add new web camera:</source>
-        <translation>Add new web camera:</translation>
+        <translation>Yeni web kamerası ekleyin:</translation>
     </message>
     <message>
         <source>Add new web page link:</source>
-        <translation>Add new web page link:</translation>
+        <translation>Yeni web sayfası bağlantısı ekleyin:</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
-        <translation>Add new web radio:</translation>
+        <translation>Yeni web radyosu ekleyin:</translation>
     </message>
     <message>
         <source>Add quicklink</source>
-        <translation>Add quicklink</translation>
+        <translation>Hızlı bağlantı ekleyin</translation>
     </message>
     <message>
         <source>Address:</source>
-        <translation>Address:</translation>
+        <translation>Adres:</translation>
     </message>
     <message>
         <source>camera</source>
-        <translation>Camera</translation>
+        <translation>Kamera</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>İPTAL</translation>
     </message>
     <message>
         <source>Click to enter link...</source>
-        <translation>Click to enter link...</translation>
+        <translation>Bağlantı girmek için tıklayın...</translation>
     </message>
     <message>
         <source>Click to enter name...</source>
-        <translation>Click to enter name...</translation>
+        <translation>Ad girmek için tıklayın...</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
-        <translation>Confirm deletion</translation>
+        <translation>Silmeyi onaylayın</translation>
     </message>
     <message>
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
-        <translation>Do you want to remove the selected quicklink?
-Name: %1
-Address: %2</translation>
+        <translation>Seçilen hızlı bağlantıyı kaldırmak istiyor musunuz?
+Ad: %1
+Adres: %2</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
-        <translation>Edit quicklink properties</translation>
+        <translation>Hızlı bağlantı özellikleri düzenleyin</translation>
     </message>
     <message>
         <source>Home</source>
@@ -280,7 +276,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <source>OK</source>
@@ -288,7 +284,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>Profiles</translation>
+        <translation>Profiller</translation>
     </message>
     <message>
         <source>rss</source>
@@ -296,102 +292,102 @@ Address: %2</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>Değişiklikler kaydedilsin mi?</translation>
     </message>
     <message>
         <source>scenario</source>
-        <translation>Scenario</translation>
+        <translation>Senaryo</translation>
     </message>
     <message>
         <source>Select existing camera:</source>
-        <translation>Select existing camera:</translation>
+        <translation>Mevcut kamera seçin:</translation>
     </message>
     <message>
         <source>Select existing rss link:</source>
-        <translation>Select existing rss link:</translation>
+        <translation>Mevcut rss bağlantısı seçin:</translation>
     </message>
     <message>
         <source>Select existing scenario:</source>
-        <translation>Select existing scenario:</translation>
+        <translation>Mevcut senaryo seçin:</translation>
     </message>
     <message>
         <source>Select existing weather forecast link:</source>
-        <translation>Select existing weather forecast link:</translation>
+        <translation>Mevcut hava durumu bağlantısı seçin:</translation>
     </message>
     <message>
         <source>Select existing web camera:</source>
-        <translation>Select existing web camera:</translation>
+        <translation>Mevcut web kamerası seçin:</translation>
     </message>
     <message>
         <source>Select existing web page link:</source>
-        <translation>Select existing web page link:</translation>
+        <translation>Mevcut web sayfası bağlantısı seçin:</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
-        <translation>Select existing web radio:</translation>
+        <translation>Mevcut web radyosu seçin:</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Title:</translation>
+        <translation>Başlık:</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Tip:</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation>Weather</translation>
+        <translation>Hava durumu</translation>
     </message>
     <message>
         <source>web camera</source>
-        <translation>Web camera</translation>
+        <translation>Web kamerası</translation>
     </message>
     <message>
         <source>web page</source>
-        <translation>Web page</translation>
+        <translation>Web sayfası</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web radio</translation>
+        <translation>Web radyo</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenario</name>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>Devrede</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioAction</name>
     <message>
         <source>action</source>
-        <translation>Action</translation>
+        <translation>İş</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioDateTimeCondition</name>
     <message>
         <source>activation</source>
-        <translation>Activation</translation>
+        <translation>Etkinleştirme</translation>
     </message>
     <message>
         <source>days</source>
-        <translation>Days</translation>
+        <translation>Günler</translation>
     </message>
     <message>
         <source>F</source>
         <comment>Friday</comment>
-        <translation>F</translation>
+        <translation>C</translation>
     </message>
     <message>
         <source>M</source>
         <comment>Monday</comment>
-        <translation>M</translation>
+        <translation>P</translation>
     </message>
     <message>
         <source>S</source>
@@ -401,53 +397,53 @@ Address: %2</translation>
     <message>
         <source>S</source>
         <comment>Sunday</comment>
-        <translation>S</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
-        <translation>T</translation>
-    </message>
-    <message>
-        <source>time</source>
-        <translation>Time</translation>
+        <translation>Pz</translation>
     </message>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>T</translation>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>time</source>
+        <translation>Saat</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
-        <translation>W</translation>
+        <translation>Ç</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioDeviceCondition</name>
     <message>
         <source>device condition</source>
-        <translation>Device Condition</translation>
+        <translation>Aygıt Durumu</translation>
     </message>
     <message>
         <source>Intensity</source>
-        <translation>Intensity</translation>
+        <translation>Şiddet</translation>
     </message>
     <message>
         <source>OFF</source>
-        <translation>OFF</translation>
+        <translation>OFF (KAPALI)</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>ON</translation>
+        <translation>ON (AÇIK)</translation>
     </message>
     <message>
         <source>Temperature</source>
-        <translation>Temperature</translation>
+        <translation>Sıcaklık</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
     <message>
         <source>ºC</source>
@@ -458,11 +454,11 @@ Address: %2</translation>
     <name>AdvancedSplit</name>
     <message>
         <source>fancoil</source>
-        <translation>Fancoil</translation>
+        <translation>Havalandırma</translation>
     </message>
     <message>
         <source>modality</source>
-        <translation>Modality</translation>
+        <translation>Mod</translation>
     </message>
     <message>
         <source>program</source>
@@ -470,108 +466,76 @@ Address: %2</translation>
     </message>
     <message>
         <source>swing</source>
-        <translation>Swing</translation>
+        <translation>Salınım</translation>
     </message>
     <message>
         <source>temperature</source>
-        <translation>Temperature</translation>
+        <translation>Sıcaklık</translation>
     </message>
 </context>
 <context>
     <name>AlarmClock</name>
     <message>
         <source>Click to enter name...</source>
-        <translation>Click to enter name...</translation>
+        <translation>Ad girmek için tıklayın...</translation>
     </message>
 </context>
 <context>
     <name>AlarmClockDateTimePage</name>
     <message>
         <source>activation</source>
-        <translation>Activation</translation>
+        <translation>Etkinleştirme</translation>
     </message>
     <message>
         <source>Alarm clock - date and time</source>
-        <translation>Alarm clock - date and time</translation>
-    </message>
-    <message>
-        <source>Alarm not saved</source>
-        <translation>Alarm not saved</translation>
+        <translation>Alarm saati - tarih ve saat</translation>
     </message>
     <message>
         <source>Alarm settings</source>
-        <translation>Alarm settings</translation>
+        <translation>Alarm ayarları</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>İPTAL</translation>
     </message>
     <message>
         <source>days</source>
-        <translation>Days</translation>
+        <translation>Günler</translation>
     </message>
     <message>
         <source>description</source>
-        <translation>Description</translation>
-    </message>
-    <message>
-        <source>Edit alarm name</source>
-        <translation>Edit alarm name</translation>
+        <translation>Tanım</translation>
     </message>
     <message>
         <source>MTWTFSS</source>
-        <translation>MTWTFSS</translation>
-    </message>
-    <message>
-        <source>New name:</source>
-        <translation>New name:</translation>
-    </message>
-    <message>
-        <source>No name set</source>
-        <translation>No name set</translation>
+        <translation>PSÇPCCP</translation>
     </message>
     <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <source>Only once</source>
-        <translation>Only once</translation>
-    </message>
-    <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>Değişiklikler kaydedilsin mi?</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>Time</translation>
+        <translation>Saat</translation>
     </message>
 </context>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
-        <source>Alarm clock - sound settings</source>
-        <translation>Alarm clock - sound settings</translation>
-    </message>
-    <message>
         <source>Alarm settings</source>
-        <translation>Alarm settings</translation>
+        <translation>Alarm ayarları</translation>
     </message>
     <message>
         <source>beep</source>
-        <translation>Beep</translation>
+        <translation>Bip</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
-    </message>
-    <message>
-        <source>No amplifier set</source>
-        <translation>No amplifier set</translation>
-    </message>
-    <message>
-        <source>No source set</source>
-        <translation>No source set</translation>
+        <translation>İPTAL</translation>
     </message>
     <message>
         <source>OK</source>
@@ -579,49 +543,45 @@ Address: %2</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>Değişiklikler kaydedilsin mi?</translation>
     </message>
     <message>
         <source>Select a source:</source>
-        <translation>Select a source:</translation>
-    </message>
-    <message>
-        <source>Select an amplifier:</source>
-        <translation>Select an amplifier:</translation>
+        <translation>Bir kaynak seçin:</translation>
     </message>
     <message>
         <source>Signal:</source>
-        <translation>Signal:</translation>
+        <translation>Sinyal:</translation>
     </message>
     <message>
         <source>sound diffusion</source>
-        <translation>Sound diffusion</translation>
+        <translation>Ses difüzyonu</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>Alert</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>Uyarı</translation>
     </message>
 </context>
 <context>
     <name>Amplifier</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
@@ -632,7 +592,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>equalizer</source>
-        <translation>Equalizer</translation>
+        <translation>Denkleştirici</translation>
     </message>
     <message>
         <source>loud</source>
@@ -640,68 +600,68 @@ Address: %2</translation>
     </message>
     <message>
         <source>off</source>
-        <translation>Off</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>on</source>
-        <translation>On</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>treble</source>
-        <translation>Treble</translation>
+        <translation>Tiz</translation>
     </message>
 </context>
 <context>
     <name>Antintrusion</name>
     <message>
         <source>Burglar alarm</source>
-        <translation>Burglar alarm</translation>
+        <translation>Hırsızlık alarmı</translation>
     </message>
     <message>
         <source>enter code</source>
-        <translation>Enter code</translation>
+        <translation>Kodu girin</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionAlarms</name>
     <message>
         <source>date and time</source>
-        <translation>Date and time</translation>
+        <translation>Tarih ve saat</translation>
     </message>
     <message>
         <source>No Alarm Present</source>
-        <translation>No Alarm Present</translation>
+        <translation>Alarm Yok</translation>
     </message>
     <message>
         <source>remove all</source>
-        <translation>Remove All</translation>
+        <translation>Hepsini kaldır</translation>
     </message>
     <message>
         <source>type</source>
-        <translation>Type</translation>
+        <translation>Tip</translation>
     </message>
     <message>
         <source>zone</source>
-        <translation>Zone</translation>
+        <translation>Alan</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionNames</name>
     <message>
         <source>anti-panic</source>
-        <translation>anti-panic</translation>
+        <translation>panik önleme</translation>
     </message>
     <message>
         <source>intrusion detection</source>
-        <translation>intrusion detection</translation>
+        <translation>izinsiz girme algılama</translation>
     </message>
     <message>
         <source>tamper</source>
-        <translation>tamper</translation>
+        <translation>kurcalama</translation>
     </message>
     <message>
         <source>technical</source>
-        <translation>technical</translation>
+        <translation>teknik</translation>
     </message>
 </context>
 <context>
@@ -712,51 +672,51 @@ Address: %2</translation>
     </message>
     <message>
         <source>disable system</source>
-        <translation>Disable system</translation>
+        <translation>Sistemi devre dışı edin</translation>
     </message>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>enable system</source>
-        <translation>Enable system</translation>
+        <translation>Sistemi etkinleştirin</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>modify zones</source>
-        <translation>Modify zones</translation>
+        <translation>Bölgeleri değiştirin</translation>
     </message>
     <message>
         <source>scenario</source>
-        <translation>Scenario</translation>
+        <translation>Senaryo</translation>
     </message>
     <message>
         <source>system</source>
-        <translation>System</translation>
+        <translation>Sistem</translation>
     </message>
     <message>
         <source>system disabled</source>
-        <translation>System disabled</translation>
+        <translation>Sistem devre dışı edildi</translation>
     </message>
     <message>
         <source>system enabled</source>
-        <translation>System enabled</translation>
+        <translation>Sistem etkinleştirildi</translation>
     </message>
     <message>
         <source>wrong code</source>
-        <translation>Wrong code</translation>
+        <translation>Yanlış kod</translation>
     </message>
     <message>
         <source>zone</source>
-        <translation>Zone</translation>
+        <translation>Alan</translation>
     </message>
     <message>
         <source>zone settings</source>
-        <translation>Zone settings</translation>
+        <translation>Bölge ayarları</translation>
     </message>
 </context>
 <context>
@@ -767,18 +727,18 @@ Address: %2</translation>
     </message>
     <message>
         <source>Loop detected</source>
-        <translation>Loop detected</translation>
+        <translation>Döngü algılandı</translation>
     </message>
     <message>
         <source>No tunable web radio</source>
-        <translation>No tunable web radio</translation>
+        <translation>Ayarlanabilir web radyosu yok</translation>
     </message>
 </context>
 <context>
     <name>Automation</name>
     <message>
         <source>automation</source>
-        <translation>Automation</translation>
+        <translation>Otomasyon</translation>
     </message>
 </context>
 <context>
@@ -792,37 +752,37 @@ Address: %2</translation>
     <name>Brightness</name>
     <message>
         <source>brightness</source>
-        <translation>Brightness</translation>
+        <translation>Parlaklık</translation>
     </message>
 </context>
 <context>
     <name>browsermain</name>
     <message>
         <source>Authentication required</source>
-        <translation>Authentication required</translation>
+        <translation>Kimlik denetimi gerekli</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Password</translation>
+        <translation>şifre</translation>
     </message>
     <message>
         <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>This connection is untrusted. Do you wish to continue?</translation>
+        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Untrusted SSL connection</source>
-        <translation>Untrusted SSL connection</translation>
+        <translation>Güvenli olmayan SSL bağlantısı</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation>User name</translation>
+        <translation>Kullanıcı adı</translation>
     </message>
 </context>
 <context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>Multimedya</translation>
     </message>
 </context>
 <context>
@@ -846,15 +806,15 @@ Address: %2</translation>
         <translation>&lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
-&lt;title&gt;Problem loading page&lt;/title&gt;
+&lt;title&gt;Problem yükleme sayfas&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;h1&gt;Sunucu bulunamad&lt;/h1&gt;
+&lt;p&gt;$SERVER adresinde sunucu bulunamıyor. Lütfen tekrar deneyin&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
-&lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
-&lt;li&gt;If you are unable to load any pages, check the network connection.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;ww.example.com&lt;/b&gt; yerine &lt;b&gt;www.example.com&lt;/b&gt;tıklamak gibi yazım hataları için adresi kontrol edin &lt;/li&gt;
+&lt;li&gt;Herhangi bir sayfa yükleyemiyorsanız ağ bağlantısını kontrol edin.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>
@@ -864,83 +824,83 @@ Address: %2</translation>
     <name>ButtonOkCancel</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
 </context>
 <context>
     <name>Calibration</name>
     <message>
         <source>Click the button</source>
-        <translation>Click the button</translation>
+        <translation>Butona tıklayın</translation>
     </message>
     <message>
         <source>Click the crosshair</source>
-        <translation>Click the crosshair</translation>
+        <translation>Artıya tıkla</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Change Password</translation>
+        <translation>Değiştirmek şifre</translation>
     </message>
     <message>
         <source>Insert new password:</source>
-        <translation>Insert new password:</translation>
+        <translation>Yeni şifreyi girin:</translation>
     </message>
     <message>
         <source>Insert old password:</source>
-        <translation>Insert old password:</translation>
+        <translation>Eski şifreyi girin:</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>Passwords don&apos;t match</source>
-        <translation>Passwords don&apos;t match</translation>
+        <translation>Şifreler uyuşmuyor</translation>
     </message>
     <message>
         <source>Repeat new password:</source>
-        <translation>Repeat new password:</translation>
+        <translation>Yeni şifreyi tekrar edin:</translation>
     </message>
     <message>
         <source>Wrong password</source>
-        <translation>Wrong password</translation>
+        <translation>Şifre yanlış</translation>
     </message>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
     <message>
         <source>Music folder</source>
-        <translation>Music folder</translation>
+        <translation>Müzik klasörü</translation>
     </message>
 </context>
 <context>
     <name>ColumnMessages</name>
     <message>
         <source> message</source>
-        <translation> message</translation>
+        <translation>mesaj</translation>
     </message>
     <message>
         <source> messages</source>
-        <translation> messages</translation>
+        <translation>mesajlar</translation>
     </message>
     <message>
         <source>remove all</source>
-        <translation>Remove All</translation>
+        <translation>Hepsini kaldır</translation>
     </message>
 </context>
 <context>
@@ -951,189 +911,189 @@ Address: %2</translation>
     </message>
     <message>
         <source>Save scenario recording?</source>
-        <translation>Save scenario recording?</translation>
+        <translation>Senaryo kaydı kaydedilsin mi?</translation>
     </message>
 </context>
 <context>
     <name>ControlAlarmClock</name>
     <message>
         <source>beep</source>
-        <translation>Beep</translation>
+        <translation>Bip</translation>
     </message>
     <message>
         <source>DELETE</source>
-        <translation>DELETE</translation>
+        <translation>SIL</translation>
     </message>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>MTWTFSS</source>
-        <translation>MTWTFSS</translation>
+        <translation>PSÇPCCP</translation>
     </message>
     <message>
         <source>repetition</source>
-        <translation>Repetition</translation>
+        <translation>Tekrar</translation>
     </message>
     <message>
         <source>ringtone</source>
-        <translation>Ringtone</translation>
+        <translation>Zil tonu</translation>
     </message>
     <message>
         <source>sound diffusion</source>
-        <translation>Sound diffusion</translation>
+        <translation>Ses difüzyonu</translation>
     </message>
     <message>
         <source>triggers at</source>
-        <translation>Triggers at</translation>
+        <translation>Harekete geçme</translation>
     </message>
 </context>
 <context>
     <name>ControlBalance</name>
     <message>
         <source>balance</source>
-        <translation>Balance</translation>
+        <translation>Balans</translation>
     </message>
 </context>
 <context>
     <name>ControlCall</name>
     <message>
         <source>push to talk</source>
-        <translation>Push to talk</translation>
+        <translation>Bas konuş</translation>
     </message>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>ControlFMRadio</name>
     <message>
         <source>radio FM</source>
-        <translation>Radio FM</translation>
+        <translation>Radyo FM</translation>
     </message>
 </context>
 <context>
     <name>ControlIPRadio</name>
     <message>
         <source>IP radio</source>
-        <translation>IP radio</translation>
+        <translation>Radyo IP</translation>
     </message>
 </context>
 <context>
     <name>ControlOnOff</name>
     <message>
         <source>OFF</source>
-        <translation>OFF</translation>
+        <translation>OFF (KAPALI)</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>ON</translation>
+        <translation>ON (AÇIK)</translation>
     </message>
 </context>
 <context>
     <name>ControlPopup</name>
     <message>
         <source>confirm</source>
-        <translation>Confirm</translation>
+        <translation>Onayla</translation>
     </message>
     <message>
         <source>dismiss</source>
-        <translation>Dismiss</translation>
+        <translation>Son ver</translation>
     </message>
 </context>
 <context>
     <name>ControlPullDown</name>
     <message>
         <source>Video settings</source>
-        <translation>Video settings</translation>
+        <translation>Video ayarları</translation>
     </message>
 </context>
 <context>
     <name>ControlPullDownVideo</name>
     <message>
         <source>Brightness</source>
-        <translation>Brightness</translation>
+        <translation>Parlaklık</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Color</translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation>Contrast</translation>
+        <translation>Kontrast</translation>
     </message>
 </context>
 <context>
     <name>ControlSetDateTime</name>
     <message>
         <source>until date</source>
-        <translation>Until date</translation>
+        <translation>Bitiş tarihi</translation>
     </message>
     <message>
         <source>until time</source>
-        <translation>Until time</translation>
+        <translation>Bitiş saati</translation>
     </message>
 </context>
 <context>
     <name>ControlSlider</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>ControlSliderMute</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
         <source>Controlled</source>
-        <translation>Controlled</translation>
+        <translation>Kontrollü</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>Cihaz</translation>
     </message>
     <message>
         <source>Not Controlled</source>
-        <translation>Not Controlled</translation>
+        <translation>Denetimsiz</translation>
     </message>
     <message>
         <source>Not Enabled</source>
-        <translation>Not enabled</translation>
+        <translation>İzin verilmedi</translation>
     </message>
 </context>
 <context>
     <name>ControlTextImageCallManager</name>
     <message>
         <source>Active call</source>
-        <translation>Active call</translation>
+        <translation>Arama etkinleştirin</translation>
     </message>
     <message>
         <source>Call in progress</source>
-        <translation>Call in progress</translation>
+        <translation>Arama sürüyor</translation>
     </message>
     <message>
         <source>Incoming call from</source>
-        <translation>Incoming call from</translation>
+        <translation>Gelen arama</translation>
     </message>
     <message>
         <source>Mute on</source>
-        <translation>Mute on</translation>
+        <translation>Sessiz on</translation>
     </message>
     <message>
         <source>No answer</source>
-        <translation>No answer</translation>
+        <translation>Cevap yok</translation>
     </message>
     <message>
         <source>Teleloop</source>
@@ -1144,51 +1104,51 @@ Address: %2</translation>
     <name>ControlTiming</name>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>timer</source>
-        <translation>Timer</translation>
+        <translation>Zamanlayıcı</translation>
     </message>
 </context>
 <context>
     <name>DateSelect</name>
     <message>
         <source>until date</source>
-        <translation>Until date</translation>
+        <translation>Bitiş tarihi</translation>
     </message>
     <message>
         <source>until time</source>
-        <translation>Until time</translation>
+        <translation>Bitiş saati</translation>
     </message>
 </context>
 <context>
     <name>Devices</name>
     <message>
         <source>Devices</source>
-        <translation>Devices</translation>
+        <translation>Aygıtlar</translation>
     </message>
 </context>
 <context>
     <name>Dimmer</name>
     <message>
         <source>light intensity</source>
-        <translation>Light intensity</translation>
+        <translation>Işık şiddeti</translation>
     </message>
 </context>
 <context>
     <name>EditNote</name>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>İPTAL</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation>Note</translation>
+        <translation>Not</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1199,31 +1159,31 @@ Address: %2</translation>
     <name>EnergyData</name>
     <message>
         <source>Apr</source>
-        <translation>Apr</translation>
+        <translation>Nis</translation>
     </message>
     <message>
         <source>Aug</source>
-        <translation>Aug</translation>
+        <translation>Ağu</translation>
     </message>
     <message>
         <source>Dec</source>
-        <translation>Dec</translation>
+        <translation>Ara</translation>
     </message>
     <message>
         <source>Feb</source>
-        <translation>Feb</translation>
+        <translation>Şub</translation>
     </message>
     <message>
         <source>Jan</source>
-        <translation>Jan</translation>
+        <translation>Oca</translation>
     </message>
     <message>
         <source>Jul</source>
-        <translation>Jul</translation>
+        <translation>Tem</translation>
     </message>
     <message>
         <source>Jun</source>
-        <translation>Jun</translation>
+        <translation>Haz</translation>
     </message>
     <message>
         <source>Mar</source>
@@ -1231,99 +1191,99 @@ Address: %2</translation>
     </message>
     <message>
         <source>May</source>
-        <translation>May</translation>
+        <translation>Mayıs</translation>
     </message>
     <message>
         <source>Nov</source>
-        <translation>Nov</translation>
+        <translation>Kas</translation>
     </message>
     <message>
         <source>Oct</source>
-        <translation>Oct</translation>
+        <translation>Eki</translation>
     </message>
     <message>
         <source>Sep</source>
-        <translation>Sep</translation>
+        <translation>Eyl</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDelegate</name>
     <message>
         <source>cumulative consumption</source>
-        <translation>Cumulative consumption</translation>
+        <translation>Kümülatif tüketim</translation>
     </message>
     <message>
         <source>instant consumption</source>
-        <translation>Instant consumption</translation>
+        <translation>Anlık tüketim</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDetail</name>
     <message>
         <source>energy consumption</source>
-        <translation>Energy Consumption</translation>
+        <translation>Enerji Tüketimi</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataGraph</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>Gün</translation>
     </message>
     <message>
         <source>day cumulative consumption</source>
-        <translation>Day cumulative consumption</translation>
+        <translation>Gün kümülatif tüketim</translation>
     </message>
     <message>
         <source>energy consumption</source>
-        <translation>Energy Consumption</translation>
+        <translation>Enerji Tüketimi</translation>
     </message>
     <message>
         <source>instant consumption</source>
-        <translation>Instant consumption</translation>
+        <translation>Anlık tüketim</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Month</translation>
+        <translation>Ay</translation>
     </message>
     <message>
         <source>month cumulative consumption</source>
-        <translation>Month cumulative consumption</translation>
+        <translation>Ay kümülatif tüketim</translation>
     </message>
     <message>
         <source>Overall</source>
-        <translation>Overall</translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <source>year</source>
-        <translation>Year</translation>
+        <translation>Yıl</translation>
     </message>
     <message>
         <source>year cumulative consumption</source>
-        <translation>Year cumulative consumption</translation>
+        <translation>Yıl kümülatif tüketim</translation>
     </message>
 </context>
 <context>
     <name>EnergyDateSelector</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>Gün</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>dd/MM/yyyy</translation>
+        <translation>gg/AA/yyyy</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>MM/yyyy</translation>
+        <translation>AA/yyyy</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Month</translation>
+        <translation>Ay</translation>
     </message>
     <message>
         <source>year</source>
-        <translation>Year</translation>
+        <translation>Yıl</translation>
     </message>
     <message>
         <source>yyyy</source>
@@ -1334,33 +1294,33 @@ Address: %2</translation>
     <name>EnergyDayGraph</name>
     <message>
         <source>hour</source>
-        <translation>Hour</translation>
+        <translation>Saat</translation>
     </message>
 </context>
 <context>
     <name>EnergyDayTable</name>
     <message>
         <source>hour</source>
-        <translation>Hour</translation>
+        <translation>Saat</translation>
     </message>
 </context>
 <context>
     <name>EnergyGlobalView</name>
     <message>
         <source>energy consumption</source>
-        <translation>Energy Consumption</translation>
+        <translation>Enerji Tüketimi</translation>
     </message>
     <message>
         <source>Global View</source>
-        <translation>Global view</translation>
+        <translation>Genel bakış</translation>
     </message>
     <message>
         <source>units</source>
-        <translation>Units</translation>
+        <translation>Birim</translation>
     </message>
     <message>
         <source>value</source>
-        <translation>Value</translation>
+        <translation>Değer</translation>
     </message>
     <message>
         <source>€</source>
@@ -1371,88 +1331,84 @@ Address: %2</translation>
     <name>EnergyManagement</name>
     <message>
         <source>Energy management</source>
-        <translation>Energy Management</translation>
+        <translation>Enerji Yönetimi</translation>
     </message>
 </context>
 <context>
     <name>EnergyManagementNames</name>
     <message>
-        <source>Blocked</source>
-        <translation>Blocked</translation>
-    </message>
-    <message>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>Kapandı</translation>
     </message>
     <message>
         <source>Consumption Management</source>
-        <translation>Consumption Management</translation>
+        <translation>Tüketim Yönetimi</translation>
     </message>
     <message>
         <source>Electricity</source>
-        <translation>Electricity</translation>
+        <translation>Elektrik</translation>
     </message>
     <message>
         <source>Gas</source>
-        <translation>Gas</translation>
+        <translation>Gaz</translation>
     </message>
     <message>
         <source>GroundFail</source>
-        <translation>GroundFail</translation>
+        <translation>ToprakArızası</translation>
     </message>
     <message>
         <source>Heat</source>
-        <translation>Heat</translation>
+        <translation>Isıtma</translation>
     </message>
     <message>
         <source>HotWater</source>
-        <translation>HotWater</translation>
+        <translation>SıcakSu</translation>
     </message>
     <message>
         <source>Opened</source>
-        <translation>Opened</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>Overtension</source>
-        <translation>Overtension</translation>
+        <translation>AşırıGerilim</translation>
     </message>
     <message>
         <source>ShortCircuit</source>
-        <translation>ShortCircuit</translation>
+        <translation>KısaDevre</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>Bilinmeyen</translation>
     </message>
     <message>
         <source>Water</source>
-        <translation>Water</translation>
+        <translation>Su</translation>
     </message>
 </context>
 <context>
     <name>EnergyManagementSystem</name>
     <message>
         <source>consumption/production</source>
-        <translation>Consumption/production</translation>
+        <translation>Tüketim/üretim</translation>
     </message>
     <message>
         <source>load management</source>
-        <translation>Load management</translation>
+        <translation>Yük yönetimi</translation>
     </message>
     <message>
         <source>systems supervision</source>
-        <translation>Systems supervision</translation>
+        <translation>Sistemlerin gözetimi</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthGraph</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>Gün</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>dd/MM/yyyy</translation>
+        <translation>gg/AA/yyyy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1460,28 +1416,28 @@ Address: %2</translation>
     </message>
     <message>
         <source>select a date</source>
-        <translation>Select a date</translation>
+        <translation>Bir tarih seçin</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthTable</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>Gün</translation>
     </message>
 </context>
 <context>
     <name>EnergyOverview</name>
     <message>
         <source>Global View</source>
-        <translation>Global view</translation>
+        <translation>Genel bakış</translation>
     </message>
 </context>
 <context>
     <name>EnergyYearGraph</name>
     <message>
         <source>no data available</source>
-        <translation>No data available</translation>
+        <translation>Mevcut veri bulunmamaktadır</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1492,57 +1448,49 @@ Address: %2</translation>
     <name>EnergyYearTable</name>
     <message>
         <source>delta</source>
-        <translation>Delta</translation>
+        <translation>delta</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Month</translation>
+        <translation>Ay</translation>
     </message>
     <message>
         <source>objective</source>
-        <translation>Objective</translation>
+        <translation>nesnel</translation>
     </message>
 </context>
 <context>
     <name>FavoriteEditPopup</name>
     <message>
         <source>Address:</source>
-        <translation>Address:</translation>
+        <translation>Adres:</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
-        <translation>Edit quicklink properties</translation>
+        <translation>Hızlı bağlantı özellikleri düzenleyin</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Title:</translation>
+        <translation>Başlık:</translation>
     </message>
 </context>
 <context>
     <name>FavoritesBar</name>
     <message>
         <source>Address:</source>
-        <translation>Address:</translation>
+        <translation>Adres:</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
-        <translation>Edit quicklink properties</translation>
-    </message>
-    <message>
-        <source>Name cannot be empty</source>
-        <translation>Name cannot be empty</translation>
-    </message>
-    <message>
-        <source>No type selection</source>
-        <translation>No type selection</translation>
+        <translation>Hızlı bağlantı özellikleri düzenleyin</translation>
     </message>
     <message>
         <source>rss</source>
@@ -1550,221 +1498,205 @@ Address: %2</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Title:</translation>
+        <translation>Başlık:</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation>Weather</translation>
+        <translation>Hava durumu</translation>
     </message>
     <message>
         <source>web camera</source>
-        <translation>Web camera</translation>
+        <translation>Web kamerası</translation>
     </message>
     <message>
         <source>web page</source>
-        <translation>Web page</translation>
+        <translation>Web sayfası</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web radio</translation>
+        <translation>Web radyo</translation>
     </message>
 </context>
 <context>
     <name>FeedbackPopup</name>
     <message>
         <source>programming impossible</source>
-        <translation>Programming impossible</translation>
+        <translation>Programlama imkansız</translation>
     </message>
 </context>
 <context>
     <name>ForceDurationPopup</name>
     <message>
         <source>Force load</source>
-        <translation>Force load</translation>
+        <translation>Yük zorla</translation>
     </message>
     <message>
         <source>force load</source>
-        <translation>Force load</translation>
+        <translation>Yük zorla</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Time</translation>
+        <translation>Süre</translation>
     </message>
 </context>
 <context>
     <name>GeneralAmbient</name>
     <message>
         <source>source</source>
-        <translation>Source</translation>
+        <translation>Kaynak</translation>
     </message>
 </context>
 <context>
     <name>GlobalViewTable</name>
     <message>
         <source>consumption</source>
-        <translation>Consumption</translation>
+        <translation>Tüketim</translation>
     </message>
     <message>
         <source>delta</source>
-        <translation>Delta</translation>
+        <translation>delta</translation>
     </message>
     <message>
         <source>line</source>
-        <translation>Line</translation>
+        <translation>Hat</translation>
     </message>
     <message>
         <source>objective</source>
-        <translation>Objective</translation>
+        <translation>nesnel</translation>
     </message>
 </context>
 <context>
     <name>HomePage</name>
     <message>
         <source>functions</source>
-        <translation>Functions</translation>
+        <translation>Fonksiyonlar</translation>
     </message>
     <message>
         <source>multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <source>rooms</source>
-        <translation>Rooms</translation>
+        <translation>Odalar</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation>Settings</translation>
+        <translation>Ayarlar</translation>
     </message>
 </context>
 <context>
     <name>InstantConsumption</name>
     <message>
         <source>Instant consumption</source>
-        <translation>Instant consumption</translation>
+        <translation>Anlık tüketim</translation>
     </message>
 </context>
 <context>
     <name>Lighting</name>
     <message>
         <source>lighting</source>
-        <translation>Lighting</translation>
+        <translation>Aydınlatma</translation>
     </message>
 </context>
 <context>
     <name>LightingNames</name>
     <message>
         <source>0.5 Seconds</source>
-        <translation>0.5 Seconds</translation>
+        <translation>0,5 Saniye</translation>
     </message>
     <message>
         <source>1 Minute</source>
-        <translation>1 Minute</translation>
+        <translation>1 Dakika</translation>
     </message>
     <message>
         <source>15 Minutes</source>
-        <translation>15 Minutes</translation>
+        <translation>15 Dakika</translation>
     </message>
     <message>
         <source>2 Minutes</source>
-        <translation>2 Minutes</translation>
+        <translation>2 Dakika</translation>
     </message>
     <message>
         <source>3 Minutes</source>
-        <translation>3 Minutes</translation>
+        <translation>3 Dakika</translation>
     </message>
     <message>
         <source>30 Seconds</source>
-        <translation>30 Seconds</translation>
+        <translation>30 Saniye</translation>
     </message>
     <message>
         <source>4 Minutes</source>
-        <translation>4 Minutes</translation>
+        <translation>4 Dakika</translation>
     </message>
     <message>
         <source>5 Minutes</source>
-        <translation>5 Minutes</translation>
+        <translation>5 Dakika</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre Dışı Bırakıldı</translation>
     </message>
 </context>
 <context>
     <name>LoadDiagnostic</name>
     <message>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>Kapandı</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>Open - Block</source>
-        <translation>Open - Block</translation>
+        <translation>Açık - Blok</translation>
     </message>
     <message>
         <source>Open - Earth Fault</source>
-        <translation>Open - Earth Fault</translation>
+        <translation>Açık - Toprak Arızası</translation>
     </message>
     <message>
         <source>Open - Over Current</source>
-        <translation>Open - Over Current</translation>
+        <translation>Açık - Aşırı Akım</translation>
     </message>
     <message>
         <source>Open - Short Circuit</source>
-        <translation>Open - Short Circuit</translation>
+        <translation>Açık - Kısa Devre</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>Bilinmeyen</translation>
     </message>
 </context>
 <context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
-        <translation>Closed</translation>
-    </message>
-    <message>
-        <source>Forced</source>
-        <translation>Forced</translation>
-    </message>
-    <message>
-        <source>No amplifier set</source>
-        <translation>No amplifier set</translation>
-    </message>
-    <message>
-        <source>No name set</source>
-        <translation>No name set</translation>
-    </message>
-    <message>
-        <source>No source set</source>
-        <translation>No source set</translation>
+        <translation>Kapandı</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>Open - Block</source>
-        <translation>Open - Block</translation>
+        <translation>Açık - Blok</translation>
     </message>
     <message>
         <source>Open - Earth Fault</source>
-        <translation>Open - Earth Fault</translation>
+        <translation>Açık - Toprak Arızası</translation>
     </message>
     <message>
         <source>Open - Over Current</source>
-        <translation>Open - Over Current</translation>
+        <translation>Açık - Aşırı Akım</translation>
     </message>
     <message>
         <source>Open - Short Circuit</source>
-        <translation>Open - Short Circuit</translation>
+        <translation>Açık - Kısa Devre</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>Bilinmeyen</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1775,33 +1707,33 @@ Address: %2</translation>
     <name>Messages</name>
     <message>
         <source>messages</source>
-        <translation>Messages</translation>
+        <translation>İletiler</translation>
     </message>
 </context>
 <context>
     <name>MessagesItems</name>
     <message>
         <source>inbox</source>
-        <translation>Inbox</translation>
+        <translation>Gelen kutusu</translation>
     </message>
     <message>
         <source>Received messages</source>
-        <translation>Received messages</translation>
+        <translation>Alınan mesajlar</translation>
     </message>
 </context>
 <context>
     <name>Multimedia</name>
     <message>
         <source>devices</source>
-        <translation>Devices</translation>
+        <translation>Aygıtlar</translation>
     </message>
     <message>
         <source>ip radio</source>
-        <translation>IP radio</translation>
+        <translation>Radyo IP</translation>
     </message>
     <message>
         <source>multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <source>rss</source>
@@ -1809,26 +1741,26 @@ Address: %2</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation>Weather</translation>
+        <translation>Hava durumu</translation>
     </message>
     <message>
         <source>web browser</source>
-        <translation>Web browser</translation>
+        <translation>Web tarayıcısı</translation>
     </message>
     <message>
         <source>web cam</source>
-        <translation>Web Cam</translation>
+        <translation>Web Kamerası</translation>
     </message>
     <message>
         <source>web link</source>
-        <translation>Web link</translation>
+        <translation>Web bağlantısı</translation>
     </message>
 </context>
 <context>
     <name>NewImageCard</name>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>İPTAL</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1836,14 +1768,14 @@ Address: %2</translation>
     </message>
     <message>
         <source>Save configuration changes?</source>
-        <translation>Save configuration changes?</translation>
+        <translation>Konfigürasyon değişiklikleri kaydedilsin mi?</translation>
     </message>
 </context>
 <context>
     <name>Partial</name>
     <message>
         <source>Partial </source>
-        <translation>Partial</translation>
+        <translation>Kısmi</translation>
     </message>
     <message>
         <source>reset</source>
@@ -1851,145 +1783,145 @@ Address: %2</translation>
     </message>
     <message>
         <source>since </source>
-        <translation>Since </translation>
+        <translation>Başlangıç</translation>
     </message>
 </context>
 <context>
     <name>PasswordInput</name>
     <message>
         <source>Confirm</source>
-        <translation>Confirm</translation>
+        <translation>Onayla</translation>
     </message>
     <message>
         <source>Insert security code</source>
-        <translation>Insert security code</translation>
+        <translation>Güvenlik kodu girin</translation>
     </message>
 </context>
 <context>
     <name>PhotoPlayer</name>
     <message>
         <source>%1 seconds</source>
-        <translation>%1 seconds</translation>
+        <translation>%1 saniye</translation>
     </message>
 </context>
 <context>
     <name>popup</name>
     <message>
         <source>activated</source>
-        <translation>Activated</translation>
+        <translation>Etkinleştirildi</translation>
     </message>
     <message>
         <source>ALARM CLOCK</source>
-        <translation>ALARM CLOCK</translation>
+        <translation>ALARM SAATİ</translation>
     </message>
     <message>
         <source>ANTINTRUSION</source>
-        <translation>ANTINTRUSION</translation>
+        <translation>İZİNSİZ GİRME ÖNLEME</translation>
     </message>
     <message>
         <source>available</source>
-        <translation>Available</translation>
+        <translation>Kullanılabilir</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Command sent</source>
-        <translation>Command sent</translation>
+        <translation>Komut gönderildi</translation>
     </message>
     <message>
         <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGY MANAGEMENT</translation>
+        <translation>ENERJİ YÖNETİMİ</translation>
     </message>
     <message>
         <source>Energy Monthly Report</source>
-        <translation>Energy Monthly Report</translation>
+        <translation>Enerji Aylık Raporu</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>Ignore</translation>
+        <translation>Yoksay</translation>
     </message>
     <message>
         <source>MESSAGES</source>
-        <translation>MESSAGES</translation>
+        <translation>MESAJLAR</translation>
     </message>
     <message>
         <source>Monthly goal reached</source>
-        <translation>Monthly goal reached</translation>
+        <translation>Aylık sayıya ulaşıldı</translation>
     </message>
     <message>
         <source>More info</source>
-        <translation>More info</translation>
+        <translation>Daha fazla bilgi</translation>
     </message>
     <message>
         <source>new message (s)</source>
-        <translation>new message (s)</translation>
+        <translation>Yeni mesaj(lar)</translation>
     </message>
     <message>
         <source>Postpone</source>
-        <translation>Postpone</translation>
+        <translation>Ertele</translation>
     </message>
     <message>
         <source>Read</source>
-        <translation>Read</translation>
+        <translation>Oku</translation>
     </message>
     <message>
         <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
+        <translation>SENARYO</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Show</translation>
+        <translation>Göster</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Durdur</translation>
     </message>
     <message>
         <source>SUPERVISION</source>
-        <translation>Supervision</translation>
+        <translation>Denetleme</translation>
     </message>
     <message>
         <source>Threshold %n exceeded</source>
-        <translation>Threshold %n exceeded</translation>
+        <translation>Eşik %n aşıldı</translation>
     </message>
 </context>
 <context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
-        <translation>Zone</translation>
+        <translation>Alan</translation>
     </message>
 </context>
 <context>
     <name>PowerAmplifier</name>
     <message>
         <source>settings</source>
-        <translation>Settings</translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>PowerAmplifierPreset</name>
     <message>
         <source>Classical</source>
-        <translation>Classical</translation>
+        <translation>Klasik</translation>
     </message>
     <message>
         <source>Dance</source>
-        <translation>Dance</translation>
+        <translation>Dans</translation>
     </message>
     <message>
         <source>Full Bass</source>
-        <translation>Full Bass</translation>
+        <translation>Tam Bas</translation>
     </message>
     <message>
         <source>Full Treble</source>
-        <translation>Full Treble</translation>
+        <translation>Tam Tiz</translation>
     </message>
     <message>
         <source>Normal</source>
@@ -1997,7 +1929,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>Party</source>
-        <translation>Party</translation>
+        <translation>Parti</translation>
     </message>
     <message>
         <source>Pop</source>
@@ -2013,144 +1945,140 @@ Address: %2</translation>
     </message>
     <message>
         <source>Techno</source>
-        <translation>Techno</translation>
+        <translation>Tekno</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Add note</source>
-        <translation>Add note</translation>
-    </message>
-    <message>
-        <source>Max notes limit reached</source>
-        <translation>Max notes limit reached</translation>
+        <translation>Not ekle</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>IP radio</source>
-        <translation>IP radio</translation>
+        <translation>Radyo IP</translation>
     </message>
 </context>
 <context>
     <name>RoomModify</name>
     <message>
         <source>Background image</source>
-        <translation>Background image</translation>
+        <translation>Arkadaki görüntü</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Card image</translation>
+        <translation>Kart görüntü</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Change background image</translation>
+        <translation>Arkadaki görüntü değiştir</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Change card image</translation>
+        <translation>Kart görüntüsü değiştir</translation>
     </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
         <source>rooms</source>
-        <translation>Rooms</translation>
+        <translation>Odalar</translation>
     </message>
 </context>
 <context>
     <name>RssPage</name>
     <message>
         <source>No news to display</source>
-        <translation>No news to display</translation>
+        <translation>Görüntülenecek haber yok</translation>
     </message>
     <message>
         <source>Rss load failed</source>
-        <translation>Rss load failed</translation>
+        <translation>Rss yükleme başarısız oldu</translation>
     </message>
 </context>
 <context>
     <name>ScenarioLink</name>
     <message>
         <source>Command sent</source>
-        <translation>Command sent</translation>
+        <translation>Komut gönderildi</translation>
     </message>
 </context>
 <context>
     <name>ScenarioModuleSettings</name>
     <message>
         <source>Are you sure to reset the scenario?</source>
-        <translation>Are you sure to reset the scenario?</translation>
+        <translation>Senaryoyu resetlemekten emin misiniz?</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
+        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız OK&apos;a, işlemi iptal etmek istiyorsanız İPTAL ET&apos;e basın.</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>programming impossible</source>
-        <translation>Programming impossible</translation>
+        <translation>Programlama imkansız</translation>
     </message>
     <message>
         <source>reset program</source>
-        <translation>Reset program</translation>
+        <translation>Program reset</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
-        <translation>Scenario configuration</translation>
+        <translation>Senaryoların konfigürasyonu</translation>
     </message>
     <message>
         <source>start programming</source>
-        <translation>Start programming</translation>
+        <translation>Programlama start</translation>
     </message>
     <message>
         <source>stop programming</source>
-        <translation>Stop programming</translation>
+        <translation>Programlama stop</translation>
     </message>
 </context>
 <context>
     <name>Scenarios</name>
     <message>
         <source>Scenarios</source>
-        <translation>Scenarios</translation>
+        <translation>Senaryolar</translation>
     </message>
 </context>
 <context>
     <name>ScheduledScenario</name>
     <message>
         <source>start</source>
-        <translation>Start</translation>
+        <translation>Başlat</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation>Stop</translation>
+        <translation>Durdur</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>Ayarlar</translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvancedScenario</name>
     <message>
         <source>Advanced scenario</source>
-        <translation>Advanced Scenario</translation>
+        <translation>Gelişmiş Senaryo</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>İPTAL</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2158,367 +2086,335 @@ Address: %2</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>Değişiklikler kaydedilsin mi?</translation>
     </message>
 </context>
 <context>
     <name>SettingsBrowser</name>
     <message>
         <source>Change Home Page</source>
-        <translation>Change Home Page</translation>
+        <translation>Anasayfa Değiştir</translation>
     </message>
     <message>
         <source>Clear History</source>
-        <translation>Clear History</translation>
+        <translation>Geçmişi Temizle</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Enable history</source>
-        <translation>Enable history</translation>
+        <translation>Geçmişi etkinleştir</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
-    </message>
-    <message>
-        <source>Insert new home page</source>
-        <translation>Insert new home page</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
-        <translation>Pressing ok will delete all browser history.
-Continue?</translation>
+        <translation>Ok&apos;a basıldığında tüm tarayıcı geçmişi silinecek.
+Devam?</translation>
     </message>
 </context>
 <context>
     <name>SettingsClocks</name>
     <message>
         <source>Add Clock</source>
-        <translation>Add Clock</translation>
+        <translation>Saat Ekle</translation>
     </message>
 </context>
 <context>
     <name>SettingsDateTime</name>
     <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
         <source>Date</source>
-        <translation>Date</translation>
+        <translation>Tarih</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Time</translation>
+        <translation>Saat</translation>
     </message>
 </context>
 <context>
     <name>SettingsDisplay</name>
     <message>
         <source>Brightness</source>
-        <translation>Brightness</translation>
+        <translation>Parlaklık</translation>
     </message>
     <message>
         <source>Calibration</source>
-        <translation>Calibration</translation>
+        <translation>Ayar</translation>
     </message>
     <message>
         <source>Clean</source>
-        <translation>Clean</translation>
+        <translation>Temizle</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergy</name>
     <message>
         <source>consumption goals</source>
-        <translation>Consumption goals</translation>
+        <translation>Tüketim sayıları</translation>
     </message>
     <message>
         <source>tariffs</source>
-        <translation>Tariffs</translation>
+        <translation>Tarifeler</translation>
     </message>
     <message>
         <source>thresholds</source>
-        <translation>Thresholds</translation>
+        <translation>Eşik</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyGoalPanel</name>
     <message>
         <source>consumption goal</source>
-        <translation>Consumption goal</translation>
+        <translation>Tüketim hedefi</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyGoalsLine</name>
     <message>
         <source>April</source>
-        <translation>April</translation>
+        <translation>Nisan</translation>
     </message>
     <message>
         <source>August</source>
-        <translation>August</translation>
+        <translation>Ağustos</translation>
     </message>
     <message>
         <source>December</source>
-        <translation>December</translation>
+        <translation>Aralık</translation>
     </message>
     <message>
         <source>February</source>
-        <translation>February</translation>
+        <translation>Şubat</translation>
     </message>
     <message>
         <source>goals enabled</source>
-        <translation>Goals enabled</translation>
+        <translation>Sayılar etkin</translation>
     </message>
     <message>
         <source>January</source>
-        <translation>January</translation>
+        <translation>Ocak</translation>
     </message>
     <message>
         <source>July</source>
-        <translation>July</translation>
+        <translation>Temmuz</translation>
     </message>
     <message>
         <source>June</source>
-        <translation>June</translation>
+        <translation>Haziran</translation>
     </message>
     <message>
         <source>March</source>
-        <translation>March</translation>
+        <translation>Mart</translation>
     </message>
     <message>
         <source>May</source>
-        <translation>May</translation>
+        <translation>Mayıs</translation>
     </message>
     <message>
         <source>November</source>
-        <translation>November</translation>
+        <translation>Kasım</translation>
     </message>
     <message>
         <source>October</source>
-        <translation>October</translation>
+        <translation>Ekim</translation>
     </message>
     <message>
         <source>September</source>
-        <translation>September</translation>
+        <translation>Eylül</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>threshold 1</source>
-        <translation>Threshold 1</translation>
+        <translation>Eşik 1</translation>
     </message>
     <message>
         <source>threshold 1 %1</source>
-        <translation>Threshold 1 %1</translation>
+        <translation>Eşik 1 %1</translation>
     </message>
     <message>
         <source>threshold 2</source>
-        <translation>Threshold 2</translation>
+        <translation>Eşik 2</translation>
     </message>
     <message>
         <source>threshold 2 %1</source>
-        <translation>Threshold 2 %1</translation>
+        <translation>Eşik 2 %1</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergySetThresholdsPanel</name>
     <message>
         <source>threshold 1</source>
-        <translation>Threshold 1</translation>
+        <translation>Eşik 1</translation>
     </message>
     <message>
         <source>threshold 2</source>
-        <translation>Threshold 2</translation>
+        <translation>Eşik 2</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyThresholds</name>
     <message>
         <source>alerts %1</source>
-        <translation>Alerts %1</translation>
+        <translation>uyarı %1</translation>
     </message>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
 </context>
 <context>
     <name>SettingsGenerals</name>
     <message>
         <source>Beep</source>
-        <translation>Beep</translation>
+        <translation>Bip</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Connected</translation>
+        <translation>Bağlı</translation>
     </message>
     <message>
         <source>Date &amp; Time</source>
-        <translation>Date &amp; Time</translation>
+        <translation>Tarih ve Saat</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Disconnected</source>
-        <translation>Disconnected</translation>
+        <translation>Bağlı değil</translation>
     </message>
     <message>
         <source>Display</source>
-        <translation>Display</translation>
+        <translation>Ekran</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>Bilgi</translation>
     </message>
     <message>
         <source>International</source>
-        <translation>International</translation>
+        <translation>Uluslararası</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>Network</translation>
+        <translation>Ağ</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Password</translation>
+        <translation>şifre</translation>
     </message>
 </context>
 <context>
     <name>SettingsHistory</name>
     <message>
         <source>disable</source>
-        <translation>Disable</translation>
+        <translation>Devre dışı bırak</translation>
     </message>
     <message>
         <source>enable</source>
-        <translation>Enable</translation>
+        <translation>İzin ver</translation>
     </message>
 </context>
 <context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
-        <translation>Background image</translation>
+        <translation>Arkadaki görüntü</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Change background image</translation>
-    </message>
-    <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
-        <source>Do you want to restore background to default value?</source>
-        <translation>Do you want to restore background to default value?</translation>
+        <translation>Arkadaki görüntü değiştir</translation>
     </message>
     <message>
         <source>Quicklinks</source>
-        <translation>Quicklinks</translation>
-    </message>
-    <message>
-        <source>Restore background image</source>
-        <translation>Restore background image</translation>
+        <translation>Hızlı bağlantılar</translation>
     </message>
     <message>
         <source>skin home</source>
-        <translation>Skin home</translation>
+        <translation>Home dış görünümü</translation>
     </message>
 </context>
 <context>
     <name>SettingsHomeDelete</name>
     <message>
         <source>Are you sure to delete the selected quicklink?</source>
-        <translation>Are you sure to delete the selected quicklink?</translation>
+        <translation>Seçilen hızlı bağlantıları silmekten emin misiniz?</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
-        <translation>Confirm deletion</translation>
+        <translation>Silmeyi onaylayın</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>Rename</translation>
+        <translation>Yeniden adlandır</translation>
     </message>
 </context>
 <context>
     <name>SettingsHomeQuicklinks</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Add Quicklink</translation>
+        <translation>Hızlı bağlantı ekle</translation>
     </message>
 </context>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
-        <source>Do you want to change actual image with the one selected?</source>
-        <translation>Do you want to change actual image with the one selected?</translation>
-    </message>
-    <message>
         <source>Images</source>
-        <translation>Images</translation>
-    </message>
-    <message>
-        <source>Last used</source>
-        <translation>Last used</translation>
+        <translation>Görüntüler</translation>
     </message>
 </context>
 <context>
     <name>SettingsInternational</name>
     <message>
         <source>keyboard language</source>
-        <translation>Keyboard language</translation>
+        <translation>Klavye dili</translation>
     </message>
     <message>
         <source>text language</source>
-        <translation>Text language</translation>
+        <translation>Metin dili</translation>
     </message>
 </context>
 <context>
     <name>SettingsItems</name>
     <message>
         <source>Alarm Clock</source>
-        <translation>Alarm clock</translation>
+        <translation>Çalar saat</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation>Functions</translation>
+        <translation>Fonksiyonlar</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <source>Home</source>
@@ -2526,45 +2422,45 @@ Continue?</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>Multimedya</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>Profiles</translation>
+        <translation>Profiller</translation>
     </message>
     <message>
         <source>Ringtones</source>
-        <translation>Ringtones</translation>
+        <translation>Zil tonları</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation>Rooms</translation>
+        <translation>Odalar</translation>
     </message>
 </context>
 <context>
     <name>SettingsMultimedia</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Add Quicklink</translation>
+        <translation>Hızlı bağlantı ekle</translation>
     </message>
     <message>
         <source>Browser</source>
-        <translation>Browser</translation>
+        <translation>Tarayıcı</translation>
     </message>
 </context>
 <context>
     <name>SettingsNames</name>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>Temiz</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>Connect</translation>
+        <translation>Bağlan</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Dark</translation>
+        <translation>Koyu</translation>
     </message>
     <message>
         <source>DHCP</source>
@@ -2572,52 +2468,52 @@ Continue?</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Disable</translation>
+        <translation>Devre dışı bırak</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>Disconnect</translation>
+        <translation>Bağlantıyı Kes</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Enable</translation>
+        <translation>İzin ver</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>English</translation>
+        <translation>İngilizce</translation>
     </message>
     <message>
         <source>French</source>
-        <translation>French</translation>
+        <translation>Türkçe</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation>Italian</translation>
+        <translation>İtalyanca</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
 Continue?</source>
-        <translation>Pressing ok will cause a device reboot in a few moments.
-Continue?</translation>
+        <translation>Ok&apos;a basılması, birkaç saniye içinde bir aygıt yeniden başlatılmasına neden olacaktır.
+Devam?</translation>
     </message>
     <message>
         <source>Static IP address</source>
-        <translation>Static IP address</translation>
+        <translation>Statik IP adresi</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>Connected</source>
-        <translation>Connected</translation>
+        <translation>Bağlı</translation>
     </message>
     <message>
         <source>DHCP</source>
@@ -2625,107 +2521,88 @@ Continue?</translation>
     </message>
     <message>
         <source>Disconnected</source>
-        <translation>Disconnected</translation>
+        <translation>Bağlı değil</translation>
     </message>
     <message>
         <source>Gateway</source>
-        <translation>Gateway</translation>
+        <translation>Ağ geçidi</translation>
     </message>
     <message>
         <source>IP address</source>
-        <translation>IP address</translation>
+        <translation>IP adresi</translation>
     </message>
     <message>
         <source>IP configuration</source>
-        <translation>IP configuration</translation>
+        <translation>IP konfigürasyonu</translation>
     </message>
     <message>
         <source>MAC address</source>
-        <translation>MAC address</translation>
+        <translation>MAC adresi</translation>
     </message>
     <message>
         <source>network state</source>
-        <translation>Network state</translation>
+        <translation>Ağ durumu</translation>
     </message>
     <message>
         <source>Primary DNS</source>
-        <translation>Primary DNS</translation>
+        <translation>Birincil DNS</translation>
     </message>
     <message>
         <source>Secondary DNS</source>
-        <translation>Secondary DNS</translation>
+        <translation>İkincil DNS</translation>
     </message>
     <message>
         <source>Static</source>
-        <translation>Static</translation>
+        <translation>Statik</translation>
     </message>
     <message>
         <source>Subnet mask</source>
-        <translation>Subnet mask</translation>
+        <translation>Alt ağ maskesi</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>Bilinmeyen</translation>
     </message>
 </context>
 <context>
     <name>SettingsPassword</name>
     <message>
         <source>Change password</source>
-        <translation>Change Password</translation>
+        <translation>Değiştirmek şifre</translation>
     </message>
     <message>
         <source>Incorrect password</source>
-        <translation>Incorrect password</translation>
+        <translation>Şifre yanlış</translation>
     </message>
 </context>
 <context>
     <name>SettingsProfile</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Add Quicklink</translation>
+        <translation>Hızlı bağlantı ekle</translation>
     </message>
     <message>
         <source>Background image</source>
-        <translation>Background image</translation>
+        <translation>Arkadaki görüntü</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Card image</translation>
+        <translation>Kart görüntü</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Change background image</translation>
+        <translation>Arkadaki görüntü değiştir</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Change card image</translation>
-    </message>
-    <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
-        <source>Do you want to restore background to default value?</source>
-        <translation>Do you want to restore background to default value?</translation>
-    </message>
-    <message>
-        <source>Restore background image</source>
-        <translation>Restore background image</translation>
+        <translation>Kart görüntüsü değiştir</translation>
     </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
-        <translation>Ringtones</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsRingtones</name>
-    <message>
-        <source>Ringtone volume</source>
-        <translation>Ringtone volume</translation>
+        <translation>Zil tonları</translation>
     </message>
 </context>
 <context>
@@ -2734,70 +2611,70 @@ Continue?</translation>
         <source>Pressing ok will cause a device reboot in a few moments.
 Please, do not use the touch till it is restarted.
 Continue?</source>
-        <translation>Pressing ok will cause a device reboot in a few moments.
-Please, do not use the touch till it is restarted.
-Continue?</translation>
+        <translation>Ok&apos;a basılması, birkaç saniye içinde bir aygıt yeniden başlatılmasına neden olacaktır.
+Bu yeniden başlatılana kadar lütfen dokunmatik ekranı kullanmayın.
+Devam?</translation>
     </message>
 </context>
 <context>
     <name>SettingsSystems</name>
     <message>
         <source>Energy</source>
-        <translation>Energy</translation>
+        <translation>Enerji</translation>
     </message>
     <message>
         <source>Scenarios</source>
-        <translation>Scenarios</translation>
+        <translation>Senaryolar</translation>
     </message>
     <message>
         <source>Video Door Entry</source>
-        <translation>Video door entry</translation>
+        <translation>Video kapısı girişi</translation>
     </message>
 </context>
 <context>
     <name>SettingsTeleloop</name>
     <message>
         <source>Associate</source>
-        <translation>Associate</translation>
+        <translation>İlişkilendir</translation>
     </message>
     <message>
         <source>Associated</source>
-        <translation>Associated</translation>
+        <translation>Eşleştirildi</translation>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Not associated</translation>
+        <translation>Ilişkilendirilmemiş</translation>
     </message>
 </context>
 <context>
     <name>SettingsVDE</name>
     <message>
         <source>Associated</source>
-        <translation>Associated</translation>
+        <translation>Eşleştirildi</translation>
     </message>
     <message>
         <source>auto open</source>
-        <translation>Auto open</translation>
+        <translation>Otomatik açık</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre Dışı Bırakıldı</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>Etkin</translation>
     </message>
     <message>
         <source>hands free</source>
-        <translation>Hands Free</translation>
+        <translation>Eller Serbest</translation>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Not associated</translation>
+        <translation>Ilişkilendirilmemiş</translation>
     </message>
     <message>
         <source>Ringtone exclusion</source>
-        <translation>Ringtone exclusion</translation>
+        <translation>Zil sesi dışlama</translation>
     </message>
     <message>
         <source>Teleloop</source>
@@ -2808,301 +2685,277 @@ Continue?</translation>
     <name>SettingsVersion</name>
     <message>
         <source>External unit associated</source>
-        <translation>External unit associated</translation>
+        <translation>Giriş paneli eşleştirildi</translation>
     </message>
     <message>
         <source>Firmware version</source>
-        <translation>Firmware version</translation>
+        <translation>FIRMWARE VERSİYONU</translation>
     </message>
     <message>
         <source>Internal unit address</source>
-        <translation>Internal unit address</translation>
+        <translation>Dahili birim adresi</translation>
     </message>
     <message>
         <source>Kernel version</source>
-        <translation>Kernel version</translation>
+        <translation>Kernel versiyonu</translation>
     </message>
     <message>
         <source>Multimedia source address</source>
-        <translation>Multimedia source address</translation>
+        <translation>Multimedya kaynağı adresi</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>Bilinmeyen</translation>
     </message>
 </context>
 <context>
     <name>SimpleScenario</name>
     <message>
         <source>activate</source>
-        <translation>Activate</translation>
+        <translation>Etkinleştir</translation>
     </message>
     <message>
         <source>Command sent</source>
-        <translation>Command sent</translation>
+        <translation>Komut gönderildi</translation>
     </message>
 </context>
 <context>
     <name>SoundAmbient</name>
     <message>
         <source>source</source>
-        <translation>Source</translation>
+        <translation>Kaynak</translation>
     </message>
 </context>
 <context>
     <name>SoundDiffusion</name>
     <message>
         <source>Sound System</source>
-        <translation>Sound system</translation>
+        <translation>Sesli yayın</translation>
     </message>
 </context>
 <context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
-        <translation>Browse</translation>
+        <translation>Tarayıcı</translation>
     </message>
     <message>
         <source>no album</source>
-        <translation>No album</translation>
+        <translation>Albüm yok</translation>
     </message>
     <message>
         <source>no title</source>
-        <translation>No title</translation>
+        <translation>Başlık yok</translation>
     </message>
     <message>
         <source>saved IP radios</source>
-        <translation>Saved IP radios</translation>
+        <translation>Kaydedilmiş IP radyolar</translation>
     </message>
     <message>
         <source>source</source>
-        <translation>Source</translation>
+        <translation>Kaynak</translation>
     </message>
     <message>
         <source>source change</source>
-        <translation>Source change</translation>
+        <translation>Kaynak değiştirme</translation>
     </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
     <message>
         <source>off</source>
-        <translation>Off</translation>
+        <translation>Kapalı</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
-        <translation>%1 days</translation>
+        <translation>%1 Günler</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Breaker</source>
-        <translation>Breaker</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test Circuit</translation>
+        <translation>Otomatik</translation>
     </message>
     <message>
         <source>Test every</source>
-        <translation>Test every</translation>
+        <translation>Her birini test et</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoMenu</name>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
+        <translation>Otomatik</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Check Faults</source>
-        <translation>Check Faults</translation>
+        <translation>Otomatik</translation>
     </message>
     <message>
         <source>close</source>
-        <translation>Close</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>Aktif</translation>
     </message>
     <message>
         <source>open</source>
-        <translation>Open</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
+        <translation>Aç</translation>
     </message>
 </context>
 <context>
     <name>Supervision</name>
     <message>
         <source>load diagnostic</source>
-        <translation>Load Diagnostic</translation>
+        <translation>Yük Diyagnostik</translation>
     </message>
 </context>
 <context>
     <name>Systems</name>
     <message>
         <source>functions</source>
-        <translation>Functions</translation>
+        <translation>Fonksiyonlar</translation>
     </message>
 </context>
 <context>
     <name>TextDialog</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
+        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız OK&apos;a, işlemi iptal etmek istiyorsanız İPTAL ET&apos;e basın.</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
-        <translation>Scenario configuration</translation>
+        <translation>Senaryoların konfigürasyonu</translation>
     </message>
 </context>
 <context>
     <name>ThermalControlledProbe</name>
     <message>
         <source>fancoil speed</source>
-        <translation>Fancoil speed</translation>
+        <translation>Fanlı ısıtıcı hızı</translation>
     </message>
     <message>
         <source>modes</source>
-        <translation>Modes</translation>
+        <translation>Modlar</translation>
     </message>
     <message>
         <source>temperature set</source>
-        <translation>Temperature set</translation>
+        <translation>Sıcaklık ayarı</translation>
     </message>
     <message>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
-        <translation>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</translation>
+        <translation>Kaydedilmemiş değişiklikler sürüyor.
+Ok seçtiğinizde bunlar kaybedilecek.
+Devam?</translation>
     </message>
 </context>
 <context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
-        <translation>Antifreeze</translation>
+        <translation>Donma önleyici</translation>
     </message>
     <message>
         <source>duration</source>
-        <translation>Duration</translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <source>Holiday</source>
-        <translation>Holiday</translation>
+        <translation>Tatil günleri</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation>Manual</translation>
+        <translation>Manuel</translation>
     </message>
     <message>
         <source>mode</source>
-        <translation>Mode</translation>
+        <translation>Yöntem</translation>
     </message>
     <message>
         <source>next program</source>
-        <translation>Next program</translation>
+        <translation>Sonraki program</translation>
     </message>
     <message>
         <source>next scenario</source>
-        <translation>Next scenario</translation>
+        <translation>Sonraki senaryo</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>Scenarios</source>
-        <translation>Scenarios</translation>
+        <translation>Senaryolar</translation>
     </message>
     <message>
         <source>season</source>
-        <translation>Season</translation>
+        <translation>Mevsim</translation>
     </message>
     <message>
         <source>temperature set</source>
-        <translation>Temperature set</translation>
+        <translation>Sıcaklık ayarı</translation>
     </message>
     <message>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
-        <translation>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</translation>
+        <translation>Kaydedilmemiş değişiklikler sürüyor.
+Ok seçtiğinizde bunlar kaybedilecek.
+Devam?</translation>
     </message>
     <message>
         <source>Timed Manual</source>
-        <translation>Timed manual</translation>
+        <translation>Zamanlanmış manuel</translation>
     </message>
     <message>
         <source>Weekday</source>
-        <translation>Weekday</translation>
+        <translation>İş günü</translation>
     </message>
     <message>
         <source>Weekly</source>
-        <translation>Weekly</translation>
+        <translation>Haftalık</translation>
     </message>
 </context>
 <context>
     <name>ThermalNames</name>
     <message>
         <source>antifreeze</source>
-        <translation>Antifreeze</translation>
+        <translation>Donma önleyici</translation>
     </message>
     <message>
         <source>auto</source>
-        <translation>Auto</translation>
+        <translation>Oto</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
+        <translation>Otomatik</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Cooling</translation>
+        <translation>Soğutma</translation>
     </message>
     <message>
         <source>Dry</source>
-        <translation>Dry</translation>
+        <translation>Nem Giderici</translation>
     </message>
     <message>
         <source>Fan</source>
@@ -3110,23 +2963,23 @@ Continue?</translation>
     </message>
     <message>
         <source>Heating</source>
-        <translation>Heating</translation>
+        <translation>Isıtma</translation>
     </message>
     <message>
         <source>High</source>
-        <translation>High</translation>
+        <translation>Yüksek</translation>
     </message>
     <message>
         <source>holiday</source>
-        <translation>Holiday</translation>
+        <translation>Tatil günleri</translation>
     </message>
     <message>
         <source>Low</source>
-        <translation>Low</translation>
+        <translation>Düşük</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation>Manual</translation>
+        <translation>Manuel</translation>
     </message>
     <message>
         <source>max</source>
@@ -3134,11 +2987,11 @@ Continue?</translation>
     </message>
     <message>
         <source>med</source>
-        <translation>Med</translation>
+        <translation>Orta</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation>Medium</translation>
+        <translation>Ortam</translation>
     </message>
     <message>
         <source>min</source>
@@ -3146,123 +2999,123 @@ Continue?</translation>
     </message>
     <message>
         <source>off</source>
-        <translation>Off</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>On</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>scenario</source>
-        <translation>Scenario</translation>
+        <translation>Senaryo</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silent</translation>
+        <translation>Sessiz</translation>
     </message>
     <message>
         <source>summer</source>
-        <translation>Summer</translation>
+        <translation>Yaz</translation>
     </message>
     <message>
         <source>timed manual</source>
-        <translation>Timed manual</translation>
+        <translation>Zamanlanmış manuel</translation>
     </message>
     <message>
         <source>weekday</source>
-        <translation>Weekday</translation>
+        <translation>İş günü</translation>
     </message>
     <message>
         <source>weekly programs</source>
-        <translation>Weekly programs</translation>
+        <translation>Haftalık programlar</translation>
     </message>
     <message>
         <source>winter</source>
-        <translation>Winter</translation>
+        <translation>Kış</translation>
     </message>
 </context>
 <context>
     <name>ThermalRegulation</name>
     <message>
         <source>temperature control</source>
-        <translation>Temperature control</translation>
+        <translation>Isı regülasyonu</translation>
     </message>
 </context>
 <context>
     <name>ThermalRegulationItems</name>
     <message>
         <source>Air Conditioning</source>
-        <translation>Air Conditioning</translation>
+        <translation>Klimatizasyon</translation>
     </message>
     <message>
         <source>External Probes</source>
-        <translation>External probes</translation>
+        <translation>Harici problar</translation>
     </message>
     <message>
         <source>Not Controlled Probes</source>
-        <translation>Not Controlled Probes</translation>
+        <translation>Kontrol Edilmemiş Sondalar</translation>
     </message>
 </context>
 <context>
     <name>VideoCamera</name>
     <message>
         <source>door lock</source>
-        <translation>Door lock</translation>
+        <translation>Kapı kilidi</translation>
     </message>
     <message>
         <source>stairlight</source>
-        <translation>Stairlight</translation>
+        <translation>Merdiven ışığı</translation>
     </message>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntry</name>
     <message>
         <source>video door entry</source>
-        <translation>Video door entry</translation>
+        <translation>Video kapısı girişi</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntryItems</name>
     <message>
         <source>intercom</source>
-        <translation>Intercom</translation>
+        <translation>Bina içi sistem</translation>
     </message>
     <message>
         <source>pager</source>
-        <translation>Pager</translation>
+        <translation>çağrı cihazı</translation>
     </message>
     <message>
         <source>video control</source>
-        <translation>Video control</translation>
+        <translation>Video kontrolü</translation>
     </message>
 </context>
 <context>
     <name>VideoPlayer</name>
     <message>
         <source>Loop detected</source>
-        <translation>Loop detected</translation>
+        <translation>Döngü algılandı</translation>
     </message>
 </context>
 <context>
     <name>VolumeGeneral</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>Ses seviyesi</translation>
     </message>
 </context>
 <context>
     <name>VolumePopup</name>
     <message>
         <source>mute</source>
-        <translation>Mute</translation>
+        <translation>Sessiz</translation>
     </message>
 </context>
 </TS>
