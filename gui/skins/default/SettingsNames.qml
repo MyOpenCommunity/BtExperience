@@ -33,7 +33,7 @@ QtObject {
         container['LANGUAGE']["ru"] = qsTr("Russian")
         container['LANGUAGE']["tr"] = qsTr("Turkish")
         container['LANGUAGE']["pl"] = qsTr("Polish")
-        container['LANGUAGE']["zh"] = qsTr("Simplified Chinese")
+        container['LANGUAGE']["zh_CN"] = qsTr("Simplified Chinese")
 
         container['KEYBOARD'] = []
         container['KEYBOARD']["it_bticino"] = qsTr("Italian")

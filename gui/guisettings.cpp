@@ -194,7 +194,12 @@ QStringList GuiSettings::getLanguages() const
 
 	foreach (QString path, QDir(locale.absoluteFilePath()).entryList(QStringList() << "bt_experience_*.qm"))
 	{
-		int underscore = path.lastIndexOf('_');
+		// we need to extract the language extension, which may be it_IT, or
+		// zh_CN.
+		// -2 below is because:
+		//  * sizeof(char *) is the length of the string + the terminator \0
+		//  * the code assumes we find the index of the underscore, so we need to subtract 1
+		int underscore = path.indexOf("bt_experience_") + (sizeof("bt_experience_") - 2);
 		int dot = path.lastIndexOf('.');
 
 		result << path.mid(underscore + 1, dot - (underscore + 1));
