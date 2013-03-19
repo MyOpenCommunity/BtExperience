@@ -296,6 +296,14 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 		if (new_state != AudioState::Mute)
 			smartExecute_synch(intercom_audio_off);
 		break;
+	case SenderPagerCall:
+		if (new_state != AudioState::Mute)
+			smartExecute_synch(vde_audio_off);
+		break;
+	case ReceiverPagerCall:
+		if (new_state != AudioState::Mute)
+			smartExecute_synch(vde_audio_off);
+		break;
 	case Mute:
 		setZlMute(false);
 		if (new_state != AudioState::ScsVideoCall && new_state != AudioState::ScsIntercomCall)
