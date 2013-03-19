@@ -217,6 +217,8 @@ Item {
                 global.audioState.enableState(AudioState.ScsIntercomCall)
         }
         onCallEnded: {
+            global.audioState.disableState(AudioState.SenderPagerCall)
+            global.audioState.disableState(AudioState.ReceiverPagerCall)
             global.audioState.disableState(AudioState.VdeRingtone)
             global.audioState.disableState(AudioState.ScsIntercomCall)
             global.audioState.disableState(AudioState.IpIntercomCall)
