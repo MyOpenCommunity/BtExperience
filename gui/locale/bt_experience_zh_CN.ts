@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en_US">
+<TS version="2.0" language="zh">
 <context>
     <name>ActionObject</name>
     <message>
         <source>1 min.</source>
-        <translation>1 min.</translation>
+        <translation>1分钟</translation>
     </message>
     <message>
         <source>100%</source>
@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>15 min.</source>
-        <translation>15 min.</translation>
+        <translation>15分钟</translation>
     </message>
     <message>
         <source>2 min.</source>
-        <translation>2 min.</translation>
+        <translation>2分钟</translation>
     </message>
     <message>
         <source>20%</source>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>3 min.</source>
-        <translation>3 min.</translation>
+        <translation>3分钟</translation>
     </message>
     <message>
         <source>30%</source>
@@ -33,7 +33,7 @@
     </message>
     <message>
         <source>4 min.</source>
-        <translation>4 min.</translation>
+        <translation>4分钟</translation>
     </message>
     <message>
         <source>40%</source>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>5 min.</source>
-        <translation>5 min.</translation>
+        <translation>5分钟</translation>
     </message>
     <message>
         <source>50%</source>
@@ -65,230 +65,226 @@
     </message>
     <message>
         <source>Activate Scenarios</source>
-        <translation>Activate Scenarios </translation>
+        <translation>启用场景</translation>
     </message>
     <message>
         <source>Air-conditioning program</source>
-        <translation>Air-conditioning program</translation>
+        <translation>空调程序</translation>
     </message>
     <message>
         <source>Air-conditioning scenario</source>
-        <translation>Air-conditioning scenario</translation>
+        <translation>空调场景</translation>
     </message>
     <message>
         <source>Antifreeze/thermal protection</source>
-        <translation>Antifreeze/thermal protection</translation>
+        <translation>防冻/热防护</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Decrease level</source>
-        <translation>Decrease level</translation>
+        <translation>降低水平</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Down</translation>
+        <translation>下</translation>
     </message>
     <message>
         <source>Extended pressure button</source>
-        <translation>Extended pressure button</translation>
+        <translation>长按键</translation>
     </message>
     <message>
         <source>Heating Program</source>
-        <translation>Heating Program</translation>
+        <translation>暖气程序</translation>
     </message>
     <message>
         <source>Heating scenario</source>
-        <translation>Heating scenario</translation>
+        <translation>加温场景</translation>
     </message>
     <message>
         <source>Increase level</source>
-        <translation>Increase level</translation>
+        <translation>增加水平</translation>
     </message>
     <message>
         <source>Last program</source>
-        <translation>Last Program</translation>
+        <translation>上一次程序设定</translation>
     </message>
     <message>
         <source>Last scenario</source>
-        <translation>Last Scenario</translation>
+        <translation>上一次场景</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Level</translation>
+        <translation>水平</translation>
     </message>
     <message>
         <source>Manual Temperature</source>
-        <translation>Manual Temperature</translation>
+        <translation>手动温度</translation>
     </message>
     <message>
         <source>OFF</source>
-        <translation>OFF</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>ON</translation>
+        <translation>开启</translation>
     </message>
     <message>
         <source>On 1 sec.</source>
-        <translation>On 1 sec.</translation>
+        <translation>1秒钟</translation>
     </message>
     <message>
         <source>On 2 sec.</source>
-        <translation>On 2 sec.</translation>
+        <translation>2秒钟</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Release after extended pressure button</source>
-        <translation>Release after extended pressure button</translation>
+        <translation>长按键后放开</translation>
     </message>
     <message>
         <source>Scenario 1.16</source>
-        <translation>Scenario 1.16</translation>
+        <translation>场景1.16</translation>
     </message>
     <message>
         <source>Scenario 1.4</source>
-        <translation>Scenario 1.4</translation>
+        <translation>场景1.4</translation>
     </message>
     <message>
         <source>Scenario OFF</source>
-        <translation>Scenario OFF</translation>
+        <translation>场景关闭</translation>
     </message>
     <message>
         <source>Set the air conditioning mode</source>
-        <translation>Set the air conditioning mode</translation>
+        <translation>设定空调模式</translation>
     </message>
     <message>
         <source>Set the fan-coil speed</source>
-        <translation>Set the fan-coil speed</translation>
+        <translation>设置盘管式风机速度</translation>
     </message>
     <message>
         <source>Set the heating mode</source>
-        <translation>Set the heating mode</translation>
+        <translation>设定加热模式</translation>
     </message>
     <message>
         <source>Short pressure button</source>
-        <translation>Short pressure button</translation>
+        <translation>短按键</translation>
     </message>
     <message>
         <source>Start pressure button</source>
-        <translation>Start pressure button</translation>
+        <translation>开始按键</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <source>Timed manual Temperature</source>
-        <translation>Timed manual temperature</translation>
+        <translation>定时手动温度</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation>Up</translation>
+        <translation>上</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>AddQuicklink</name>
     <message>
-        <source>ADD</source>
-        <translation>ADD</translation>
-    </message>
-    <message>
         <source>Add new camera:</source>
-        <translation>Add new camera:</translation>
+        <translation>添加新摄像头：</translation>
     </message>
     <message>
         <source>Add new rss link:</source>
-        <translation>Add new rss link:</translation>
+        <translation>添加新rss链接：</translation>
     </message>
     <message>
         <source>Add new scenario:</source>
-        <translation>Add new scenario:</translation>
+        <translation>添加新的场景：</translation>
     </message>
     <message>
         <source>Add new weather forecast link:</source>
-        <translation>Add new weather forecast link:</translation>
+        <translation>添加新的天气预报链接：</translation>
     </message>
     <message>
         <source>Add new web camera:</source>
-        <translation>Add new web camera:</translation>
+        <translation>添加新的网络摄像头：</translation>
     </message>
     <message>
         <source>Add new web page link:</source>
-        <translation>Add new web page link:</translation>
+        <translation>添加新的网页链接：</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
-        <translation>Add new web radio:</translation>
+        <translation>添加新的网络广播：</translation>
     </message>
     <message>
         <source>Add quicklink</source>
-        <translation>Add quicklink</translation>
+        <translation>添加快捷链接</translation>
     </message>
     <message>
         <source>Address:</source>
-        <translation>Address:</translation>
+        <translation>地址：</translation>
     </message>
     <message>
         <source>camera</source>
-        <translation>Camera</translation>
+        <translation>摄像头</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>Click to enter link...</source>
-        <translation>Click to enter link...</translation>
+        <translation>点击进入链接......</translation>
     </message>
     <message>
         <source>Click to enter name...</source>
-        <translation>Click to enter name...</translation>
+        <translation>点击进入名称......</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
-        <translation>Confirm deletion</translation>
+        <translation>确认删除</translation>
     </message>
     <message>
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
-        <translation>Do you want to remove the selected quicklink?
-Name: %1
-Address: %2</translation>
+        <translation>需要移除选定的快捷链接吗？?
+名称：%1
+地址：%2</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
-        <translation>Edit quicklink properties</translation>
+        <translation>编辑快捷链接属性</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Home</translation>
+        <translation>主页</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>Profiles</translation>
+        <translation>特性</translation>
     </message>
     <message>
         <source>rss</source>
@@ -296,102 +292,102 @@ Address: %2</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>保存修改吗？</translation>
     </message>
     <message>
         <source>scenario</source>
-        <translation>Scenario</translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>Select existing camera:</source>
-        <translation>Select existing camera:</translation>
+        <translation>选择现有摄像头：</translation>
     </message>
     <message>
         <source>Select existing rss link:</source>
-        <translation>Select existing rss link:</translation>
+        <translation>选择现有rss链接：</translation>
     </message>
     <message>
         <source>Select existing scenario:</source>
-        <translation>Select existing scenario:</translation>
+        <translation>选择现有场景：</translation>
     </message>
     <message>
         <source>Select existing weather forecast link:</source>
-        <translation>Select existing weather forecast link:</translation>
+        <translation>选择现有天气预报链接：</translation>
     </message>
     <message>
         <source>Select existing web camera:</source>
-        <translation>Select existing web camera:</translation>
+        <translation>选择现有网络摄像头：</translation>
     </message>
     <message>
         <source>Select existing web page link:</source>
-        <translation>Select existing web page link:</translation>
+        <translation>选择现有网页链接：</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
-        <translation>Select existing web radio:</translation>
+        <translation>选择现有网络广播：</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Title:</translation>
+        <translation>标题：</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>种类：</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation>Weather</translation>
+        <translation>天气</translation>
     </message>
     <message>
         <source>web camera</source>
-        <translation>Web camera</translation>
+        <translation>网络摄像头</translation>
     </message>
     <message>
         <source>web page</source>
-        <translation>Web page</translation>
+        <translation>网页</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web radio</translation>
+        <translation>网络广播</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenario</name>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>已启动</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioAction</name>
     <message>
         <source>action</source>
-        <translation>Action</translation>
+        <translation>行动</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioDateTimeCondition</name>
     <message>
         <source>activation</source>
-        <translation>Activation</translation>
+        <translation>激活</translation>
     </message>
     <message>
         <source>days</source>
-        <translation>Days</translation>
+        <translation>日</translation>
     </message>
     <message>
         <source>F</source>
         <comment>Friday</comment>
-        <translation>F</translation>
+        <translation>星期五</translation>
     </message>
     <message>
         <source>M</source>
         <comment>Monday</comment>
-        <translation>M</translation>
+        <translation>星期一</translation>
     </message>
     <message>
         <source>S</source>
@@ -401,53 +397,53 @@ Address: %2</translation>
     <message>
         <source>S</source>
         <comment>Sunday</comment>
-        <translation>S</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
-        <translation>T</translation>
-    </message>
-    <message>
-        <source>time</source>
-        <translation>Time</translation>
+        <translation>星期日</translation>
     </message>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>T</translation>
+        <translation>星期二</translation>
+    </message>
+    <message>
+        <source>time</source>
+        <translation>时间</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>星期四</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
-        <translation>W</translation>
+        <translation>星期三</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioDeviceCondition</name>
     <message>
         <source>device condition</source>
-        <translation>Device Condition</translation>
+        <translation>设备条件</translation>
     </message>
     <message>
         <source>Intensity</source>
-        <translation>Intensity</translation>
+        <translation>强度</translation>
     </message>
     <message>
         <source>OFF</source>
-        <translation>OFF</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>ON</translation>
+        <translation>开启</translation>
     </message>
     <message>
         <source>Temperature</source>
-        <translation>Temperature</translation>
+        <translation>温度</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
     <message>
         <source>ºC</source>
@@ -458,371 +454,335 @@ Address: %2</translation>
     <name>AdvancedSplit</name>
     <message>
         <source>fancoil</source>
-        <translation>Fancoil</translation>
+        <translation>风机盘管</translation>
     </message>
     <message>
         <source>modality</source>
-        <translation>Modality</translation>
+        <translation>模式</translation>
     </message>
     <message>
         <source>program</source>
-        <translation>Program</translation>
+        <translation>程序</translation>
     </message>
     <message>
         <source>swing</source>
-        <translation>Swing</translation>
+        <translation>摆风</translation>
     </message>
     <message>
         <source>temperature</source>
-        <translation>Temperature</translation>
+        <translation>温度</translation>
     </message>
 </context>
 <context>
     <name>AlarmClock</name>
     <message>
         <source>Click to enter name...</source>
-        <translation>Click to enter name...</translation>
+        <translation>点击进入名称......</translation>
     </message>
 </context>
 <context>
     <name>AlarmClockDateTimePage</name>
     <message>
         <source>activation</source>
-        <translation>Activation</translation>
+        <translation>激活</translation>
     </message>
     <message>
         <source>Alarm clock - date and time</source>
-        <translation>Alarm clock - date and time</translation>
-    </message>
-    <message>
-        <source>Alarm not saved</source>
-        <translation>Alarm not saved</translation>
+        <translation>闹钟 – 日期和时间</translation>
     </message>
     <message>
         <source>Alarm settings</source>
-        <translation>Alarm settings</translation>
+        <translation>报警服务</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>days</source>
-        <translation>Days</translation>
+        <translation>日</translation>
     </message>
     <message>
         <source>description</source>
-        <translation>Description</translation>
-    </message>
-    <message>
-        <source>Edit alarm name</source>
-        <translation>Edit alarm name</translation>
+        <translation>描述</translation>
     </message>
     <message>
         <source>MTWTFSS</source>
-        <translation>MTWTFSS</translation>
-    </message>
-    <message>
-        <source>New name:</source>
-        <translation>New name:</translation>
-    </message>
-    <message>
-        <source>No name set</source>
-        <translation>No name set</translation>
+        <translation>全周</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Only once</source>
-        <translation>Only once</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>保存修改吗？</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>Time</translation>
+        <translation>时间</translation>
     </message>
 </context>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
-        <source>Alarm clock - sound settings</source>
-        <translation>Alarm clock - sound settings</translation>
-    </message>
-    <message>
         <source>Alarm settings</source>
-        <translation>Alarm settings</translation>
+        <translation>报警服务</translation>
     </message>
     <message>
         <source>beep</source>
-        <translation>Beep</translation>
+        <translation>嘟嘟声</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
-    </message>
-    <message>
-        <source>No amplifier set</source>
-        <translation>No amplifier set</translation>
-    </message>
-    <message>
-        <source>No source set</source>
-        <translation>No source set</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>保存修改吗？</translation>
     </message>
     <message>
         <source>Select a source:</source>
-        <translation>Select a source:</translation>
-    </message>
-    <message>
-        <source>Select an amplifier:</source>
-        <translation>Select an amplifier:</translation>
+        <translation>选择声源：</translation>
     </message>
     <message>
         <source>Signal:</source>
-        <translation>Signal:</translation>
+        <translation>信号：</translation>
     </message>
     <message>
         <source>sound diffusion</source>
-        <translation>Sound diffusion</translation>
+        <translation>声音系统</translation>
     </message>
     <message>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>Alert</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Warning</translation>
+        <translation>注意</translation>
     </message>
 </context>
 <context>
     <name>Amplifier</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>AmplifierSettings</name>
     <message>
         <source>bass</source>
-        <translation>Bass</translation>
+        <translation>低音</translation>
     </message>
     <message>
         <source>equalizer</source>
-        <translation>Equalizer</translation>
+        <translation>均衡器</translation>
     </message>
     <message>
         <source>loud</source>
-        <translation>Loud</translation>
+        <translation>响亮</translation>
     </message>
     <message>
         <source>off</source>
-        <translation>Off</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>on</source>
-        <translation>On</translation>
+        <translation>开启</translation>
     </message>
     <message>
         <source>treble</source>
-        <translation>Treble</translation>
+        <translation>高音</translation>
     </message>
 </context>
 <context>
     <name>Antintrusion</name>
     <message>
         <source>Burglar alarm</source>
-        <translation>Burglar alarm</translation>
+        <translation>防盗警报</translation>
     </message>
     <message>
         <source>enter code</source>
-        <translation>Enter code</translation>
+        <translation>输入代码</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionAlarms</name>
     <message>
         <source>date and time</source>
-        <translation>Date and time</translation>
+        <translation>日期和时间</translation>
     </message>
     <message>
         <source>No Alarm Present</source>
-        <translation>No Alarm Present</translation>
+        <translation>没有报警</translation>
     </message>
     <message>
         <source>remove all</source>
-        <translation>Remove All</translation>
+        <translation>移除所有</translation>
     </message>
     <message>
         <source>type</source>
-        <translation>Type</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <source>zone</source>
-        <translation>Zone</translation>
+        <translation>区</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionNames</name>
     <message>
         <source>anti-panic</source>
-        <translation>anti-panic</translation>
+        <translation>免惊慌</translation>
     </message>
     <message>
         <source>intrusion detection</source>
-        <translation>intrusion detection</translation>
+        <translation>防盗检测</translation>
     </message>
     <message>
         <source>tamper</source>
-        <translation>tamper</translation>
+        <translation>防拆</translation>
     </message>
     <message>
         <source>technical</source>
-        <translation>technical</translation>
+        <translation>技术</translation>
     </message>
 </context>
 <context>
     <name>AntintrusionSystem</name>
     <message>
         <source>alarm log</source>
-        <translation>Alarm Log             </translation>
+        <translation>报警记录</translation>
     </message>
     <message>
         <source>disable system</source>
-        <translation>Disable system</translation>
+        <translation>禁用系统</translation>
     </message>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>enable system</source>
-        <translation>Enable system</translation>
+        <translation>启用系统</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>modify zones</source>
-        <translation>Modify zones</translation>
+        <translation>修改区域</translation>
     </message>
     <message>
         <source>scenario</source>
-        <translation>Scenario</translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>system</source>
-        <translation>System</translation>
+        <translation>系统</translation>
     </message>
     <message>
         <source>system disabled</source>
-        <translation>System disabled</translation>
+        <translation>系统被禁用</translation>
     </message>
     <message>
         <source>system enabled</source>
-        <translation>System enabled</translation>
+        <translation>系统已启用</translation>
     </message>
     <message>
         <source>wrong code</source>
-        <translation>Wrong code</translation>
+        <translation>错误代码</translation>
     </message>
     <message>
         <source>zone</source>
-        <translation>Zone</translation>
+        <translation>区</translation>
     </message>
     <message>
         <source>zone settings</source>
-        <translation>Zone settings</translation>
+        <translation>区域设置</translation>
     </message>
 </context>
 <context>
     <name>AudioPlayer</name>
     <message>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>音频</translation>
     </message>
     <message>
         <source>Loop detected</source>
-        <translation>Loop detected</translation>
+        <translation>检测到循环</translation>
     </message>
     <message>
         <source>No tunable web radio</source>
-        <translation>No tunable web radio</translation>
+        <translation>没有可调谐的网络广播</translation>
     </message>
 </context>
 <context>
     <name>Automation</name>
     <message>
         <source>automation</source>
-        <translation>Automation</translation>
+        <translation>自动控制</translation>
     </message>
 </context>
 <context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
-        <translation>Program</translation>
+        <translation>程序</translation>
     </message>
 </context>
 <context>
     <name>Brightness</name>
     <message>
         <source>brightness</source>
-        <translation>Brightness</translation>
+        <translation>亮度</translation>
     </message>
 </context>
 <context>
     <name>browsermain</name>
     <message>
         <source>Authentication required</source>
-        <translation>Authentication required</translation>
+        <translation>需要验证</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Password</translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>This connection is untrusted. Do you wish to continue?</translation>
+        <translation>这个连接不可信。需要继续吗？</translation>
     </message>
     <message>
         <source>Untrusted SSL connection</source>
-        <translation>Untrusted SSL connection</translation>
+        <translation>不可信的SSL连接</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation>User name</translation>
+        <translation>用户名</translation>
     </message>
 </context>
 <context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>多媒体</translation>
     </message>
 </context>
 <context>
@@ -846,15 +806,15 @@ Address: %2</translation>
         <translation>&lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
-&lt;title&gt;Problem loading page&lt;/title&gt;
+&lt;title&gt;问题加载页面&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-&lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;h1&gt;服务器未找到&lt;/h1&gt;
+&lt;p&gt;在$服务器上无法找到服务器. 请重试&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
-&lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
-&lt;li&gt;If you are unable to load any pages, check the network connection.&lt;/li&gt;
+&lt;li&gt;请检查地址输入的错误，不是 &lt;b&gt;ww.example.com&lt;/b&gt; 应该是 &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;如果无法加载页面，请检查网络连接。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;
 &lt;/html&gt;</translation>
@@ -864,276 +824,272 @@ Address: %2</translation>
     <name>ButtonOkCancel</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
 </context>
 <context>
     <name>Calibration</name>
     <message>
         <source>Click the button</source>
-        <translation>Click the button</translation>
+        <translation>点击此按钮</translation>
     </message>
     <message>
         <source>Click the crosshair</source>
-        <translation>Click the crosshair</translation>
+        <translation>按一下十字</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Change Password</translation>
+        <translation>更改密码</translation>
     </message>
     <message>
         <source>Insert new password:</source>
-        <translation>Insert new password:</translation>
+        <translation>输入新的密码：</translation>
     </message>
     <message>
         <source>Insert old password:</source>
-        <translation>Insert old password:</translation>
+        <translation>输入旧的密码：</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Passwords don&apos;t match</source>
-        <translation>Passwords don&apos;t match</translation>
+        <translation>密码不匹配</translation>
     </message>
     <message>
         <source>Repeat new password:</source>
-        <translation>Repeat new password:</translation>
+        <translation>重新输入新的密码：</translation>
     </message>
     <message>
         <source>Wrong password</source>
-        <translation>Wrong password</translation>
+        <translation>密码错误 </translation>
     </message>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
     <message>
         <source>Music folder</source>
-        <translation>Music folder</translation>
+        <translation>音乐文件夹</translation>
     </message>
 </context>
 <context>
     <name>ColumnMessages</name>
     <message>
         <source> message</source>
-        <translation> message</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <source> messages</source>
-        <translation> messages</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <source>remove all</source>
-        <translation>Remove All</translation>
+        <translation>移除所有</translation>
     </message>
 </context>
 <context>
     <name>ConfirmationBar</name>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Save scenario recording?</source>
-        <translation>Save scenario recording?</translation>
+        <translation>保存场景记录吗？</translation>
     </message>
 </context>
 <context>
     <name>ControlAlarmClock</name>
     <message>
         <source>beep</source>
-        <translation>Beep</translation>
+        <translation>嘟嘟声</translation>
     </message>
     <message>
         <source>DELETE</source>
-        <translation>DELETE</translation>
+        <translation>清除</translation>
     </message>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>MTWTFSS</source>
-        <translation>MTWTFSS</translation>
+        <translation>全周</translation>
     </message>
     <message>
         <source>repetition</source>
-        <translation>Repetition</translation>
+        <translation>重复</translation>
     </message>
     <message>
         <source>ringtone</source>
-        <translation>Ringtone</translation>
+        <translation>铃音</translation>
     </message>
     <message>
         <source>sound diffusion</source>
-        <translation>Sound diffusion</translation>
+        <translation>声音系统</translation>
     </message>
     <message>
         <source>triggers at</source>
-        <translation>Triggers at</translation>
+        <translation>触发器在</translation>
     </message>
 </context>
 <context>
     <name>ControlBalance</name>
     <message>
         <source>balance</source>
-        <translation>Balance</translation>
+        <translation>平衡</translation>
     </message>
 </context>
 <context>
     <name>ControlCall</name>
     <message>
         <source>push to talk</source>
-        <translation>Push to talk</translation>
+        <translation>按键应答</translation>
     </message>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>ControlFMRadio</name>
     <message>
         <source>radio FM</source>
-        <translation>Radio FM</translation>
+        <translation>Fm广播</translation>
     </message>
 </context>
 <context>
     <name>ControlIPRadio</name>
     <message>
         <source>IP radio</source>
-        <translation>IP radio</translation>
+        <translation>IP广播</translation>
     </message>
 </context>
 <context>
     <name>ControlOnOff</name>
     <message>
         <source>OFF</source>
-        <translation>OFF</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>ON</translation>
+        <translation>开启</translation>
     </message>
 </context>
 <context>
     <name>ControlPopup</name>
     <message>
         <source>confirm</source>
-        <translation>Confirm</translation>
+        <translation>确认</translation>
     </message>
     <message>
         <source>dismiss</source>
-        <translation>Dismiss</translation>
+        <translation>忽略</translation>
     </message>
 </context>
 <context>
     <name>ControlPullDown</name>
     <message>
         <source>Video settings</source>
-        <translation>Video settings</translation>
+        <translation>视频设置</translation>
     </message>
 </context>
 <context>
     <name>ControlPullDownVideo</name>
     <message>
         <source>Brightness</source>
-        <translation>Brightness</translation>
+        <translation>亮度</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Color</translation>
+        <translation>颜色</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation>Contrast</translation>
+        <translation>对比</translation>
     </message>
 </context>
 <context>
     <name>ControlSetDateTime</name>
     <message>
         <source>until date</source>
-        <translation>Until date</translation>
+        <translation>直到日期</translation>
     </message>
     <message>
         <source>until time</source>
-        <translation>Until time</translation>
+        <translation>直到时间</translation>
     </message>
 </context>
 <context>
     <name>ControlSlider</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>ControlSliderMute</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Controlled</translation>
-    </message>
-    <message>
         <source>Device</source>
-        <translation>Device</translation>
+        <translation>设备</translation>
     </message>
     <message>
         <source>Not Controlled</source>
-        <translation>Not Controlled</translation>
+        <translation>未受控制</translation>
     </message>
     <message>
         <source>Not Enabled</source>
-        <translation>Not enabled</translation>
+        <translation>未启动</translation>
     </message>
 </context>
 <context>
     <name>ControlTextImageCallManager</name>
     <message>
         <source>Active call</source>
-        <translation>Active call</translation>
+        <translation>开始呼叫</translation>
     </message>
     <message>
         <source>Call in progress</source>
-        <translation>Call in progress</translation>
+        <translation>呼叫进行中</translation>
     </message>
     <message>
         <source>Incoming call from</source>
-        <translation>Incoming call from</translation>
+        <translation>呼叫来自</translation>
     </message>
     <message>
         <source>Mute on</source>
-        <translation>Mute on</translation>
+        <translation>静音开启</translation>
     </message>
     <message>
         <source>No answer</source>
-        <translation>No answer</translation>
+        <translation>没有应答</translation>
     </message>
     <message>
         <source>Teleloop</source>
@@ -1144,223 +1100,223 @@ Address: %2</translation>
     <name>ControlTiming</name>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>timer</source>
-        <translation>Timer</translation>
+        <translation>定时器</translation>
     </message>
 </context>
 <context>
     <name>DateSelect</name>
     <message>
         <source>until date</source>
-        <translation>Until date</translation>
+        <translation>直到日期</translation>
     </message>
     <message>
         <source>until time</source>
-        <translation>Until time</translation>
+        <translation>直到时间</translation>
     </message>
 </context>
 <context>
     <name>Devices</name>
     <message>
         <source>Devices</source>
-        <translation>Devices</translation>
+        <translation>设备</translation>
     </message>
 </context>
 <context>
     <name>Dimmer</name>
     <message>
         <source>light intensity</source>
-        <translation>Light intensity</translation>
+        <translation>亮度</translation>
     </message>
 </context>
 <context>
     <name>EditNote</name>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>Note</source>
-        <translation>Note</translation>
+        <translation>备注</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
 </context>
 <context>
     <name>EnergyData</name>
     <message>
         <source>Apr</source>
-        <translation>Apr</translation>
+        <translation>四月</translation>
     </message>
     <message>
         <source>Aug</source>
-        <translation>Aug</translation>
+        <translation>八月</translation>
     </message>
     <message>
         <source>Dec</source>
-        <translation>Dec</translation>
+        <translation>十二月</translation>
     </message>
     <message>
         <source>Feb</source>
-        <translation>Feb</translation>
+        <translation>二月</translation>
     </message>
     <message>
         <source>Jan</source>
-        <translation>Jan</translation>
+        <translation>一月</translation>
     </message>
     <message>
         <source>Jul</source>
-        <translation>Jul</translation>
+        <translation>七月</translation>
     </message>
     <message>
         <source>Jun</source>
-        <translation>Jun</translation>
+        <translation>六月</translation>
     </message>
     <message>
         <source>Mar</source>
-        <translation>Mar</translation>
+        <translation>三月</translation>
     </message>
     <message>
         <source>May</source>
-        <translation>May</translation>
+        <translation>5月</translation>
     </message>
     <message>
         <source>Nov</source>
-        <translation>Nov</translation>
+        <translation>十一月</translation>
     </message>
     <message>
         <source>Oct</source>
-        <translation>Oct</translation>
+        <translation>十月</translation>
     </message>
     <message>
         <source>Sep</source>
-        <translation>Sep</translation>
+        <translation>九月</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDelegate</name>
     <message>
         <source>cumulative consumption</source>
-        <translation>Cumulative consumption</translation>
+        <translation>累计能耗</translation>
     </message>
     <message>
         <source>instant consumption</source>
-        <translation>Instant consumption</translation>
+        <translation>即时能耗</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataDetail</name>
     <message>
         <source>energy consumption</source>
-        <translation>Energy Consumption</translation>
+        <translation>能耗</translation>
     </message>
 </context>
 <context>
     <name>EnergyDataGraph</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>天</translation>
     </message>
     <message>
         <source>day cumulative consumption</source>
-        <translation>Day cumulative consumption</translation>
+        <translation>日累计能耗</translation>
     </message>
     <message>
         <source>energy consumption</source>
-        <translation>Energy Consumption</translation>
+        <translation>能耗</translation>
     </message>
     <message>
         <source>instant consumption</source>
-        <translation>Instant consumption</translation>
+        <translation>即时能耗</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Month</translation>
+        <translation>月</translation>
     </message>
     <message>
         <source>month cumulative consumption</source>
-        <translation>Month cumulative consumption</translation>
+        <translation>月累计能耗</translation>
     </message>
     <message>
         <source>Overall</source>
-        <translation>Overall</translation>
+        <translation>全部</translation>
     </message>
     <message>
         <source>year</source>
-        <translation>Year</translation>
+        <translation>年</translation>
     </message>
     <message>
         <source>year cumulative consumption</source>
-        <translation>Year cumulative consumption</translation>
+        <translation>年累计能耗</translation>
     </message>
 </context>
 <context>
     <name>EnergyDateSelector</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>天</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>dd/MM/yyyy</translation>
+        <translation>日/月/年</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>MM/yyyy</translation>
+        <translation>月/年</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Month</translation>
+        <translation>月</translation>
     </message>
     <message>
         <source>year</source>
-        <translation>Year</translation>
+        <translation>年</translation>
     </message>
     <message>
         <source>yyyy</source>
-        <translation>yyyy</translation>
+        <translation>年</translation>
     </message>
 </context>
 <context>
     <name>EnergyDayGraph</name>
     <message>
         <source>hour</source>
-        <translation>Hour</translation>
+        <translation>小时</translation>
     </message>
 </context>
 <context>
     <name>EnergyDayTable</name>
     <message>
         <source>hour</source>
-        <translation>Hour</translation>
+        <translation>小时</translation>
     </message>
 </context>
 <context>
     <name>EnergyGlobalView</name>
     <message>
         <source>energy consumption</source>
-        <translation>Energy Consumption</translation>
+        <translation>能耗</translation>
     </message>
     <message>
         <source>Global View</source>
-        <translation>Global view</translation>
+        <translation>概览</translation>
     </message>
     <message>
         <source>units</source>
-        <translation>Units</translation>
+        <translation>单位</translation>
     </message>
     <message>
         <source>value</source>
-        <translation>Value</translation>
+        <translation>数值</translation>
     </message>
     <message>
         <source>€</source>
@@ -1371,178 +1327,166 @@ Address: %2</translation>
     <name>EnergyManagement</name>
     <message>
         <source>Energy management</source>
-        <translation>Energy Management</translation>
+        <translation>能耗管理</translation>
     </message>
 </context>
 <context>
     <name>EnergyManagementNames</name>
     <message>
-        <source>Blocked</source>
-        <translation>Blocked</translation>
-    </message>
-    <message>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Consumption Management</source>
-        <translation>Consumption Management</translation>
+        <translation>能耗管理</translation>
     </message>
     <message>
         <source>Electricity</source>
-        <translation>Electricity</translation>
+        <translation>电</translation>
     </message>
     <message>
         <source>Gas</source>
-        <translation>Gas</translation>
+        <translation>燃气</translation>
     </message>
     <message>
         <source>GroundFail</source>
-        <translation>GroundFail</translation>
+        <translation>接地故障</translation>
     </message>
     <message>
         <source>Heat</source>
-        <translation>Heat</translation>
+        <translation>取暖</translation>
     </message>
     <message>
         <source>HotWater</source>
-        <translation>HotWater</translation>
+        <translation>热水</translation>
     </message>
     <message>
         <source>Opened</source>
-        <translation>Opened</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Overtension</source>
-        <translation>Overtension</translation>
+        <translation>电压过高</translation>
     </message>
     <message>
         <source>ShortCircuit</source>
-        <translation>ShortCircuit</translation>
+        <translation>短路</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>未知</translation>
     </message>
     <message>
         <source>Water</source>
-        <translation>Water</translation>
+        <translation>水</translation>
     </message>
 </context>
 <context>
     <name>EnergyManagementSystem</name>
     <message>
         <source>consumption/production</source>
-        <translation>Consumption/production</translation>
+        <translation>能耗/生产</translation>
     </message>
     <message>
         <source>load management</source>
-        <translation>Load management</translation>
+        <translation>负荷管理</translation>
     </message>
     <message>
         <source>systems supervision</source>
-        <translation>Systems supervision</translation>
+        <translation>系统监督</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthGraph</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>天</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>dd/MM/yyyy</translation>
+        <translation>日/月/年</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>select a date</source>
-        <translation>Select a date</translation>
+        <translation>选择日期</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthTable</name>
     <message>
         <source>day</source>
-        <translation>Day</translation>
+        <translation>天</translation>
     </message>
 </context>
 <context>
     <name>EnergyOverview</name>
     <message>
         <source>Global View</source>
-        <translation>Global view</translation>
+        <translation>概览</translation>
     </message>
 </context>
 <context>
     <name>EnergyYearGraph</name>
     <message>
         <source>no data available</source>
-        <translation>No data available</translation>
+        <translation>没有可用数据</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
 </context>
 <context>
     <name>EnergyYearTable</name>
     <message>
         <source>delta</source>
-        <translation>Delta</translation>
+        <translation>差異</translation>
     </message>
     <message>
         <source>month</source>
-        <translation>Month</translation>
+        <translation>月</translation>
     </message>
     <message>
         <source>objective</source>
-        <translation>Objective</translation>
+        <translation>目標</translation>
     </message>
 </context>
 <context>
     <name>FavoriteEditPopup</name>
     <message>
         <source>Address:</source>
-        <translation>Address:</translation>
+        <translation>地址：</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
-        <translation>Edit quicklink properties</translation>
+        <translation>编辑快捷链接属性</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Title:</translation>
+        <translation>标题：</translation>
     </message>
 </context>
 <context>
     <name>FavoritesBar</name>
     <message>
         <source>Address:</source>
-        <translation>Address:</translation>
+        <translation>地址：</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
-        <translation>Edit quicklink properties</translation>
-    </message>
-    <message>
-        <source>Name cannot be empty</source>
-        <translation>Name cannot be empty</translation>
-    </message>
-    <message>
-        <source>No type selection</source>
-        <translation>No type selection</translation>
+        <translation>编辑快捷链接属性</translation>
     </message>
     <message>
         <source>rss</source>
@@ -1550,258 +1494,242 @@ Address: %2</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Title:</translation>
+        <translation>标题：</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation>Weather</translation>
+        <translation>天气</translation>
     </message>
     <message>
         <source>web camera</source>
-        <translation>Web camera</translation>
+        <translation>网络摄像头</translation>
     </message>
     <message>
         <source>web page</source>
-        <translation>Web page</translation>
+        <translation>网页</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web radio</translation>
+        <translation>网络广播</translation>
     </message>
 </context>
 <context>
     <name>FeedbackPopup</name>
     <message>
         <source>programming impossible</source>
-        <translation>Programming impossible</translation>
+        <translation>无法编程</translation>
     </message>
 </context>
 <context>
     <name>ForceDurationPopup</name>
     <message>
         <source>Force load</source>
-        <translation>Force load</translation>
+        <translation>强制负荷</translation>
     </message>
     <message>
         <source>force load</source>
-        <translation>Force load</translation>
+        <translation>强制负荷</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Time</translation>
+        <translation>时间</translation>
     </message>
 </context>
 <context>
     <name>GeneralAmbient</name>
     <message>
         <source>source</source>
-        <translation>Source</translation>
+        <translation>声源</translation>
     </message>
 </context>
 <context>
     <name>GlobalViewTable</name>
     <message>
         <source>consumption</source>
-        <translation>Consumption</translation>
+        <translation>消耗</translation>
     </message>
     <message>
         <source>delta</source>
-        <translation>Delta</translation>
+        <translation>差異</translation>
     </message>
     <message>
         <source>line</source>
-        <translation>Line</translation>
+        <translation>线条</translation>
     </message>
     <message>
         <source>objective</source>
-        <translation>Objective</translation>
+        <translation>目標</translation>
     </message>
 </context>
 <context>
     <name>HomePage</name>
     <message>
         <source>functions</source>
-        <translation>Functions</translation>
+        <translation>功能</translation>
     </message>
     <message>
         <source>multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <source>rooms</source>
-        <translation>Rooms</translation>
+        <translation>场所</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation>Settings</translation>
+        <translation>设定</translation>
     </message>
 </context>
 <context>
     <name>InstantConsumption</name>
     <message>
         <source>Instant consumption</source>
-        <translation>Instant consumption</translation>
+        <translation>即时能耗</translation>
     </message>
 </context>
 <context>
     <name>Lighting</name>
     <message>
         <source>lighting</source>
-        <translation>Lighting</translation>
+        <translation>照明</translation>
     </message>
 </context>
 <context>
     <name>LightingNames</name>
     <message>
         <source>0.5 Seconds</source>
-        <translation>0.5 Seconds</translation>
+        <translation>0.5 秒</translation>
     </message>
     <message>
         <source>1 Minute</source>
-        <translation>1 Minute</translation>
+        <translation>1分钟</translation>
     </message>
     <message>
         <source>15 Minutes</source>
-        <translation>15 Minutes</translation>
+        <translation>15分钟</translation>
     </message>
     <message>
         <source>2 Minutes</source>
-        <translation>2 Minutes</translation>
+        <translation>2分钟</translation>
     </message>
     <message>
         <source>3 Minutes</source>
-        <translation>3 Minutes</translation>
+        <translation>3分钟</translation>
     </message>
     <message>
         <source>30 Seconds</source>
-        <translation>30 Seconds</translation>
+        <translation>30秒红</translation>
     </message>
     <message>
         <source>4 Minutes</source>
-        <translation>4 Minutes</translation>
+        <translation>4分钟</translation>
     </message>
     <message>
         <source>5 Minutes</source>
-        <translation>5 Minutes</translation>
+        <translation>5分钟</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>无效</translation>
     </message>
 </context>
 <context>
     <name>LoadDiagnostic</name>
     <message>
         <source>Closed</source>
-        <translation>Closed</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Open - Block</source>
-        <translation>Open - Block</translation>
+        <translation>打开 – 阻止</translation>
     </message>
     <message>
         <source>Open - Earth Fault</source>
-        <translation>Open - Earth Fault</translation>
+        <translation>打开 – 接地故障</translation>
     </message>
     <message>
         <source>Open - Over Current</source>
-        <translation>Open - Over Current</translation>
+        <translation>打开 – 电流过高</translation>
     </message>
     <message>
         <source>Open - Short Circuit</source>
-        <translation>Open - Short Circuit</translation>
+        <translation>打开 – 短路</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>未知</translation>
     </message>
 </context>
 <context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
-        <translation>Closed</translation>
-    </message>
-    <message>
-        <source>Forced</source>
-        <translation>Forced</translation>
-    </message>
-    <message>
-        <source>No amplifier set</source>
-        <translation>No amplifier set</translation>
-    </message>
-    <message>
-        <source>No name set</source>
-        <translation>No name set</translation>
-    </message>
-    <message>
-        <source>No source set</source>
-        <translation>No source set</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Open - Block</source>
-        <translation>Open - Block</translation>
+        <translation>打开 – 阻止</translation>
     </message>
     <message>
         <source>Open - Earth Fault</source>
-        <translation>Open - Earth Fault</translation>
+        <translation>打开 – 接地故障</translation>
     </message>
     <message>
         <source>Open - Over Current</source>
-        <translation>Open - Over Current</translation>
+        <translation>打开 – 电流过高</translation>
     </message>
     <message>
         <source>Open - Short Circuit</source>
-        <translation>Open - Short Circuit</translation>
+        <translation>打开 – 短路</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>未知</translation>
     </message>
     <message>
         <source>°C</source>
-        <translation>°C</translation>
+        <translation>攝氏度</translation>
     </message>
 </context>
 <context>
     <name>Messages</name>
     <message>
         <source>messages</source>
-        <translation>Messages</translation>
+        <translation>信息</translation>
     </message>
 </context>
 <context>
     <name>MessagesItems</name>
     <message>
         <source>inbox</source>
-        <translation>Inbox</translation>
+        <translation>收件箱</translation>
     </message>
     <message>
         <source>Received messages</source>
-        <translation>Received messages</translation>
+        <translation>收到的信息</translation>
     </message>
 </context>
 <context>
     <name>Multimedia</name>
     <message>
         <source>devices</source>
-        <translation>Devices</translation>
+        <translation>设备</translation>
     </message>
     <message>
         <source>ip radio</source>
-        <translation>IP radio</translation>
+        <translation>IP广播</translation>
     </message>
     <message>
         <source>multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <source>rss</source>
@@ -1809,762 +1737,722 @@ Address: %2</translation>
     </message>
     <message>
         <source>weather</source>
-        <translation>Weather</translation>
+        <translation>天气</translation>
     </message>
     <message>
         <source>web browser</source>
-        <translation>Web browser</translation>
+        <translation>网络浏览器</translation>
     </message>
     <message>
         <source>web cam</source>
-        <translation>Web Cam</translation>
+        <translation>摄像头</translation>
     </message>
     <message>
         <source>web link</source>
-        <translation>Web link</translation>
+        <translation>网络链接</translation>
     </message>
 </context>
 <context>
     <name>NewImageCard</name>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Save configuration changes?</source>
-        <translation>Save configuration changes?</translation>
+        <translation>保存配置修改吗？</translation>
     </message>
 </context>
 <context>
     <name>Partial</name>
     <message>
         <source>Partial </source>
-        <translation>Partial</translation>
+        <translation>分表</translation>
     </message>
     <message>
         <source>reset</source>
-        <translation>Reset</translation>
+        <translation>重新设置</translation>
     </message>
     <message>
         <source>since </source>
-        <translation>Since </translation>
+        <translation>自</translation>
     </message>
 </context>
 <context>
     <name>PasswordInput</name>
     <message>
         <source>Confirm</source>
-        <translation>Confirm</translation>
+        <translation>确认</translation>
     </message>
     <message>
         <source>Insert security code</source>
-        <translation>Insert security code</translation>
+        <translation>输入安全代码</translation>
     </message>
 </context>
 <context>
     <name>PhotoPlayer</name>
     <message>
         <source>%1 seconds</source>
-        <translation>%1 seconds</translation>
+        <translation>%1秒</translation>
     </message>
 </context>
 <context>
     <name>popup</name>
     <message>
         <source>activated</source>
-        <translation>Activated</translation>
+        <translation>启动</translation>
     </message>
     <message>
         <source>ALARM CLOCK</source>
-        <translation>ALARM CLOCK</translation>
+        <translation>闹钟</translation>
     </message>
     <message>
         <source>ANTINTRUSION</source>
-        <translation>ANTINTRUSION</translation>
+        <translation>防盗</translation>
     </message>
     <message>
         <source>available</source>
-        <translation>Available</translation>
+        <translation>可用</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Command sent</source>
-        <translation>Command sent</translation>
+        <translation>指令已发送</translation>
     </message>
     <message>
         <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGY MANAGEMENT</translation>
+        <translation>能耗管理</translation>
     </message>
     <message>
         <source>Energy Monthly Report</source>
-        <translation>Energy Monthly Report</translation>
+        <translation>能耗月报表</translation>
     </message>
     <message>
         <source>Ignore</source>
-        <translation>Ignore</translation>
+        <translation>忽略</translation>
     </message>
     <message>
         <source>MESSAGES</source>
-        <translation>MESSAGES</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <source>Monthly goal reached</source>
-        <translation>Monthly goal reached</translation>
+        <translation>月达成目标</translation>
     </message>
     <message>
         <source>More info</source>
-        <translation>More info</translation>
+        <translation>更多信息</translation>
     </message>
     <message>
         <source>new message (s)</source>
-        <translation>new message (s)</translation>
+        <translation>新的信息</translation>
     </message>
     <message>
         <source>Postpone</source>
-        <translation>Postpone</translation>
+        <translation>推迟</translation>
     </message>
     <message>
         <source>Read</source>
-        <translation>Read</translation>
+        <translation>读取</translation>
     </message>
     <message>
         <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Show</translation>
+        <translation>显示</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <source>SUPERVISION</source>
-        <translation>Supervision</translation>
+        <translation>监督</translation>
     </message>
     <message>
         <source>Threshold %n exceeded</source>
-        <translation>Threshold %n exceeded</translation>
+        <translation>阙值%n超出</translation>
     </message>
 </context>
 <context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
-        <translation>Zone</translation>
+        <translation>区</translation>
     </message>
 </context>
 <context>
     <name>PowerAmplifier</name>
     <message>
         <source>settings</source>
-        <translation>Settings</translation>
+        <translation>设定</translation>
     </message>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>PowerAmplifierPreset</name>
     <message>
         <source>Classical</source>
-        <translation>Classical</translation>
+        <translation>古典</translation>
     </message>
     <message>
         <source>Dance</source>
-        <translation>Dance</translation>
+        <translation>舞曲</translation>
     </message>
     <message>
         <source>Full Bass</source>
-        <translation>Full Bass</translation>
+        <translation>重低音</translation>
     </message>
     <message>
         <source>Full Treble</source>
-        <translation>Full Treble</translation>
+        <translation>重高音</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>正常</translation>
     </message>
     <message>
         <source>Party</source>
-        <translation>Party</translation>
+        <translation>宴会</translation>
     </message>
     <message>
         <source>Pop</source>
-        <translation>Pop</translation>
+        <translation>流行</translation>
     </message>
     <message>
         <source>Rock</source>
-        <translation>Rock</translation>
+        <translation>摇滚</translation>
     </message>
     <message>
         <source>Soft</source>
-        <translation>Soft</translation>
+        <translation>轻音乐</translation>
     </message>
     <message>
         <source>Techno</source>
-        <translation>Techno</translation>
+        <translation>Techno音乐</translation>
     </message>
 </context>
 <context>
     <name>Profile</name>
     <message>
         <source>Add note</source>
-        <translation>Add note</translation>
-    </message>
-    <message>
-        <source>Max notes limit reached</source>
-        <translation>Max notes limit reached</translation>
+        <translation>添加备注</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>IP radio</source>
-        <translation>IP radio</translation>
+        <translation>IP广播</translation>
     </message>
 </context>
 <context>
     <name>RoomModify</name>
     <message>
         <source>Background image</source>
-        <translation>Background image</translation>
-    </message>
-    <message>
-        <source>Card image</source>
-        <translation>Card image</translation>
+        <translation>背景图片</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Change background image</translation>
+        <translation>更换背景图片</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Change card image</translation>
+        <translation>更换卡片</translation>
     </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
         <source>rooms</source>
-        <translation>Rooms</translation>
+        <translation>场所</translation>
     </message>
 </context>
 <context>
     <name>RssPage</name>
     <message>
         <source>No news to display</source>
-        <translation>No news to display</translation>
+        <translation>没有新的显示</translation>
     </message>
     <message>
         <source>Rss load failed</source>
-        <translation>Rss load failed</translation>
+        <translation>Rss加载失败</translation>
     </message>
 </context>
 <context>
     <name>ScenarioLink</name>
     <message>
         <source>Command sent</source>
-        <translation>Command sent</translation>
+        <translation>指令已发送</translation>
     </message>
 </context>
 <context>
     <name>ScenarioModuleSettings</name>
     <message>
         <source>Are you sure to reset the scenario?</source>
-        <translation>Are you sure to reset the scenario?</translation>
+        <translation>确定要重设场景吗？</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
+        <translation>如果没有重设场景，则需要添加场景动作。按OK键开始场景编程，按CANCEL键取消操作。</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>programming impossible</source>
-        <translation>Programming impossible</translation>
+        <translation>无法编程</translation>
     </message>
     <message>
         <source>reset program</source>
-        <translation>Reset program</translation>
+        <translation>重设程序</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
-        <translation>Scenario configuration</translation>
+        <translation>场景配置</translation>
     </message>
     <message>
         <source>start programming</source>
-        <translation>Start programming</translation>
+        <translation>开始编程</translation>
     </message>
     <message>
         <source>stop programming</source>
-        <translation>Stop programming</translation>
+        <translation>停止编程</translation>
     </message>
 </context>
 <context>
     <name>Scenarios</name>
     <message>
         <source>Scenarios</source>
-        <translation>Scenarios</translation>
+        <translation>场景</translation>
     </message>
 </context>
 <context>
     <name>ScheduledScenario</name>
     <message>
         <source>start</source>
-        <translation>Start</translation>
+        <translation>开始</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation>Stop</translation>
+        <translation>停止</translation>
     </message>
 </context>
 <context>
     <name>Settings</name>
     <message>
         <source>Settings</source>
-        <translation>Settings</translation>
+        <translation>设定</translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvancedScenario</name>
     <message>
         <source>Advanced scenario</source>
-        <translation>Advanced Scenario</translation>
+        <translation>高級場景</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>CANCEL</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Save changes?</translation>
+        <translation>保存修改吗？</translation>
     </message>
 </context>
 <context>
     <name>SettingsBrowser</name>
     <message>
         <source>Change Home Page</source>
-        <translation>Change Home Page</translation>
+        <translation>更换主页</translation>
     </message>
     <message>
         <source>Clear History</source>
-        <translation>Clear History</translation>
+        <translation>清除历史记录</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>Enable history</source>
-        <translation>Enable history</translation>
+        <translation>启用历史记录</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
-    </message>
-    <message>
-        <source>Insert new home page</source>
-        <translation>Insert new home page</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
-        <translation>Pressing ok will delete all browser history.
-Continue?</translation>
+        <translation>按ok键将删除所有浏览器历史记录。
+继续吗？</translation>
     </message>
 </context>
 <context>
     <name>SettingsClocks</name>
     <message>
         <source>Add Clock</source>
-        <translation>Add Clock</translation>
+        <translation>添加时钟</translation>
     </message>
 </context>
 <context>
     <name>SettingsDateTime</name>
     <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
         <source>Date</source>
-        <translation>Date</translation>
+        <translation>日期</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Time</translation>
+        <translation>时间</translation>
     </message>
 </context>
 <context>
     <name>SettingsDisplay</name>
     <message>
         <source>Brightness</source>
-        <translation>Brightness</translation>
+        <translation>亮度</translation>
     </message>
     <message>
         <source>Calibration</source>
-        <translation>Calibration</translation>
+        <translation>校准</translation>
     </message>
     <message>
         <source>Clean</source>
-        <translation>Clean</translation>
+        <translation>清除</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergy</name>
     <message>
         <source>consumption goals</source>
-        <translation>Consumption goals</translation>
+        <translation>能耗目标</translation>
     </message>
     <message>
         <source>tariffs</source>
-        <translation>Tariffs</translation>
+        <translation>价格</translation>
     </message>
     <message>
         <source>thresholds</source>
-        <translation>Thresholds</translation>
+        <translation>閾值</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyGoalPanel</name>
     <message>
         <source>consumption goal</source>
-        <translation>Consumption goal</translation>
+        <translation>能耗目标</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyGoalsLine</name>
     <message>
         <source>April</source>
-        <translation>April</translation>
+        <translation>4月</translation>
     </message>
     <message>
         <source>August</source>
-        <translation>August</translation>
+        <translation>8月</translation>
     </message>
     <message>
         <source>December</source>
-        <translation>December</translation>
+        <translation>12月</translation>
     </message>
     <message>
         <source>February</source>
-        <translation>February</translation>
+        <translation>二月</translation>
     </message>
     <message>
         <source>goals enabled</source>
-        <translation>Goals enabled</translation>
+        <translation>目标已启用</translation>
     </message>
     <message>
         <source>January</source>
-        <translation>January</translation>
+        <translation>1月</translation>
     </message>
     <message>
         <source>July</source>
-        <translation>July</translation>
+        <translation>7月</translation>
     </message>
     <message>
         <source>June</source>
-        <translation>June</translation>
+        <translation>6月</translation>
     </message>
     <message>
         <source>March</source>
-        <translation>March</translation>
+        <translation>3月</translation>
     </message>
     <message>
         <source>May</source>
-        <translation>May</translation>
+        <translation>5月</translation>
     </message>
     <message>
         <source>November</source>
-        <translation>November</translation>
+        <translation>11月</translation>
     </message>
     <message>
         <source>October</source>
-        <translation>October</translation>
+        <translation>10月</translation>
     </message>
     <message>
         <source>September</source>
-        <translation>September</translation>
+        <translation>9月</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>threshold 1</source>
-        <translation>Threshold 1</translation>
+        <translation>閾值1</translation>
     </message>
     <message>
         <source>threshold 1 %1</source>
-        <translation>Threshold 1 %1</translation>
+        <translation>阙值1 %1</translation>
     </message>
     <message>
         <source>threshold 2</source>
-        <translation>Threshold 2</translation>
+        <translation>閾值2</translation>
     </message>
     <message>
         <source>threshold 2 %1</source>
-        <translation>Threshold 2 %1</translation>
+        <translation>阙值2 %1</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergySetThresholdsPanel</name>
     <message>
         <source>threshold 1</source>
-        <translation>Threshold 1</translation>
+        <translation>閾值1</translation>
     </message>
     <message>
         <source>threshold 2</source>
-        <translation>Threshold 2</translation>
+        <translation>閾值2</translation>
     </message>
 </context>
 <context>
     <name>SettingsEnergyThresholds</name>
     <message>
         <source>alerts %1</source>
-        <translation>Alerts %1</translation>
+        <translation>报警 %1</translation>
     </message>
     <message>
         <source>disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
 </context>
 <context>
     <name>SettingsGenerals</name>
     <message>
         <source>Beep</source>
-        <translation>Beep</translation>
+        <translation>嘟嘟声</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Connected</translation>
+        <translation>已连接</translation>
     </message>
     <message>
         <source>Date &amp; Time</source>
-        <translation>Date &amp; Time</translation>
+        <translation>日期 &amp; 时间</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>Disconnected</source>
-        <translation>Disconnected</translation>
+        <translation>已断开</translation>
     </message>
     <message>
         <source>Display</source>
-        <translation>Display</translation>
+        <translation>显示</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation>信息</translation>
     </message>
     <message>
         <source>International</source>
-        <translation>International</translation>
+        <translation>国际</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>Network</translation>
+        <translation>网络</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Password</translation>
+        <translation>密码</translation>
     </message>
 </context>
 <context>
     <name>SettingsHistory</name>
     <message>
         <source>disable</source>
-        <translation>Disable</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>enable</source>
-        <translation>Enable</translation>
+        <translation>启动</translation>
     </message>
 </context>
 <context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
-        <translation>Background image</translation>
+        <translation>背景图片</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Change background image</translation>
-    </message>
-    <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
-        <source>Do you want to restore background to default value?</source>
-        <translation>Do you want to restore background to default value?</translation>
+        <translation>更换背景图片</translation>
     </message>
     <message>
         <source>Quicklinks</source>
-        <translation>Quicklinks</translation>
-    </message>
-    <message>
-        <source>Restore background image</source>
-        <translation>Restore background image</translation>
+        <translation>快捷链接</translation>
     </message>
     <message>
         <source>skin home</source>
-        <translation>Skin home</translation>
+        <translation>主页皮肤</translation>
     </message>
 </context>
 <context>
     <name>SettingsHomeDelete</name>
     <message>
         <source>Are you sure to delete the selected quicklink?</source>
-        <translation>Are you sure to delete the selected quicklink?</translation>
+        <translation>确定要删除选定的快捷链接吗？</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
-        <translation>Confirm deletion</translation>
+        <translation>确认删除</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Delete</translation>
+        <translation>清除</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>Rename</translation>
+        <translation>重命名</translation>
     </message>
 </context>
 <context>
     <name>SettingsHomeQuicklinks</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Add Quicklink</translation>
+        <translation>添加快捷链接</translation>
     </message>
 </context>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
-        <source>Do you want to change actual image with the one selected?</source>
-        <translation>Do you want to change actual image with the one selected?</translation>
-    </message>
-    <message>
         <source>Images</source>
-        <translation>Images</translation>
-    </message>
-    <message>
-        <source>Last used</source>
-        <translation>Last used</translation>
+        <translation>图片</translation>
     </message>
 </context>
 <context>
     <name>SettingsInternational</name>
     <message>
         <source>keyboard language</source>
-        <translation>Keyboard language</translation>
+        <translation>键盘语言</translation>
     </message>
     <message>
         <source>text language</source>
-        <translation>Text language</translation>
+        <translation>文本语言</translation>
     </message>
 </context>
 <context>
     <name>SettingsItems</name>
     <message>
         <source>Alarm Clock</source>
-        <translation>Alarm clock</translation>
+        <translation>闹钟</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation>Functions</translation>
+        <translation>功能</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>总体</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Home</translation>
+        <translation>主页</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation>Multimedia</translation>
+        <translation>多媒体</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>Profiles</translation>
+        <translation>特性</translation>
     </message>
     <message>
         <source>Ringtones</source>
-        <translation>Ringtones</translation>
+        <translation>铃音</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation>Rooms</translation>
+        <translation>场所</translation>
     </message>
 </context>
 <context>
     <name>SettingsMultimedia</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Add Quicklink</translation>
+        <translation>添加快捷链接</translation>
     </message>
     <message>
         <source>Browser</source>
-        <translation>Browser</translation>
+        <translation>浏览器</translation>
     </message>
 </context>
 <context>
     <name>SettingsNames</name>
     <message>
         <source>Clear</source>
-        <translation>Clear</translation>
+        <translation>清晰</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>Connect</translation>
+        <translation>连接</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Dark</translation>
+        <translation>黑色</translation>
     </message>
     <message>
         <source>DHCP</source>
@@ -2572,52 +2460,52 @@ Continue?</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Disable</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>Disconnect</translation>
+        <translation>断开连接</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Enable</translation>
+        <translation>启动</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>English</translation>
+        <translation>英文</translation>
     </message>
     <message>
         <source>French</source>
-        <translation>French</translation>
+        <translation>法文</translation>
     </message>
     <message>
         <source>Italian</source>
-        <translation>Italian</translation>
+        <translation>意大利文</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
 Continue?</source>
-        <translation>Pressing ok will cause a device reboot in a few moments.
-Continue?</translation>
+        <translation>按ok键将使设备在几分钟内重启。
+继续吗？</translation>
     </message>
     <message>
         <source>Static IP address</source>
-        <translation>Static IP address</translation>
+        <translation>静态IP地址</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>Connected</source>
-        <translation>Connected</translation>
+        <translation>已连接</translation>
     </message>
     <message>
         <source>DHCP</source>
@@ -2625,107 +2513,84 @@ Continue?</translation>
     </message>
     <message>
         <source>Disconnected</source>
-        <translation>Disconnected</translation>
+        <translation>已断开</translation>
     </message>
     <message>
         <source>Gateway</source>
-        <translation>Gateway</translation>
+        <translation>网关</translation>
     </message>
     <message>
         <source>IP address</source>
-        <translation>IP address</translation>
+        <translation>IP地址</translation>
     </message>
     <message>
         <source>IP configuration</source>
-        <translation>IP configuration</translation>
+        <translation>IP配置</translation>
     </message>
     <message>
         <source>MAC address</source>
-        <translation>MAC address</translation>
+        <translation>MAC地址</translation>
     </message>
     <message>
         <source>network state</source>
-        <translation>Network state</translation>
+        <translation>网络状态</translation>
     </message>
     <message>
         <source>Primary DNS</source>
-        <translation>Primary DNS</translation>
+        <translation>主网域名称系统服务器</translation>
     </message>
     <message>
         <source>Secondary DNS</source>
-        <translation>Secondary DNS</translation>
+        <translation>次网域名称系统服务器</translation>
     </message>
     <message>
         <source>Static</source>
-        <translation>Static</translation>
+        <translation>静态</translation>
     </message>
     <message>
         <source>Subnet mask</source>
-        <translation>Subnet mask</translation>
+        <translation>子网掩码</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>未知</translation>
     </message>
 </context>
 <context>
     <name>SettingsPassword</name>
     <message>
         <source>Change password</source>
-        <translation>Change Password</translation>
+        <translation>更改密码</translation>
     </message>
     <message>
         <source>Incorrect password</source>
-        <translation>Incorrect password</translation>
+        <translation>密码不正确</translation>
     </message>
 </context>
 <context>
     <name>SettingsProfile</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Add Quicklink</translation>
+        <translation>添加快捷链接</translation>
     </message>
     <message>
         <source>Background image</source>
-        <translation>Background image</translation>
-    </message>
-    <message>
-        <source>Card image</source>
-        <translation>Card image</translation>
+        <translation>背景图片</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Change background image</translation>
+        <translation>更换背景图片</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Change card image</translation>
-    </message>
-    <message>
-        <source>Confirm operation</source>
-        <translation>Confirm operation</translation>
-    </message>
-    <message>
-        <source>Do you want to restore background to default value?</source>
-        <translation>Do you want to restore background to default value?</translation>
-    </message>
-    <message>
-        <source>Restore background image</source>
-        <translation>Restore background image</translation>
+        <translation>更换卡片</translation>
     </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
-        <translation>Ringtones</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsRingtones</name>
-    <message>
-        <source>Ringtone volume</source>
-        <translation>Ringtone volume</translation>
+        <translation>铃音</translation>
     </message>
 </context>
 <context>
@@ -2734,70 +2599,70 @@ Continue?</translation>
         <source>Pressing ok will cause a device reboot in a few moments.
 Please, do not use the touch till it is restarted.
 Continue?</source>
-        <translation>Pressing ok will cause a device reboot in a few moments.
-Please, do not use the touch till it is restarted.
-Continue?</translation>
+        <translation>按ok键将使设备在几分钟内重启。
+请不要使用触摸键，直到设备重新启动。
+继续吗？</translation>
     </message>
 </context>
 <context>
     <name>SettingsSystems</name>
     <message>
         <source>Energy</source>
-        <translation>Energy</translation>
+        <translation>電能</translation>
     </message>
     <message>
         <source>Scenarios</source>
-        <translation>Scenarios</translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>Video Door Entry</source>
-        <translation>Video door entry</translation>
+        <translation>视频入门系统</translation>
     </message>
 </context>
 <context>
     <name>SettingsTeleloop</name>
     <message>
         <source>Associate</source>
-        <translation>Associate</translation>
+        <translation>结合</translation>
     </message>
     <message>
         <source>Associated</source>
-        <translation>Associated</translation>
+        <translation>关联</translation>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Not associated</translation>
+        <translation>未结合</translation>
     </message>
 </context>
 <context>
     <name>SettingsVDE</name>
     <message>
         <source>Associated</source>
-        <translation>Associated</translation>
+        <translation>关联</translation>
     </message>
     <message>
         <source>auto open</source>
-        <translation>Auto open</translation>
+        <translation>自动打开</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>已禁用</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>已啟用</translation>
     </message>
     <message>
         <source>hands free</source>
-        <translation>Hands Free</translation>
+        <translation>免提</translation>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Not associated</translation>
+        <translation>未结合</translation>
     </message>
     <message>
         <source>Ringtone exclusion</source>
-        <translation>Ringtone exclusion</translation>
+        <translation>取消铃音</translation>
     </message>
     <message>
         <source>Teleloop</source>
@@ -2808,309 +2673,281 @@ Continue?</translation>
     <name>SettingsVersion</name>
     <message>
         <source>External unit associated</source>
-        <translation>External unit associated</translation>
+        <translation>关联的室外单元</translation>
     </message>
     <message>
         <source>Firmware version</source>
-        <translation>Firmware version</translation>
+        <translation>固件版本</translation>
     </message>
     <message>
         <source>Internal unit address</source>
-        <translation>Internal unit address</translation>
+        <translation>内部分机地址</translation>
     </message>
     <message>
         <source>Kernel version</source>
-        <translation>Kernel version</translation>
+        <translation>内核版本</translation>
     </message>
     <message>
         <source>Multimedia source address</source>
-        <translation>Multimedia source address</translation>
+        <translation>多媒体源地址</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation>Unknown</translation>
+        <translation>未知</translation>
     </message>
 </context>
 <context>
     <name>SimpleScenario</name>
     <message>
         <source>activate</source>
-        <translation>Activate</translation>
+        <translation>激活</translation>
     </message>
     <message>
         <source>Command sent</source>
-        <translation>Command sent</translation>
+        <translation>指令已发送</translation>
     </message>
 </context>
 <context>
     <name>SoundAmbient</name>
     <message>
         <source>source</source>
-        <translation>Source</translation>
+        <translation>声源</translation>
     </message>
 </context>
 <context>
     <name>SoundDiffusion</name>
     <message>
         <source>Sound System</source>
-        <translation>Sound system</translation>
+        <translation>声音系统</translation>
     </message>
 </context>
 <context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
-        <translation>Browse</translation>
+        <translation>翻阅</translation>
     </message>
     <message>
         <source>no album</source>
-        <translation>No album</translation>
+        <translation>没有专辑</translation>
     </message>
     <message>
         <source>no title</source>
-        <translation>No title</translation>
+        <translation>没有标题</translation>
     </message>
     <message>
         <source>saved IP radios</source>
-        <translation>Saved IP radios</translation>
+        <translation>保存的IP广播</translation>
     </message>
     <message>
         <source>source</source>
-        <translation>Source</translation>
+        <translation>声源</translation>
     </message>
     <message>
         <source>source change</source>
-        <translation>Source change</translation>
+        <translation>更换声源</translation>
     </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
     <message>
         <source>off</source>
-        <translation>Off</translation>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoBtest</name>
     <message>
-        <source>%1 days</source>
-        <translation>%1 days</translation>
-    </message>
-    <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Breaker</source>
-        <translation>Breaker</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test Circuit</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Test every</source>
-        <translation>Test every</translation>
+        <translation>测试每一个</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoMenu</name>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
+        <translation>自动</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Check Faults</source>
-        <translation>Check Faults</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>close</source>
-        <translation>Close</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Disabled</translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Enabled</translation>
+        <translation>启动的</translation>
     </message>
     <message>
         <source>open</source>
-        <translation>Open</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
+        <translation>打开</translation>
     </message>
 </context>
 <context>
     <name>Supervision</name>
     <message>
         <source>load diagnostic</source>
-        <translation>Load Diagnostic</translation>
+        <translation>负荷诊断</translation>
     </message>
 </context>
 <context>
     <name>Systems</name>
     <message>
         <source>functions</source>
-        <translation>Functions</translation>
+        <translation>功能</translation>
     </message>
 </context>
 <context>
     <name>TextDialog</name>
     <message>
         <source>cancel</source>
-        <translation>Cancel</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
+        <translation>如果没有重设场景，则需要添加场景动作。按OK键开始场景编程，按CANCEL键取消操作。</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>Ok</translation>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
-        <translation>Scenario configuration</translation>
+        <translation>场景配置</translation>
     </message>
 </context>
 <context>
     <name>ThermalControlledProbe</name>
     <message>
         <source>fancoil speed</source>
-        <translation>Fancoil speed</translation>
+        <translation>盘管风机速度</translation>
     </message>
     <message>
         <source>modes</source>
-        <translation>Modes</translation>
+        <translation>模式</translation>
     </message>
     <message>
         <source>temperature set</source>
-        <translation>Temperature set</translation>
+        <translation>温度设置</translation>
     </message>
     <message>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
-        <translation>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</translation>
+        <translation>有未保存的修改正在进行中。
+如果选择ok键将丢失修改。
+继续吗？</translation>
     </message>
 </context>
 <context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
-        <translation>Antifreeze</translation>
+        <translation>防冻</translation>
     </message>
     <message>
         <source>duration</source>
-        <translation>Duration</translation>
+        <translation>期限</translation>
     </message>
     <message>
         <source>Holiday</source>
-        <translation>Holiday</translation>
+        <translation>假日</translation>
     </message>
     <message>
         <source>Manual</source>
-        <translation>Manual</translation>
+        <translation>手动</translation>
     </message>
     <message>
         <source>mode</source>
-        <translation>Mode</translation>
+        <translation>模式</translation>
     </message>
     <message>
         <source>next program</source>
-        <translation>Next program</translation>
+        <translation>下一个程序</translation>
     </message>
     <message>
         <source>next scenario</source>
-        <translation>Next scenario</translation>
+        <translation>下一个场景</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Scenarios</source>
-        <translation>Scenarios</translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>season</source>
-        <translation>Season</translation>
+        <translation>季节</translation>
     </message>
     <message>
         <source>temperature set</source>
-        <translation>Temperature set</translation>
+        <translation>温度设置</translation>
     </message>
     <message>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
-        <translation>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</translation>
+        <translation>有未保存的修改正在进行中。
+如果选择ok键将丢失修改。
+继续吗？</translation>
     </message>
     <message>
         <source>Timed Manual</source>
-        <translation>Timed manual</translation>
+        <translation>定时手动</translation>
     </message>
     <message>
         <source>Weekday</source>
-        <translation>Weekday</translation>
+        <translation>平日</translation>
     </message>
     <message>
         <source>Weekly</source>
-        <translation>Weekly</translation>
+        <translation>每周</translation>
     </message>
 </context>
 <context>
     <name>ThermalNames</name>
     <message>
         <source>antifreeze</source>
-        <translation>Antifreeze</translation>
+        <translation>防冻</translation>
     </message>
     <message>
         <source>auto</source>
-        <translation>Auto</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Automatic</translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>Cooling</translation>
+        <translation>降温</translation>
     </message>
     <message>
         <source>Dry</source>
-        <translation>Dry</translation>
+        <translation>去湿</translation>
     </message>
     <message>
         <source>Fan</source>
-        <translation>Fan</translation>
+        <translation>风扇</translation>
     </message>
     <message>
         <source>Heating</source>
-        <translation>Heating</translation>
+        <translation>暖气</translation>
     </message>
     <message>
         <source>High</source>
@@ -3118,15 +2955,15 @@ Continue?</translation>
     </message>
     <message>
         <source>holiday</source>
-        <translation>Holiday</translation>
+        <translation>假日</translation>
     </message>
     <message>
         <source>Low</source>
-        <translation>Low</translation>
+        <translation>低</translation>
     </message>
     <message>
         <source>manual</source>
-        <translation>Manual</translation>
+        <translation>手动</translation>
     </message>
     <message>
         <source>max</source>
@@ -3134,135 +2971,135 @@ Continue?</translation>
     </message>
     <message>
         <source>med</source>
-        <translation>Med</translation>
+        <translation>中间</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation>Medium</translation>
+        <translation>中</translation>
     </message>
     <message>
         <source>min</source>
-        <translation>Min</translation>
+        <translation>最小</translation>
     </message>
     <message>
         <source>off</source>
-        <translation>Off</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>On</translation>
+        <translation>开启</translation>
     </message>
     <message>
         <source>scenario</source>
-        <translation>Scenario</translation>
+        <translation>场景</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silent</translation>
+        <translation>无声</translation>
     </message>
     <message>
         <source>summer</source>
-        <translation>Summer</translation>
+        <translation>夏季</translation>
     </message>
     <message>
         <source>timed manual</source>
-        <translation>Timed manual</translation>
+        <translation>定时手动</translation>
     </message>
     <message>
         <source>weekday</source>
-        <translation>Weekday</translation>
+        <translation>平日</translation>
     </message>
     <message>
         <source>weekly programs</source>
-        <translation>Weekly programs</translation>
+        <translation>每周程序</translation>
     </message>
     <message>
         <source>winter</source>
-        <translation>Winter</translation>
+        <translation>冬季</translation>
     </message>
 </context>
 <context>
     <name>ThermalRegulation</name>
     <message>
         <source>temperature control</source>
-        <translation>Temperature control</translation>
+        <translation>温度控制</translation>
     </message>
 </context>
 <context>
     <name>ThermalRegulationItems</name>
     <message>
         <source>Air Conditioning</source>
-        <translation>Air Conditioning</translation>
+        <translation>空调</translation>
     </message>
     <message>
         <source>External Probes</source>
-        <translation>External probes</translation>
+        <translation>外部探测器</translation>
     </message>
     <message>
         <source>Not Controlled Probes</source>
-        <translation>Not Controlled Probes</translation>
+        <translation>未受控的探测器</translation>
     </message>
 </context>
 <context>
     <name>VideoCamera</name>
     <message>
         <source>door lock</source>
-        <translation>Door lock</translation>
+        <translation>门锁</translation>
     </message>
     <message>
         <source>stairlight</source>
-        <translation>Stairlight</translation>
+        <translation>楼梯灯</translation>
     </message>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntry</name>
     <message>
         <source>video door entry</source>
-        <translation>Video door entry</translation>
+        <translation>视频入门系统</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntryItems</name>
     <message>
         <source>intercom</source>
-        <translation>Intercom</translation>
+        <translation>内部通讯</translation>
     </message>
     <message>
         <source>pager</source>
-        <translation>Pager</translation>
+        <translation>传呼机</translation>
     </message>
     <message>
         <source>video control</source>
-        <translation>Video control</translation>
+        <translation>闭路电视</translation>
     </message>
 </context>
 <context>
     <name>VideoPlayer</name>
     <message>
         <source>Loop detected</source>
-        <translation>Loop detected</translation>
+        <translation>检测到循环</translation>
     </message>
 </context>
 <context>
     <name>VolumeGeneral</name>
     <message>
         <source>volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
 </context>
 <context>
     <name>VolumePopup</name>
     <message>
         <source>mute</source>
-        <translation>Mute</translation>
+        <translation>静音</translation>
     </message>
 </context>
 </TS>

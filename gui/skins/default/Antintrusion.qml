@@ -7,7 +7,7 @@ import "js/datetime.js" as DateTime
 SystemPage {
     id: antintrusion
     source: "images/background/burglar_alarm.jpg"
-    text: qsTr("antintrusion")
+    text: qsTr("Burglar alarm")
     rootColumn: Component { AntintrusionSystem {} }
     names: AntintrusionNames { }
 

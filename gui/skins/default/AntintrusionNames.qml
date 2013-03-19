@@ -7,10 +7,10 @@ QtObject {
     // internal function to load values into the container
     function _init(container) {
         container['ALARM_TYPE'] = []
-        container['ALARM_TYPE'][AntintrusionAlarm.Antipanic] = qsTr("panic")
+        container['ALARM_TYPE'][AntintrusionAlarm.Antipanic] = qsTr("anti-panic")
         container['ALARM_TYPE'][AntintrusionAlarm.Intrusion] = qsTr("intrusion detection")
         container['ALARM_TYPE'][AntintrusionAlarm.Technical] = qsTr("technical")
-        container['ALARM_TYPE'][AntintrusionAlarm.Tamper] = qsTr("anti-tampering")
+        container['ALARM_TYPE'][AntintrusionAlarm.Tamper] = qsTr("tamper")
     }
 
     // retrieves the requested value from the local array
