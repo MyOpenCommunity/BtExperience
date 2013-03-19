@@ -134,12 +134,6 @@ void GstMediaPlayer::resume()
 void GstMediaPlayer::stop()
 {
 	// simulate player termination when the player is logically paused
-	if (paused)
-	{
-		paused = false;
-		emit gstPlayerStopped();
-	}
-
 	paused = false;
 	quit();
 }
