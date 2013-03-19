@@ -7,7 +7,7 @@ var _alarmPopups = []
 var _stopGoPopups = []
 var _scenarioActivationPopups = []
 var _unreadMessagesPopups = []
-var _thresholdGoalPopups = []
+var _goalPopups = []
 var _alarmClockPopups = []
 
 
@@ -141,38 +141,9 @@ function addScenarioActivationPopup(descr) {
 }
 
 /**
-  * Adds a threshold popup
-  *
-  * Adds a threshold popup to the stack of threshold popups and show
-  * the last popup
-  *
-  * descr: line name/description
-  * level: number of levels exceeded
-  */
-function addThresholdExceededPopup(device) {
-    var data = []
-
-    data["_kind"] = "threshold_exceeded"
-    data["_device"] = device // saved for later use
-
-    data["title"] = qsTr("ENERGY MANAGEMENT")
-
-    data["line1"] = device.name
-    data["line2"] = qsTr("Threshold %n exceeded", "", device.thresholdLevel)
-    data["line3"] = ""
-
-    data["confirmText"] = qsTr("Show")
-    data["dismissText"] = qsTr("Ignore")
-
-    _thresholdGoalPopups.push(data)
-
-    return highestPriorityPopup()
-}
-
-/**
   * Adds a goal popup
   *
-  * Adds a goal popup to the stack of threshold popups and show
+  * Adds a goal popup to the stack of goal popups and show
   * the last popup
   *
   * descr: line name/description
@@ -195,18 +166,18 @@ function addGoalReachedPopup(device) {
 
     // we can only have one goal popup (less recents are discarded)
     var tmp = []
-    for (var i = 0; i < _thresholdGoalPopups.length; ++i) {
-        var p = _thresholdGoalPopups[i]
+    for (var i = 0; i < _goalPopups.length; ++i) {
+        var p = _goalPopups[i]
         if (p["_kind"] === "goal_reached") // removes old goal popups
             continue
         tmp.push(p)
     }
 
-    _thresholdGoalPopups = []
+    _goalPopups = []
     for (var j = 0; j < tmp.length; ++j)
-        _thresholdGoalPopups.push(tmp[j])
+        _goalPopups.push(tmp[j])
 
-    _thresholdGoalPopups.push(data)
+    _goalPopups.push(data)
 
     return highestPriorityPopup()
 }
@@ -262,7 +233,7 @@ function addMonthlyReportNotification() {
     data["confirmText"] = qsTr("Show")
     data["dismissText"] = qsTr("Ignore")
 
-    _thresholdGoalPopups.push(data)
+    _goalPopups.push(data)
 
     return highestPriorityPopup()
 }
@@ -284,7 +255,7 @@ function confirm() {
     _stopGoPopups = []
     _scenarioActivationPopups = []
     _unreadMessagesPopups = []
-    _thresholdGoalPopups = []
+    _goalPopups = []
 
     if (p["_kind"] === "messages") {
         return "Messages"
@@ -296,10 +267,6 @@ function confirm() {
 
     if (p["_kind"] === "stop&go") {
         return "Supervision"
-    }
-
-    if (p["_kind"] === "threshold_exceeded") {
-        return ["ThresholdExceeded", p["_device"]]
     }
 
     if (p["_kind"] === "goal_reached") {
@@ -361,8 +328,8 @@ function dismiss() {
         return highestPriorityPopup()
     }
 
-    if (_thresholdGoalPopups.length > 0) {
-        _thresholdGoalPopups.pop()
+    if (_goalPopups.length > 0) {
+        _goalPopups.pop()
         return highestPriorityPopup()
     }
 
@@ -392,8 +359,8 @@ function highestPriorityPopup() {
         return _scenarioActivationPopups[_scenarioActivationPopups.length - 1]
     }
 
-    if (_thresholdGoalPopups.length > 0) {
-        return _thresholdGoalPopups[_thresholdGoalPopups.length - 1]
+    if (_goalPopups.length > 0) {
+        return _goalPopups[_goalPopups.length - 1]
     }
 
     return undefined

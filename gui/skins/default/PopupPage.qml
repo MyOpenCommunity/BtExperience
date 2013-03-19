@@ -86,10 +86,6 @@ BasePage {
         privateProps.update(PopupLogic.addScenarioActivationPopup(description))
     }
 
-    function addThresholdExceededPopup(energyDevice) {
-        privateProps.update(PopupLogic.addThresholdExceededPopup(energyDevice))
-    }
-
     function addGoalReachedPopup(energyDevice) {
         privateProps.update(PopupLogic.addGoalReachedPopup(energyDevice))
     }
@@ -145,12 +141,6 @@ BasePage {
                 Stack.goToPage("EnergyGlobalView.qml")
             }
 
-            if (data[0] === "ThresholdExceeded") {
-                Stack.pushPageBelow("EnergyDataGraph.qml", {energyData: data[1], state: "day"}).setComponentOnGraphLoader()
-                closePopup()
-                return
-            }
-
             if (data[0] === "GoalReached") {
                 Stack.pushPageBelow("EnergyDataGraph.qml", {energyData: data[1]})
                 closePopup()
@@ -183,12 +173,6 @@ BasePage {
                 popupLoader.item.line3 = data.line3
                 popupLoader.item.confirmText = data.confirmText
                 popupLoader.item.dismissText = data.dismissText
-            }
-
-            if (data["_kind"] === "threshold_exceeded") {
-                energyGraphCache.energyData = data["_device"]
-                energyGraphCache.graphType = EnergyData.CumulativeDayGraph
-                energyGraphCache.date = new Date()
             }
 
             if (data["_kind"] === "goal_reached") {

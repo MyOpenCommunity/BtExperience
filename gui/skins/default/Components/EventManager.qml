@@ -90,6 +90,11 @@ Item {
         }
     }
 
+    ObjectModel {
+        id: energiesFamilies
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+    }
+
     Timer {
         id: monthlyReportTimer
 
@@ -570,11 +575,16 @@ Item {
                 else if (energyDevice.thresholdLevel === 2)
                     global.ringtoneManager.playRingtone(global.extraPath + "10/drin3.wav", AudioState.Ringtone)
             }
-            // opens popup only if we are below normal screen state
-            if (s < ScreenState.Normal && energyDevice.thresholdLevel > 0) {
-                var p = privateProps.preparePopupPage(false)
-                // adds threshold alarm
-                p.addThresholdExceededPopup(energyDevice)
+            if (s < ScreenState.Normal) {
+                // navigates to energy data detail page; we don't have a way to
+                // compute the right family for our energyData object, so let's
+                // take the first electricity family in the hypothesis there is
+                // only one of them
+                for (var i = 0; i < energiesFamilies.count; ++i) {
+                    var f = energiesFamilies.getObject(i)
+                    if (f.objectKey == EnergyFamily.Electricity)
+                        Stack.pushPage("EnergyDataDetail.qml", {"family": f})
+                }
             }
         }
 
