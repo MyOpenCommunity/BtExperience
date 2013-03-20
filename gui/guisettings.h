@@ -97,8 +97,6 @@ public:
 	QString getLanguage() const;
 	QStringList getLanguages() const;
 	void setLanguage(QString l);
-	QString getHomeBgImage() const;
-	void setHomeBgImage(QString new_value);
 	bool getBeep() const;
 	void setBeep(bool beep);
 	bool getEnergyThresholdBeep() const;
@@ -130,7 +128,6 @@ public:
 
 signals:
 	void languageChanged();
-	void homeBgImageChanged();
 	void beepChanged();
 	void energyThresholdBeepChanged();
 	void energyPopupChanged();
