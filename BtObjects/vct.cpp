@@ -129,6 +129,7 @@ VDEBase::VDEBase(QList<ExternalPlace *> list, VideoDoorEntryDevice *d)
 	exit_call = false;
 	ip_mode = dev->vctMode() == VideoDoorEntryDevice::IP_MODE;
 	is_teleloop = false;
+	moving_camera = false;
 
 	foreach (ExternalPlace *ep, list)
 		external_places << ep;
@@ -222,6 +223,51 @@ void VDEBase::setTeleloop(bool teleloop)
 bool VDEBase::getTeleloop() const
 {
 	return is_teleloop;
+}
+
+bool VDEBase::getMovingCamera() const
+{
+	return moving_camera;
+}
+
+void VDEBase::moveUpPress()
+{
+	dev->moveUpPress();
+}
+
+void VDEBase::moveDownPress()
+{
+	dev->moveDownPress();
+}
+
+void VDEBase::moveLeftPress()
+{
+	dev->moveLeftPress();
+}
+
+void VDEBase::moveRightPress()
+{
+	dev->moveRightPress();
+}
+
+void VDEBase::moveUpRelease()
+{
+	dev->moveUpRelease();
+}
+
+void VDEBase::moveDownRelease()
+{
+	dev->moveDownRelease();
+}
+
+void VDEBase::moveLeftRelease()
+{
+	dev->moveLeftRelease();
+}
+
+void VDEBase::moveRightRelease()
+{
+	dev->moveRightRelease();
 }
 
 
@@ -622,6 +668,14 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 				return;
 			associationTimeout();
 			break;
+		case VideoDoorEntryDevice::MOVING_CAMERA:
+			qDebug() << "Received VideoDoorEntryDevice::MOVING_CAMERA" << *it;
+			if (moving_camera != it.value().toBool())
+			{
+				moving_camera = it.value().toBool();
+				emit movingCameraChanged();
+			}
+			break;
 		default:
 			qDebug() << "CCTV::valueReceived, unhandled value" << it.key() << *it;
 			break;
@@ -839,6 +893,14 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			setRingtone(it.value().toInt());
 			break;
 		}
+		case VideoDoorEntryDevice::MOVING_CAMERA:
+			qDebug() << "Received VideoDoorEntryDevice::MOVING_CAMERA" << *it;
+			if (moving_camera != it.value().toBool())
+			{
+				moving_camera = it.value().toBool();
+				emit movingCameraChanged();
+			}
+			break;
 		default:
 			qDebug() << "Intercom::valueReceived, unhandled value" << it.key() << *it;
 			break;

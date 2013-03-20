@@ -118,6 +118,11 @@ class VDEBase : public ObjectInterface
 	*/
 	Q_PROPERTY(bool teleloop READ getTeleloop NOTIFY teleloopChanged)
 
+	/*!
+		\brief Gets if this VDE device have a moving camera or not.
+	*/
+	Q_PROPERTY(bool movingCamera READ getMovingCamera NOTIFY movingCameraChanged)
+
 public:
 	ObjectDataModel *getExternalPlaces() const;
 
@@ -128,6 +133,7 @@ public:
 	bool getMute() const;
 	void setMute(bool value);
 	bool getTeleloop() const;
+	bool getMovingCamera() const;
 
 signals:
 	void volumeChanged();
@@ -137,6 +143,17 @@ signals:
 	void callActiveChanged();
 	void exitingCallChanged();
 	void teleloopChanged();
+	void movingCameraChanged();
+
+public slots:
+	void moveUpPress();
+	void moveDownPress();
+	void moveLeftPress();
+	void moveRightPress();
+	void moveUpRelease();
+	void moveDownRelease();
+	void moveLeftRelease();
+	void moveRightRelease();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list) = 0;
@@ -156,6 +173,7 @@ protected:
 	bool mute;
 	bool ip_mode;
 	bool is_teleloop;
+	bool moving_camera;
 	bool call_in_progress, call_active, exit_call;
 	ObjectDataModel external_places;
 	VideoDoorEntryDevice *dev;
