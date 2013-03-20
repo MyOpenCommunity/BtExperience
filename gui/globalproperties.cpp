@@ -463,14 +463,14 @@ QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 QVariantList GlobalProperties::getCardCustomImagesFolder() const
 {
 	QVariantList result = getDefaultPathAsVariantList("12");
-	result << "images" << "card";
+	result << "custom_images" << "card";
 	return result;
 }
 
 QVariantList GlobalProperties::getBackgroundCustomImagesFolder() const
 {
 	QVariantList result = getDefaultPathAsVariantList("12");
-	result << "images" << "background";
+	result << "custom_images" << "background";
 	return result;
 }
 
