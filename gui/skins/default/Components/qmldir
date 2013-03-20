@@ -3,15 +3,10 @@ AnimatedLoader 1.0 AnimatedLoader.qml
 AnimationManager 1.0 AnimationManager.qml
 BeepingMouseArea 1.0 BeepingMouseArea.qml
 BtObjectsMapping 1.0 BtObjectsMapping.qml
-ButtonBack 1.0 ButtonBack.qml
 ButtonHomePageLink 1.0 ButtonHomePageLink.qml
 ButtonImageThreeStates 1.0 ButtonImageThreeStates.qml
 ButtonMinusPlus 1.0 ButtonMinusPlus.qml
-ButtonMultimedia 1.0 ButtonMultimedia.qml
 ButtonOkCancel 1.0 ButtonOkCancel.qml
-ButtonRooms 1.0 ButtonRooms.qml
-ButtonSettings 1.0 ButtonSettings.qml
-ButtonSystems 1.0 ButtonSystems.qml
 ButtonTextImageThreeStates 1.0 ButtonTextImageThreeStates.qml
 ButtonThreeStates 1.0 ButtonThreeStates.qml
 ButtonThreeStatesAutomation 1.0 ButtonThreeStatesAutomation.qml
@@ -28,7 +23,6 @@ Constants 1.0 Constants.qml
 ControlAutomation3Group 1.0 ControlAutomation3Group.qml
 ControlBalance 1.0 ControlBalance.qml
 ControlCall 1.0 ControlCall.qml
-ControlChoices 1.0 ControlChoices.qml
 ControlDateTime 1.0 ControlDateTime.qml
 ControlDoubleSpin 1.0 ControlDoubleSpin.qml
 ControlLeftRight 1.0 ControlLeftRight.qml
@@ -36,7 +30,6 @@ ControlLeftRightWithTitle 1.0 ControlLeftRightWithTitle.qml
 ControlMinusPlus 1.0 ControlMinusPlus.qml
 ControlOn 1.0 ControlOn.qml
 ControlOnOff 1.0 ControlOnOff.qml
-ControlOnOffGroup 1.0 ControlOnOffGroup.qml
 ControlOpenCloseStop 1.0 ControlOpenCloseStop.qml
 ControlOpenCloseStopSafe 1.0 ControlOpenCloseStopSafe.qml
 ControlPathView 1.0 ControlPathView.qml
@@ -58,6 +51,7 @@ EventManager 1.0 EventManager.qml
 FadeAnimation 1.0 FadeAnimation.qml
 FavoriteEditPopup 1.0 FavoriteEditPopup.qml
 FavoriteItem 1.0 FavoriteItem.qml
+HorizontalView 1.0 HorizontalView.qml
 KeyPad 1.0 KeyPad.qml
 LoaderWithProps 1.0 LoaderWithProps.qml
 MenuColumn 1.0 MenuColumn.qml

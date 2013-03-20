@@ -41,11 +41,11 @@ Page {
             leftMargin: 30
             top: toolbar.bottom
             topMargin: 50
-            bottom: floorView.top
+            bottom: bottomFloorsView.top
         }
         pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
         arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': privateProps.floorUii})
+        onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': privateProps.floorUii()})
     }
 
     CardView {
@@ -55,7 +55,7 @@ Page {
             left: navigationBar.right
             leftMargin: 30
             top: toolbar.bottom
-            bottom: floorView.top
+            bottom: bottomFloorsView.top
         }
         visible: model.count < 3
         delegate: CardDelegate {
@@ -63,7 +63,7 @@ Page {
             source: itemObject.cardImageCached
             label: itemObject.description
 
-            onClicked: Stack.goToPage("Room.qml", {'room': itemObject, 'floorUii': privateProps.floorUii})
+            onClicked: Stack.goToPage("Room.qml", {'room': itemObject, 'floorUii': privateProps.floorUii()})
         }
 
         delegateSpacing: 40
@@ -72,19 +72,22 @@ Page {
         model: roomsModel
     }
 
-    ListView {
-        id: floorView
-        interactive: false
-        orientation: ListView.Horizontal
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: 32
-        height: 100
-        width: 140 * floorsModel.count
+    HorizontalView {
+        id: bottomFloorsView
+        anchors {
+            left: navigationBar.right
+            leftMargin: parent.width / 100
+            right: parent.right
+            rightMargin: parent.width / 100
+            bottom: parent.bottom
+        }
+        height: 110
+        model: floorsModel
+        selectedIndex: 0
         delegate: Image {
             property variant itemObject: floorsModel.getObject(index)
 
-            source: index === floorView.currentIndex ? "images/common/pianoS.png" : "images/common/piano.png"
+            source: index === bottomFloorsView.selectedIndex ? "images/common/pianoS.png" : "images/common/piano.png"
             UbuntuLightText {
                 text: itemObject.description
                 anchors {
@@ -97,28 +100,26 @@ Page {
                     verticalCenter: parent.verticalCenter
                 }
                 horizontalAlignment: Text.AlignHCenter
-                color: index === floorView.currentIndex ? "white" : "black"
+                color: index === bottomFloorsView.selectedIndex ? "white" : "black"
                 elide: Text.ElideRight
             }
 
             BeepingMouseArea {
                 anchors.fill: parent
-                onPressed: floorView.currentIndex = index
+                onClicked: {
+                    bottomFloorsView.selectedIndex = index
+                    roomsModel.containers = [floorsModel.getObject(index).uii]
+                }
             }
         }
-
-        onCurrentIndexChanged: {
-            roomsModel.containers = [floorsModel.getObject(currentIndex).uii]
-            privateProps.floorUii = floorsModel.getObject(currentIndex).uii
-        }
-
-        model: floorsModel
     }
 
     QtObject {
         id: privateProps
 
-        property int floorUii
+        function floorUii() {
+            return floorsModel.getObject(bottomFloorsView.selectedIndex).uii
+        }
     }
 }
 
