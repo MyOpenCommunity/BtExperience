@@ -30,6 +30,7 @@ MenuColumn {
             onCurrentPageChanged: element.closeChild()
             delegate: MenuItemDelegate {
                 clickable: false
+                itemObject: listModel.getObject(index)
                 status: MenuItem.status(itemObject)
                 hasChild: MenuItem.hasChild(itemObject)
                 description: MenuItem.description(itemObject)
