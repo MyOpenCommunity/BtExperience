@@ -474,6 +474,15 @@ QVariantList GlobalProperties::getBackgroundCustomImagesFolder() const
 	return result;
 }
 
+QVariantList GlobalProperties::getX11PrependPath() const
+{
+	QVariantList result;
+	// last 2 elements are removed by the getPath function, so adds 2 fake elements
+	// to have right path
+	result << ".." << ".." << ".." << "bin" << "x86" << "12" << "." << ".";
+	return result;
+}
+
 void GlobalProperties::createExtra12Folders()
 {
 #if defined(BT_HARDWARE_X11)
@@ -481,9 +490,12 @@ void GlobalProperties::createExtra12Folders()
 #endif
 
 	QDir(EXTRA_12_DIR).mkdir("images");
+	QDir(EXTRA_12_DIR).mkdir("custom_images");
 
 	QDir(QString("%1/%2").arg(EXTRA_12_DIR).arg("images")).mkdir("background");
 	QDir(QString("%1/%2").arg(EXTRA_12_DIR).arg("images")).mkdir("card");
+	QDir(QString("%1/%2").arg(EXTRA_12_DIR).arg("custom_images")).mkdir("background");
+	QDir(QString("%1/%2").arg(EXTRA_12_DIR).arg("custom_images")).mkdir("card");
 }
 
 QString GlobalProperties::takeScreenshot(QRect rect, QString filename)

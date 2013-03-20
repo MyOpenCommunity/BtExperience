@@ -148,7 +148,7 @@ MenuColumn {
                     if (column._isStock)
                         homeProperties.homeBgImage = path
                     else
-                        global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", path, "images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                        global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", path, "custom_images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 }
                 else {
                     if (column._isStock) {

@@ -51,6 +51,7 @@ signals:
 	void skinChanged();
 
 private:
+	QString images_folder, custom_images_folder;
 	QString home_bg_image;
 	Skin skin;
 	ConfigFile *configurations;

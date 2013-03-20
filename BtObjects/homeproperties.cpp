@@ -5,6 +5,11 @@
 
 #include <QDebug>
 
+#include <QApplication>
+#include <QDeclarativeView>
+#include <QDeclarativeContext>
+#include <QDeclarativeProperty>
+
 
 namespace
 {
@@ -12,6 +17,49 @@ namespace
 	{
 		HomePageContainer = 17
 	};
+
+	// I need to find the top QDeclarativeView to obtain the root context;
+	// from the root context I will have access to the global property which
+	// contains paths for extra dirs
+	QDeclarativeView *getDeclarativeView()
+	{
+		foreach (QWidget *w, qApp->topLevelWidgets())
+			if (qobject_cast<QDeclarativeView *>(w))
+				return static_cast<QDeclarativeView *>(w);
+
+		return 0;
+	}
+
+	QString getPath(QString property_name)
+	{
+		QDeclarativeView *view = getDeclarativeView();
+
+		if (!view)
+			return QString();
+
+		// defines a property on global object to retrieve the path variant list
+		QDeclarativeProperty property(qvariant_cast<QObject *>(view->rootContext()->contextProperty("global")), property_name);
+		QVariantList path_list = property.read().value<QVariantList>();
+		// last 2 elements are meaningless to us
+		path_list.removeLast();
+		path_list.removeLast();
+
+		// reconstructs the path string skipping empty values
+		QString result;
+		foreach (QVariant v, path_list) {
+			QString s = v.value<QString>();
+
+			if (s.isEmpty())
+				continue;
+
+			result.append("/");
+			result.append(s);
+		}
+
+		result.append("/");
+
+		return result;
+	}
 }
 
 
@@ -26,34 +74,61 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 	{
 		if (getIntAttribute(container, "id") == HomePageContainer)
 		{
-			setSkin(getIntAttribute(container, "img_type", 0) == 0 ? Clear : Dark);
-			setHomeBgImage(getAttribute(container, "img"));
+			XmlObject v(container);
+			foreach (const QDomNode &ist, getChildren(container, "ist"))
+			{
+				v.setIst(ist);
+				setSkin(v.intValue("img_type") == 0 ? Clear : Dark);
+				setHomeBgImage(v.value("img"));
+			}
 			break;
 		}
 	}
+
+	images_folder = getPath("stockBackgroundImagesFolder");
+
+#if defined(BT_HARDWARE_X11)
+	custom_images_folder = getPath("x11PrependPath").mid(1);
+#else
+	custom_images_folder = getPath("customBackgroundImagesFolder");
+#endif
 }
 
 QString HomeProperties::getHomeBgImage() const
 {
-	return home_bg_image;
+	bool is_custom = (home_bg_image.indexOf("custom_images/") == 0);
+
+	if (is_custom)
+		return custom_images_folder + home_bg_image;
+
+	return images_folder + home_bg_image;
 }
 
 void HomeProperties::setHomeBgImage(QString new_value)
 {
-	if (home_bg_image == new_value)
+	bool is_custom = (new_value.indexOf("/custom_images/") >= 0);
+
+	QString image_path;
+	if (is_custom)
+		image_path = new_value.mid(new_value.indexOf("/custom_images/") + 1);
+	else
+		image_path = new_value.mid(new_value.indexOf("/images/") + 1);
+
+	if (home_bg_image == image_path)
 		return;
 
 	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
 	{
 		if (getIntAttribute(container, "id") == HomePageContainer)
 		{
-			setAttribute(container, "img", new_value);
+			foreach (QDomNode ist, getChildren(container, "ist"))
+				setAttribute(ist, "img", image_path);
 			break;
 		}
 	}
 	configurations->saveConfiguration(LAYOUT_FILE);
 
-	home_bg_image = new_value;
+	home_bg_image = image_path;
 	emit homeBgImageChanged();
 }
 
@@ -71,7 +146,8 @@ void HomeProperties::setSkin(HomeProperties::Skin s)
 	{
 		if (getIntAttribute(container, "id") == HomePageContainer)
 		{
-			setAttribute(container, "img_type", QString::number(s == Clear ? 0 : 1));
+			foreach (QDomNode ist, getChildren(container, "ist"))
+				setAttribute(ist, "img_type", QString::number(s == Clear ? 0 : 1));
 			break;
 		}
 	}
