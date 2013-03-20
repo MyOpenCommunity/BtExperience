@@ -656,7 +656,7 @@ void CCTV::stopVideo()
 	{
 		qDebug() << "terminate grabber";
 		//TODO: fix correctly the kill of this process
-		system ("killall loopback");
+		system ("killall video_loopback_dm3730.x470MV");
 		video_grabber.terminate();
 	}
 }
