@@ -4,19 +4,70 @@
 
 #include <QDebug>
 
+#include <QApplication>
+#include <QDeclarativeView>
+#include <QDeclarativeContext>
+#include <QDeclarativeProperty>
+
 #define HOME_BG_CLEAR "images/background/home.jpg"
 #define HOME_BG_DARK "images/background/home_dark.jpg"
 
 
+namespace
+{
+	// I need to find the top QDeclarativeView to obtain the root context;
+	// from the root context I will have access to the global property which
+	// contains paths for extra dirs
+	QDeclarativeView *getDeclarativeView()
+	{
+		foreach (QWidget *w, qApp->topLevelWidgets())
+			if (qobject_cast<QDeclarativeView *>(w))
+				return static_cast<QDeclarativeView *>(w);
+
+		return 0;
+	}
+
+	QString getPath(QString property_name)
+	{
+		QDeclarativeView *view = getDeclarativeView();
+
+		if (!view)
+			return QString();
+
+		// defines a property on global object to retrieve the path variant list
+		QDeclarativeProperty property(qvariant_cast<QObject *>(view->rootContext()->contextProperty("global")), property_name);
+		QVariantList path_list = property.read().value<QVariantList>();
+		// last 2 elements are meaningless to us
+		path_list.removeLast();
+		path_list.removeLast();
+
+		// reconstructs the path string skipping empty values
+		QString result;
+		foreach (QVariant v, path_list) {
+			QString s = v.value<QString>();
+
+			if (s.isEmpty())
+				continue;
+
+			result.append("/");
+			result.append(s);
+		}
+
+		result.append("/");
+
+		return result;
+	}
+}
+
 void updateContainerNameImage(QDomNode node, Container *item)
 {
 	setAttribute(node, "descr", item->getDescription());
-	setAttribute(node, "img", item->getImage());
+	setAttribute(node, "img", item->getImageConfName());
 }
 
 void updateProfileCardImage(QDomNode node, ContainerWithCard *item)
 {
-	setAttribute(node, "img_card", item->getCardImage());
+	setAttribute(node, "img_card", item->getCardImageConfName());
 }
 
 
@@ -35,6 +86,14 @@ Container::Container(int _id, int _uii, QString _image, QString _description, Ho
 
 	if (home_properties)
 		connect(home_properties, SIGNAL(skinChanged()), this, SIGNAL(imageChanged()));
+
+	images_folder = getPath("stockBackgroundImagesFolder");
+
+#if defined(BT_HARDWARE_X11)
+	custom_images_folder = getPath("x11PrependPath").mid(1);
+#else
+	custom_images_folder = getPath("customBackgroundImagesFolder");
+#endif
 }
 
 void Container::setCacheDirty()
@@ -55,30 +114,55 @@ int Container::getUii() const
 
 void Container::setImage(QString _image)
 {
-	if (image == _image)
+	bool is_custom = (_image.indexOf("/custom_images/") >= 0);
+
+	QString image_path;
+	if (is_custom)
+		image_path = _image.mid(_image.indexOf("/custom_images/") + 1);
+	else
+		image_path = _image.mid(_image.indexOf("/images/") + 1);
+
+	if (image == image_path)
 		return;
 
-	image = _image;
+	image = image_path;
 	emit imageChanged();
+}
+
+QString Container::getImageConfName() const
+{
+	return image;
 }
 
 QString Container::getImage() const
 {
-	// if image is set and not a default one, returns it
-	if (image != "" && image != HOME_BG_CLEAR && image != HOME_BG_DARK)
-		return image;
+	QString result;
 
-	// if image is not set, returns a default one depending on skin
-	if (home_properties)
+	// if image is set and not a default one, uses it as is
+	if (image != "" && image != HOME_BG_CLEAR && image != HOME_BG_DARK)
+	{
+		result = image;
+	}
+	// if image is not set, uses a default one depending on skin
+	else if (home_properties)
 	{
 		if (home_properties->getSkin() == HomeProperties::Clear)
-			return QString(HOME_BG_CLEAR);
+			result = QString(HOME_BG_CLEAR);
 		else
-			return QString(HOME_BG_DARK);
+			result = QString(HOME_BG_DARK);
+	}
+	// image is not set, but we don't have a pointer to home page, so uses what it has
+	else
+	{
+		result = image;
 	}
 
-	// image is not set, but we don't have a pointer to home page, so returns what we have
-	return image;
+	bool is_custom = (result.indexOf("custom_images/") == 0);
+
+	if (is_custom)
+		return custom_images_folder + result;
+
+	return images_folder + result;
 }
 
 QString Container::getCardImage() const
@@ -121,18 +205,37 @@ ContainerWithCard::ContainerWithCard(int id, int uii, QString image, QString _ca
 
 void ContainerWithCard::setCardImage(QString image)
 {
-	if (image == card_image)
+	bool is_custom = (image.indexOf("/custom_images/") >= 0);
+
+	QString image_path;
+	if (is_custom)
+		image_path = image.mid(image.indexOf("/custom_images/") + 1);
+	else
+		image_path = image.mid(image.indexOf("/images/") + 1);
+
+	if (card_image == image_path)
 		return;
-	card_image = image;
+
+	card_image = image_path;
 	emit cardImageChanged();
 }
 
 QString ContainerWithCard::getCardImage() const
 {
-	return card_image;
+	bool is_custom = (card_image.indexOf("custom_images/") == 0);
+
+	if (is_custom)
+		return custom_images_folder + card_image;
+
+	return images_folder + card_image;
 }
 
 QString ContainerWithCard::getCardImageCached() const
 {
 	return getCardImage() + "?cache_id=" + getCacheId();
+}
+
+QString ContainerWithCard::getCardImageConfName() const
+{
+	return card_image;
 }

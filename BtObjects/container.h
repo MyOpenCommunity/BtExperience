@@ -108,6 +108,7 @@ public:
 	QString getDescription() const;
 
 	int getContainerId() const;
+	QString getImageConfName() const;
 
 signals:
 	void descriptionChanged();
@@ -117,6 +118,8 @@ signals:
 
 protected:
 	QString getCacheId() const;
+
+	QString images_folder, custom_images_folder;
 
 private:
 	QString description, image;
@@ -143,6 +146,8 @@ public:
 	void setCardImage(QString image);
 	virtual QString getCardImage() const;
 	virtual QString getCardImageCached() const;
+
+	QString getCardImageConfName() const;
 
 signals:
 	void cardImageChanged();

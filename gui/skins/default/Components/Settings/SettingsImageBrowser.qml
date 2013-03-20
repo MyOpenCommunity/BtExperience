@@ -142,7 +142,7 @@ MenuColumn {
                     if (column._isStock)
                         column.dataModel.cardImage = path
                     else
-                        Stack.pushPage("NewImageCard.qml", {containerWithCard: column.dataModel, fullImage: path, newFilename: "images/card/bg_" + column.dataModel.uii})
+                        Stack.pushPage("NewImageCard.qml", {containerWithCard: column.dataModel, fullImage: path, newFilename: "custom_images/card/bg_" + column.dataModel.uii})
                 }
                 else if (column.homeCustomization) {
                     if (column._isStock)
@@ -155,7 +155,7 @@ MenuColumn {
                         column.dataModel.image = path
                     }
                     else {
-                        var newFilename = "images/background/bg_" + column.dataModel.uii
+                        var newFilename = "custom_images/background/bg_" + column.dataModel.uii
                         global.saveInCustomDirIfNeeded(column.dataModel, "image", path, newFilename, Qt.size(global.mainWidth, global.mainHeight))
                     }
                 }
