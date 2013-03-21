@@ -153,10 +153,10 @@ Item {
 
 
         Repeater {
-            model: privateProps.modelGraph.graph
+            model: 24
             UbuntuLightText {
                 visible: (index + 1) % 6 === 0 || index === 0
-                text: index === 0 ? 0 : model.modelData.label
+                text: index + 1
                 width: columnPrototype.width
                 color: "white"
                 font.pixelSize: graphLabelPrototype.font.pixelSize

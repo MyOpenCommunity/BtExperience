@@ -325,10 +325,10 @@ Item {
         }
 
         Repeater {
-            model: privateProps.modelGraph.graph
+            model: DateTime.daysInMonth(modelGraphValue.date.getMonth(), modelGraphValue.date.getFullYear())
             UbuntuLightText {
                 visible: (index + 1) % 5 === 0 || index === 0
-                text: model.modelData.label
+                text: index + 1
                 width: columnPrototype.width
                 color: "white"
                 font.pixelSize: graphLabelPrototype.font.pixelSize
