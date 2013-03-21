@@ -15,10 +15,41 @@ SvgImage {
     property alias label: statusLabel.text
     property alias nextButtonVisible: nextButton.visible
     property alias color: bg_video.color
+    property bool moveArrowsVisible: false
 
     signal nextClicked
+    signal leftArrowPressed
+    signal leftArrowReleased
+    signal rightArrowPressed
+    signal rightArrowReleased
+    signal upArrowPressed
+    signal upArrowReleased
+    signal downArrowPressed
+    signal downArrowReleased
 
     source: "../../images/common/bordo_video.svg"
+
+    QtObject {
+        id: privateProps
+
+        property int margin: 5 // space between arrow and border
+        property int barHeight: statusBar.height // we have to take account for the bottom bar
+
+        // base offsets computed without considering the bar at the bottom of the video area
+        property int hOffset: (bg.width - arrowRight.width) / 2 - margin
+        property int vOffset: (bg.height - arrowRight.height) / 2 - margin
+
+        // horizontal and vertical offsets (considering the bottom bar) for
+        // all the arrows
+        property int leftHOffset: -hOffset
+        property int leftVOffset: - barHeight / 2
+        property int rightHOffset: hOffset
+        property int rightVOffset: - barHeight / 2
+        property int upHOffset: 0
+        property int upVOffset: - vOffset
+        property int downHOffset: 0
+        property int downVOffset: vOffset - barHeight
+    }
 
     SvgImage {
         id: video
@@ -77,5 +108,80 @@ SvgImage {
             bottom: statusBar.bottom
             bottomMargin: 7
         }
+    }
+
+    // all arrows are rendered with freccia_dx.svg (right arrow) rotating it
+    // properly to render all arrows; I defined a bg_freccia.svg (a transparent
+    // 50x50 image) to give a dimension to the buttons
+    ButtonImageThreeStates {
+        id: arrowLeft
+
+        visible: bg.moveArrowsVisible
+        rotation: 180
+        defaultImageBg: "../../images/common/bg_freccia.svg"
+        pressedImageBg: "../../images/common/bg_freccia.svg"
+        defaultImage: "../../images/common/freccia_dx.svg"
+        pressedImage: "../../images/common/freccia_dx_P.svg"
+        anchors {
+            centerIn: video
+            horizontalCenterOffset: privateProps.leftHOffset
+            verticalCenterOffset: privateProps.leftVOffset
+        }
+        onPressed: leftArrowPressed()
+        onReleased: leftArrowReleased()
+    }
+
+    ButtonImageThreeStates {
+        id: arrowDown
+
+        visible: bg.moveArrowsVisible
+        rotation: 90
+        defaultImageBg: "../../images/common/bg_freccia.svg"
+        pressedImageBg: "../../images/common/bg_freccia.svg"
+        defaultImage: "../../images/common/freccia_dx.svg"
+        pressedImage: "../../images/common/freccia_dx_P.svg"
+        anchors {
+            centerIn: video
+            horizontalCenterOffset: privateProps.downHOffset
+            verticalCenterOffset: privateProps.downVOffset
+        }
+        onPressed: downArrowPressed()
+        onReleased: downArrowReleased()
+    }
+
+    ButtonImageThreeStates {
+        id: arrowRight
+
+        visible: bg.moveArrowsVisible
+        rotation: 0
+        defaultImageBg: "../../images/common/bg_freccia.svg"
+        pressedImageBg: "../../images/common/bg_freccia.svg"
+        defaultImage: "../../images/common/freccia_dx.svg"
+        pressedImage: "../../images/common/freccia_dx_P.svg"
+        anchors {
+            centerIn: video
+            horizontalCenterOffset: privateProps.rightHOffset
+            verticalCenterOffset: privateProps.rightVOffset
+        }
+        onPressed: rightArrowPressed()
+        onReleased: rightArrowReleased()
+    }
+
+    ButtonImageThreeStates {
+        id: arrowUp
+
+        visible: bg.moveArrowsVisible
+        rotation: 270
+        defaultImageBg: "../../images/common/bg_freccia.svg"
+        pressedImageBg: "../../images/common/bg_freccia.svg"
+        defaultImage: "../../images/common/freccia_dx.svg"
+        pressedImage: "../../images/common/freccia_dx_P.svg"
+        anchors {
+            centerIn: video
+            horizontalCenterOffset: privateProps.upHOffset
+            verticalCenterOffset: privateProps.upVOffset
+        }
+        onPressed: upArrowPressed()
+        onReleased: upArrowReleased()
     }
 }

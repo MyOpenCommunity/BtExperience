@@ -84,6 +84,7 @@ Page {
         // place
         id: controlVideo
 
+        moveArrowsVisible: camera.movingCamera
         label: "CAMERA EXTERNAL PLACE #1"
         anchors {
             right: controlCallManager.left
@@ -92,6 +93,14 @@ Page {
             bottomMargin: 22
         }
         onNextClicked: camera.nextCamera()
+        onLeftArrowPressed: camera.moveLeftPress()
+        onLeftArrowReleased: camera.moveLeftRelease()
+        onRightArrowPressed: camera.moveRightPress()
+        onRightArrowReleased: camera.moveRightRelease()
+        onUpArrowPressed: camera.moveUpPress()
+        onUpArrowReleased: camera.moveUpRelease()
+        onDownArrowPressed: camera.moveDownPress()
+        onDownArrowReleased: camera.moveDownRelease()
         Timer {
             id: redTimer
             interval: 1500
