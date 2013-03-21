@@ -60,6 +60,30 @@ BasePage {
 
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
+
+            Component.onCompleted: {
+                // sourceSize is initially set to image size; we want to start
+                // with a value to zero and resize image only if needed
+                sourceSize.width = 0
+                sourceSize.height = 0
+
+                // computes ratios to know if we have to resize or not (we
+                // resize the image if it is bigger than the frame)
+                var ratioW = width / parent.width
+                var ratioH = height / parent.height
+
+                // if image is wider than frame and is wider than taller,
+                // then resize its width
+                if (ratioW > 1.0)
+                    if (ratioW >= ratioH)
+                        sourceSize.width = parent.width
+
+                // if image is taller than frame and is taller than wider,
+                // then resize its height
+                if (ratioH > 1.0)
+                    if (ratioH >= ratioW)
+                        sourceSize.height = parent.height
+            }
         }
 
         Item {
@@ -308,8 +332,7 @@ BasePage {
     QtObject {
         id: privateProps
 
-        property int zoom: 100
-        property int zoomStep: 10
+        property real zoom: 100
         property variant originalRect: undefined
 
         property real darkRectOpacity: 0.5
@@ -348,16 +371,16 @@ BasePage {
         }
 
         function zoomIn() {
-            if (zoom < 200) {
-                zoom += zoomStep
+            if (zoom < 500) {
+                zoom *= 1.25
                 doZoom(zoom / 100)
                 adjustPosition()
             }
         }
 
         function zoomOut() {
-            if (zoom > 25) {
-                zoom -= zoomStep
+            if (zoom > 1) {
+                zoom *= 0.8
                 doZoom(zoom / 100)
                 adjustPosition()
             }
