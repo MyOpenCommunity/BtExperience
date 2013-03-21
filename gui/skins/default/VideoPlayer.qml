@@ -16,6 +16,8 @@ BasePage {
     property int index
     property bool upnp
 
+    _pageName: "VideoPlayer"
+
     Rectangle {
         id: fullScreenBg
 
