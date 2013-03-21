@@ -1,29 +1,38 @@
 import QtQuick 1.1
 
 Item {
-    // TODO: we need to insert a background, and take care of it in the calculation
-    // below (because the background will be a child of this item).
     id: column
     width: 212
-    height: paginator.height * paginator.visible + privateProps.currentPageSize
+    height: paginator.height * paginator.visible + privateProps.maxPageSize
 
     property int maxHeight: 300
     signal currentPageChanged
 
     QtObject {
         id: privateProps
-        property int currentPageSize: 100
+        property int maxPageSize: 100
     }
 
     Component.onCompleted: {
         showPage(paginator.currentPage)
     }
 
+    SvgImage {
+        id: background
+        property bool skipMe: true
+        source: "../images/common/bg_paginazione.png"
+        width: parent.width
+        height: parent.height
+    }
+
     function showPage(requestedPage) {
         var pageSize = 0
         var pageNumber = 1
+        var maxPageSize = 0
         for (var i = 1; i < column.children.length; i++) {
             var child = column.children[i]
+            if (child.skipMe === true)
+                continue
             var y = pageSize
             pageSize = pageSize + child.height
             if (pageSize > column.maxHeight) {
@@ -31,9 +40,13 @@ Item {
                 y = 0
                 pageSize = child.height
                 pageNumber++
+                if (maxPageSize > privateProps.maxPageSize)
+                    privateProps.maxPageSize = maxPageSize
+                maxPageSize = child.height
             }
-            if (pageNumber === requestedPage)
-                privateProps.currentPageSize = pageSize
+            else {
+                maxPageSize += child.height
+            }
 
             child.visible = pageNumber === requestedPage
             child.y = y
@@ -43,7 +56,8 @@ Item {
 
     Paginator {
         id: paginator
-        y: privateProps.currentPageSize
+        property bool skipMe: true
+        anchors.bottom: parent.bottom
         onCurrentPageChanged: {
             showPage(paginator.currentPage)
             column.currentPageChanged()
