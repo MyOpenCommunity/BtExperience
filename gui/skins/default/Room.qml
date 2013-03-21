@@ -56,33 +56,30 @@ Page {
             right: parent.right
             rightMargin: 20
             top: toolbar.bottom
-            bottom: roomView.top
+            bottom: bottomRoomsView.top
         }
         pageObject: page
         model: roomModel
     }
 
-    ListView {
-        id: roomView
-
+    HorizontalView {
+        id: bottomRoomsView
         anchors {
-            bottom: parent.bottom
             left: navigationBar.right
+            leftMargin: parent.width / 100
             right: parent.right
+            rightMargin: parent.width / 100
+            bottom: parent.bottom
         }
         height: 110
-        orientation: ListView.Horizontal
-        interactive: false
-        currentIndex: findCurrentIndex()
         model: roomsModel
-        visible: model.count > 1
-
+        selectedIndex: findCurrentIndex()
         delegate: Image {
             id: listDelegate
 
-            property variant itemObject: roomsModel.getObject(index)
+            property variant itemObject: bottomRoomsView.model.getObject(index)
 
-            source: roomView.currentIndex === index ? "images/common/stanzaS.png" : "images/common/stanza.png"
+            source: bottomRoomsView.selectedIndex === index ? "images/common/stanzaS.png" : "images/common/stanza.png"
 
             Image {
                 source: itemObject.cardImageCached
@@ -96,7 +93,10 @@ Page {
                 BeepingMouseArea {
                     id: clickMouseArea
                     anchors.fill: parent
-                    onPressed: roomView.currentIndex = index
+                    onClicked: {
+                        bottomRoomsView.selectedIndex = index
+                        page.room = roomsModel.getObject(index)
+                    }
                 }
 
                 Rectangle {
@@ -106,10 +106,7 @@ Page {
                     visible: clickMouseArea.pressed
                 }
             }
-
         }
-
-        onCurrentIndexChanged: page.room = roomsModel.getObject(currentIndex)
     }
 
     function findCurrentIndex() {
