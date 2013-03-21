@@ -408,7 +408,7 @@ Page {
 
                     anchors.centerIn: parent
                     text: energyFunctions.formatValue(currentItem)
-                    color: "grey"
+                    color: energyFunctions.getColor(currentItem)
                     font.pixelSize: 18
                 }
             }

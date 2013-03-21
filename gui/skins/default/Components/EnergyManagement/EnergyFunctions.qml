@@ -31,6 +31,19 @@ QtObject {
         return ""
     }
 
+    function getColor(energyItem) {
+        // returns a color showing how many threshold has been exceeded
+        if (energyItem.isValid) {
+            if (energyItem.thresholdLevel === 0)
+                return "grey"
+            if (energyItem.thresholdLevel === 1)
+                return "orange"
+            if (energyItem.thresholdLevel === 2)
+                return "red"
+        }
+        return "grey"
+    }
+
     function isEnergyMonthValid(d) {
         var year = d.getFullYear()
         var month = d.getMonth()

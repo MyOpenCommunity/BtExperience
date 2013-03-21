@@ -245,7 +245,7 @@ Column {
             UbuntuLightText {
                 anchors.centerIn: parent
                 font.pixelSize: 18
-                color: "grey"
+                color: energyFunctions.getColor(privateProps.currentConsumptionObj)
                 text: energyFunctions.formatValue(privateProps.currentConsumptionObj)
             }
         }
