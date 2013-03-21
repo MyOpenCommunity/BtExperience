@@ -135,12 +135,12 @@ void StopAndGoPlus::setDiagnostic(bool active)
 
 void StopAndGoPlus::open()
 {
-	dev->sendOpen();
+	dev->sendClose();
 }
 
 void StopAndGoPlus::close()
 {
-	dev->sendClose();
+	dev->sendOpen();
 }
 
 void StopAndGoPlus::valueReceived(const DeviceValues &values_list)
