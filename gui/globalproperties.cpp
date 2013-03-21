@@ -463,6 +463,9 @@ QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 QVariantList GlobalProperties::getCardCustomImagesFolder() const
 {
 	QVariantList result = getDefaultPathAsVariantList("12");
+#if defined(BT_HARDWARE_X11)
+	result << ".." << ".." << ".." << "bin" << "x86" << "12" << "." << ".";
+#endif
 	result << "custom_images" << "card";
 	return result;
 }
@@ -470,6 +473,9 @@ QVariantList GlobalProperties::getCardCustomImagesFolder() const
 QVariantList GlobalProperties::getBackgroundCustomImagesFolder() const
 {
 	QVariantList result = getDefaultPathAsVariantList("12");
+#if defined(BT_HARDWARE_X11)
+	result << ".." << ".." << ".." << "bin" << "x86" << "12" << "." << ".";
+#endif
 	result << "custom_images" << "background";
 	return result;
 }
