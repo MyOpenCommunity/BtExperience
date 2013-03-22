@@ -1,6 +1,8 @@
 #ifndef AUDIOSTATE_H
 #define AUDIOSTATE_H
 
+#include "multimediaplayer.h"
+
 #include <QObject>
 #include <QList>
 
@@ -100,6 +102,7 @@ private slots:
 	void completeTransition(bool state);
 	void checkDirectAudioAccess();
 	void changeSoundDiffusionAccess();
+	void checkPlayerState(MultiMediaPlayer::PlayerState);
 
 private:
 	enum PlayerType

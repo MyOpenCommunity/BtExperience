@@ -232,7 +232,7 @@ void AudioState::registerMediaPlayer(MultiMediaPlayer *player)
 	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(checkDirectAudioAccess()));
 	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
-		this, SLOT(checkDirectAudioAccess()));
+		this, SLOT(checkPlayerState(MultiMediaPlayer::PlayerState)));
 }
 
 void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
@@ -243,7 +243,7 @@ void AudioState::registerSoundPlayer(MultiMediaPlayer *player)
 	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 		this, SLOT(checkDirectAudioAccess()));
 	connect(player, SIGNAL(playerStateChanged(MultiMediaPlayer::PlayerState)),
-		this, SLOT(checkDirectAudioAccess()));
+		this, SLOT(checkPlayerState(MultiMediaPlayer::PlayerState)));
 }
 
 void AudioState::registerBeep(SoundPlayer *player)
@@ -464,6 +464,19 @@ void AudioState::changeSoundDiffusionAccess()
 		qWarning("Add code to disable sound diffusion");
 
 	sound_diffusion = new_sound_diffusion;
+}
+
+void AudioState::checkPlayerState(MultiMediaPlayer::PlayerState state)
+{
+	// We need to process the audio state only when the player is really paused
+	// Consider this scenario: the player is playing at low volume and the
+	// beep state (or ringtone) is at high volume.
+	// As soon as we get the AboutToPause state we rise the volume, but the
+	// player is not yet stopped, so we hear a "noise" in output (which is just
+	// the last bits of the song playing at high volume).
+	// See bug #20351
+	if (state != MultiMediaPlayer::AboutToPause)
+		checkDirectAudioAccess();
 }
 
 void AudioState::releasePausedPlayer()
