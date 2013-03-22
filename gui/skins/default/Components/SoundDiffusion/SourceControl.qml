@@ -192,7 +192,8 @@ MenuColumn {
                 name: qsTr("browse")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
-                enabled: Script.mediaItemEnabled(objModel)
+                // if we are playing Upnp, enable browsing
+                enabled: global.upnpStatus === GlobalProperties.UpnpSoundDiffusion ? true : Script.mediaItemEnabled(objModel)
                 onEnabledChanged: column.closeChild()
                 onTouched: {
                     if (privateProps.currentIndex !== 1)
