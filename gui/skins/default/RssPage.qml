@@ -32,7 +32,7 @@ Page {
         Rectangle {
             anchors.fill: parent
             color: homeProperties.skin === HomeProperties.Clear ? "white" : "black"
-            opacity: 0.5
+            opacity: 0.9
         }
 
         XmlListModel {
