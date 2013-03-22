@@ -28,6 +28,8 @@ Item {
         // Also, in createComponent() we need to check for null-ness anyway,
         // since at start the item is already null.
         itemLoader.item.destroy()
+        // destroy() may take a few moments, set the item to null in the meanwhile
+        itemLoader.item = null
     }
 
     QtObject {
