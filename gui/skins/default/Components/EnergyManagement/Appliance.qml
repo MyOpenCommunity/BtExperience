@@ -83,6 +83,7 @@ MenuColumn {
             UnitSelector {
                 id: unitSelectorItem
 
+                visible: load.rate || false
                 load: element.dataModel
             }
 
@@ -134,6 +135,7 @@ MenuColumn {
             UnitSelector {
                 id: unitSelectorItem
 
+                visible: load.rate || false
                 load: element.dataModel
             }
 
