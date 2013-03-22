@@ -543,7 +543,6 @@ Item {
             if (checkCallInProgress("VideoCamera"))
                 return
             global.screenState.enableState(ScreenState.ForcedNormal)
-            console.log("################################# Enabling VideoCamera page")
             if (checkPasswordPage()) {
                 Stack.pushPageBelow("VideoCamera.qml", {"camera": vctConnection.target})
             }
