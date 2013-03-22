@@ -1,4 +1,5 @@
 #include "mounts.h"
+#include "generic_functions.h"
 
 #include <QFileSystemWatcher>
 #include <QSet>
@@ -176,7 +177,7 @@ void MountWatcher::runQueue()
 
 void MountWatcher::mountError(QProcess::ProcessError error)
 {
-	qDebug() << "Mount error" << mount_process.errorString();
+	qDebug() << "Mount error (" << error << ")" << mount_process.errorString();
 }
 
 void MountWatcher::mountComplete()
@@ -221,6 +222,7 @@ QStringList MountWatcher::parseMounts() const
 	QTextStream mtab_in(&mtab);
 
 	// skip malformed line and mount points not under "/mnt"
+	QString base_sd_mnt_point;
 	for (;;)
 	{
 		QString line = mtab_in.readLine();
@@ -231,11 +233,34 @@ QStringList MountWatcher::parseMounts() const
 		if (!parts[1].startsWith(MOUNT_PATH "/") || !parts[0].startsWith("/"))
 			continue;
 #if !defined(BT_HARDWARE_X11)
-		// on touch there is an internal SD card mounted on /media/mmcblk1pX: ignore it
-		if (parts[1].startsWith("/media/mmcblk") && parts[1] != "/media/mmcblk0p1")
-			continue;
+		// on touch there is an internal SD card; we have the problem to
+		// understand where is mounted; our hypothesis is that is in the form
+		// /media/mmcblkNpX, but we don't know N: we try to find a file named
+		// boot.scr inside it and ignore it
+		if (QFile::exists(parts[1] + "/boot.scr")) // system SD
+			base_sd_mnt_point = parts[1].left(parts[1].length() - 1);
 #endif
 		dirs.append(parts[1]);
+	}
+#if !defined(BT_HARDWARE_X11)
+	if (!base_sd_mnt_point.isEmpty())
+	{
+		for (int i = dirs.length() - 1; i >= 0; --i)
+		{
+			if (dirs.at(i).startsWith(base_sd_mnt_point))
+				dirs.removeAt(i);
+		}
+	}
+#endif
+
+	// at startup, .automount files are not created if device is already
+	// mounted: let's create them, in this way we are notified on the first
+	// unmount operation on the device, too
+	foreach (const QString &dir, dirs)
+	{
+		QString sentinel(AUTOMOUNT + QFileInfo(dir).baseName());
+		if (!QFile::exists(sentinel))
+			smartExecute("touch", QStringList() << sentinel);
 	}
 
 	return dirs;

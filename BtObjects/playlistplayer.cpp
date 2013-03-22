@@ -107,7 +107,7 @@ bool PlayListPlayer::isPlaying() const
 
 void PlayListPlayer::directoryUnmounted(QString dir)
 {
-	if (!isPlaying() || actual_list != local_list)
+	if (actual_list != local_list)
 		return;
 	if (current.startsWith(dir))
 		emit deviceUnmounted();
