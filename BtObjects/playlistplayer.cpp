@@ -127,6 +127,9 @@ void PlayListPlayer::next()
 
 bool PlayListPlayer::checkLoop()
 {
+	if (actual_list == 0)
+		return true;
+
 	if (loop_starting_file == -1)
 	{
 		loop_starting_file = actual_list->currentIndex();

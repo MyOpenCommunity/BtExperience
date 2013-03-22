@@ -193,7 +193,6 @@ Item {
         }
         onCallInProgressChanged: {
             if (vctConnection.target.callInProgress) {
-                privateProps.stopVideoPlayer()
                 global.screenState.enableState(ScreenState.ForcedNormal)
             } else {
                 global.screenState.enableState(ScreenState.Normal)
@@ -486,8 +485,16 @@ Item {
             }
 
             // if p doesn't point to Popup page, pushes it
-            if (p._pageName !== "PopupPage")
-                p = Stack.pushPage("PopupPage.qml")
+            if (p._pageName !== "PopupPage") {
+                if (checkVideoPage()) {
+                    p = Stack.pushPageBelow("PopupPage.qml")
+                    // See vctIncomingCall()
+                    Stack.currentPage().player.terminate()
+                    Stack.popPage()
+                }
+                else
+                    p = Stack.pushPage("PopupPage.qml")
+            }
 
             if (!p) // something bad happened
                 console.log("PopupPage not opened.")
@@ -522,6 +529,10 @@ Item {
             return false
         }
 
+        function checkVideoPage() {
+            return Stack.currentPage()._pageName === "VideoPlayer"
+        }
+
         function monthlyReportArriving() {
             var p = privateProps.preparePopupPage(false)
             // adds monthly report notification
@@ -532,8 +543,27 @@ Item {
             if (checkCallInProgress("VideoCamera"))
                 return
             global.screenState.enableState(ScreenState.ForcedNormal)
-            if (checkPasswordPage())
+            console.log("################################# Enabling VideoCamera page")
+            if (checkPasswordPage()) {
                 Stack.pushPageBelow("VideoCamera.qml", {"camera": vctConnection.target})
+            }
+            else if (checkVideoPage()) {
+                Stack.pushPageBelow("VideoCamera.qml", {"camera": vctConnection.target})
+
+                // In case we receive a call during video reproduction, we need
+                // to stop the video. If we only rely on VideoPage to do the
+                // cleanup, we incorrectly show the playing icon in the toolbar.
+                // The events are the following:
+                // 1. Call in: setup video camera page and pop video player
+                // 2. Ringtone: pause video player and play ringtone
+                // 3. Video camera page shown: player now is paused, so shown in the toolbar
+                // 4. Animation finishes: video player resets the internal playlist
+                // 5. End call: player resumes (due to audio state machine)
+                // 6. Player is stopped.
+                // See bug #20428
+                Stack.currentPage().player.terminate()
+                Stack.popPage()
+            }
             else
                 Stack.pushPage("VideoCamera.qml", {"camera": vctConnection.target})
         }
@@ -542,8 +572,15 @@ Item {
             if (checkCallInProgress("IntercomPage"))
                 return
             global.screenState.enableState(ScreenState.ForcedNormal)
-            if (checkPasswordPage())
+            if (checkPasswordPage()) {
                 Stack.pushPageBelow("IntercomPage.qml", {"callObject": intercomConnection.target})
+            }
+            else if (checkVideoPage()) {
+                Stack.pushPageBelow("IntercomPage.qml", {"callObject": intercomConnection.target})
+                // See vctIncomingCall()
+                Stack.currentPage().player.terminate()
+                Stack.popPage()
+            }
             else
                 Stack.pushPage("IntercomPage.qml", {"callObject": intercomConnection.target})
         }
