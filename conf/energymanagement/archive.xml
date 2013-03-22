@@ -71,6 +71,14 @@
 		<ist uii="5005" descr="Bedroom" where="54" rate_enabled="1"
                       rate_id="5" rate_n_decimal_view="0" />
 	</obj>
+	<obj cid="6107" id="6105" descr="Gas" where="51"
+	     SWmeasure="m3" measure="m3" consumption_goal_enabled="0"
+	     threshold_one_enable="0" threshold_two_enable="0"
+	     rate_enabled="0"  rate_id="-1" rate_n_decimal_view="2"
+             rate_type="0" mode="5">
+		<ist uii="5111" descr="Kitchen" where="511" rate_enabled="1"
+                      rate_id="5" rate_n_decimal_view="0" />
+	</obj>
 	<obj cid="6110" id="6105" descr="Custom Family" where="51"
 	     SWmeasure="Pere" measure="Pere" consumption_goal_enabled="0"
 	     threshold_one_enable="0" threshold_two_enable="0"
