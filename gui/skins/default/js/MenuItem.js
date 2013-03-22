@@ -48,12 +48,18 @@ function status(itemObject) {
         return (itemObject.validityStatus !== AlarmClock.AlarmClockApplyResultOk) ? 3 : -1
 
     case ObjectInterface.IdLoadWithControlUnit:
-        if (itemObject.loadEnabled && itemObject.loadForced)
-            return 4 // green empty
-        else if (itemObject.loadEnabled)
+    case ObjectInterface.IdLoadWithoutControlUnit:
+        switch (itemObject.energyLoadStatus) {
+        case EnergyLoadDiagnostic.EnergyLoadAbsent:
+            return 0
+        case EnergyLoadDiagnostic.EnergyLoadOk:
             return 1
-        else
+        case EnergyLoadDiagnostic.EnergyLoadDisabled:
+            return 4
+        case EnergyLoadDiagnostic.EnergyLoadDetached:
             return 3
+        }
+        break
 
     case ObjectInterface.IdStopAndGo:
     case ObjectInterface.IdStopAndGoPlus:
@@ -125,20 +131,23 @@ function description(itemObject) {
         break
 
     case ObjectInterface.IdLoadWithControlUnit:
-        if (itemObject.hasControlUnit) {
-            // we need to check !loadEnabled first because we may have !loadEnabled
-            // AND loadForced true at the same time.
-            if (!itemObject.loadEnabled) {
-                descr = qsTr("Load detached")
-            }
-            else if (itemObject.loadEnabled && itemObject.loadForced) {
-                descr =  qsTr("Control disabled")
-            }
-            else if (itemObject.loadEnabled) {
-                descr = qsTr("Control enabled")
-            }
+    case ObjectInterface.IdLoadWithoutControlUnit:
+        switch (itemObject.energyLoadStatus) {
+        case EnergyLoadDiagnostic.EnergyLoadAbsent:
+            descr = qsTr("")
+            break
+        case EnergyLoadDiagnostic.EnergyLoadOk:
+            descr = qsTr("Control enabled")
+            break
+        case EnergyLoadDiagnostic.EnergyLoadDisabled:
+            descr = qsTr("Control disabled")
+            break
+        case EnergyLoadDiagnostic.EnergyLoadDetached:
+            descr = qsTr("Load detached")
+            break
         }
         break
+
     case ObjectInterface.IdEnergyData:
         descr = itemObject.familyName
         break

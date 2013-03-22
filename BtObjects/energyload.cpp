@@ -180,6 +180,7 @@ EnergyLoadManagement::EnergyLoadManagement(LoadsDevice *_dev, QString _name, QSt
 	rate = _rate;
 	rate_decimals = _rate_decimals;
 	status = Unknown;
+	energy_load_status = EnergyLoadAbsent;
 	consumption = 0;
 	oid = static_cast<ObjectInterface::ObjectId>(_oid);
 	priority = _priority;
@@ -277,6 +278,8 @@ void EnergyLoadManagement::resetTotal(int index)
 
 void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 {
+	setEnergyLoadStatus();
+
 	DeviceValues::const_iterator it = values_list.constBegin();
 	while (it != values_list.constEnd())
 	{
@@ -314,6 +317,12 @@ void EnergyLoadManagement::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+void EnergyLoadManagement::setEnergyLoadStatus()
+{
+	energy_load_status = EnergyLoadOk;
+	emit energyLoadStatusChanged();
 }
 
 
@@ -413,4 +422,23 @@ void EnergyLoadManagementWithControlUnit::valueReceived(const DeviceValues &valu
 		}
 		++it;
 	}
+
+	setEnergyLoadStatus();
+}
+
+void EnergyLoadManagementWithControlUnit::setEnergyLoadStatus()
+{
+	EnergyLoadStatus value = EnergyLoadOk;
+
+	if (!getLoadEnabled())
+		value = EnergyLoadDetached;
+	else
+		if (getLoadForced())
+			value = EnergyLoadDisabled;
+
+	if (value == energy_load_status)
+		return;
+
+	energy_load_status = value;
+	emit energyLoadStatusChanged();
 }

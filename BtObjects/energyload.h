@@ -184,7 +184,12 @@ class EnergyLoadManagement : public DeviceObjectInterface
 	*/
 	Q_PROPERTY(QString priority READ getPriority CONSTANT)
 
-	Q_ENUMS(LoadStatus)
+	/*!
+		\brief Returns a the energy load status
+	*/
+	Q_PROPERTY(EnergyLoadStatus energyLoadStatus READ getEnergyLoadStatus() NOTIFY energyLoadStatusChanged)
+
+	Q_ENUMS(LoadStatus EnergyLoadStatus)
 
 public:
 	/// High-level status, for load diagnostic
@@ -198,6 +203,18 @@ public:
 		Warning,
 		/// Consumption value is very hight, indicative of a malfunction
 		Critical
+	};
+
+	enum EnergyLoadStatus
+	{
+		/// no status received yet (we suppose the load is not present on plant
+		EnergyLoadAbsent,
+		/// status received and everything is fine
+		EnergyLoadOk,
+		/// load is working, but not under unit control
+		EnergyLoadDisabled,
+		/// load is detached
+		EnergyLoadDetached
 	};
 
 	EnergyLoadManagement(LoadsDevice *dev, QString name, QString priority, int oid, EnergyRate *rate, int rate_decimals);
@@ -221,6 +238,8 @@ public:
 	QString getCurrentUnit() const;
 	QString getCumulativeUnit() const;
 	QString getPriority() const;
+
+	EnergyLoadStatus getEnergyLoadStatus() const { return energy_load_status; }
 
 	virtual bool getHasControlUnit() const { return false; }
 	virtual bool getHasConsumptionMeters() const { return true; }
@@ -257,12 +276,16 @@ signals:
 	void periodTotalsChanged();
 	void consumptionChanged();
 	void expenseChanged();
+	void energyLoadStatusChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
 
 protected:
+	virtual void setEnergyLoadStatus();
+
 	LoadsDevice *dev;
+	EnergyLoadStatus energy_load_status;
 
 private:
 	EnergyRate *rate;
@@ -377,6 +400,9 @@ signals:
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
+
+protected:
+	virtual void setEnergyLoadStatus();
 
 private:
 	bool load_enabled, load_forced, is_advanced;
