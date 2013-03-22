@@ -46,6 +46,8 @@ int main(int argc, char *argv[])
 
 	qmlRegisterType<ImageReader>("BtExperience", 1, 0, "ImageReader");
 	qmlRegisterType<BrowserProcess>("BtExperience", 1, 0, "BrowserProcess");
+	qmlRegisterUncreatableType<GlobalProperties>("BtExperience", 1, 0, "GlobalProperties",
+		"unable to create an GlobalProperties instance");
 
 	LastClickTime *last_click = new LastClickTime;
 	// To receive all the events, even if there is some qml elements which manage
