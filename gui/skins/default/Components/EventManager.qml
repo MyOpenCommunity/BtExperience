@@ -529,6 +529,16 @@ Item {
             return false
         }
 
+        // checks if the energy data detail page is on top
+        function checkEnergyDataDetailPage() {
+            var p = Stack.currentPage()
+
+            if (p._pageName === "EnergyDataDetail")
+                return true
+
+            return false
+        }
+
         function checkVideoPage() {
             return Stack.currentPage()._pageName === "VideoPlayer"
         }
@@ -613,7 +623,7 @@ Item {
                 else if (energyDevice.thresholdLevel === 2)
                     global.ringtoneManager.playRingtone(global.extraPath + "10/drin3.wav", AudioState.Ringtone)
             }
-            if (s < ScreenState.Normal) {
+            if (s < ScreenState.Normal && !checkEnergyDataDetailPage()) {
                 // navigates to energy data detail page; we don't have a way to
                 // compute the right family for our energyData object, so let's
                 // take the first electricity family in the hypothesis there is
