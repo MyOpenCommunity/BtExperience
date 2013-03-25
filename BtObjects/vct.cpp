@@ -230,6 +230,43 @@ bool VDEBase::getMovingCamera() const
 	return moving_camera;
 }
 
+void VDEBase::setTalkerFromWhere(const QString &where)
+{
+	if (where.isEmpty() && !talker.isEmpty())
+	{
+		talker = "";
+		emit talkerChanged(talker);
+		return;
+	}
+
+	bool found = false;
+	for (int i = 0; i < external_places.getCount(); ++i)
+	{
+		ObjectInterface *obj = external_places.getObject(i);
+		ExternalPlace *ep = static_cast<ExternalPlace *>(obj);
+		if (ep->getWhere() == where)
+		{
+			talker = ep->getName();
+			emit talkerChanged(talker);
+			found = true;
+			break;
+		}
+	}
+
+	if (!found)
+	{
+		// strip away the first char, it's not part of the address (it only
+		// indicates external/internal places)
+		talker = "#" + where.mid(1);
+		emit talkerChanged(talker);
+	}
+}
+
+QString VDEBase::getTalker() const
+{
+	return talker;
+}
+
 void VDEBase::moveUpPress()
 {
 	dev->moveUpPress();
@@ -510,6 +547,7 @@ void CCTV::callerAddress(QString address)
 		is_autoswitch = autoswitch;
 		emit autoSwitchChanged();
 	}
+	setTalkerFromWhere(addr);
 
 	if (getAutoSwitch())
 		return;
@@ -745,6 +783,7 @@ void CCTV::disactivateCall()
 	setCallInProgress(false);
 	setExitingCall(false);
 	setMute(false);
+	setTalkerFromWhere(QString());
 }
 
 
@@ -917,35 +956,6 @@ void Intercom::valueReceived(const DeviceValues &values_list)
 			break;
 		}
 		++it;
-	}
-}
-
-void Intercom::setTalkerFromWhere(QString where)
-{
-	if (where.isEmpty() && !talker.isEmpty())
-	{
-		talker = "";
-		emit talkerChanged();
-		return;
-	}
-
-	// helper function used in startCall, answerPagerCall and valueReceived to set the talker where
-	// depending on if we are making or receiving a call we have to set the
-	// talker where's field in 2 different ways, so this function refactor
-	// common code for both cases
-	// note: the where passed as CALLER_ADDRESS may be a boolean, it doesn't
-	// matter, in that case, the where is set in startCall and we never enter
-	// the if
-	for (int i = 0; i < external_places.getCount(); ++i)
-	{
-		ObjectInterface *obj = external_places.getObject(i);
-		ExternalPlace *ep = static_cast<ExternalPlace *>(obj);
-		if (ep->getWhere() == where)
-		{
-			talker = ep->getName();
-			emit talkerChanged();
-			break;
-		}
 	}
 }
 
