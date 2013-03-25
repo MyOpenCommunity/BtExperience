@@ -357,17 +357,21 @@ BasePage {
         }
 
         function adjustPosition() {
-            if (transparentRect.x < sourceImage.x)
-                transparentRect.x = sourceImage.x
+            var x = Math.max(sourceImage.x, 0)
+            if (transparentRect.x < x)
+                transparentRect.x = x
 
-            if (transparentRect.x + transparentRect.width > sourceImage.x + sourceImage.width)
-                transparentRect.x = sourceImage.x + sourceImage.width - transparentRect.width
+            var xx = Math.min(sourceImage.x + sourceImage.width, 0 + bgImage.width)
+            if (transparentRect.x + transparentRect.width > xx)
+                transparentRect.x = xx - transparentRect.width
 
-            if (transparentRect.y < sourceImage.y)
-                transparentRect.y = sourceImage.y
+            var y = Math.max(sourceImage.y, 0)
+            if (transparentRect.y < y)
+                transparentRect.y = y
 
-            if (transparentRect.y + transparentRect.height > sourceImage.y + sourceImage.height)
-                transparentRect.y = sourceImage.y + sourceImage.height - transparentRect.height
+            var yy = Math.min(sourceImage.y + sourceImage.height, 0 + bgImage.height)
+            if (transparentRect.y + transparentRect.height > yy)
+                transparentRect.y = yy - transparentRect.height
         }
 
         function zoomIn() {
