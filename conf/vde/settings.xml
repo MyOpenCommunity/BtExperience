@@ -52,10 +52,6 @@
 	<obj cid="14152" id="14152" clean_time="10000">
 		<ist uii="30230" clean_time="20000"/>
 	</obj>
-	<!-- password -->
-	<obj cid="14003" id="14003" mode="0" password="12345">
-		<ist uii="30301" password="1234567" mode="0" />
-	</obj>
 	<!-- beep enable -->
 	<obj cid="14001" id="14001">
 		<ist uii="30105" enable="1" />
