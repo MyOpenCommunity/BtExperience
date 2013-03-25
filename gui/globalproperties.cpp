@@ -40,7 +40,6 @@ namespace
 	enum Parsing
 	{
 		Beep = 14001,
-		Password = 14003,
 		Brightness = 14151,
 		RingtoneS0 = 14101,
 		RingtoneS1,
@@ -106,34 +105,6 @@ namespace
 		return parseIntSetting(xml_node, "brightness");
 	}
 
-	void setPassword(QDomDocument document, int id, QString password, bool enabled)
-	{
-		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
-		{
-			if (getIntAttribute(xml_obj, "id") == id)
-			{
-				foreach (QDomNode ist, getChildren(xml_obj, "ist"))
-				{
-					setAttribute(ist, "password", password);
-					setAttribute(ist, "mode", QString::number(bool(enabled)));
-				}
-				break;
-			}
-		}
-	}
-
-	void parsePassword(QDomNode xml_node, QString *password, bool *enabled)
-	{
-		XmlObject v(xml_node);
-
-		foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
-		{
-			v.setIst(ist);
-			*password = v.value("password");
-			*enabled = bool(v.intValue("mode"));
-		}
-	}
-
 	void setBrowser(QDomDocument document, int id, QString home_page, bool keep_history)
 	{
 		foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))
@@ -186,6 +157,10 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 							   (*bt_global::config)[DEFAULT_PE]);
 	else
 		default_external_place = 0;
+
+	password = (*bt_global::config)[USER_PASSWORD];
+	password_enabled = (*bt_global::config)[USER_PASSWORD_ENABLED] == "1" ? true : false;
+	screen_state->setPasswordEnabled(password_enabled);
 
 	parseSettings();
 	parseBrowser();
@@ -326,11 +301,6 @@ void GlobalProperties::parseSettings()
 		{
 		case Beep:
 			settings->setBeep(parseEnableFlag(xml_obj));
-			break;
-		case Password:
-			password = (*bt_global::config)[USER_PASSWORD];
-			password_enabled = (*bt_global::config)[USER_PASSWORD_ENABLED] == "1" ? true : false;
-			screen_state->setPasswordEnabled(password_enabled);
 			break;
 		case Brightness:
 			screen_state->setNormalBrightness(parseBrightness(xml_obj));
