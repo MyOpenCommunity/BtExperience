@@ -94,6 +94,11 @@ class VDEBase : public ObjectInterface
 	Q_PROPERTY(ObjectDataModel *externalPlaces READ getExternalPlaces CONSTANT)
 
 	/*!
+		\brief Retrieves a description for the device on the other side of the call.
+	*/
+	Q_PROPERTY(QString talker READ getTalker NOTIFY talkerChanged)
+
+	/*!
 		\brief Whether the current call is SCS or IP
 	*/
 	Q_PROPERTY(bool isIpCall READ isIpCall NOTIFY isIpCallChanged)
@@ -135,6 +140,9 @@ public:
 	bool getTeleloop() const;
 	bool getMovingCamera() const;
 
+	void setTalkerFromWhere(const QString &where);
+	QString getTalker() const;
+
 signals:
 	void volumeChanged();
 	void muteChanged();
@@ -144,6 +152,7 @@ signals:
 	void exitingCallChanged();
 	void teleloopChanged();
 	void movingCameraChanged();
+	void talkerChanged(const QString &talker);
 
 public slots:
 	void moveUpPress();
@@ -175,6 +184,7 @@ protected:
 	bool is_teleloop;
 	bool moving_camera;
 	bool call_in_progress, call_active, exit_call;
+	QString talker;
 	ObjectDataModel external_places;
 	VideoDoorEntryDevice *dev;
 };
@@ -370,11 +380,6 @@ class Intercom : public VDEBase
 	Q_OBJECT
 
 	/*!
-		\brief Retrieves a description for the device on the other side of the call.
-	*/
-	Q_PROPERTY(QString talker READ getTalker NOTIFY talkerChanged)
-
-	/*!
 		\brief Logical event (as reported by the device) for which a ringtone should be played
 	*/
 	Q_PROPERTY(Ringtone ringtone READ getRingtone NOTIFY ringtoneChanged)
@@ -443,13 +448,11 @@ protected:
 
 private:
 	void setRingtone(int vde_ringtone);
-	void setTalkerFromWhere(QString where);
 	void activateCall();
 	void disactivateCall();
 
 	bool pager_call, pager_configured;
 	Ringtone ringtone;
-	QString talker;
 };
 
 #endif // VCT_H

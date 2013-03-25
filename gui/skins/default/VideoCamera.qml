@@ -85,7 +85,7 @@ Page {
         id: controlVideo
 
         moveArrowsVisible: camera.movingCamera
-        label: "CAMERA EXTERNAL PLACE #1"
+        label: camera.talker
         anchors {
             right: controlCallManager.left
             rightMargin: 16
