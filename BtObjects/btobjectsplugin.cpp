@@ -1646,7 +1646,7 @@ void BtObjectsPlugin::registerTypes(const char *uri)
 	qmlRegisterUncreatableType<ScreenState>(uri, 1, 0, "ScreenState",
 						"unable to create a ScreenState instance");
 	// the following is useful to export GrabberState enum to QML
-	qmlRegisterUncreatableType<CCTV>(uri, 1, 0, "CCTV",
+	qmlRegisterUncreatableType<CCTV>(uri, 1, 0, "VideoDoorEntryCCTV",
 						"unable to create a CCTV instance");
 }
 

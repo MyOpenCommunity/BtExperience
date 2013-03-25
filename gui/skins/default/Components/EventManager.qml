@@ -175,7 +175,7 @@ Item {
             // we don't need to turn off vde audio because the call is still
             // not answered
             if (global.audioState.state === AudioState.ScsVideoCall)
-                global.audioState.vdeEnable(newState === CCTV.GrabberRunning)
+                global.audioState.vdeEnable(newState === VideoDoorEntryCCTV.GrabberRunning)
         }
         onIncomingCall: privateProps.addNotification({"type": Script.VCT_INCOMING_CALL})
         onCallAnswered: {
