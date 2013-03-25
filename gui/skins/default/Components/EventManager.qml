@@ -163,6 +163,20 @@ Item {
     Connections {
         id: vctConnection
         target: null
+        onGrabberStateChanged: {
+            // if we are in ScsVideoCall audio state a video call is in progress
+            // and it was answered; in such a state, if the grabber changes state
+            // it means that we are cycling between cameras; when cycling we
+            // must turn vde audio off, till the connection to the new camera
+            // is established; please note that, if the ScsVideoCall state is
+            // leaved for whatever reason the vde on script is not called (maybe
+            // the vde off script is called twice, but probably it doesn't hurt)
+            // if we are not in ScsVideoCall state and the grabber changes state
+            // we don't need to turn off vde audio because the call is still
+            // not answered
+            if (global.audioState.state === AudioState.ScsVideoCall)
+                global.audioState.vdeEnable(newState === CCTV.GrabberRunning)
+        }
         onIncomingCall: privateProps.addNotification({"type": Script.VCT_INCOMING_CALL})
         onCallAnswered: {
             if (vctConnection.target.teleloop)

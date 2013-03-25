@@ -388,6 +388,16 @@ void AudioState::updateAudioPaths(State old_state, State new_state)
 	resumeActivePlayer();
 }
 
+void AudioState::vdeEnable(bool enable)
+{
+	// this slot enables/disables the vde audio; it is used during camera
+	// cycling to avoid to introduce an additional state on audio state machine
+	if (enable)
+		smartExecute_synch(vde_audio_on);
+	else
+		smartExecute_synch(vde_audio_off);
+}
+
 void AudioState::completeTransition(bool state)
 {
 	if (pending_state == Invalid)

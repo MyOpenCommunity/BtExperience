@@ -289,6 +289,9 @@ CCTV::CCTV(QList<ExternalPlace *> list, VideoDoorEntryDevice *d, QString _pe_add
 
 	video_grabber.setStandardOutputFile("/dev/null");
 	video_grabber.setStandardErrorFile("/dev/null");
+	// connects to video_grabber process state changes to notify QML of such
+	// changes; this is needed when cycling between cameras
+	connect(&video_grabber, SIGNAL(stateChanged(QProcess::ProcessState)), this, SLOT(grabberStateReceived(QProcess::ProcessState)));
 
 	grabber_delay.setSingleShot(true);
 	grabber_delay.setInterval(VIDEO_GRABBER_DELAY);
@@ -682,6 +685,14 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 		}
 		++it;
 	}
+}
+
+void CCTV::grabberStateReceived(QProcess::ProcessState state)
+{
+	if (state == QProcess::Running)
+		emit grabberStateChanged(GrabberRunning);
+	else
+		emit grabberStateChanged(GrabberNotRunning);
 }
 
 void CCTV::startVideo()

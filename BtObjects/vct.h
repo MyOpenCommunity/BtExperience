@@ -245,7 +245,7 @@ class CCTV : public VDEBase
 	*/
 	Q_PROPERTY(bool teleloopAssociating READ getTeleloopAssociating NOTIFY teleloopAssociatingChanged)
 
-	Q_ENUMS(Ringtone)
+	Q_ENUMS(Ringtone GrabberState)
 
 public:
 	enum Ringtone
@@ -254,6 +254,12 @@ public:
 		ExternalPlace2,
 		ExternalPlace3,
 		ExternalPlace4
+	};
+
+	enum GrabberState
+	{
+		GrabberRunning,
+		GrabberNotRunning
 	};
 
 	explicit CCTV(QList<ExternalPlace *> l, VideoDoorEntryDevice *d, QString pe_address);
@@ -314,9 +320,11 @@ signals:
 	void teleloopAssociationComplete();
 	void teleloopAssociationTimeout();
 	void teleloopAssociatingChanged();
+	void grabberStateChanged(int newState);
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
+	void grabberStateReceived(QProcess::ProcessState state);
 
 protected:
 	int brightness;

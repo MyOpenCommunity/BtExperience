@@ -98,6 +98,9 @@ signals:
 
 	void volumeChanged(int state, int volume);
 
+public slots:
+	void vdeEnable(bool enable);
+
 private slots:
 	void completeTransition(bool state);
 	void checkDirectAudioAccess();
