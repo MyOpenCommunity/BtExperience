@@ -5,7 +5,7 @@ import Components.Text 1.0
 SvgImage {
     id: buttonSlider
 
-    property int percentage: 70
+    property int percentage
     property alias description: label.text
     property bool sliderEnabled: true
 
