@@ -68,6 +68,10 @@
     <sicurezza>
       <pwd_open>12345</pwd_open>
     </sicurezza>
+    <password>
+	    <enabled>0</enabled>
+	    <pwd>1234567</pwd>
+    </password>
     <keyobjects>
       <num>1</num>
       <ko1>
