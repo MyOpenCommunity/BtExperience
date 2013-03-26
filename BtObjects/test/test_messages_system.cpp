@@ -40,6 +40,8 @@ void TestMessagesSystem::cleanup()
 	delete obj->dev;
 	delete obj;
 	delete dev;
+
+	MessagesSystem::cleanupMessagesFile();
 }
 
 void TestMessagesSystem::testNewMessage()

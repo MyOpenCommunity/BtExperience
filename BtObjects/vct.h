@@ -452,7 +452,6 @@ public:
 signals:
 	void incomingCall();
 	void callEnded();
-	void talkerChanged();
 	void callAnswered();
 	void ringtoneChanged();
 	void ringtoneReceived();
