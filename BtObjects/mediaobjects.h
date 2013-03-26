@@ -160,6 +160,7 @@ public slots:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Base class for objects that represent a user visible source, eg. usb, sd, ip radio, rds radio etc.
 
 	Each SourceObject communicates with one SourceBase object, which handles low
@@ -256,6 +257,7 @@ private:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Multimedia browse point
 
 	A subset of the properties of a local source object, used to display devices in multimedia section
@@ -296,6 +298,7 @@ private:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Multimedia played through local source
 
 	All SourceMedia instances share the same \ref MultiMediaPlayer/\ref AudioVideoPlayer instance
@@ -350,6 +353,7 @@ protected:
 };
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Web radio played through local source
 */
 class SourceIpRadio : public SourceMedia
@@ -374,6 +378,7 @@ private:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief Local file played through local source
 */
 class SourceLocalMedia : public SourceMedia
@@ -411,6 +416,7 @@ private:
 
 
 /*!
+	\ingroup SoundDiffusion
 	\brief UPnP media object played through local source
 */
 class SourceUpnpMedia : public SourceMedia
