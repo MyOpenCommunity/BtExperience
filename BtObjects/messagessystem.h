@@ -76,6 +76,7 @@ private slots:
 
 private:
 	void loadMessages();
+	static void cleanupMessagesFile();
 
 	MessageDevice *dev;
 	MediaDataModel message_list;
