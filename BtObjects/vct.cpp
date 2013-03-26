@@ -108,6 +108,39 @@ QList<ObjectPair> parsePager(const QDomNode &xml_node)
 	return obj_list;
 }
 
+QList<ObjectPair> parseStaircaseLight(const QDomNode &xml_node)
+{
+	VideoDoorEntryDevice *d = bt_global::add_device_to_cache(new VideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE]));
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		obj_list << ObjectPair(uii, new StaircaseLight(v.value("descr"), d));
+	}
+	return obj_list;
+}
+
+
+StaircaseLight::StaircaseLight(const QString &_name, VideoDoorEntryDevice *d, QObject *parent)
+	: ObjectInterface(parent)
+{
+	dev = d;
+	setName(_name);
+}
+
+void StaircaseLight::staircaseLightActivate()
+{
+	dev->stairLightActivate();
+}
+
+void StaircaseLight::staircaseLightRelease()
+{
+	dev->stairLightRelease();
+}
 
 ExternalPlace::ExternalPlace(const QString &_name, int _object_id, const QString &_where)
 {

@@ -178,6 +178,7 @@ public:
 
 		// lights
 		IdLightGroup = 2004, //!< A set of lights
+		IdStaircaseLight = 2009, //!< A staircase light
 
 		// the following constants don't have a correspondence 1-to-1 with
 		// ids used in configuration file; ids used in configuration file
