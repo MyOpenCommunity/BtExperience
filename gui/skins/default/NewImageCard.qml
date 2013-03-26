@@ -329,6 +329,15 @@ BasePage {
         onClicked: privateProps.upArrowClicked()
     }
 
+    states: [
+        State {
+            name: "screenshot"
+            PropertyChanges { target: arrowDown; visible: false; }
+            PropertyChanges { target: arrowLeft; visible: false; }
+            PropertyChanges { target: arrowRight; visible: false; }
+            PropertyChanges { target: arrowUp; visible: false; }
+        }
+    ]
     QtObject {
         id: privateProps
 
@@ -419,7 +428,9 @@ BasePage {
             // customization filenames are in the form uii.extension
             // the string concatenation is needed to convert everything to a string
             var name = page.newFilename + "." + getExtension("" + sourceImage.source)
+            page.state = "screenshot"
             containerWithCard.cardImage = global.takeScreenshot(Qt.rect(x, y, w, h), name)
+            page.state = ""
             // images are internally cached and shared, so a trick is needed
             // to cause a reload of the image from disk
             containerWithCard.setCacheDirty()
