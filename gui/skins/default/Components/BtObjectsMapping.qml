@@ -17,13 +17,13 @@ QtObject {
         case ObjectInterface.IdLightFixedAMBGRGEN:
         case ObjectInterface.IdLightCustomPP:
         case ObjectInterface.IdLightCustomAMBGRGEN:
+        case ObjectInterface.IdDimmerFixedAMBGRGEN:
+        case ObjectInterface.IdDimmer100CustomAMBGRGEN:
+        case ObjectInterface.IdDimmer100FixedAMBGRGEN:
             return Qt.createComponent("Lighting/Light.qml")
         case ObjectInterface.IdDimmerFixedPP:
-        case ObjectInterface.IdDimmerFixedAMBGRGEN:
         case ObjectInterface.IdDimmer100CustomPP:
-        case ObjectInterface.IdDimmer100CustomAMBGRGEN:
         case ObjectInterface.IdDimmer100FixedPP:
-        case ObjectInterface.IdDimmer100FixedAMBGRGEN:
             return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdLightGroup:
         case ObjectInterface.IdDimmerGroup:
