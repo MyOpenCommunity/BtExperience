@@ -1,4 +1,4 @@
-QT += network xml testlib
+QT += declarative network xml testlib
 OBJECTS_DIR = obj
 MOC_DIR = moc
 
