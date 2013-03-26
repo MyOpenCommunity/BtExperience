@@ -139,13 +139,6 @@ namespace
 		return link_node;
 	}
 
-	void createLinkHomepage(QDomNode parent, int uii)
-	{
-		QDomElement link_node = createLink(parent, uii);
-
-		link_node.setAttribute("img", "");
-	}
-
 	template<class T>
 	void createLink(QDomNode parent, int uii, T *obj)
 	{
@@ -972,7 +965,7 @@ void BtObjectsPlugin::insertObject(ItemInterface *obj)
 
 	if (is_home_page)
 	{
-		createLinkHomepage(container_path.first, uii);
+		createLink(container_path.first, uii);
 	}
 	else
 	{
