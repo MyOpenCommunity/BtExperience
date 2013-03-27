@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QTimer>
 
 class MultiMediaPlayer;
 class SoundPlayer;
@@ -106,6 +107,7 @@ private slots:
 	void checkDirectAudioAccess();
 	void changeSoundDiffusionAccess();
 	void checkPlayerState(MultiMediaPlayer::PlayerState);
+	void runVdeOn();
 
 private:
 	enum PlayerType
@@ -145,6 +147,7 @@ private:
 	bool sound_diffusion;
 	QList<PlayerInfo> players;
 	SoundPlayer *beep;
+	QTimer vde_on_delay;
 };
 
 #endif // AUDIOSTATE_H
