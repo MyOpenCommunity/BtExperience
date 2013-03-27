@@ -203,7 +203,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode")));
+		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode"), EnergyDevice::FORCE_REQUEST_FRAMES));
 		QVariantList goals, thresholds_enabled;
 
 		EnergyRate *rate = 0;
