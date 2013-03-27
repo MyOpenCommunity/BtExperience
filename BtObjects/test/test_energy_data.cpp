@@ -20,7 +20,7 @@ namespace
 
 void TestEnergyData::init()
 {
-	EnergyDevice *d = new EnergyDevice("1", 1);
+	EnergyDevice *d = new EnergyDevice("1", 1, EnergyDevice::FORCE_REQUEST_FRAMES);
 	EnergyRate *rate = new EnergyRate(0.25);
 	QVariantList goals;
 
@@ -28,7 +28,7 @@ void TestEnergyData::init()
 		goals.append(i + 11);
 
 	obj = new EnergyData(d, "", EnergyFamily::Electricity, "kW", goals, true, QVariantList() << false << false, rate, 0);
-	dev = new EnergyDevice("1", 1, 1);
+	dev = new EnergyDevice("1", 1, EnergyDevice::FORCE_REQUEST_FRAMES, 1);
 
 	rate->setParent(obj);
 }
@@ -1353,10 +1353,10 @@ void TestEnergyData::testGoalDisabled()
 
 void TestEnergyItem::init()
 {
-	EnergyDevice *d = new EnergyDevice("1", 1);
+	EnergyDevice *d = new EnergyDevice("1", 1, EnergyDevice::FORCE_REQUEST_FRAMES);
 
 	obj = new EnergyData(d, "", EnergyFamily::Electricity, "kW", QVariantList(), true, QVariantList(), 0, 0);
-	dev = new EnergyDevice("1", 1, 1);
+	dev = new EnergyDevice("1", 1, EnergyDevice::FORCE_REQUEST_FRAMES, 1);
 }
 
 void TestEnergyItem::cleanup()
@@ -1414,10 +1414,10 @@ void TestEnergyItem::testRequestUpdate()
 
 void TestEnergyGraph::init()
 {
-	EnergyDevice *d = new EnergyDevice("1", 1);
+	EnergyDevice *d = new EnergyDevice("1", 1, EnergyDevice::FORCE_REQUEST_FRAMES);
 
 	obj = new EnergyData(d, "", EnergyFamily::Electricity, "kW", QVariantList(), true, QVariantList(), 0, 0);
-	dev = new EnergyDevice("1", 1, 1);
+	dev = new EnergyDevice("1", 1, EnergyDevice::FORCE_REQUEST_FRAMES, 1);
 }
 
 void TestEnergyGraph::cleanup()
