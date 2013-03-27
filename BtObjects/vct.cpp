@@ -760,9 +760,10 @@ void CCTV::valueReceived(const DeviceValues &values_list)
 
 void CCTV::grabberStateReceived(QProcess::ProcessState state)
 {
+	// ignoring the Starting state, it only creates confusion
 	if (state == QProcess::Running)
 		emit grabberStateChanged(GrabberRunning);
-	else
+	else if (state == QProcess::NotRunning)
 		emit grabberStateChanged(GrabberNotRunning);
 }
 
