@@ -10,6 +10,9 @@
 #include <QtDebug>
 
 
+#define VDE_ON_DELAY 300
+
+
 namespace
 {
 	AudioState::Volume volume_map[AudioState::StateCount + 1] =
@@ -120,6 +123,10 @@ AudioState::AudioState(QObject *parent) :
 	current_state = pending_state = Invalid;
 	current_volume = InvalidVolume;
 	direct_audio_access = direct_video_access = sound_diffusion = false;
+
+	vde_on_delay.setSingleShot(true);
+	vde_on_delay.setInterval(300);
+	connect(&vde_on_delay, SIGNAL(timeout()), this, SLOT(runVdeOn()));
 
 	connect(this, SIGNAL(directAudioAccessChanged(bool)),
 		this, SLOT(completeTransition(bool)));
@@ -392,10 +399,17 @@ void AudioState::vdeEnable(bool enable)
 {
 	// this slot enables/disables the vde audio; it is used during camera
 	// cycling to avoid to introduce an additional state on audio state machine
+	vde_on_delay.stop();
 	if (enable)
-		smartExecute_synch(vde_audio_on);
+		vde_on_delay.start();
 	else
 		smartExecute_synch(vde_audio_off);
+}
+
+void AudioState::runVdeOn()
+{
+	vde_on_delay.stop();
+	smartExecute_synch(vde_audio_on);
 }
 
 void AudioState::completeTransition(bool state)

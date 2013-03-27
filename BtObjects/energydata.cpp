@@ -203,7 +203,7 @@ QList<ObjectPair> parseEnergyData(const QDomNode &xml_node, EnergyFamily::Family
 	{
 		v.setIst(ist);
 		int uii = getIntAttribute(ist, "uii");
-		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode")));
+		EnergyDevice *d = bt_global::add_device_to_cache(new EnergyDevice(v.value("where"), v.intValue("mode"), EnergyDevice::FORCE_REQUEST_FRAMES));
 		QVariantList goals, thresholds_enabled;
 
 		EnergyRate *rate = 0;
@@ -925,7 +925,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 
 			for (int i = 0; i < 2; ++i)
 			{
-				if (state[i] == EnergyDevice::THRESHOLD_EXCEEDED)
+				if (state[i] == EnergyDevice::THRESHOLD_EXCEEDED && getFamilyType() == EnergyFamily::Electricity)
 					exceeded_count += 1;
 				enabled.append(state[i] != EnergyDevice::THRESHOLD_DISABLED);
 			}

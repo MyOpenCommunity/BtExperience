@@ -29,6 +29,8 @@ void TestMessagesSystem::init()
 {
 	MessageDevice *d = new MessageDevice;
 
+	MessagesSystem::cleanupMessagesFile();
+
 	obj = new MessagesSystem(d);
 	dev = new MessageDevice(1);
 }
@@ -38,6 +40,8 @@ void TestMessagesSystem::cleanup()
 	delete obj->dev;
 	delete obj;
 	delete dev;
+
+	MessagesSystem::cleanupMessagesFile();
 }
 
 void TestMessagesSystem::testNewMessage()

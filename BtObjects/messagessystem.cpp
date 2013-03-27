@@ -148,6 +148,11 @@ void MessagesSystem::loadMessages()
 	emit unreadMessagesChanged();
 }
 
+void MessagesSystem::cleanupMessagesFile()
+{
+	QFile::remove(MESSAGES_FILENAME);
+}
+
 void MessagesSystem::saveMessages()
 {
 	QString dirname = QFileInfo(MESSAGES_FILENAME).absolutePath();

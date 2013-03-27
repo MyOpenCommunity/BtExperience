@@ -63,6 +63,10 @@
 			<link uii="61" />
 		</ist>
 	</obj>
+	<!-- staircase light (id 2009) -->
+	<obj cid="2009" id="2009" descr="Staircase light">
+		<ist uii="115" />
+	</obj>
 	<obj cid="2001" id="2001" descr="Dimmer 10" where="11" pul="0" ftime="2">
 		<ist uii="1" descr="lamp downstair" where="11#4#01" />
 		<ist uii="2" descr="dimmer 29 (10)"  where="29" pul="1" />
