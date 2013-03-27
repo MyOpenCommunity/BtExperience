@@ -33,7 +33,7 @@ SvgImage {
             font.pixelSize: control.pixelSize
             color: "white"
             wrapMode: Text.WordWrap
-            elide: Text.ElideMiddle
+            elide: Text.ElideRight
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
@@ -53,7 +53,7 @@ SvgImage {
                 font.pixelSize: control.pixelSize
                 color: "white"
                 wrapMode: Text.WordWrap
-                elide: Text.ElideMiddle
+                elide: Text.ElideRight
                 anchors {
                     top: parent.top
                     topMargin: parent.height / 100 * 4
@@ -67,7 +67,7 @@ SvgImage {
                 font.pixelSize: control.pixelSize
                 color: "white"
                 wrapMode: Text.WordWrap
-                elide: Text.ElideMiddle
+                elide: Text.ElideRight
                 anchors {
                     bottom: parent.bottom
                     bottomMargin: parent.height / 100 * 4
