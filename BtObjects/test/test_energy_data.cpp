@@ -1236,6 +1236,43 @@ void TestEnergyData::testReceiveThresholdLevel()
 
 	QCOMPARE(obj->getThresholdEnabled(), QVariantList() << true << false);
 	QCOMPARE(obj->getThresholdLevel(), 1);
+
+	// tests threshold signals are not emitted for non-electricity lines
+	{
+		EnergyDevice d("1", 1);
+		EnergyRate rate(0.25);
+		QVariantList goals;
+
+		for (int i = 0; i < 12; ++i)
+			goals.append(i + 11);
+
+		EnergyData obj2(&d, "", EnergyFamily::DomesticHotWater, "kW", goals, true, QVariantList() << false << false, &rate, 0);
+
+		ObjectTester te(&obj2, SIGNAL(thresholdEnabledChanged(QVariantList)));
+		ObjectTester tl(&obj2, SIGNAL(thresholdLevelChanged(int)));
+		DeviceValues v;
+		QVariant s;
+
+		s.setValue(QList<int>() << EnergyDevice::THRESHOLD_ENABLED << EnergyDevice::THRESHOLD_DISABLED);
+		v[EnergyDevice::DIM_THRESHOLD_STATE] = s;
+
+		obj2.valueReceived(v);
+		te.checkSignals();
+		tl.checkNoSignals();
+
+		QCOMPARE(obj2.getThresholdEnabled(), QVariantList() << true << false);
+		QCOMPARE(obj2.getThresholdLevel(), 0);
+
+		s.setValue(QList<int>() << EnergyDevice::THRESHOLD_EXCEEDED << EnergyDevice::THRESHOLD_DISABLED);
+		v[EnergyDevice::DIM_THRESHOLD_STATE] = s;
+
+		obj2.valueReceived(v);
+		te.checkNoSignals();
+		tl.checkNoSignals();
+
+		QCOMPARE(obj2.getThresholdEnabled(), QVariantList() << true << false);
+		QCOMPARE(obj2.getThresholdLevel(), 0);
+	}
 }
 
 void TestEnergyData::testCheckGoal()

@@ -925,7 +925,7 @@ void EnergyData::valueReceived(const DeviceValues &values_list)
 
 			for (int i = 0; i < 2; ++i)
 			{
-				if (state[i] == EnergyDevice::THRESHOLD_EXCEEDED)
+				if (state[i] == EnergyDevice::THRESHOLD_EXCEEDED && getFamilyType() == EnergyFamily::Electricity)
 					exceeded_count += 1;
 				enabled.append(state[i] != EnergyDevice::THRESHOLD_DISABLED);
 			}
