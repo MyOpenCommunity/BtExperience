@@ -75,7 +75,7 @@ inline uint qHash(const CacheKey &key)
 /*!
 	\brief Used to group energy lines
 
-	This object does not correspond to an \c <ist> tag; the \ref objectKey attribute
+	This object does not correspond to an \c \<ist\> tag; the \ref objectKey attribute
 	can be used to filter the list of interfaces that belong to the family.
 */
 class EnergyFamily : public ObjectInterface

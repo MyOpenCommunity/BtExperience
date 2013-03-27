@@ -6,7 +6,7 @@ import BtObjects 1.0
   * It was not possible to use Components.
   * In case of circular imports, the createObject function hangs forever.
   * Reverting to file names (at least for now).
-  * Another possibility is to use new <<Component>>() in Javascript code, but
+  * Another possibility is to use new Component() in Javascript code, but
   * it is not clear if it is a bug or a feature, so we leave apart at the moment.
   */
 QtObject {
@@ -48,8 +48,6 @@ QtObject {
             return Qt.createComponent("Automation/AutomationVDE.qml")
         case ObjectInterface.IdAutomationDoor:
             return Qt.createComponent("Automation/Automation1.qml")
-        //case ObjectInterface.IdAutomationCommand2: //!< Automation AMB, GEN, GR
-        //case ObjectInterface.IdAutomationCommand3: //!< Automation 3-states AMB, GEN, GR
         case ObjectInterface.IdAutomationGroup2:
             return Qt.createComponent("Automation/AutomationGroup2.qml")
         case ObjectInterface.IdAutomationGroup3OpenClose:
