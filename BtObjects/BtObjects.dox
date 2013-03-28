@@ -16,29 +16,29 @@
 	import BtObjects 1.0
 
 	ListView {
-	    model: rooms
+		model: rooms
 
-	    MediaModel {
-		id: rooms
-		source: myHomeModels.rooms
-		container
-	    }
+		MediaModel {
+			id: rooms
+			source: myHomeModels.rooms
+			containers: [floorUii]
+		}
 
-	    delegate: Image {
-		property variant itemObject: mediaModel.getObject(index)
+		delegate: Image {
+			property variant itemObject: mediaModel.getObject(index)
 
-		id: listDelegate
+			id: listDelegate
 
-		Image {
-		    source: listDelegate.itemObject.image
+			Image {
+				source: listDelegate.itemObject.image
 
-		    // ...
+				// ...
+			}
+
+			// ...
 		}
 
 		// ...
-	    }
-
-	    // ...
 	}
 	\endverbatim
 
@@ -56,9 +56,9 @@
 
 	\verbatim
 	MediaModel {
-	    source: myHomeModels.rooms
-	    id: roomsModel
-	    containers: [floorUii]
+		source: myHomeModels.rooms
+		id: roomsModel
+		containers: [floorUii]
 	}
 	\endverbatim
 
@@ -66,9 +66,9 @@
 
 	\verbatim
 	ObjectModel {
-	    id: objectModel
-	    source: myHomeModels.myHomeObjects
-	    containers: [Container.IdLights]
+		id: objectModel
+		source: myHomeModels.myHomeObjects
+		containers: [Container.IdLights]
 	}
 	\endverbatim
 
@@ -79,9 +79,9 @@
 	\verbatim
 	// currentPage can go from 0 to Math.ceil(userNotes.count / elementsOnPage)
 	MediaModel {
-	    id: userNotes
-	    source: myHomeModels.notes
-	    range: [(currentPage - 1) * elementsOnPage, currentPage * elementsOnPage]
+		id: userNotes
+		source: myHomeModels.notes
+		range: [(currentPage - 1) * elementsOnPage, currentPage * elementsOnPage]
 	}
 	\endverbatim
 
