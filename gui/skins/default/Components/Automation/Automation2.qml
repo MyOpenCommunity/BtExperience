@@ -4,7 +4,7 @@ import Components 1.0
 
 MenuColumn {
     ControlOnOff {
-        status: dataModel.active
+        status: -1
         onClicked: dataModel.active = newStatus
     }
 }
