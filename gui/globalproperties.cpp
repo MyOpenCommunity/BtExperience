@@ -14,6 +14,7 @@
 #include "browserprocess.h"
 #include "imagesaver.h"
 #include "medialink.h"
+#include "bt_global_config.h"
 
 #include <QTimer>
 #include <QDateTime>

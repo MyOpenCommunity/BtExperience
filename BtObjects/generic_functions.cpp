@@ -14,7 +14,7 @@ namespace
 	const char *image_files[] = {"png", "gif", "jpg", "jpeg", "tif", "tiff", 0};
 
 	// transforms an extension to a pattern (es. "wav" -> "*.[wW][aA][vV]")
-	void addFilters(QStringList &filters, const char **extensions, int size)
+	void addFilters(QStringList &filters, const char **extensions)
 	{
 		for (int i = 0; extensions[i] != 0; ++i)
 		{
@@ -99,34 +99,14 @@ QStringList getFileFilter(EntryInfo::Type type)
 	case EntryInfo::IMAGE:
 		files = image_files;
 		break;
-#ifdef BUILD_EXAMPLES
-	case EntryInfo::PDF:
-		files = pdf_files;
-		break;
-#endif
 	default:
 		Q_ASSERT_X(false, "getFileFilter", qPrintable(QString("type %1 not handled").arg(type)));
 	}
 
 	if (files)
-		addFilters(filters, files, ARRAY_SIZE(files));
+		addFilters(filters, files);
 
 	return filters;
-}
-
-
-bool smartExecute(const QString &program, QStringList args)
-{
-#if DEBUG
-	QTime t;
-	t.start();
-	bool ret = QProcess::execute(program, args);
-	qDebug() << "Executed:" << program << args.join(" ") << "in:" << t.elapsed() << "ms";
-	return ret;
-#else
-	qDebug() << "Executing:" << program << args.join(" ");
-	return QProcess::execute(program, args);
-#endif
 }
 
 bool smartExecute_synch(const QString &program, QStringList args)
@@ -149,6 +129,20 @@ bool smartExecute_synch(const QString &program, QStringList args)
 		return false;
 #endif
 	return ret;
+}
+
+bool smartExecute(const QString &program, QStringList args)
+{
+#if DEBUG
+	QTime t;
+	t.start();
+	bool ret = QProcess::execute(program, args);
+	qDebug() << "Executed:" << program << args.join(" ") << "in:" << t.elapsed() << "ms";
+	return ret;
+#else
+	qDebug() << "Executing:" << program << args.join(" ");
+	return QProcess::execute(program, args);
+#endif
 }
 
 bool silentExecute(const QString &program, QStringList args)

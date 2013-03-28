@@ -2,7 +2,7 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "configfile.h"
-#include "main.h" // bt_global::config
+#include "bt_global_config.h"
 
 #include <QDebug>
 #include <QDateTime>

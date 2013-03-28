@@ -5,7 +5,7 @@
 #include "lighting_device.h"
 #include "media_device.h"
 #include "objecttester.h"
-#include "main.h" // bt_global::config
+#include "bt_global_config.h"
 
 #include <QtTest>
 

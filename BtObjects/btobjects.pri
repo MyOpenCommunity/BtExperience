@@ -5,6 +5,7 @@ HEADERS += \
 	alarmclocknotifier.h \
 	antintrusionsystem.h \
 	automationobjects.h \
+	bt_global_config.h \
 	choicelist.h \
 	configfile.h \
 	container.h \
@@ -14,6 +15,7 @@ HEADERS += \
 	energyload.h \
 	energyrate.h \
 	folderlistmodel.h \
+	generic_functions.h \
 	globalmodels.h \
 	gstmediaplayer.h \
 	homeproperties.h \
@@ -93,6 +95,7 @@ SOURCES += \
 	energyload.cpp \
 	energyrate.cpp \
 	folderlistmodel.cpp \
+	generic_functions.cpp \
 	globalmodels.cpp \
 	gstmediaplayer.cpp \
 	homeproperties.cpp \
@@ -124,7 +127,6 @@ SOURCES += \
 	thermalprobes.cpp \
 	uiimapper.cpp \
 	vct.cpp \
-	generic_functions.cpp \
 	devices/airconditioning_device.cpp \
 	devices/antintrusion_device.cpp \
 	devices/automation_device.cpp \

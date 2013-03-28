@@ -1,5 +1,5 @@
 #include "configfile.h"
-#include "main.h"
+#include "bt_global_config.h"
 
 #include <QFileInfo>
 #include <QCoreApplication>

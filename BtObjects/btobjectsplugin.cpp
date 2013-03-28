@@ -1,6 +1,5 @@
 #include "btobjectsplugin.h"
 #include "openclient.h"
-#include "main.h"
 #include "device.h"
 #include "objectmodel.h"
 #include "lightobjects.h"
