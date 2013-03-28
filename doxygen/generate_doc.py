@@ -4,54 +4,26 @@
 import os
 
 def fixQhp(filename):
-    f = open(filename, 'r')
     out_lines = []
-    line = f.readline()
 
-#    while line.strip() != "<toc>":
-#       out_lines.append(line)
-#       line = f.readline()
+    with open(filename, 'r') as f:
+        line = f.readline()
 
-#    out_lines.append(line)
+        # adds myhome image to generated documentation
+        while line.strip() != "<files>":
+            out_lines.append(line)
+            line = f.readline()
 
-#    out_lines.append("      <section title=\"BTouch\" ref=\"index.html\">\n")
-#    out_lines.append("      </section>\n")
+        out_lines.append(line)
+        out_lines.append("      <file>myhome.jpg</file>\n")
+        line = f.readline()
 
-#    while line.strip() != "</toc>":
-#       line = f.readline()
+        while line.strip() != "":
+            out_lines.append(line)
+            line = f.readline()
 
-#    out_lines.append(line)
-#    line = f.readline()
-
-    while "Class Hierarchy" not in line.strip():
-	out_lines.append(line)
-	line = f.readline()
-
-    out_lines.append("      </section>\n")
-
-    while line.strip() != "</toc>":
-	line = f.readline()
-
-    out_lines.append(line)
-    line = f.readline()
-
-    while line.strip() != "<files>":
-       out_lines.append(line)
-       line = f.readline()
-
-    out_lines.append(line)
-    out_lines.append("      <file>myhome.jpg</file>\n")
-    line = f.readline()
-
-    while line.strip() != "":
-       out_lines.append(line)
-       line = f.readline()
-
-
-    f.close()
-    f = open(filename, 'w+')
-    f.write(''.join(out_lines))
-    f.close()
+    with open(filename, 'w+') as f:
+        f.write(''.join(out_lines))
 
 if __name__ == '__main__':
     os.system('doxygen btexperience.cfg')
