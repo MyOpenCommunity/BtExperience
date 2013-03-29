@@ -6,6 +6,15 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Core
+
+  \brief The page that show up when a password is requested.
+
+  If password checking has been enabled, password protected operation can
+  execute only if the correct password is entered. This page let the user
+  insert a password and then validates it.
+  */
 BasePage {
     id: control
 

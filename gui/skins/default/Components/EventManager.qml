@@ -2,12 +2,19 @@ import QtQuick 1.1
 import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
-
 import "../js/Stack.js" as Stack
 import "../js/EventManager.js" as Script
 import "../js/navigation.js" as Navigation
 
 
+/**
+  \ingroup Core
+
+  \brief A component responsible to manage asynchronous events from C++ models.
+
+  This component implements the logic to manage asynchronous events emitted
+  by C++ models. For example, it manages an incoming intercom call.
+  */
 Item {
     id: eventManager
 

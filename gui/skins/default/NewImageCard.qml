@@ -4,6 +4,15 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Core
+
+  \brief A page to create an image card from a generic image.
+
+  This page let the user highlight a part of an image. This highlight may be
+  saved as image to be used for a card.
+  For example, a user may customize her profile card from a part of a photo.
+  */
 BasePage {
     id: page
 

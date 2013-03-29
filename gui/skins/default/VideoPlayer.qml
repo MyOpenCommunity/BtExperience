@@ -4,10 +4,19 @@ import Components 1.0
 import Components.Text 1.0
 import Components.SoundDiffusion 1.0
 import Components.Popup 1.0
-
 import "js/Stack.js" as Stack
 import "js/MediaPlayerHelper.js" as Helper
 
+
+/**
+  \ingroup Multimedia
+
+  \brief The page implementing the video player.
+
+  Every time a video has to be rendered on screen, this page is used.
+  It is a BasePage and not a Page because the video must be rendered full
+  screen using all the available area.
+  */
 BasePage {
     id: page
 
