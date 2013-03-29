@@ -447,7 +447,7 @@ QSharedPointer<QObject> EnergyData::getGraph(GraphType type, QDate date, Measure
 		      !(type == CumulativeLastYearGraph && !checkLastYearGraphDataIsValid(*cached)))
 		values = createGraph(type, *cached, measure == Currency ? rate : 0);
 
-	QSharedPointer<EnergyGraph> graph(new EnergyGraph(this, type, actual_date, values), doDeleteLater);
+	QSharedPointer<EnergyGraph> graph(new EnergyGraph(this, type, actual_date, values, measure == Currency ? rate : 0), doDeleteLater);
 
 	graph_cache[key] = graph;
 	connect(graph.data(), SIGNAL(destroyed(QObject*)), this, SLOT(graphDestroyed(QObject*)));
@@ -1278,12 +1278,13 @@ QVariant EnergyGraphBar::getValue() const
 }
 
 
-EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph)
+EnergyGraph::EnergyGraph(EnergyData *_data, EnergyData::GraphType _type, QDate _date, QList<QObject*> _graph, EnergyRate *_rate)
 {
 	setParent(_data);
 	data = _data;
 	type = _type;
 	date = _date;
+	rate = _rate;
 	max_value = 0.0;
 	setGraph(_graph);
 }
@@ -1372,6 +1373,14 @@ QObject *EnergyGraph::getGraphBar(int index) const
 QVariant EnergyGraph::getMaxValue() const
 {
 	return max_value;
+}
+
+int EnergyGraph::getDecimals() const
+{
+	if (rate)
+		return data->getRateDecimals();
+	else
+		return data->getDecimals();
 }
 
 

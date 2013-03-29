@@ -25,7 +25,7 @@ Row {
     }
 
     Item {
-        width: 75
+        width: 95
         height: parent.height
         UbuntuLightText {
             anchors.verticalCenter: parent.verticalCenter

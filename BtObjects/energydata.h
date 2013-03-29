@@ -717,8 +717,13 @@ class EnergyGraph : public QObject
 	*/
 	Q_PROPERTY(QVariant maxValue READ getMaxValue NOTIFY maxValueChanged)
 
+	/*!
+		\brief Number of decimals to be used to approximate economic data
+	*/
+	Q_PROPERTY(int decimals READ getDecimals CONSTANT)
+
 public:
-	EnergyGraph(EnergyData *data, EnergyData::GraphType type, QDate date, QList<QObject*> graph);
+	EnergyGraph(EnergyData *data, EnergyData::GraphType type, QDate date, QList<QObject*> graph, EnergyRate *rate = 0);
 
 	QList<QObject*> getGraph() const;
 
@@ -731,6 +736,7 @@ public:
 	void setGraph(QList<QObject*> graph);
 
 	QVariant getMaxValue() const;
+	int getDecimals() const;
 
 	Q_INVOKABLE QObject *getGraphBar(int index) const;
 
@@ -754,6 +760,7 @@ private:
 	double max_value;
 	EnergyData *data;
 	EnergyData::GraphType type;
+	EnergyRate *rate;
 	QDate date;
 	QList<QObject*> graph;
 };
