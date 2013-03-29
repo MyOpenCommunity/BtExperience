@@ -33,7 +33,7 @@ Item {
 
         function getRowValue(i) {
             if (isRowValid(i))
-                return privateProps.modelGraph.graph[i].value.toFixed(energyData.decimals)
+                return privateProps.modelGraph.graph[i].value.toFixed(privateProps.modelGraph.decimals)
 
             return ""
         }

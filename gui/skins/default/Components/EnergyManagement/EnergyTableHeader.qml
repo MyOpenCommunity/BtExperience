@@ -28,7 +28,7 @@ Column {
 
         Rectangle {
             color: "#e6e6e6"
-            width: 75
+            width: 95
             height: parent.height
             UbuntuLightText {
                 anchors.verticalCenter: parent.verticalCenter
