@@ -133,7 +133,7 @@ function description(itemObject) {
     case ObjectInterface.IdLoadWithoutControlUnit:
         switch (itemObject.energyLoadStatus) {
         case EnergyLoadDiagnostic.EnergyLoadAbsent:
-            descr = qsTr("")
+            descr = ""
             break
         case EnergyLoadDiagnostic.EnergyLoadOk:
             descr = qsTr("Control enabled")
