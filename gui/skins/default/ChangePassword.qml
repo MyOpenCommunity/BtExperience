@@ -6,6 +6,9 @@ import "js/Stack.js" as Stack
 import "js/EventManager.js" as EventManager
 
 
+/**
+  * A page to change the password.
+  */
 Page {
     id: page
 
