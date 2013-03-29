@@ -203,6 +203,10 @@
 <context>
     <name>AddQuicklink</name>
     <message>
+        <source>ADD</source>
+        <translation>ΠΡΟΣΘΗΚΗ</translation>
+    </message>
+    <message>
         <source>Add new camera:</source>
         <translation>Προσθήκη νέας κάμερας:</translation>
     </message>
@@ -241,6 +245,10 @@
     <message>
         <source>camera</source>
         <translation>Κάμερα</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>ΑΚΥΡΩΣΗ</translation>
     </message>
     <message>
         <source>Click to enter link...</source>
@@ -487,8 +495,16 @@ Name: %1
         <translation>Ρολόι συναγερμού - ημερομηνία και ώρα</translation>
     </message>
     <message>
+        <source>Alarm not saved</source>
+        <translation>Μη αποθήκευση συναγερμού</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Ρυθμ. συναγ</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>ΑΚΥΡΩΣΗ</translation>
     </message>
     <message>
         <source>days</source>
@@ -499,6 +515,10 @@ Name: %1
         <translation>Περιγραφή</translation>
     </message>
     <message>
+        <source>Edit alarm name</source>
+        <translation>Διόρθωση ονόματος συναγερμού</translation>
+    </message>
+    <message>
         <source>MTWTFSS</source>
         <translation>ΔΤΤΠΠΣΚ</translation>
     </message>
@@ -507,8 +527,16 @@ Name: %1
         <translation>Νέο όνομα:</translation>
     </message>
     <message>
+        <source>No name set</source>
+        <translation>Μη ρύθμιση ονόματος</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>Only once</source>
+        <translation>Μια φορά</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -522,12 +550,28 @@ Name: %1
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
+        <source>Alarm clock - sound settings</source>
+        <translation>Ρολόι συναγερμού - ρυθμίσεις ήχου</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Ρυθμ. συναγ</translation>
     </message>
     <message>
         <source>beep</source>
         <translation>Μπιπ</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>ΑΚΥΡΩΣΗ</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>Δεν ρυθμίστηκε ενισχυτής</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Δεν ρυθμίστηκε πηγή</translation>
     </message>
     <message>
         <source>OK</source>
@@ -540,6 +584,10 @@ Name: %1
     <message>
         <source>Select a source:</source>
         <translation>Επιλογή πηγής:</translation>
+    </message>
+    <message>
+        <source>Select an amplifier:</source>
+        <translation>Επιλογή ενισχυτή:</translation>
     </message>
     <message>
         <source>Signal:</source>
@@ -660,7 +708,7 @@ Name: %1
     <name>AntintrusionSystem</name>
     <message>
         <source>alarm log</source>
-        <translation>Log Συν.              </translation>
+        <translation>Log Συν.</translation>
     </message>
     <message>
         <source>disable system</source>
@@ -709,6 +757,13 @@ Name: %1
     <message>
         <source>zone settings</source>
         <translation>Ρυθμ.ζωνών</translation>
+    </message>
+</context>
+<context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>Εξ. Φορτίου </translation>
     </message>
 </context>
 <context>
@@ -857,6 +912,10 @@ Name: %1
         <translation>Εισαγωγή παλιού password:</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>Το νέο password είναι κενό</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>Ok</translation>
     </message>
@@ -875,6 +934,10 @@ Name: %1
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>Κενός φάκελος</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>Καρτέλα μουσικής</translation>
@@ -1049,20 +1112,23 @@ Name: %1
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Ελεγχόμενη</translation>
+        <source>Control</source>
+        <translation>Έλεγχος</translation>
     </message>
     <message>
-        <source>Device</source>
-        <translation>Συσκευή</translation>
+        <source>Disabled</source>
+        <translation>Απενεργοποιημένος</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>Μη ελεγχόμενο</translation>
+        <source>Enabled</source>
+        <translation>Ενεργοποιημένο</translation>
     </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
     <message>
-        <source>Not Enabled</source>
-        <translation>Μη ενεργοποιημένη</translation>
+        <source>ON</source>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1134,6 +1200,10 @@ Name: %1
 </context>
 <context>
     <name>EditNote</name>
+    <message>
+        <source>CANCEL</source>
+        <translation>ΑΚΥΡΩΣΗ</translation>
+    </message>
     <message>
         <source>Note</source>
         <translation>Σημείωση</translation>
@@ -1259,7 +1329,7 @@ Name: %1
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>ηη/μμ/έέέ</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
@@ -1324,6 +1394,10 @@ Name: %1
 </context>
 <context>
     <name>EnergyManagementNames</name>
+    <message>
+        <source>Blocked</source>
+        <translation>Φραγή</translation>
+    </message>
     <message>
         <source>Closed</source>
         <translation>Κλειστό</translation>
@@ -1396,7 +1470,7 @@ Name: %1
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>ηη/μμ/έέέ</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1481,6 +1555,14 @@ Name: %1
         <translation>Προσθήκη ιδιοτήτων ταχυσυνδέσμου</translation>
     </message>
     <message>
+        <source>Name cannot be empty</source>
+        <translation>Το όνομα δεν μπορεί να είναι κενό</translation>
+    </message>
+    <message>
+        <source>No type selection</source>
+        <translation>Δεν υπάρχει επιλογή τύπου</translation>
+    </message>
+    <message>
         <source>rss</source>
         <translation>Rss</translation>
     </message>
@@ -1506,13 +1588,24 @@ Name: %1
     </message>
 </context>
 <context>
+    <name>FeedbackPopup</name>
+    <message>
+        <source>programming impossible</source>
+        <translation>Αδυναμία προγραμματισμού</translation>
+    </message>
+</context>
+<context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>Εξ. Φορτίου </translation>
+        <source>cancel</source>
+        <translation>Ακύρωση</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>Επιβολή</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>Εξ. Φορτίου </translation>
     </message>
     <message>
@@ -1619,45 +1712,42 @@ Name: %1
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>Κλειστό</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Ανοικτό</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>Ανοικτό - Φραγή</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>Ανοικτό – Αστοχία γείωσης</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>Ανοικτό – Υπερένταση</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>Ανοικτό – Βραχυκύκλωμα</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Άγνωστος</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>Κλειστό</translation>
     </message>
     <message>
-        <source>Forced</source>
-        <translation>Αναγκαστική</translation>
+        <source>Control disabled</source>
+        <translation>Απενεργοποίηση ελέγχου</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>Ενεργοποίηση ελέγχου</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Κίνδυνος</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>Αποσπασμένο φορτίο</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>Δεν ρυθμίστηκε ενισχυτής</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Μη ρύθμιση ονόματος</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Δεν ρυθμίστηκε πηγή</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1682,6 +1772,10 @@ Name: %1
     <message>
         <source>Unknown</source>
         <translation>Άγνωστος</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1697,6 +1791,10 @@ Name: %1
 </context>
 <context>
     <name>MessagesItems</name>
+    <message>
+        <source>inbox</source>
+        <translation>Inbox</translation>
+    </message>
     <message>
         <source>Received messages</source>
         <translation>Ληφθέντα μηνύματα</translation>
@@ -1740,6 +1838,10 @@ Name: %1
 <context>
     <name>NewImageCard</name>
     <message>
+        <source>CANCEL</source>
+        <translation>ΑΚΥΡΩΣΗ</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1757,6 +1859,10 @@ Name: %1
     <message>
         <source>reset</source>
         <translation>Reset</translation>
+    </message>
+    <message>
+        <source>since </source>
+        <translation>από</translation>
     </message>
 </context>
 <context>
@@ -1828,7 +1934,7 @@ Name: %1
         <translation>Περισσότερες πληροφορίες</translation>
     </message>
     <message>
-        <source>new message (s)</source>
+        <source>new message(s)</source>
         <translation>νέο (α) μηνύμ(α)τα</translation>
     </message>
     <message>
@@ -1927,6 +2033,10 @@ Name: %1
         <source>Add note</source>
         <translation>Προσθήκη σημείωσης</translation>
     </message>
+    <message>
+        <source>Max notes limit reached</source>
+        <translation>Ανάκτηση μέγ. ορίου σημειώσεων</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1940,6 +2050,10 @@ Name: %1
     <message>
         <source>Background image</source>
         <translation>Εικόνα φόντου</translation>
+    </message>
+    <message>
+        <source>Card image</source>
+        <translation>Εικόνα κάρτας</translation>
     </message>
     <message>
         <source>Change background image</source>
@@ -1994,6 +2108,10 @@ Name: %1
         <translation>Ok</translation>
     </message>
     <message>
+        <source>programming impossible</source>
+        <translation>Αδυναμία προγραμματισμού</translation>
+    </message>
+    <message>
         <source>reset program</source>
         <translation>Επανεκκίνηση προγραμματισμού</translation>
     </message>
@@ -2042,6 +2160,10 @@ Name: %1
         <translation>Προχωρημένο σενάριο</translation>
     </message>
     <message>
+        <source>CANCEL</source>
+        <translation>ΑΚΥΡΩΣΗ</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2073,6 +2195,14 @@ Name: %1
         <translation>Ενεργοποιημένο</translation>
     </message>
     <message>
+        <source>Insert new home page</source>
+        <translation>Εισαγωγή νέας home page</translation>
+    </message>
+    <message>
+        <source>New URL:</source>
+        <translation>Νέο URL:</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>Πατήστε οκ για να σβήσετε το ιστορικό πλοήγησης .
@@ -2088,6 +2218,10 @@ Continue?</source>
 </context>
 <context>
     <name>SettingsDateTime</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Επιβεβαίωση λειτουργίας</translation>
+    </message>
     <message>
         <source>Date</source>
         <translation>Ημερομηνία</translation>
@@ -2192,6 +2326,10 @@ Continue?</source>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>Απενεργοποιημένος</translation>
     </message>
@@ -2204,16 +2342,8 @@ Continue?</source>
         <translation>Κατώτατο όριο 1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>Κατώφλι 1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>Κατώφλι 2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>Κατώφλι 2 %1</translation>
     </message>
 </context>
 <context>
@@ -2290,17 +2420,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>Απενεργοποίηση</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>Ενεργοποίηση</translation>
-    </message>
-</context>
-<context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
@@ -2311,8 +2430,24 @@ Continue?</source>
         <translation>Αλλαγή εικόνας φόντου</translation>
     </message>
     <message>
+        <source>Confirm operation</source>
+        <translation>Επιβεβαίωση λειτουργίας</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>Θέλετε να επαναφέρετε την πρότυπη εικόνα background;</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Ταχυσύνδεσμοι</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Επαναφορά εικόνας background</translation>
+    </message>
+    <message>
+        <source>skin home</source>
+        <translation>Κεντρικό κέλυφος</translation>
     </message>
 </context>
 <context>
@@ -2344,8 +2479,20 @@ Continue?</source>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
+        <source>Confirm operation</source>
+        <translation>Επιβεβαίωση λειτουργίας</translation>
+    </message>
+    <message>
+        <source>Do you want to change actual image with the one selected?</source>
+        <translation>Θέλετε να αλλάξετε την τρέχουσα εικόνα με την επιλεγμένη;</translation>
+    </message>
+    <message>
         <source>Images</source>
         <translation>Εικόνες</translation>
+    </message>
+    <message>
+        <source>Last used</source>
+        <translation>Τελευταία χρησιμοποιούμενη</translation>
     </message>
 </context>
 <context>
@@ -2436,6 +2583,10 @@ Continue?</source>
         <translation>Αποσύνδεση</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>Ολλανδικά</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Ενεργοποίηση</translation>
     </message>
@@ -2452,8 +2603,24 @@ Continue?</source>
         <translation>Γαλλικά</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>Γερμανικά</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>Ελληνικά</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>Ιταλικά</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Στίλβωση</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Πορτογαλικά</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2462,12 +2629,32 @@ Continue?</source>
 Συνέχεια;</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>Ρώσικα</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>Απλοποιημένα Κινέζικα</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Ισπανικά</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>Στατική διεύθυνση ΙΡ</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>Τουρκικά</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>Ακύρωση</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>Συνδεδεμένο</translation>
@@ -2499,6 +2686,10 @@ Continue?</source>
     <message>
         <source>network state</source>
         <translation>κατάσταση δικτύου</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Primary DNS</source>
@@ -2543,6 +2734,10 @@ Continue?</source>
         <translation>Εικόνα φόντου</translation>
     </message>
     <message>
+        <source>Card image</source>
+        <translation>Εικόνα κάρτας</translation>
+    </message>
+    <message>
         <source>Change background image</source>
         <translation>Αλλαγή εικόνας φόντου</translation>
     </message>
@@ -2550,12 +2745,31 @@ Continue?</source>
         <source>Change card image</source>
         <translation>Αλλαγή εικόνας κάρτας</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Επιβεβαίωση λειτουργίας</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>Θέλετε να επαναφέρετε την πρότυπη εικόνα background;</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Επαναφορά εικόνας background</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
         <translation>Ήχοι κλήσης (Ringtones)</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsRingtones</name>
+    <message>
+        <source>Ringtone volume</source>
+        <translation>Ένταση κουδουνιού</translation>
     </message>
 </context>
 <context>
@@ -2731,6 +2945,18 @@ Continue?</source>
         <translation>Αυτόματο</translation>
     </message>
     <message>
+        <source>Breaker</source>
+        <translation>Διακόπτης</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Επανάζευξη</translation>
+    </message>
+    <message>
+        <source>Test Circuit</source>
+        <translation>Δοκιμή Κυκλωμάτων</translation>
+    </message>
+    <message>
         <source>Test every</source>
         <translation>Δοκιμή κάθε</translation>
     </message>
@@ -2741,12 +2967,20 @@ Continue?</source>
         <source>Automatic</source>
         <translation>Αυτόματο</translation>
     </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Επανάζευξη</translation>
+    </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
         <translation>Αυτόματο</translation>
+    </message>
+    <message>
+        <source>Check Faults</source>
+        <translation>&apos;Ελεγχος Σφαμάτων</translation>
     </message>
     <message>
         <source>close</source>
@@ -2763,6 +2997,10 @@ Continue?</source>
     <message>
         <source>open</source>
         <translation>Άνοιγμα</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Επανάζευξη</translation>
     </message>
 </context>
 <context>
@@ -2816,7 +3054,7 @@ Continue?</source>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
-        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές σε εξέλιξη. 
+        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές σε εξέλιξη.
 Αν επιλέξετε ok θα χαθούν.
 Συνέχεια;</translation>
     </message>
@@ -2871,7 +3109,7 @@ Continue?</source>
         <source>There are unsaved changes in progress.
 If you choose ok they will be lost.
 Continue?</source>
-        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές σε εξέλιξη. 
+        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές σε εξέλιξη.
 Αν επιλέξετε ok θα χαθούν.
 Συνέχεια;</translation>
     </message>

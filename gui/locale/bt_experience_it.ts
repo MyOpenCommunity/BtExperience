@@ -236,7 +236,7 @@
     </message>
     <message>
         <source>Add quicklink</source>
-        <translation>Aggiungi un quicklink</translation>
+        <translation>Aggiungi un quicklink:</translation>
     </message>
     <message>
         <source>Address:</source>
@@ -760,6 +760,13 @@ Indirizzo: %2</translation>
     </message>
 </context>
 <context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>Forza carico</translation>
+    </message>
+</context>
+<context>
     <name>AudioPlayer</name>
     <message>
         <source>Audio</source>
@@ -905,6 +912,10 @@ Indirizzo: %2</translation>
         <translation>Inserire la vecchia password:</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>La nuova password è vuota</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>Ok</translation>
     </message>
@@ -923,6 +934,10 @@ Indirizzo: %2</translation>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>Directory vuota</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>Cartella musica</translation>
@@ -1097,20 +1112,23 @@ Indirizzo: %2</translation>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Controllato</translation>
+        <source>Control</source>
+        <translation>Controllo</translation>
     </message>
     <message>
-        <source>Device</source>
-        <translation>Dispositivo</translation>
+        <source>Disabled</source>
+        <translation>Disabilitato</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>Non controllata</translation>
+        <source>Enabled</source>
+        <translation>Abilitato</translation>
     </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
     <message>
-        <source>Not Enabled</source>
-        <translation>Non abilitato</translation>
+        <source>ON</source>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1579,11 +1597,15 @@ Indirizzo: %2</translation>
 <context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>Forza carico</translation>
+        <source>cancel</source>
+        <translation>Annulla</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>Forza</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>Forza carico</translation>
     </message>
     <message>
@@ -1690,45 +1712,26 @@ Indirizzo: %2</translation>
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>Chiuso</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Aperto</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>Circuito aperto per blocco</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>Ciruito aperto per guasto a terra</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>Ciruito aperto per sovratensione</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>Circuito aperto per cortocircuito</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Sconosciuto</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>Chiuso</translation>
     </message>
     <message>
-        <source>Forced</source>
-        <translation>Forzato</translation>
+        <source>Control disabled</source>
+        <translation>Controllo disabilitato</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>Controllo abilitato</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Pericolo</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>Carico staccato</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -1743,6 +1746,10 @@ Indirizzo: %2</translation>
         <translation>Nessuna sorgente impostata</translation>
     </message>
     <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Aperto</translation>
     </message>
@@ -1765,6 +1772,10 @@ Indirizzo: %2</translation>
     <message>
         <source>Unknown</source>
         <translation>Sconosciuto</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Attenzione</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1923,7 +1934,7 @@ Indirizzo: %2</translation>
         <translation>Maggiori informazioni</translation>
     </message>
     <message>
-        <source>new message (s)</source>
+        <source>new message(s)</source>
         <translation>nuovo(i) messaggio(i)</translation>
     </message>
     <message>
@@ -2188,6 +2199,10 @@ Indirizzo: %2</translation>
         <translation>Inserire la nuova home page</translation>
     </message>
     <message>
+        <source>New URL:</source>
+        <translation>Nuovo URL:</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>Premendo OK andrai a cancellare la cronologia del browser.
@@ -2311,6 +2326,10 @@ Vuoi continuare?</translation>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>Disabilitato</translation>
     </message>
@@ -2323,16 +2342,8 @@ Vuoi continuare?</translation>
         <translation>Soglia 1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>Soglia 1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>Soglia 2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>Soglia 2 %1</translation>
     </message>
 </context>
 <context>
@@ -2406,17 +2417,6 @@ Vuoi continuare?</translation>
     <message>
         <source>Password</source>
         <translation>Password</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>Disabilita</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>Abilita</translation>
     </message>
 </context>
 <context>
@@ -2583,6 +2583,10 @@ Vuoi continuare?</translation>
         <translation>Disconnetti</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>Olandese</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Abilita</translation>
     </message>
@@ -2599,8 +2603,24 @@ Vuoi continuare?</translation>
         <translation>Francese</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>Tedesco</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>Greco</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>Italiano</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Polacco</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Portoghese</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2609,12 +2629,32 @@ Continue?</source>
 Continuare?</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>Russo</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>Cinese semplificato</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Spagnolo</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>Indirizzo IP statico</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>Turco</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>Annulla</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>Connesso</translation>
@@ -2646,6 +2686,10 @@ Continuare?</translation>
     <message>
         <source>network state</source>
         <translation>Stato della rete</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Primary DNS</source>
@@ -3114,7 +3158,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>High</source>
-        <translation>Alta</translation>
+        <translation>High</translation>
     </message>
     <message>
         <source>holiday</source>
@@ -3162,7 +3206,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Silenzioso</translation>
+        <translation>Tacito</translation>
     </message>
     <message>
         <source>summer</source>

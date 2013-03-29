@@ -203,6 +203,10 @@
 <context>
     <name>AddQuicklink</name>
     <message>
+        <source>ADD</source>
+        <translation>TOEVOEGEN</translation>
+    </message>
+    <message>
         <source>Add new camera:</source>
         <translation>Nieuwe camera toevoegen:</translation>
     </message>
@@ -241,6 +245,10 @@
     <message>
         <source>camera</source>
         <translation>Camera</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>ANNULEREN</translation>
     </message>
     <message>
         <source>Click to enter link...</source>
@@ -405,8 +413,7 @@ Adres: %2</translation>
         <translation>Uur</translation>
     </message>
     <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
+        <source>Tuesday</source>
         <translation>D</translation>
     </message>
     <message>
@@ -487,8 +494,16 @@ Adres: %2</translation>
         <translation>Wekker - datum en tijd</translation>
     </message>
     <message>
+        <source>Alarm not saved</source>
+        <translation>Alarm niet opgeslagen</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Alarminstellingen</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>ANNULEREN</translation>
     </message>
     <message>
         <source>days</source>
@@ -499,12 +514,28 @@ Adres: %2</translation>
         <translation>Beschrijving</translation>
     </message>
     <message>
+        <source>Edit alarm name</source>
+        <translation>Naam alarm invoeren</translation>
+    </message>
+    <message>
         <source>MTWTFSS</source>
         <translation>MDWDVZZ</translation>
     </message>
     <message>
+        <source>New name:</source>
+        <translation>Nieuwe naam:</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Geen naam ingesteld</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>Only once</source>
+        <translation>Slechts eenmaal</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -512,11 +543,15 @@ Adres: %2</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>TIjdstip</translation>
+        <translation>TIjdstip:</translation>
     </message>
 </context>
 <context>
     <name>AlarmClockRingtonePage</name>
+    <message>
+        <source>Alarm clock - sound settings</source>
+        <translation>Wekker - geluidsinstellingen</translation>
+    </message>
     <message>
         <source>Alarm settings</source>
         <translation>Alarminstellingen</translation>
@@ -524,6 +559,18 @@ Adres: %2</translation>
     <message>
         <source>beep</source>
         <translation>Beep</translation>
+    </message>
+    <message>
+        <source>CANCEL</source>
+        <translation>ANNULEREN</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>Geen versterker ingesteld</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Geen bron ingesteld</translation>
     </message>
     <message>
         <source>OK</source>
@@ -536,6 +583,10 @@ Adres: %2</translation>
     <message>
         <source>Select a source:</source>
         <translation>Kies een bron:</translation>
+    </message>
+    <message>
+        <source>Select an amplifier:</source>
+        <translation>Selecteer een versterker:</translation>
     </message>
     <message>
         <source>Signal:</source>
@@ -656,7 +707,7 @@ Adres: %2</translation>
     <name>AntintrusionSystem</name>
     <message>
         <source>alarm log</source>
-        <translation>Alarm Log             </translation>
+        <translation>Alarm Log</translation>
     </message>
     <message>
         <source>disable system</source>
@@ -705,6 +756,13 @@ Adres: %2</translation>
     <message>
         <source>zone settings</source>
         <translation>Instellingen zone</translation>
+    </message>
+</context>
+<context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>Lading forceren</translation>
     </message>
 </context>
 <context>
@@ -853,6 +911,10 @@ Adres: %2</translation>
         <translation>Voer het oude wachtwoord in:</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>Nieuw wachtwoord is leeg</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>Ok</translation>
     </message>
@@ -871,6 +933,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>Lege directory</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>Muziekmapje</translation>
@@ -1045,20 +1111,23 @@ Adres: %2</translation>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Gecontroleerde</translation>
+        <source>Control</source>
+        <translation>Controle</translation>
     </message>
     <message>
-        <source>Device</source>
-        <translation>Installatie</translation>
+        <source>Disabled</source>
+        <translation>Gedesactiv.</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>Niet Gecontroleerd</translation>
+        <source>Enabled</source>
+        <translation>Geactiveerd</translation>
     </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
     <message>
-        <source>Not Enabled</source>
-        <translation>Niet geactiveerd</translation>
+        <source>ON</source>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1100,7 +1169,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>timer</source>
-        <translation>4695</translation>
+        <translation>Timer</translation>
     </message>
 </context>
 <context>
@@ -1130,6 +1199,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>EditNote</name>
+    <message>
+        <source>CANCEL</source>
+        <translation>ANNULEREN</translation>
+    </message>
     <message>
         <source>Note</source>
         <translation>Opmerking</translation>
@@ -1255,7 +1328,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>dd/MM/jjjj</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
@@ -1320,6 +1393,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>EnergyManagementNames</name>
+    <message>
+        <source>Blocked</source>
+        <translation>Geblokkeerd</translation>
+    </message>
     <message>
         <source>Closed</source>
         <translation>Gesloten</translation>
@@ -1392,7 +1469,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>dd/MM/jjjj</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1477,6 +1554,14 @@ Adres: %2</translation>
         <translation>Pas de quicklink eigenschappen aan</translation>
     </message>
     <message>
+        <source>Name cannot be empty</source>
+        <translation>De naam mag niet leeg zijn</translation>
+    </message>
+    <message>
+        <source>No type selection</source>
+        <translation>Geen type gekozen</translation>
+    </message>
+    <message>
         <source>rss</source>
         <translation>Rss</translation>
     </message>
@@ -1511,11 +1596,15 @@ Adres: %2</translation>
 <context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>Lading forceren</translation>
+        <source>cancel</source>
+        <translation>Annuleer</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>Kracht</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>Lading forceren</translation>
     </message>
     <message>
@@ -1622,43 +1711,44 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>Gesloten</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Openen</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>Openen - Blok</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>Openen - Storing Aarde</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>Openen - Overstroom</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>Openen - Kortsluiting</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Onbekend</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>Gesloten</translation>
     </message>
     <message>
+        <source>Control disabled</source>
+        <translation>Controle gedeactiveerd</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>Controle geactiveerd</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Gevaarlijk</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>Lading losgekoppeld</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>Geen versterker ingesteld</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Geen naam ingesteld</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Geen bron ingesteld</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Openen</translation>
     </message>
@@ -1681,6 +1771,10 @@ Adres: %2</translation>
     <message>
         <source>Unknown</source>
         <translation>Onbekend</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Opgelet</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1742,6 +1836,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>NewImageCard</name>
+    <message>
+        <source>CANCEL</source>
+        <translation>ANNULEREN</translation>
+    </message>
     <message>
         <source>OK</source>
         <translation>OK</translation>
@@ -1835,8 +1933,8 @@ Adres: %2</translation>
         <translation>Meer informatie</translation>
     </message>
     <message>
-        <source>new message (s)</source>
-        <translation>Nieuw(e) bericht(en)</translation>
+        <source>new message(s)</source>
+        <translation>nieuw(e) bericht(en)</translation>
     </message>
     <message>
         <source>Postpone</source>
@@ -1934,6 +2032,10 @@ Adres: %2</translation>
         <source>Add note</source>
         <translation>Opmerking toevoegen</translation>
     </message>
+    <message>
+        <source>Max notes limit reached</source>
+        <translation>Max. limiet opmerkingen bereikt</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1947,6 +2049,10 @@ Adres: %2</translation>
     <message>
         <source>Background image</source>
         <translation>Beeld achtergrond</translation>
+    </message>
+    <message>
+        <source>Card image</source>
+        <translation>Beeld kaart</translation>
     </message>
     <message>
         <source>Change background image</source>
@@ -2053,6 +2159,10 @@ Adres: %2</translation>
         <translation>Geavanceerd Scenario</translation>
     </message>
     <message>
+        <source>CANCEL</source>
+        <translation>ANNULEREN</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2084,6 +2194,14 @@ Adres: %2</translation>
         <translation>Geactiveerd</translation>
     </message>
     <message>
+        <source>Insert new home page</source>
+        <translation>Nieuwe homepage invoeren</translation>
+    </message>
+    <message>
+        <source>New URL:</source>
+        <translation>Nieuwe URL:</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>Met een druk op OK wist u de zoekgeschiedenis van uw browser.
@@ -2099,6 +2217,10 @@ Doorgaan?</translation>
 </context>
 <context>
     <name>SettingsDateTime</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Handeling bevestigen</translation>
+    </message>
     <message>
         <source>Date</source>
         <translation>Datum</translation>
@@ -2203,6 +2325,10 @@ Doorgaan?</translation>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>Gedesactiv.</translation>
     </message>
@@ -2215,16 +2341,8 @@ Doorgaan?</translation>
         <translation>Drempel 1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>Drempel 1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>Drempel 2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>Drempel 2 %1</translation>
     </message>
 </context>
 <context>
@@ -2301,17 +2419,6 @@ Doorgaan?</translation>
     </message>
 </context>
 <context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>Deactiveren</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>Activeren</translation>
-    </message>
-</context>
-<context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
@@ -2322,8 +2429,20 @@ Doorgaan?</translation>
         <translation>Beeld achtergrond wijzigen</translation>
     </message>
     <message>
+        <source>Confirm operation</source>
+        <translation>Handeling bevestigen</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>De default waarde van de achtergrond herstellen?</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Quicklinks</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Beeld achtergrond herstellen</translation>
     </message>
     <message>
         <source>skin home</source>
@@ -2359,8 +2478,20 @@ Doorgaan?</translation>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
+        <source>Confirm operation</source>
+        <translation>Handeling bevestigen</translation>
+    </message>
+    <message>
+        <source>Do you want to change actual image with the one selected?</source>
+        <translation>Het actuele beeld vervangen door het gekozen beeld?</translation>
+    </message>
+    <message>
         <source>Images</source>
         <translation>Beelden</translation>
+    </message>
+    <message>
+        <source>Last used</source>
+        <translation>Laatst gebruikt</translation>
     </message>
 </context>
 <context>
@@ -2451,6 +2582,10 @@ Doorgaan?</translation>
         <translation>Uit geschakeld</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>Nederlands</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Activeren</translation>
     </message>
@@ -2467,8 +2602,24 @@ Doorgaan?</translation>
         <translation>Frans</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>Duits</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>Grieks</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>Italiaans</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Pools</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Portugees</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2477,12 +2628,32 @@ Continue?</source>
 Doorgaan?</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>Russisch</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>Vereenvoudigd Chinees</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Spaans</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>Statisch IP-adres</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>Turks</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>Annuleer</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>Aangesloten</translation>
@@ -2514,6 +2685,10 @@ Doorgaan?</translation>
     <message>
         <source>network state</source>
         <translation>Status netwerk</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Primary DNS</source>
@@ -2558,6 +2733,10 @@ Doorgaan?</translation>
         <translation>Beeld achtergrond</translation>
     </message>
     <message>
+        <source>Card image</source>
+        <translation>Beeld kaart</translation>
+    </message>
+    <message>
         <source>Change background image</source>
         <translation>Beeld achtergrond wijzigen</translation>
     </message>
@@ -2565,12 +2744,31 @@ Doorgaan?</translation>
         <source>Change card image</source>
         <translation>Beeld kaart wijzigen</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Handeling bevestigen</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>De default waarde van de achtergrond herstellen?</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Beeld achtergrond herstellen</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
         <translation>Beltonen</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsRingtones</name>
+    <message>
+        <source>Ringtone volume</source>
+        <translation>Volume beltoon</translation>
     </message>
 </context>
 <context>
@@ -2746,6 +2944,18 @@ Doorgaan?</translation>
         <translation>Automatisch</translation>
     </message>
     <message>
+        <source>Breaker</source>
+        <translation>Schakelaar</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Afsluiting</translation>
+    </message>
+    <message>
+        <source>Test Circuit</source>
+        <translation>Test Circuit</translation>
+    </message>
+    <message>
         <source>Test every</source>
         <translation>Testen elke</translation>
     </message>
@@ -2756,12 +2966,20 @@ Doorgaan?</translation>
         <source>Automatic</source>
         <translation>Automatisch</translation>
     </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Afsluiting</translation>
+    </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
         <translation>Automatisch</translation>
+    </message>
+    <message>
+        <source>Check Faults</source>
+        <translation>Controle storingen</translation>
     </message>
     <message>
         <source>close</source>
@@ -2778,6 +2996,10 @@ Doorgaan?</translation>
     <message>
         <source>open</source>
         <translation>Openen</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Afsluiting</translation>
     </message>
 </context>
 <context>
