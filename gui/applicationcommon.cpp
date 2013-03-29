@@ -151,6 +151,11 @@ void ApplicationCommon::initialize()
 	loadGeneralConfig(general_config);
 	setupLogger(general_config.log_file);
 	VERBOSITY_LEVEL = general_config.verbosity_level;
+	// the default value for startDragDistance is 4 pixel; we resistive
+	// touches this is too low, when a user tries to click a minimal noise
+	// "transforms" the click in flick. To avoid such spurious flicks we
+	// set the value to 35, this gives us a better signal/noise ratio.
+	qApp->setStartDragDistance(35);
 
 #if defined(BT_MALIIT)
 	QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
