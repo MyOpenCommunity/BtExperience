@@ -203,6 +203,10 @@
 <context>
     <name>AddQuicklink</name>
     <message>
+        <source>ADD</source>
+        <translation>EKLE</translation>
+    </message>
+    <message>
         <source>Add new camera:</source>
         <translation>Yeni kamera ekleyin:</translation>
     </message>
@@ -491,6 +495,10 @@ Adres: %2</translation>
         <translation>Alarm saati - tarih ve saat</translation>
     </message>
     <message>
+        <source>Alarm not saved</source>
+        <translation>Alarm kaydedilmedi</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Alarm ayarları</translation>
     </message>
@@ -507,12 +515,28 @@ Adres: %2</translation>
         <translation>Tanım</translation>
     </message>
     <message>
+        <source>Edit alarm name</source>
+        <translation>Alarm adı düzenleyin</translation>
+    </message>
+    <message>
         <source>MTWTFSS</source>
         <translation>PSÇPCCP</translation>
     </message>
     <message>
+        <source>New name:</source>
+        <translation>Yeni ad:</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Ad ayarı yok</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>Only once</source>
+        <translation>Sadece bir kez</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -526,6 +550,10 @@ Adres: %2</translation>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
+        <source>Alarm clock - sound settings</source>
+        <translation>Alarm saati - ses ayarları</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Alarm ayarları</translation>
     </message>
@@ -538,6 +566,14 @@ Adres: %2</translation>
         <translation>İPTAL</translation>
     </message>
     <message>
+        <source>No amplifier set</source>
+        <translation>Amplifikatör ayarı yok</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Kaynak ayarı yok</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -548,6 +584,10 @@ Adres: %2</translation>
     <message>
         <source>Select a source:</source>
         <translation>Bir kaynak seçin:</translation>
+    </message>
+    <message>
+        <source>Select an amplifier:</source>
+        <translation>Bir amplifikatör seç:</translation>
     </message>
     <message>
         <source>Signal:</source>
@@ -720,6 +760,13 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>Yük zorla</translation>
+    </message>
+</context>
+<context>
     <name>AudioPlayer</name>
     <message>
         <source>Audio</source>
@@ -865,6 +912,10 @@ Adres: %2</translation>
         <translation>Eski şifreyi girin:</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>Yeni şifre boş</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>Tamam</translation>
     </message>
@@ -883,6 +934,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>Boş dizin</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>Müzik klasörü</translation>
@@ -1057,20 +1112,23 @@ Adres: %2</translation>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Kontrollü</translation>
+        <source>Control</source>
+        <translation>Kontrol</translation>
     </message>
     <message>
-        <source>Device</source>
-        <translation>Cihaz</translation>
+        <source>Disabled</source>
+        <translation>Devre dışı</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>Denetimsiz</translation>
+        <source>Enabled</source>
+        <translation>Aktif</translation>
     </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
     <message>
-        <source>Not Enabled</source>
-        <translation>İzin verilmedi</translation>
+        <source>ON</source>
+        <translation>ON (AÇIK)</translation>
     </message>
 </context>
 <context>
@@ -1271,7 +1329,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>gg/AA/yyyy</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
@@ -1336,6 +1394,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>EnergyManagementNames</name>
+    <message>
+        <source>Blocked</source>
+        <translation>Bloke</translation>
+    </message>
     <message>
         <source>Closed</source>
         <translation>Kapandı</translation>
@@ -1408,7 +1470,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>gg/AA/yyyy</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1493,6 +1555,14 @@ Adres: %2</translation>
         <translation>Hızlı bağlantı özellikleri düzenleyin</translation>
     </message>
     <message>
+        <source>Name cannot be empty</source>
+        <translation>Ad boş olamaz</translation>
+    </message>
+    <message>
+        <source>No type selection</source>
+        <translation>Tip seçimi yok</translation>
+    </message>
+    <message>
         <source>rss</source>
         <translation>Rss</translation>
     </message>
@@ -1527,11 +1597,15 @@ Adres: %2</translation>
 <context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>Yük zorla</translation>
+        <source>cancel</source>
+        <translation>İptal</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>Zorla</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>Yük zorla</translation>
     </message>
     <message>
@@ -1638,43 +1712,44 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>Kapandı</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Açık</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>Açık - Blok</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>Açık - Toprak Arızası</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>Açık - Aşırı Akım</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>Açık - Kısa Devre</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Bilinmeyen</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>Kapandı</translation>
     </message>
     <message>
+        <source>Control disabled</source>
+        <translation>Kontrol devre dışı</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>Kontrol etkin</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Tehlike</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>Yük ayrıldı</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>Amplifikatör ayarı yok</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Ad ayarı yok</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Kaynak ayarı yok</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Tamam</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Açık</translation>
     </message>
@@ -1697,6 +1772,10 @@ Adres: %2</translation>
     <message>
         <source>Unknown</source>
         <translation>Bilinmeyen</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Uyarı</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1855,8 +1934,8 @@ Adres: %2</translation>
         <translation>Daha fazla bilgi</translation>
     </message>
     <message>
-        <source>new message (s)</source>
-        <translation>Yeni mesaj(lar)</translation>
+        <source>new message(s)</source>
+        <translation>yeni mesaj(lar)</translation>
     </message>
     <message>
         <source>Postpone</source>
@@ -1953,6 +2032,10 @@ Adres: %2</translation>
     <message>
         <source>Add note</source>
         <translation>Not ekle</translation>
+    </message>
+    <message>
+        <source>Max notes limit reached</source>
+        <translation>Max not limiti ulaşıldı</translation>
     </message>
 </context>
 <context>
@@ -2112,6 +2195,14 @@ Adres: %2</translation>
         <translation>Aktif</translation>
     </message>
     <message>
+        <source>Insert new home page</source>
+        <translation>Yeni anasayfa girin</translation>
+    </message>
+    <message>
+        <source>New URL:</source>
+        <translation>Yeni URL:</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>Ok&apos;a basıldığında tüm tarayıcı geçmişi silinecek.
@@ -2127,6 +2218,10 @@ Devam?</translation>
 </context>
 <context>
     <name>SettingsDateTime</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>İşlemi onaylayın</translation>
+    </message>
     <message>
         <source>Date</source>
         <translation>Tarih</translation>
@@ -2231,6 +2326,10 @@ Devam?</translation>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>Devre dışı</translation>
     </message>
@@ -2243,16 +2342,8 @@ Devam?</translation>
         <translation>Eşik 1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>Eşik 1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>Eşik 2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>Eşik 2 %1</translation>
     </message>
 </context>
 <context>
@@ -2329,17 +2420,6 @@ Devam?</translation>
     </message>
 </context>
 <context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>Devre dışı bırak</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>İzin ver</translation>
-    </message>
-</context>
-<context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
@@ -2350,8 +2430,20 @@ Devam?</translation>
         <translation>Arkadaki görüntü değiştir</translation>
     </message>
     <message>
+        <source>Confirm operation</source>
+        <translation>İşlemi onaylayın</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>Arka plana varsayılan değeri geri yüklemek istiyor musunuz?</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Hızlı bağlantılar</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Arka plan görüntüsü geri yükleyin</translation>
     </message>
     <message>
         <source>skin home</source>
@@ -2387,8 +2479,20 @@ Devam?</translation>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
+        <source>Confirm operation</source>
+        <translation>İşlemi onaylayın</translation>
+    </message>
+    <message>
+        <source>Do you want to change actual image with the one selected?</source>
+        <translation>Güncel görüntüyü seçilen görüntü ile değiştirmek istiyor musunuz?</translation>
+    </message>
+    <message>
         <source>Images</source>
         <translation>Görüntüler</translation>
+    </message>
+    <message>
+        <source>Last used</source>
+        <translation>Son kullanılan</translation>
     </message>
 </context>
 <context>
@@ -2479,6 +2583,10 @@ Devam?</translation>
         <translation>Bağlantıyı Kes</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>Flamanca</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>İzin ver</translation>
     </message>
@@ -2495,8 +2603,24 @@ Devam?</translation>
         <translation>Türkçe</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>Almanca</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>Yunanca</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>İtalyanca</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Lehçe</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Portekizce</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2505,12 +2629,32 @@ Continue?</source>
 Devam?</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>Rusça</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>Basitleştirilmiş Çince</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>İspanyolca</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>Statik IP adresi</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>Türkçe</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>İptal</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>Bağlı</translation>
@@ -2542,6 +2686,10 @@ Devam?</translation>
     <message>
         <source>network state</source>
         <translation>Ağ durumu</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Tamam</translation>
     </message>
     <message>
         <source>Primary DNS</source>
@@ -2597,12 +2745,31 @@ Devam?</translation>
         <source>Change card image</source>
         <translation>Kart görüntüsü değiştir</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>İşlemi onaylayın</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>Arka plana varsayılan değeri geri yüklemek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Arka plan görüntüsü geri yükleyin</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
         <translation>Zil tonları</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsRingtones</name>
+    <message>
+        <source>Ringtone volume</source>
+        <translation>Zil sesi ayarı</translation>
     </message>
 </context>
 <context>
@@ -2778,6 +2945,18 @@ Devam?</translation>
         <translation>Otomatik</translation>
     </message>
     <message>
+        <source>Breaker</source>
+        <translation>Kesici</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Tekrar Kapama</translation>
+    </message>
+    <message>
+        <source>Test Circuit</source>
+        <translation>Test Devre</translation>
+    </message>
+    <message>
         <source>Test every</source>
         <translation>Her birini test et</translation>
     </message>
@@ -2788,12 +2967,20 @@ Devam?</translation>
         <source>Automatic</source>
         <translation>Otomatik</translation>
     </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Tekrar Kapama</translation>
+    </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
         <translation>Otomatik</translation>
+    </message>
+    <message>
+        <source>Check Faults</source>
+        <translation>Hataları Kontrol Edin</translation>
     </message>
     <message>
         <source>close</source>
@@ -2810,6 +2997,10 @@ Devam?</translation>
     <message>
         <source>open</source>
         <translation>Aç</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Tekrar Kapama</translation>
     </message>
 </context>
 <context>

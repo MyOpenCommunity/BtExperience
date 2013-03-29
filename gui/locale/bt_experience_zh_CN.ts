@@ -203,6 +203,10 @@
 <context>
     <name>AddQuicklink</name>
     <message>
+        <source>ADD</source>
+        <translation>添加</translation>
+    </message>
+    <message>
         <source>Add new camera:</source>
         <translation>添加新摄像头：</translation>
     </message>
@@ -262,9 +266,7 @@
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
-        <translation>需要移除选定的快捷链接吗？?
-名称：%1
-地址：%2</translation>
+        <translation>需要移除选定的快捷链接吗？?/n名称：%1/n地址：%2</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
@@ -491,6 +493,10 @@ Address: %2</source>
         <translation>闹钟 – 日期和时间</translation>
     </message>
     <message>
+        <source>Alarm not saved</source>
+        <translation>防盗报警未保存</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>报警服务</translation>
     </message>
@@ -507,12 +513,28 @@ Address: %2</source>
         <translation>描述</translation>
     </message>
     <message>
+        <source>Edit alarm name</source>
+        <translation>编辑防盗报警名称</translation>
+    </message>
+    <message>
         <source>MTWTFSS</source>
         <translation>全周</translation>
     </message>
     <message>
+        <source>New name:</source>
+        <translation>新名称：</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>没有设置名称</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>可以</translation>
+    </message>
+    <message>
+        <source>Only once</source>
+        <translation>只有一次</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -526,6 +548,10 @@ Address: %2</source>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
+        <source>Alarm clock - sound settings</source>
+        <translation>闹钟 - 声音设置</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>报警服务</translation>
     </message>
@@ -538,6 +564,14 @@ Address: %2</source>
         <translation>取消</translation>
     </message>
     <message>
+        <source>No amplifier set</source>
+        <translation>没有设置扩音器</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>没有设置声源</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>可以</translation>
     </message>
@@ -548,6 +582,10 @@ Address: %2</source>
     <message>
         <source>Select a source:</source>
         <translation>选择声源：</translation>
+    </message>
+    <message>
+        <source>Select an amplifier:</source>
+        <translation>选择一个扩音器：</translation>
     </message>
     <message>
         <source>Signal:</source>
@@ -720,6 +758,13 @@ Address: %2</source>
     </message>
 </context>
 <context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>强制负荷</translation>
+    </message>
+</context>
+<context>
     <name>AudioPlayer</name>
     <message>
         <source>Audio</source>
@@ -865,6 +910,10 @@ Address: %2</source>
         <translation>输入旧的密码：</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>新密码是空的</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>可以</translation>
     </message>
@@ -883,6 +932,10 @@ Address: %2</source>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>空的目录</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>音乐文件夹</translation>
@@ -1057,16 +1110,23 @@ Address: %2</source>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Device</source>
-        <translation>设备</translation>
+        <source>Control</source>
+        <translation>检查</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>未受控制</translation>
+        <source>Disabled</source>
+        <translation>禁用</translation>
     </message>
     <message>
-        <source>Not Enabled</source>
-        <translation>未启动</translation>
+        <source>Enabled</source>
+        <translation>启动的</translation>
+    </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
+    <message>
+        <source>ON</source>
+        <translation>开启</translation>
     </message>
 </context>
 <context>
@@ -1267,7 +1327,7 @@ Address: %2</source>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>日/月/年</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
@@ -1332,6 +1392,10 @@ Address: %2</source>
 </context>
 <context>
     <name>EnergyManagementNames</name>
+    <message>
+        <source>Blocked</source>
+        <translation>被阻止</translation>
+    </message>
     <message>
         <source>Closed</source>
         <translation>关闭</translation>
@@ -1404,7 +1468,7 @@ Address: %2</source>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>日/月/年</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1489,6 +1553,14 @@ Address: %2</source>
         <translation>编辑快捷链接属性</translation>
     </message>
     <message>
+        <source>Name cannot be empty</source>
+        <translation>名称不能为空</translation>
+    </message>
+    <message>
+        <source>No type selection</source>
+        <translation>没有选择类型</translation>
+    </message>
+    <message>
         <source>rss</source>
         <translation>Rss</translation>
     </message>
@@ -1523,11 +1595,15 @@ Address: %2</source>
 <context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>强制负荷</translation>
+        <source>cancel</source>
+        <translation>取消</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>强制</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>强制负荷</translation>
     </message>
     <message>
@@ -1634,43 +1710,44 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>打开</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>打开 – 阻止</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>打开 – 接地故障</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>打开 – 电流过高</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>打开 – 短路</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>未知</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>关闭</translation>
     </message>
     <message>
+        <source>Control disabled</source>
+        <translation>中控禁用</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>中控启用</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>危险</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>载荷分离</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>没有设置扩音器</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>没有设置名称</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>没有设置声源</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>可以</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>打开</translation>
     </message>
@@ -1693,6 +1770,10 @@ Address: %2</source>
     <message>
         <source>Unknown</source>
         <translation>未知</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>注意</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1851,7 +1932,7 @@ Address: %2</source>
         <translation>更多信息</translation>
     </message>
     <message>
-        <source>new message (s)</source>
+        <source>new message(s)</source>
         <translation>新的信息</translation>
     </message>
     <message>
@@ -1950,6 +2031,10 @@ Address: %2</source>
         <source>Add note</source>
         <translation>添加备注</translation>
     </message>
+    <message>
+        <source>Max notes limit reached</source>
+        <translation>达到最大备注限制</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1963,6 +2048,10 @@ Address: %2</source>
     <message>
         <source>Background image</source>
         <translation>背景图片</translation>
+    </message>
+    <message>
+        <source>Card image</source>
+        <translation>卡片图像</translation>
     </message>
     <message>
         <source>Change background image</source>
@@ -2104,6 +2193,14 @@ Address: %2</source>
         <translation>启动的</translation>
     </message>
     <message>
+        <source>Insert new home page</source>
+        <translation>输入新的主页</translation>
+    </message>
+    <message>
+        <source>New URL:</source>
+        <translation>新的网页地址：</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>按ok键将删除所有浏览器历史记录。
@@ -2119,6 +2216,10 @@ Continue?</source>
 </context>
 <context>
     <name>SettingsDateTime</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>确认操作</translation>
+    </message>
     <message>
         <source>Date</source>
         <translation>日期</translation>
@@ -2223,6 +2324,10 @@ Continue?</source>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>禁用</translation>
     </message>
@@ -2235,16 +2340,8 @@ Continue?</source>
         <translation>閾值1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>阙值1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>閾值2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>阙值2 %1</translation>
     </message>
 </context>
 <context>
@@ -2321,17 +2418,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>启动</translation>
-    </message>
-</context>
-<context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
@@ -2342,8 +2428,20 @@ Continue?</source>
         <translation>更换背景图片</translation>
     </message>
     <message>
+        <source>Confirm operation</source>
+        <translation>确认操作</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>要恢复背景为默认值吗？</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>快捷链接</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>恢复背景图像</translation>
     </message>
     <message>
         <source>skin home</source>
@@ -2379,8 +2477,20 @@ Continue?</source>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
+        <source>Confirm operation</source>
+        <translation>确认操作</translation>
+    </message>
+    <message>
+        <source>Do you want to change actual image with the one selected?</source>
+        <translation>要更换当前图像为另一个选择的图像吗？</translation>
+    </message>
+    <message>
         <source>Images</source>
         <translation>图片</translation>
+    </message>
+    <message>
+        <source>Last used</source>
+        <translation>最后一次使用的</translation>
     </message>
 </context>
 <context>
@@ -2471,6 +2581,10 @@ Continue?</source>
         <translation>断开连接</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>荷兰文</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>启动</translation>
     </message>
@@ -2487,8 +2601,24 @@ Continue?</source>
         <translation>法文</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>德文</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>希腊语</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>意大利文</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>波兰语</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>葡萄牙文</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2497,12 +2627,32 @@ Continue?</source>
 继续吗？</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>俄语</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>中文简体</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>西班牙文</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>静态IP地址</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>土耳其语</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>取消</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>已连接</translation>
@@ -2534,6 +2684,10 @@ Continue?</source>
     <message>
         <source>network state</source>
         <translation>网络状态</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>可以</translation>
     </message>
     <message>
         <source>Primary DNS</source>
@@ -2578,6 +2732,10 @@ Continue?</source>
         <translation>背景图片</translation>
     </message>
     <message>
+        <source>Card image</source>
+        <translation>卡片图像</translation>
+    </message>
+    <message>
         <source>Change background image</source>
         <translation>更换背景图片</translation>
     </message>
@@ -2585,12 +2743,31 @@ Continue?</source>
         <source>Change card image</source>
         <translation>更换卡片</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>确认操作</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>要恢复背景为默认值吗？</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>恢复背景图像</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
         <translation>铃音</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsRingtones</name>
+    <message>
+        <source>Ringtone volume</source>
+        <translation>铃声音量</translation>
     </message>
 </context>
 <context>
@@ -2758,8 +2935,24 @@ Continue?</source>
 <context>
     <name>StopAndGoBtest</name>
     <message>
+        <source>%1 days</source>
+        <translation>%1天</translation>
+    </message>
+    <message>
         <source>Automatic</source>
         <translation>自动</translation>
+    </message>
+    <message>
+        <source>Breaker</source>
+        <translation>断路器</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>合闸</translation>
+    </message>
+    <message>
+        <source>Test Circuit</source>
+        <translation>测试电路</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2772,12 +2965,20 @@ Continue?</source>
         <source>Automatic</source>
         <translation>自动</translation>
     </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>合闸</translation>
+    </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
         <translation>自动</translation>
+    </message>
+    <message>
+        <source>Check Faults</source>
+        <translation>检查故障</translation>
     </message>
     <message>
         <source>close</source>
@@ -2794,6 +2995,10 @@ Continue?</source>
     <message>
         <source>open</source>
         <translation>打开</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>合闸</translation>
     </message>
 </context>
 <context>
