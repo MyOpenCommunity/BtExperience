@@ -495,6 +495,10 @@ Address: %2</source>
         <translation>Будильник - дата и время</translation>
     </message>
     <message>
+        <source>Alarm not saved</source>
+        <translation>Тревожный сигнал не сохранен</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Настройки трев. сигнала</translation>
     </message>
@@ -511,12 +515,28 @@ Address: %2</source>
         <translation>Описание</translation>
     </message>
     <message>
+        <source>Edit alarm name</source>
+        <translation>Редактировать имя тревожного сигнала</translation>
+    </message>
+    <message>
         <source>MTWTFSS</source>
         <translation>ПВСЧПСВ</translation>
     </message>
     <message>
+        <source>New name:</source>
+        <translation>Новое имя:</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Имя не задано</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>Only once</source>
+        <translation>Только один раз</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -530,6 +550,10 @@ Address: %2</source>
 <context>
     <name>AlarmClockRingtonePage</name>
     <message>
+        <source>Alarm clock - sound settings</source>
+        <translation>Будильник - настройки звука</translation>
+    </message>
+    <message>
         <source>Alarm settings</source>
         <translation>Настройки трев. сигнала</translation>
     </message>
@@ -542,6 +566,14 @@ Address: %2</source>
         <translation>ОТМЕНИТЕ</translation>
     </message>
     <message>
+        <source>No amplifier set</source>
+        <translation>Усилитель не задан</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Источник не задан</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -552,6 +584,10 @@ Address: %2</source>
     <message>
         <source>Select a source:</source>
         <translation>Выбрать источник:</translation>
+    </message>
+    <message>
+        <source>Select an amplifier:</source>
+        <translation>Выбрать усилитель:</translation>
     </message>
     <message>
         <source>Signal:</source>
@@ -724,6 +760,13 @@ Address: %2</source>
     </message>
 </context>
 <context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>Принудительно активировать нагрузку</translation>
+    </message>
+</context>
+<context>
     <name>AudioPlayer</name>
     <message>
         <source>Audio</source>
@@ -869,6 +912,10 @@ Address: %2</source>
         <translation>Ввести старый пароль:</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>Новый пароль пуст</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>Ok</translation>
     </message>
@@ -887,6 +934,10 @@ Address: %2</source>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>Каталог пуст</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>Папка музыки</translation>
@@ -1061,20 +1112,23 @@ Address: %2</source>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Управляемый</translation>
+        <source>Control</source>
+        <translation>Контроль</translation>
     </message>
     <message>
-        <source>Device</source>
-        <translation>Устройство</translation>
+        <source>Disabled</source>
+        <translation>Отключен</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>Неконтролируемый</translation>
+        <source>Enabled</source>
+        <translation>Включен</translation>
     </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
     <message>
-        <source>Not Enabled</source>
-        <translation>Не активировано</translation>
+        <source>ON</source>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1275,7 +1329,7 @@ Address: %2</source>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>дд/ММ/гггг</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
@@ -1340,6 +1394,10 @@ Address: %2</source>
 </context>
 <context>
     <name>EnergyManagementNames</name>
+    <message>
+        <source>Blocked</source>
+        <translation>Заблокировано</translation>
+    </message>
     <message>
         <source>Closed</source>
         <translation>Закрытый</translation>
@@ -1412,7 +1470,7 @@ Address: %2</source>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
-        <translation>дд/ММ/гггг</translation>
+        <translation>dd/MM/yyyy</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1497,6 +1555,14 @@ Address: %2</source>
         <translation>Редактировать свойства быстрой ссылки</translation>
     </message>
     <message>
+        <source>Name cannot be empty</source>
+        <translation>Имя не может быть пустым</translation>
+    </message>
+    <message>
+        <source>No type selection</source>
+        <translation>Тип не выбран</translation>
+    </message>
+    <message>
         <source>rss</source>
         <translation>Rss</translation>
     </message>
@@ -1531,11 +1597,15 @@ Address: %2</source>
 <context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>Принудительно активировать нагрузку</translation>
+        <source>cancel</source>
+        <translation>Отменить</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>Принудительно</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>Принудительно активировать нагрузку</translation>
     </message>
     <message>
@@ -1642,45 +1712,42 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>Закрытый</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Разомкнут</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>Разомкнута - Блокировка</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>Разомкнута - Замыкание на землю</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>Разомкнута - Перегрузка по току</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>Разомкнута - Короткое замыкание</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Неизвестный</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>Закрытый</translation>
     </message>
     <message>
-        <source>Forced</source>
-        <translation>Принудительный</translation>
+        <source>Control disabled</source>
+        <translation>Контроль отключен</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>Контроль подключен</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Опасность</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>Отсоединенная нагрузка</translation>
+    </message>
+    <message>
+        <source>No amplifier set</source>
+        <translation>Усилитель не задан</translation>
+    </message>
+    <message>
+        <source>No name set</source>
+        <translation>Имя не задано</translation>
+    </message>
+    <message>
+        <source>No source set</source>
+        <translation>Источник не задан</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1705,6 +1772,10 @@ Address: %2</source>
     <message>
         <source>Unknown</source>
         <translation>Неизвестный</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Предупреждение</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1863,7 +1934,7 @@ Address: %2</source>
         <translation>Больше сведений</translation>
     </message>
     <message>
-        <source>new message (s)</source>
+        <source>new message(s)</source>
         <translation>новое(ые) сообщение(я)</translation>
     </message>
     <message>
@@ -1961,6 +2032,10 @@ Address: %2</source>
     <message>
         <source>Add note</source>
         <translation>Добавить примечание</translation>
+    </message>
+    <message>
+        <source>Max notes limit reached</source>
+        <translation>Достигнут макс. предел примечаний</translation>
     </message>
 </context>
 <context>
@@ -2120,6 +2195,14 @@ Address: %2</source>
         <translation>Включен</translation>
     </message>
     <message>
+        <source>Insert new home page</source>
+        <translation>Ввести новую главную страницу</translation>
+    </message>
+    <message>
+        <source>New URL:</source>
+        <translation>Новый URL:</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>Нажатие на ok удалит всю историю браузера.
@@ -2135,6 +2218,10 @@ Continue?</source>
 </context>
 <context>
     <name>SettingsDateTime</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Подтвердить операцию</translation>
+    </message>
     <message>
         <source>Date</source>
         <translation>Дата</translation>
@@ -2239,6 +2326,10 @@ Continue?</source>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>Отключен</translation>
     </message>
@@ -2251,16 +2342,8 @@ Continue?</source>
         <translation>Порог 1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>Порог 1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>Порог 2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>Порог 2 %1</translation>
     </message>
 </context>
 <context>
@@ -2337,17 +2420,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>Деактивировать</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>Активировать</translation>
-    </message>
-</context>
-<context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
@@ -2358,8 +2430,20 @@ Continue?</source>
         <translation>Изменить изображение фона</translation>
     </message>
     <message>
+        <source>Confirm operation</source>
+        <translation>Подтвердить операцию</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>Вы хотите восстановить значение фона по умолчанию?</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Быстрые ссылки</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Восстановить фоновое изображение</translation>
     </message>
     <message>
         <source>skin home</source>
@@ -2395,8 +2479,20 @@ Continue?</source>
 <context>
     <name>SettingsImageBrowser</name>
     <message>
+        <source>Confirm operation</source>
+        <translation>Подтвердить операцию</translation>
+    </message>
+    <message>
+        <source>Do you want to change actual image with the one selected?</source>
+        <translation>Вы хотите заменить текущее изображение выбранным изображением?</translation>
+    </message>
+    <message>
         <source>Images</source>
         <translation>Изображения</translation>
+    </message>
+    <message>
+        <source>Last used</source>
+        <translation>Последние использованные</translation>
     </message>
 </context>
 <context>
@@ -2487,6 +2583,10 @@ Continue?</source>
         <translation>Разорвать соединение</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>Голландский</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Активировать</translation>
     </message>
@@ -2503,8 +2603,24 @@ Continue?</source>
         <translation>Французский</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>Немецкий</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>Греческий</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>Итальянский</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Польский</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Португальский</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2513,12 +2629,32 @@ Continue?</source>
 Продолжить?</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>Русский</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>Упрощенный китайский</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Испанский</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>Статический IP-адрес</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>Турецкий</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>Отменить</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>Подключено</translation>
@@ -2550,6 +2686,10 @@ Continue?</source>
     <message>
         <source>network state</source>
         <translation>Cостояние сети</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Primary DNS</source>
@@ -2605,12 +2745,31 @@ Continue?</source>
         <source>Change card image</source>
         <translation>Изменить изображение карты</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Подтвердить операцию</translation>
+    </message>
+    <message>
+        <source>Do you want to restore background to default value?</source>
+        <translation>Вы хотите восстановить значение фона по умолчанию?</translation>
+    </message>
+    <message>
+        <source>Restore background image</source>
+        <translation>Восстановить фоновое изображение</translation>
+    </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
         <translation>Сигналы звонка</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsRingtones</name>
+    <message>
+        <source>Ringtone volume</source>
+        <translation>Громкость мелодии</translation>
     </message>
 </context>
 <context>
@@ -2786,6 +2945,18 @@ Continue?</source>
         <translation>Автоматически</translation>
     </message>
     <message>
+        <source>Breaker</source>
+        <translation>Выключатель</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Повторное включение</translation>
+    </message>
+    <message>
+        <source>Test Circuit</source>
+        <translation>Схема испытания</translation>
+    </message>
+    <message>
         <source>Test every</source>
         <translation>Тестировать каждое</translation>
     </message>
@@ -2796,12 +2967,20 @@ Continue?</source>
         <source>Automatic</source>
         <translation>Автоматически</translation>
     </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Повторное включение</translation>
+    </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
         <source>Automatic</source>
         <translation>Автоматически</translation>
+    </message>
+    <message>
+        <source>Check Faults</source>
+        <translation>Проверка сбоев</translation>
     </message>
     <message>
         <source>close</source>
@@ -2818,6 +2997,10 @@ Continue?</source>
     <message>
         <source>open</source>
         <translation>Открыть</translation>
+    </message>
+    <message>
+        <source>Reclosing</source>
+        <translation>Повторное включение</translation>
     </message>
 </context>
 <context>

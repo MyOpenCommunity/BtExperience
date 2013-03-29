@@ -760,6 +760,13 @@ Address: %2</translation>
     </message>
 </context>
 <context>
+    <name>Appliance</name>
+    <message>
+        <source>Force load</source>
+        <translation>Force load</translation>
+    </message>
+</context>
+<context>
     <name>AudioPlayer</name>
     <message>
         <source>Audio</source>
@@ -905,6 +912,10 @@ Address: %2</translation>
         <translation>Insert old password:</translation>
     </message>
     <message>
+        <source>New password is empty</source>
+        <translation>New password is empty</translation>
+    </message>
+    <message>
         <source>ok</source>
         <translation>Ok</translation>
     </message>
@@ -923,6 +934,10 @@ Address: %2</translation>
 </context>
 <context>
     <name>ColumnBrowserCommon</name>
+    <message>
+        <source>Empty directory</source>
+        <translation>Empty directory</translation>
+    </message>
     <message>
         <source>Music folder</source>
         <translation>Music folder</translation>
@@ -1097,20 +1112,23 @@ Address: %2</translation>
 <context>
     <name>ControlSwitchLoadManagement</name>
     <message>
-        <source>Controlled</source>
-        <translation>Controlled</translation>
+        <source>Control</source>
+        <translation>Control</translation>
     </message>
     <message>
-        <source>Device</source>
-        <translation>Device</translation>
+        <source>Disabled</source>
+        <translation>Disabled</translation>
     </message>
     <message>
-        <source>Not Controlled</source>
-        <translation>Not Controlled</translation>
+        <source>Enabled</source>
+        <translation>Enabled</translation>
     </message>
+</context>
+<context>
+    <name>ControlTextCommand</name>
     <message>
-        <source>Not Enabled</source>
-        <translation>Not enabled</translation>
+        <source>ON</source>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1579,11 +1597,15 @@ Address: %2</translation>
 <context>
     <name>ForceDurationPopup</name>
     <message>
-        <source>Force load</source>
-        <translation>Force load</translation>
+        <source>cancel</source>
+        <translation>Cancel</translation>
     </message>
     <message>
-        <source>force load</source>
+        <source>force</source>
+        <translation>Force</translation>
+    </message>
+    <message>
+        <source>Force load</source>
         <translation>Force load</translation>
     </message>
     <message>
@@ -1690,45 +1712,26 @@ Address: %2</translation>
     </message>
 </context>
 <context>
-    <name>LoadDiagnostic</name>
-    <message>
-        <source>Closed</source>
-        <translation>Closed</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Open</translation>
-    </message>
-    <message>
-        <source>Open - Block</source>
-        <translation>Open - Block</translation>
-    </message>
-    <message>
-        <source>Open - Earth Fault</source>
-        <translation>Open - Earth Fault</translation>
-    </message>
-    <message>
-        <source>Open - Over Current</source>
-        <translation>Open - Over Current</translation>
-    </message>
-    <message>
-        <source>Open - Short Circuit</source>
-        <translation>Open - Short Circuit</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation>Unknown</translation>
-    </message>
-</context>
-<context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
         <translation>Closed</translation>
     </message>
     <message>
-        <source>Forced</source>
-        <translation>Forced</translation>
+        <source>Control disabled</source>
+        <translation>Control disabled</translation>
+    </message>
+    <message>
+        <source>Control enabled</source>
+        <translation>Control enabled</translation>
+    </message>
+    <message>
+        <source>Danger</source>
+        <translation>Danger</translation>
+    </message>
+    <message>
+        <source>Load detached</source>
+        <translation>Load detached</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -1743,6 +1746,10 @@ Address: %2</translation>
         <translation>No source set</translation>
     </message>
     <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Open</translation>
     </message>
@@ -1765,6 +1772,10 @@ Address: %2</translation>
     <message>
         <source>Unknown</source>
         <translation>Unknown</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Warning</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1923,8 +1934,8 @@ Address: %2</translation>
         <translation>More info</translation>
     </message>
     <message>
-        <source>new message (s)</source>
-        <translation>new message (s)</translation>
+        <source>new message(s)</source>
+        <translation>new message(s)</translation>
     </message>
     <message>
         <source>Postpone</source>
@@ -2188,6 +2199,10 @@ Address: %2</translation>
         <translation>Insert new home page</translation>
     </message>
     <message>
+        <source>New URL:</source>
+        <translation>New URL:</translation>
+    </message>
+    <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
         <translation>Pressing ok will delete all browser history.
@@ -2311,6 +2326,10 @@ Continue?</translation>
 <context>
     <name>SettingsEnergySetThresholds</name>
     <message>
+        <source>%1</source>
+        <translation>%1</translation>
+    </message>
+    <message>
         <source>disabled</source>
         <translation>Disabled</translation>
     </message>
@@ -2323,16 +2342,8 @@ Continue?</translation>
         <translation>Threshold 1</translation>
     </message>
     <message>
-        <source>threshold 1 %1</source>
-        <translation>Threshold 1 %1</translation>
-    </message>
-    <message>
         <source>threshold 2</source>
         <translation>Threshold 2</translation>
-    </message>
-    <message>
-        <source>threshold 2 %1</source>
-        <translation>Threshold 2 %1</translation>
     </message>
 </context>
 <context>
@@ -2406,17 +2417,6 @@ Continue?</translation>
     <message>
         <source>Password</source>
         <translation>Password</translation>
-    </message>
-</context>
-<context>
-    <name>SettingsHistory</name>
-    <message>
-        <source>disable</source>
-        <translation>Disable</translation>
-    </message>
-    <message>
-        <source>enable</source>
-        <translation>Enable</translation>
     </message>
 </context>
 <context>
@@ -2583,6 +2583,10 @@ Continue?</translation>
         <translation>Disconnect</translation>
     </message>
     <message>
+        <source>Dutch</source>
+        <translation>Dutch</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Enable</translation>
     </message>
@@ -2599,8 +2603,24 @@ Continue?</translation>
         <translation>French</translation>
     </message>
     <message>
+        <source>German</source>
+        <translation>German</translation>
+    </message>
+    <message>
+        <source>Greek</source>
+        <translation>Greek</translation>
+    </message>
+    <message>
         <source>Italian</source>
         <translation>Italian</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation>Polish</translation>
+    </message>
+    <message>
+        <source>Portuguese</source>
+        <translation>Portuguese</translation>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
@@ -2609,12 +2629,32 @@ Continue?</source>
 Continue?</translation>
     </message>
     <message>
+        <source>Russian</source>
+        <translation>Russian</translation>
+    </message>
+    <message>
+        <source>Simplified Chinese</source>
+        <translation>Simplified Chinese</translation>
+    </message>
+    <message>
+        <source>Spanish</source>
+        <translation>Spanish</translation>
+    </message>
+    <message>
         <source>Static IP address</source>
         <translation>Static IP address</translation>
+    </message>
+    <message>
+        <source>Turkish</source>
+        <translation>Turkish</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
+    <message>
+        <source>cancel</source>
+        <translation>Cancel</translation>
+    </message>
     <message>
         <source>Connected</source>
         <translation>Connected</translation>
@@ -2646,6 +2686,10 @@ Continue?</translation>
     <message>
         <source>network state</source>
         <translation>Network state</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Primary DNS</source>
