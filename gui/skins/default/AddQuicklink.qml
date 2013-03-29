@@ -4,15 +4,81 @@ import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
-
 import "js/Stack.js" as Stack
 
+
+/**
+  \ingroup Core
+
+  \brief Page to manage quicklinks.
+
+  This page is used to manage quicklinks. Quicklinks are visual items used
+  in the GUI to trigger some action when pressed. The action is different for
+  every type of quicklink.
+  Quicklink types are:
+  - camera
+  - web page
+  - web camera
+  - rss
+  - weather
+  - scenario
+  - web radio
+
+  The camera quicklink is used to activate a camera connected to the system.
+  For example, a video door entry camera may be activated this way.
+  The web page quicklink is used to open a web page like bookmarks in browsers.
+  The web camera quicklink opens a web page showing images coming from a webcam.
+  The rss quicklink is used to open the rss reader on a rss page.
+  The weather quicklink actually opens a weather web page, in future versions
+  it will open a weather component.
+  The scenario quicklink is used to activate a scenario.
+  The web radio quicklink opens the AudioPlayer tuned on a specific web radio.
+
+  This page may be used to manage quicklinks for the HomePage, for the Multimedia
+  page and for Profile pages. The behavior is similar in all cases.
+  The homeCustomization flag must be set to true when managing quicklinks for
+  the HomePage.
+  When managing quicklinks for the Multimedia page the onlyQuicklinks flag must
+  be set.
+  When working on profile quicklinks, none of the flags above must be set.
+  If both are set the page behavior is undefined.
+
+  In layout.xml archive objects can be linked to only one container. Every time
+  a quicklink is created it is associated to the corresponding multimedia container.
+  If working on the home page a second quicklink is created and linked to the
+  home page container.
+  If managing profile quicklinks, a second quicklink is created and linked to
+  the profile container.
+  All of this is managed by the C++ layer depending on the parameters passed to
+  the GlobalModels::createQuicklink function.
+
+  Firstly, the user has to choose the type of quicklink to be managed on the
+  left panel. The right panel changes accordingly to the choice made.
+  In some cases (like for cameras) on the right panel the user can only select
+  an already existing element from the list.
+  In other cases (like web page quicklinks), the user can create new elements.
+  To create an element, the user clicks on the highlighted areas and insert
+  all needed information in the popup that appears.
+  Clicking an ADD button finalizes the creation (the element is created in one
+  of the multimedia containers). At this point, the user may
+  select the desired element from the list and click on the OK button to link
+  the quicklink in the home page (or in the profile).
+
+  When working on multimedia quicklinks, it is possible to delete a quicklink
+  clicking on the trash button near to it. To delete a home page quicklink
+  the user must use the menu on the settings page. To delete a profile
+  quicklink the user must enter the Profile page, press and hold on the
+  quicklink and click the trash icon there.
+  */
 Page {
     id: page
 
+    /** the profile to be managed (if any) */
     property variant profile: undefined
     property int currentLink: -1
+    /** home page quicklinks customization */
     property bool homeCustomization: false
+    /** multimedia quicklinks customization */
     property bool onlyQuicklinks: false
 
     // the following properties are used by delegates

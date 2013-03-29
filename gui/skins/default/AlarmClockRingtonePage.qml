@@ -7,9 +7,25 @@ import Components.Settings 1.0
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Core
+
+  \brief Page to set alarm clock ringtone.
+
+  This page contains the logic to set the ringtone for an alarm clock.
+  On the left panel, the user may change the type of ringtone (simple beep or
+  sound diffusion alarm) and the alarm volume.
+
+  The right panel is used to customize the sound diffusion alarm. In it, the
+  user may choose one of the available sources. Clicking on the page changer,
+  the user can switch between sources and amplifiers. In the amplifiers screen
+  the user sets the amplifier that will diffuse the alarm when triggering.
+  Amplifier are grouped by ambient.
+  */
 Page {
     id: page
 
+    /** the alarm clock to be modified */
     property variant alarmClock: undefined
 
     // the following properties are used by delegates
