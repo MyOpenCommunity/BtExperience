@@ -9,8 +9,7 @@ MenuColumn {
 
     Column {
         ControlSwitch {
-            upperText: qsTr("Automatic")
-            text: qsTr("Reclosing")
+            text: qsTr("Automatic Reclosing")
             pixelSize: 14
             onPressed: element.dataModel.autoReset = !element.dataModel.autoReset
             status: !element.dataModel.autoReset

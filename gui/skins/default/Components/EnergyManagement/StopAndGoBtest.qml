@@ -10,8 +10,7 @@ MenuColumn {
     Column {
 
         ControlSwitch {
-            upperText: qsTr("Automatic")
-            text: qsTr("Reclosing")
+            text: qsTr("Automatic Reclosing")
             pixelSize: 14
             onPressed: element.dataModel.autoReset = !element.dataModel.autoReset
             status: !element.dataModel.autoReset
@@ -19,8 +18,7 @@ MenuColumn {
         }
 
         ControlSwitch {
-            upperText: qsTr("Test Circuit")
-            text: qsTr("Breaker")
+            text: qsTr("Test Circuit Breaker")
             pixelSize: 14
             onPressed: element.dataModel.autoTest = !element.dataModel.autoTest
             status: !element.dataModel.autoTest

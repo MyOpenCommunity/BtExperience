@@ -34,6 +34,7 @@ SvgImage {
             color: "white"
             wrapMode: Text.WordWrap
             elide: Text.ElideRight
+            maximumLineCount: 2
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: parent.left
