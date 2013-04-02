@@ -21,10 +21,6 @@ import "js/MainContainer.js" as Container
   all the cleaning for you. See FavoriteEditPopup as an example
   for such a popup.
 
-  The page defines also the alarm popups (BasePage::showAlert). These are
-  predefined popups to render alerts. See ChangePassword for an example
-  of alert popup.
-
   The base page contains methods to manage page transition animations. They
   are needed to support the Stack protocol for application pages.
 
@@ -63,22 +59,12 @@ Image {
      */
     signal popupDismissed
 
-    /**
-      Creates a standard popup showing an alert message to the user.
-      The source component must implement the alertOkClicked and alertCancelClicked
-      methods. See SettingsNetwork for an example
-      @param type:Item sourceElement The component opening the alarm popup
-      @param type:string message The message to be shown
-     */
     function showAlert(sourceElement, message) {
         popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
         popupLoader.item.closeAlert.connect(closeAlert)
         page.state = "alert"
     }
 
-    /**
-      Closes the alert popup.
-      */
     function closeAlert() {
         closePopup()
     }
