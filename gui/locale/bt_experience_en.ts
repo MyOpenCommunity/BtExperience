@@ -405,7 +405,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>T</source>
-        <comment>Tuesday</comment>
+        <comment>Thursday</comment>
         <translation>T</translation>
     </message>
     <message>
@@ -414,7 +414,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>T</source>
-        <comment>Thursday</comment>
+        <comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
@@ -1961,10 +1961,6 @@ Address: %2</translation>
         <source>SUPERVISION</source>
         <translation>Supervision</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Threshold %n exceeded</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Continue?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 days</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automatic</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatic Reclosing</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Breaker</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test Circuit</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test Circuit Breaker</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Continue?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatic</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatic Reclosing</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatic</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatic Reclosing</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Continue?</translation>
     <message>
         <source>open</source>
         <translation>Open</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reclosing</translation>
     </message>
 </context>
 <context>

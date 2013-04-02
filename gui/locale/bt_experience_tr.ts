@@ -406,7 +406,7 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>S</translation>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Pe</translation>
+        <translation>S</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Adres: %2</translation>
         <source>SUPERVISION</source>
         <translation>Denetleme</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Eşik %n aşıldı</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Devam?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON (AÇIK)</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 Günler</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Otomatik</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Tekrar Kapama Otomatik</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Kesici</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Tekrar Kapama</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test Devre</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test Devre Kesici</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Devam?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Otomatik</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Tekrar Kapama</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Tekrar Kapama Otomatik</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Otomatik</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Tekrar Kapama Otomatik</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Devam?</translation>
     <message>
         <source>open</source>
         <translation>Aç</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Tekrar Kapama</translation>
     </message>
 </context>
 <context>

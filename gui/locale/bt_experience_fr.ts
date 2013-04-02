@@ -117,7 +117,7 @@
     </message>
     <message>
         <source>Last scenario</source>
-        <translation>Dernier Sc&amp;eacute;nario</translation>
+        <translation>Dernier Scénario</translation>
     </message>
     <message>
         <source>Level</source>
@@ -406,7 +406,7 @@ Adresse: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>M</translation>
+        <translation>J</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Adresse: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>J</translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Adresse: %2</translation>
         <source>SUPERVISION</source>
         <translation>Supervision</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Seuil %n dépassé</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 jours</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Réenclenchement Automatique</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Disjoncteur</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Réenclenchement</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test différentiel</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test différentiel de Disjoncteur</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Continuer?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Réenclenchement</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Réenclenchement Automatique</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Réenclenchement Automatique</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Continuer?</translation>
     <message>
         <source>open</source>
         <translation>Ouvrir</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Réenclenchement</translation>
     </message>
 </context>
 <context>
@@ -3071,7 +3058,7 @@ Continuer?</translation>
     </message>
     <message>
         <source>Holiday</source>
-        <translation>Jour f&amp;eacute;ri&amp;eacute;</translation>
+        <translation>Jour férié</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -3162,7 +3149,7 @@ Continuer?</translation>
     </message>
     <message>
         <source>holiday</source>
-        <translation>Jour f&amp;eacute;ri&amp;eacute;</translation>
+        <translation>Jour férié</translation>
     </message>
     <message>
         <source>Low</source>
