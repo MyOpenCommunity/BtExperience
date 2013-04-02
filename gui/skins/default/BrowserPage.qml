@@ -37,14 +37,6 @@ Page {
     }
 
     /**
-      Called when system button on navigation bar is clicked.
-      Navigates back to multimedia page.
-      */
-    function systemPageClosed() {
-        Stack.backToMultimedia()
-    }
-
-    /**
       Called when back button on navigation bar is clicked.
       Navigates back to multimedia page.
       */
