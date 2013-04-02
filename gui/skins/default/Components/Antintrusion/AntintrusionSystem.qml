@@ -6,6 +6,16 @@ import "../../js/navigation.js" as Navigation
 import "../../js/navigationconstants.js" as NavigationConstants
 
 
+/**
+  \ingroup Antintrusion
+
+  \brief The antintrusion system.
+
+  A MenuColumn managing the antintrusion system. It is used to enable or
+  disable the system. It can be used also to partialize some zones.
+  It contains a submenu that gives access to the AntintrusionAlarms page
+  to see all logs.
+  */
 MenuColumn {
     id: column
 
@@ -33,7 +43,10 @@ MenuColumn {
         onCurrentScenarioChanged: privateProps.setScenarioDescription()
     }
 
-    // needed for menu navigation
+    /**
+      Returns callbacks known to AntintrusionSystem
+      @return An array containing all known callbacks.
+      */
     function targetsKnown() {
         return {
             "AlarmLog": privateProps.openAlarmLogMenu,
