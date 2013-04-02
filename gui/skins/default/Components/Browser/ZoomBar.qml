@@ -1,19 +1,28 @@
-/**
-  * An hiding bar showing zoom commands for browser
-  */
-
 import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 
 
+/**
+  \ingroup Core
+
+  \brief An hiding bar showing zoom commands for browser
+
+  A zoom bar for the browser component. It contains buttons to zoom out, zoom in
+  and to restore zoom at 100%. It contains only graphic and it emits proper
+  signals when buttons are clicked.
+  */
 Item {
     id: control
 
+    /// the zoom percentage level
     property int zoomPercentage: 100
 
+    /// the zoom out button was clicked
     signal zoomOutClicked
+    /// the zoom in button was clicked
     signal zoomInClicked
+    /// the zoom reset button was clicked
     signal zoomHundredClicked
 
     width: 230
