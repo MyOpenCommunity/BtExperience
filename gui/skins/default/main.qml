@@ -8,6 +8,16 @@ import "js/Stack.js" as Stack
 import "js/EventManager.js" as EventManagerContainer
 
 
+/**
+  \ingroup Core
+
+  \brief The main application component.
+
+  This is the main application component. It shows the HomePage, but it is not
+  itself visible because pages are managed by the Stack component.
+  Contains video resolution, font used by the application, the EventManager and
+  it runs startup application code.
+  */
 Item {
     id: container
 
