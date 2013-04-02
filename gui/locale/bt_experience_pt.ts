@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pl">
+<TS version="2.0" language="pt">
 <context>
     <name>ActionObject</name>
     <message>
@@ -406,7 +406,7 @@ Endereço: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>3ª</translation>
+        <translation>Q</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Endereço: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Q</translation>
+        <translation>3ª</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Endereço: %2</translation>
         <source>SUPERVISION</source>
         <translation>Supervisão</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Limiar %n ultrapassado</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Quer continuar?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 dias</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automático Reconexão</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Disjuntor</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reconexão</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Circuito de ensaio</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Circuito de ensaio Disjuntor</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Quer continuar?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reconexão</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automático Reconexão</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automático Reconexão</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Quer continuar?</translation>
     <message>
         <source>open</source>
         <translation>Abra</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Reconexão</translation>
     </message>
 </context>
 <context>

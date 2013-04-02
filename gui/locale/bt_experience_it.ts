@@ -406,7 +406,7 @@ Indirizzo: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>M</translation>
+        <translation>G</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Indirizzo: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>G</translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Indirizzo: %2</translation>
         <source>SUPERVISION</source>
         <translation>Supervisione</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Soglia %n superata</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2113,7 +2109,7 @@ Indirizzo: %2</translation>
     </message>
     <message>
         <source>reset program</source>
-        <translation>Resettare il programma</translation>
+        <translation>Cancellare lo scenario</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
@@ -2935,26 +2931,25 @@ Continuare?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 giorni</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automatico</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Richiusura Automatica</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Interruttore</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Chiusura</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Controllo Differenziale</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test interruttore differenziale</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Continuare?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatico</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Chiusura</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Richiusura Automatica</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatico</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Richiusura Automatica</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Continuare?</translation>
     <message>
         <source>open</source>
         <translation>Apri</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Chiusura</translation>
     </message>
 </context>
 <context>
@@ -3158,7 +3145,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>High</source>
-        <translation>High</translation>
+        <translation>Alta</translation>
     </message>
     <message>
         <source>holiday</source>
@@ -3206,7 +3193,7 @@ Continuare?</translation>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Tacito</translation>
+        <translation>Silenzioso</translation>
     </message>
     <message>
         <source>summer</source>

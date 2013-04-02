@@ -406,7 +406,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>В</translation>
+        <translation>Ч</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Ч</translation>
+        <translation>В</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Address: %2</source>
         <source>SUPERVISION</source>
         <translation>Контроль</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Порог %n превышен</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 дней</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Автоматически</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Автоматически Повторное включение</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Выключатель</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Повторное включение</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Схема испытания</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Схема испытания Выключатель</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Continue?</source>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Автоматически</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Повторное включение</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Автоматически Повторное включение</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Автоматически</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Автоматически Повторное включение</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Continue?</source>
     <message>
         <source>open</source>
         <translation>Открыть</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Повторное включение</translation>
     </message>
 </context>
 <context>

@@ -406,7 +406,7 @@ Name: %1
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>Τ</translation>
+        <translation>Π</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Name: %1
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Π</translation>
+        <translation>Τ</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Name: %1
         <source>SUPERVISION</source>
         <translation>Επίβλεψη</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Υπέρβαση %n κατωφλίου</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 ημέρες</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Αυτόματο</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Αυτόματο Επανάζευξη</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Διακόπτης</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Επανάζευξη</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Δοκιμή Κυκλωμάτων</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Δοκιμή Κυκλωμάτων Διακόπτης</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Continue?</source>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Αυτόματο</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Επανάζευξη</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Αυτόματο Επανάζευξη</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Αυτόματο</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Αυτόματο Επανάζευξη</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Continue?</source>
     <message>
         <source>open</source>
         <translation>Άνοιγμα</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Επανάζευξη</translation>
     </message>
 </context>
 <context>

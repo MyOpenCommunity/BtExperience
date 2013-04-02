@@ -406,7 +406,7 @@ Dirección: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>M</translation>
+        <translation>J</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Dirección: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>J</translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>W</source>
@@ -1961,10 +1961,6 @@ Dirección: %2</translation>
         <source>SUPERVISION</source>
         <translation>Supervisión</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Umbral  %n superado</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ No apretar hasta que se haya restablecido
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 días</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Recierre Automático</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Separador</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Recierre </translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Circuito de prueba</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Circuito de Prueba Separador</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ No apretar hasta que se haya restablecido
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Recierre </translation>
+        <source>Automatic Reclosing</source>
+        <translation>Recierre Automático</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Recierre Automático</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ No apretar hasta que se haya restablecido
     <message>
         <source>open</source>
         <translation>Abrir</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Recierre </translation>
     </message>
 </context>
 <context>

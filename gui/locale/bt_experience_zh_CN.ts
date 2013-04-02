@@ -384,27 +384,27 @@ Address: %2</source>
     <message>
         <source>F</source>
         <comment>Friday</comment>
-        <translation>星期五</translation>
+        <translation>周五</translation>
     </message>
     <message>
         <source>M</source>
         <comment>Monday</comment>
-        <translation>星期一</translation>
+        <translation>周一</translation>
     </message>
     <message>
         <source>S</source>
         <comment>Saturday</comment>
-        <translation>S</translation>
+        <translation>周六</translation>
     </message>
     <message>
         <source>S</source>
         <comment>Sunday</comment>
-        <translation>星期日</translation>
+        <translation>周日</translation>
     </message>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>星期二</translation>
+        <translation>周四</translation>
     </message>
     <message>
         <source>time</source>
@@ -413,12 +413,12 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>星期四</translation>
+        <translation>周二</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
-        <translation>星期三</translation>
+        <translation>周三</translation>
     </message>
 </context>
 <context>
@@ -518,7 +518,7 @@ Address: %2</source>
     </message>
     <message>
         <source>MTWTFSS</source>
-        <translation>全周</translation>
+        <translation>周一周二周三周四周五周六周日</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -1959,10 +1959,6 @@ Address: %2</source>
         <source>SUPERVISION</source>
         <translation>监督</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>阙值%n超出</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2933,26 +2929,25 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>开启</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1天</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>自动</translation>
+        <source>Automatic Reclosing</source>
+        <translation>自动重合闸</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>断路器</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>合闸</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>测试电路</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>测试电路断路器</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2962,19 +2957,15 @@ Continue?</source>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>自动</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>合闸</translation>
+        <source>Automatic Reclosing</source>
+        <translation>自动重合闸</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>自动</translation>
+        <source>Automatic Reclosing</source>
+        <translation>自动重合闸</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2995,10 +2986,6 @@ Continue?</source>
     <message>
         <source>open</source>
         <translation>打开</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>合闸</translation>
     </message>
 </context>
 <context>

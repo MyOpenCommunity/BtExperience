@@ -1961,10 +1961,6 @@ Adresse: %2</translation>
         <source>SUPERVISION</source>
         <translation>Supervision</translation>
     </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Grenze %n überschritten</translation>
-    </message>
 </context>
 <context>
     <name>PopupPage</name>
@@ -2935,26 +2931,25 @@ Wollen Sie fortfahren?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 Tage</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatisch  Wieder schließen</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Leistungsschalter</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Wieder schließen</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Kreislauf testen</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Kreislauf testen Leistungsschalter</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2959,15 @@ Wollen Sie fortfahren?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatisch</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Wieder schließen</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatisch  Wieder schließen</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatisch  Wieder schließen</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2988,6 @@ Wollen Sie fortfahren?</translation>
     <message>
         <source>open</source>
         <translation>Öffnen</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Wieder schließen</translation>
     </message>
 </context>
 <context>
@@ -3123,7 +3110,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Weekly</source>
-        <translation>W&amp;ouml;chentlich</translation>
+        <translation>Wöchentlich</translation>
     </message>
 </context>
 <context>
