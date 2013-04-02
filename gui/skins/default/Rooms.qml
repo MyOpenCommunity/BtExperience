@@ -6,6 +6,14 @@ import BtExperience 1.0
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Core
+
+  \brief A page showing all rooms.
+
+  A page to show all rooms grouped by floor. The user may select one room and
+  open the related page.
+  */
 Page {
     id: mainarea
 

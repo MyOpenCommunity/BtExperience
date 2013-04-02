@@ -6,6 +6,11 @@ import "js/Stack.js" as Stack
 import "js/Systems.js" as Script
 
 
+/**
+  \ingroup Core
+
+  \brief The entry page for all systems.
+  */
 Page {
     id: systems
 

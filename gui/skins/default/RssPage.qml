@@ -5,12 +5,24 @@ import Components.Popup 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
 
+
+/**
+  \ingroup Multimedia
+
+  \brief A page to show rss news.
+
+  This page shows rss news feeds. The feed is shown in a linear list.
+  */
 Page {
     id: rssPage
 
+    /** the URL for the RSS feed */
     property string urlString
+    /** is this page in RSS 2.0 format? */
     property bool isRss: rssFeedModel.count > 0
+    /** is this page in ATOM format? */
     property bool isAtom: atomFeedModel.count > 0
+    /** the profile the page was opened from if any */
     property variant profile: undefined
 
     text: "rss"
