@@ -16,7 +16,14 @@ import "../js/navigationconstants.js" as NavigationConstants
 Item {
     id: column
 
-    /// load of a sub-element
+    /**
+      Loads a sub-element.
+
+      @param type:Item component The submenu to load
+      @param type:string title The title to show on MenuTitle component
+      @param type:object model The model object to pass to the submenu
+      @param type:array properties The properties to be passed to the submenu at creation
+      */
     function loadColumn(component, title, model, properties) {
         column.loadComponent(menuLevel, component, title, model, properties)
     }
@@ -31,12 +38,18 @@ Item {
         column.closeItem(menuLevel + 1)
     }
 
-    /// Returns the list of callbacks for known navigation targets
+    /**
+      Returns the list of callbacks for known navigation targets
+      @return type:array a list of callbacks to be called by the navigation target logic
+      */
     function targetsKnown() {
         return []
     }
 
-    /// Returns if navigation target for this menu level is known or not
+    /**
+      Returns if navigation target for this menu level is known or not
+      @return is target known?
+      */
     function isTargetKnown() {
         var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
