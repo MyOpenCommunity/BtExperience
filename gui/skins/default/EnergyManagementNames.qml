@@ -1,9 +1,13 @@
 import QtQuick 1.1
 import BtObjects 1.0
-
 import "js/array.js" as Script
 
 
+/**
+  \ingroup EnergyDataSystem
+
+  \brief Translations for the EnergyDataSystem system.
+  */
 QtObject {
     // internal function to load values into the container
     function _init(container) {
@@ -28,10 +32,13 @@ QtObject {
         container['ENERGY_TYPE'][EnergyData.Gas] = qsTr("Gas")
         container['ENERGY_TYPE'][EnergyData.HotWater] = qsTr("HotWater")
         container['ENERGY_TYPE'][EnergyData.Heat] = qsTr("Heat")
-//        container['ENERGY_TYPE'][EnergyData.???] = qsTr("Liquid Gas")
     }
 
-    // retrieves the requested value from the local array
+    /**
+      Retrieves the requested value from the local array.
+      @param type:string context The translation context to distinguish between similar id.
+      @param type:int id The id referring to the string to be translated.
+      */
     function get(context, id) {
         if (Script.container.length === 0)
             _init(Script.container)
