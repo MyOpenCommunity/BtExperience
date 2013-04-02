@@ -5,7 +5,7 @@ import Components.Text 1.0
 import Components.EnergyManagement 1.0
 
 import "js/Stack.js" as Stack
-
+import "js/navigation.js" as Navigation
 
 Page {
     id: page
@@ -13,6 +13,10 @@ Page {
 
     function systemsButtonClicked() {
         Stack.backToSystemOrHome()
+    }
+
+    function settingsButtonClicked() {
+        Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ENERGY_SETTINGS})
     }
 
     // this function is used externally when clicking on confirm for threshold
@@ -41,6 +45,7 @@ Page {
     }
 
     showSystemsButton: true
+    showSettingsButton: true
     text: qsTr("energy consumption")
     source: "images/background/energy.jpg"
 

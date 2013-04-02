@@ -3,8 +3,8 @@ import Components 1.0
 import Components.Text 1.0
 import Components.EnergyManagement 1.0
 
-
 import "js/Stack.js" as Stack
+import "js/navigation.js" as Navigation
 
 Page {
     function systemsButtonClicked() {
@@ -16,7 +16,7 @@ Page {
     }
 
     function settingsButtonClicked() {
-        Stack.backToOptions()
+        Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ENERGY_SETTINGS})
     }
 
     showSystemsButton: true
