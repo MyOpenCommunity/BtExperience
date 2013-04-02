@@ -13,7 +13,7 @@ SvgImage {
     property string bottomText
 
     property alias status: buttonEdit.status
-    property alias bottomTextFormat: textBottomText.textFormat
+    property alias upperTextFormat: textUpperText.textFormat
 
     signal editClicked
 
