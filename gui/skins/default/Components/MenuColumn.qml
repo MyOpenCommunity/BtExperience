@@ -3,29 +3,40 @@ import "../js/navigation.js" as Navigation
 import "../js/navigationconstants.js" as NavigationConstants
 
 
+/**
+  \ingroup Core
+
+  \brief A component to group all menu items at the same level.
+
+  The MenuColumn component encapsulates logic to manage a group of menu items.
+  It defines logic to manage the MenuColumn when the MenuContainer requests to
+  do so. It contains the navigation logic to open a specific MenuItem.
+  It also implements the part of the animation logic.
+  */
 Item {
     id: column
-    // Public functions
 
-    // load of a sub-element
+    /// load of a sub-element
     function loadColumn(component, title, model, properties) {
         column.loadComponent(menuLevel, component, title, model, properties)
     }
 
-    // Close the column itself and its children
+    /// Close the column itself and its children
     function closeColumn() {
         column.closeItem(menuLevel)
     }
 
-    // Close the child's element (if present)
+    /// Close the child's element (if present)
     function closeChild() {
         column.closeItem(menuLevel + 1)
     }
 
+    /// Returns the list of callbacks for known navigation targets
     function targetsKnown() {
         return []
     }
 
+    /// Returns if navigation target for this menu level is known or not
     function isTargetKnown() {
         var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
@@ -44,6 +55,7 @@ Item {
 
     // checks if the need for opening a menu arose
     // see navigation.js for further details
+    /// if a navigation target is set, tries to navigate where requested
     function navigate() {
         var navigationTarget = Navigation.getNavigationTarget(pageObject.navigationTarget, column.menuLevel)
 
@@ -76,10 +88,10 @@ Item {
     signal loadComponent(int menuLevel, variant component, string title, variant dataModel, variant properties)
     signal destroyed()
 
-    // the page where the element is placed
+    /// the page where the element is placed
     property variant pageObject: undefined
 
-    // max number of elements in paged menus
+    /// max number of elements in paged menus
     property int elementsOnMenuPage: 8
 
     // Signals emitted from the container

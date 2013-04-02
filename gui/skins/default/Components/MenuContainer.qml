@@ -1,47 +1,56 @@
 import QtQuick 1.1
 import "../js/MenuContainer.js" as Script
 
-// The MenuContainer components encapsulates some logic to show a gerarchic list
-// of MenuColumn with different sizes and behaviour. The items are arranged
-// horizontally inside the container until the sum of their width overtakes
-// the width of the container. In this case, the first element (or elements) are
-// hidden.
-// Every item must emit the signal loadComponent to request the loading of a
-// child element, or the closeItem to close it and can optionally implement the
-// hooks onChildLoaded and onChildDestroyed.
 
+/**
+  \ingroup Core
+
+  \brief A component to manage a group of related menus.
+
+  The MenuContainer component encapsulates logic to show a hierarchical list
+  of MenuColumn that may have different sizes and behaviors. Menu items are
+  arranged horizontally inside the MenuContainer until their width sum overtakes
+  the container width. At that point, first elements are hidden.
+  Every item must emit the loadComponent signal to request loading a child
+  element. A closeItem signal is used to close the menu item.
+  */
 Item {
     id: mainContainer
+
     width: 600
     height: 400
 
-    // The root element (without scroll, the first column)
+    /// The root element (without scroll, the first column)
     property QtObject rootColumn
 
     property QtObject rootData: null
 
-    // the page where the container is placed
+    /// the page where the container is placed
     property variant pageObject: undefined
 
-    // the object that represents the root element (without scroll, the first column)
+    /// the object that represents the root element (without scroll, the first column)
     property variant rootObject: undefined
 
-    // the object that represents the current element (the last column open)
+    /// the object that represents the current element (the last column open)
     property variant currentObject: undefined
 
-    // max number of elements in paged menus
+    /// max number of elements in paged menus
     property int elementsOnMenuPage: 8
 
     property alias clipBehavior: clippingContainer.clip
 
+    /// the menu was closed
     signal closed
     signal rootColumnClicked
+    /// during navigation, causes the next MenuColumn to load
     signal loadNextColumn // used for menu navigation, see navigation.js for further details
 
+    /// closes the last MenuColumn
     function closeLastColumn() {
         Script.closeLastItem()
     }
 
+    /// closes all MenuColumn
     function closeAll() {
         Script.closeItem(1)
     }

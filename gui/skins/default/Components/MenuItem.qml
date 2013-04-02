@@ -2,33 +2,56 @@ import QtQuick 1.1
 import Components.Text 1.0
 
 
+/**
+  \ingroup Core
+
+  \brief A menu item component.
+
+  The MenuItem component implements features common to all menu items.
+  A MenuItem has a visual state (normal, pressed, selected).
+  A MenuItem can be editable, in such case logic to manage editing is present.
+  A MenuItem contains logic and graphic to optionally show a rounded box.
+  The box may change color depending on box state set.
+  A MenuItem implements a colored icon that changes color depending on the
+  MenuItem status.
+  The MenuItem shows text through the name and description property.
+  Generally, the MenuItem name property is shown as MenuTitle, too.
+  */
 Item {
     id: menuItem
 
     height: background.height
     width: background.width
 
-    // Use this property instead of settings the state. This is required because
-    // there are tree states: the default "", "pressed" and "selected". When the item
-    // is in the logical selected status, if the user clicks on the item we want
-    // to pass in the pressed status. For how the qml states works, when the user
-    // releases the clicked item, the status of the item will go in the default status,
-    // even if the starting state is the selected one. To avoid this behaviour, we
-    // expose the property isSelected and "block" the use of the states from the
-    // external of the item.
+    /**
+      It is recommended to use this property and never set the MenuItem state
+      directly. This is because there are 3 different states (default, pressed,
+      selected). When the MenuItem is in the selected state and the user clicks
+      on it, we want the MenuItem to pass to the pressed state.
+      When user releases the MenuItem, the component goes to default state and
+      not to the state it was before (this is QML design).
+      To avoid this weird behavior is highly recommended to use this property
+      and to not play with MenuItem state.
+      */
     property bool isSelected: false
-
+    /// is this MenuItem name editable?
     property bool editable: false
+    /// the MenuItem name shown on the first row
     property string name
+    /// type:string the MenuItem description shown on the last row
     property alias description: textDescription.text
+    /// type:list<State> sets the state for the rounded box causing it to appear and change color
     property alias boxInfoState: boxInfo.state
+    /// type:string what to show inside the rounded box
     property alias boxInfoText: boxInfoText.text
+    /// the MenuItem status, causes the circle icon to appear and change color
     property int status: -1
+    /// if true, shows a little arrow indicating the possible navigation to the child MenuItem
     property bool hasChild: false
     property alias backgroundImage: background.source
-    // if false, item is grayed out
+    /// can this MenuItem accept user input? if not, MenuItem is shown grayed out
     property bool enabled: true
-    // mouse interaction is enabled
+    /// is mouse interaction enabled?
     property bool clickable: true
 
     signal clicked(variant itemClicked)
@@ -37,12 +60,13 @@ Item {
     signal touched(variant itemTouched)
     signal editCompleted()
 
-    // 'virtual' function to reimplement pressAndHold behaviour in derived components
+    /// Hook called when the MenuItem is pressAndHeld. Default implementation
+    /// starts menu editing.
     function startEdit() {
         editMenuItem()
     }
 
-    // This function actually starts menu item editing
+    /// Actually starts editing
     function editMenuItem() {
         labelLoader.sourceComponent = labelInputComponent
         labelLoader.item.forceActiveFocus()

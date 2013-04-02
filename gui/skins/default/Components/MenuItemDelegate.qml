@@ -1,15 +1,27 @@
 import QtQuick 1.1
 
 
+/**
+  \ingroup Core
+
+  \brief A delegate to be used in ListView or PaginatorList.
+
+  A component that let use a MenuItem as delegate inside a ListView.
+  */
 MenuItem {
     id: itemDelegate
 
+    /// sets this item as selected on clicks
     property bool selectOnClick: true
+    /// the model item to be rendered in this delegate
     property variant itemObject
 
+    /// This delegate was clicked
     signal delegateClicked(int index)
+    /// This delegate was touched (a touch is a press to be managed like a click)
     signal delegateTouched(int index)
 
+    /// Resets the ListView selection
     function resetSelection() {
         itemDelegate.ListView.view.currentIndex = -1
     }

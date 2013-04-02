@@ -1,7 +1,15 @@
 import QtQuick 1.1
 
+
+/**
+  \ingroup Core
+
+  \brief A shadow sorrounding a menu.
+  */
 BorderImage {
     id: item
+
+    /** type:Object the MenuColumn this shadow refers to */
     property alias menuColumn: conn.target
 
     source: "../images/common/ombra1elemento.png"
