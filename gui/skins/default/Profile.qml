@@ -8,11 +8,27 @@ import "js/array.js" as Script
 import "js/navigation.js" as Navigation
 
 
+/**
+  \ingroup Core
+
+  \brief The profile page
+
+  The profile page showing profile quicklinks and notes. The user may navigate
+  to her settings page to change her profile card image and/or background.
+  In the settings she may add quicklinks to her profile page or restore the
+  default background image.
+  In this page the user may save and read notes.
+  */
 Page {
     id: profilePage
 
+    /** the profile to show */
     property variant profile
 
+    /**
+      Called when settings button on navigation bar is clicked.
+      Navigates to profile settings page.
+      */
     function settingsButtonClicked() {
         Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
     }

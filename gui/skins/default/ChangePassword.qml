@@ -7,11 +7,19 @@ import "js/EventManager.js" as EventManager
 
 
 /**
-  * A page to change the password.
+  \ingroup Core
+
+  \brief A page to let the user change her password.
+
+  Page to change a user's password. It is the classic page with boxes to
+  insert the old password and to insert 2 times the new one. It uses a
+  Pannable because the focused field must be visible when the keyboard
+  is displayed.
   */
 Page {
     id: page
 
+    // we need the reboot message
     property variant names: translations
 
     source: homeProperties.homeBgImage

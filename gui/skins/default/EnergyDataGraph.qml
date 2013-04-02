@@ -3,24 +3,46 @@ import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
 import Components.EnergyManagement 1.0
-
 import "js/Stack.js" as Stack
 import "js/navigation.js" as Navigation
 
+
+/**
+  \ingroup EnergyDataSystem
+
+  \brief The page showing data related to a line.
+
+  In this page is possible to see all data related to a particular line.
+  Data shown is selected with some toggles on the upper part.
+  The user may choose to see daily, monthly, yearly data.
+  The data may be represented in graphical or tabular form.
+  Is possible to have data in economic or energy format.
+  */
 Page {
     id: page
+    /** the object from which data is retrieved */
     property variant energyData: undefined
 
+    /**
+      Called when systems button on navigation bar is clicked.
+      Navigates back to system page.
+      */
     function systemsButtonClicked() {
         Stack.backToSystemOrHome()
     }
 
+    /**
+      Called when settings button on navigation bar is clicked.
+      Navigates to energy settings.
+      */
     function settingsButtonClicked() {
         Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ENERGY_SETTINGS})
     }
 
-    // this function is used externally when clicking on confirm for threshold
-    // and we need to open the day graph
+    /**
+      A function to select the type of data to show. Used externally when
+      clicking on confirm for threshold and we need to open the day graph
+      */
     function setComponentOnGraphLoader() {
         if (page.state === "year") {
             // Change the energy graph/table is an operation that ideally

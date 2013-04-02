@@ -1,34 +1,57 @@
 import QtQuick 1.1
-import "js/Stack.js" as Stack
 import BtObjects 1.0
 import Components 1.0
+import "js/Stack.js" as Stack
 import "js/navigation.js" as Navigation
 
+
+/**
+  \ingroup Core
+
+  \brief The room page
+
+  The room page shows all objects configured for that room. Is possible to
+  navigate to all rooms in the same ground.
+  */
 Page {
     id: page
 
+    /** the room we are showing */
     property variant room
     property variant names: translations
+    /** the uii for the ground */
     property int floorUii
 
     source: room.image
 
+    /**
+      Called when rooms button on navigation bar is clicked.
+      Navigates back to rooms main page.
+      */
     function roomsButtonClicked() {
         Stack.backToRoomOrHome()
     }
 
+    /**
+      Called when settings button on navigation bar is clicked.
+      Navigates to settings page for this room.
+      */
     function settingsButtonClicked() {
         Stack.goToPage("Settings.qml", {navigationTarget: Navigation.ROOM_SETTINGS, navigationData: [floorUii, room]})
+    }
+
+    /**
+      Called when back button on navigation bar is clicked.
+      Navigates back to room main page.
+      */
+    function backButtonClicked() {
+        Stack.backToRoomOrHome()
     }
 
     text: room.description
     showBackButton: true
     showRoomsButton: true
     showSettingsButton: true
-
-    function backButtonClicked() {
-        Stack.backToRoomOrHome()
-    }
 
     Names {
         id: translations

@@ -6,6 +6,20 @@ import BtExperience 1.0
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Multimedia
+
+  \brief The main page for the multimedia system.
+
+  This page shows all available subsystems for the multimedia system.
+  The list of available subsystem is:
+  - web browser: opens the browser to the home page
+  - web link: opens the BrowserPage loaded with the list of web links
+  - rss: opens the BrowserPage loaded with the list of rss links
+  - ip radio: opens the BrowserPage loaded with the list of ip radio links
+  - weather: opens the BrowserPage loaded with the list of weather links
+  - web cam: opens the BrowserPage loaded with the list of web cam links
+  */
 Page {
     id: multimedia
 
