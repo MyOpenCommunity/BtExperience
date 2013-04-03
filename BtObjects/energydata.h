@@ -543,7 +543,7 @@ class EnergyItem : public QObject
 public:
 	EnergyItem(EnergyData *data, EnergyData::ValueType type, QDate date, QVariant value, EnergyRate *rate = 0);
 
-	QVariant getValue() const;
+	virtual QVariant getValue() const;
 
 	EnergyData::ValueType getValueType() const;
 
@@ -576,11 +576,11 @@ signals:
 protected:
 	EnergyData *data;
 	EnergyRate *rate;
+	QVariant value;
 
 private:
 	EnergyData::ValueType type;
 	QDate date;
-	QVariant value;
 	QString measure_unit;
 };
 
@@ -616,6 +616,7 @@ public:
 	void setThresholds(QVariantList thresholds);
 	QVariantList getThresholds() const;
 
+	virtual QVariant getValue() const;
 	virtual QString getMeasureUnit() const;
 
 signals:

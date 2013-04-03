@@ -1238,12 +1238,14 @@ QVariantList EnergyItemCurrent::getThresholds() const
 	return data->getThresholds();
 }
 
+QVariant EnergyItemCurrent::getValue() const
+{
+	return value;
+}
+
 QString EnergyItemCurrent::getMeasureUnit() const
 {
-	if (rate)
-		return rate->getCurrencySymbol() + "/h";
-	else
-		return data->getCurrentUnit();
+	return data->getCurrentUnit();
 }
 
 
