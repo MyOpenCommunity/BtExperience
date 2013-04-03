@@ -98,13 +98,14 @@ namespace
 		return e.valueToKey(value);
 	}
 
-	QString scs_source_on     = "/usr/local/bin/Audio-SCS_Multimedia.sh";
-	QString vde_audio_on      = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_silent.sh";
-	QString vde_audio_off     = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
+	QString scs_source_on          = "/usr/local/bin/HwBsp-D-Audio-SCS_Multimedia.sh";
+	QString scs_source_off         = "/usr/local/bin/HwBsp-D-Audio-SCS_Multimedia_off.sh";
+	QString vde_audio_on           = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_silent.sh";
+	QString vde_audio_off          = "/usr/local/bin/HwBsp-D-Audio-VDE_Conversation_off_silent.sh";
 	QString intercom_audio_on      = "/usr/local/bin/HwBsp-D-Audio-Intercom_silent.sh";
 	QString intercom_audio_off     = "/usr/local/bin/HwBsp-D-Audio-Intercom_off_silent.sh";
-	QString pager_mic_on = "/usr/local/bin/HwBsp-D-Audio-Find-MicToScs_silent.sh";
-	QString pager_speaker_on = "/usr/local/bin/HwBsp-D-Audio-Find-ScsToSpeaker_silent.sh";
+	QString pager_mic_on           = "/usr/local/bin/HwBsp-D-Audio-Find-MicToScs_silent.sh";
+	QString pager_speaker_on       = "/usr/local/bin/HwBsp-D-Audio-Find-ScsToSpeaker_silent.sh";
 }
 
 #define VOLUME_MIN 0
@@ -485,7 +486,7 @@ void AudioState::changeSoundDiffusionAccess()
 	if (new_sound_diffusion)
 		smartExecute(scs_source_on);
 	else
-		qWarning("Add code to disable sound diffusion");
+		smartExecute(scs_source_off);
 
 	sound_diffusion = new_sound_diffusion;
 }
