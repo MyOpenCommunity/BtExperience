@@ -3,6 +3,7 @@
 #include "multimediaplayer.h"
 #include "mediaplayer.h" // SoundPlayer
 #include "generic_functions.h"
+#include "mediaobjects.h"
 
 #include <QStringList>
 #include <QMetaEnum>
@@ -270,7 +271,44 @@ void AudioState::registerSoundDiffusionPlayer(MultiMediaPlayer *player)
 
 	// this assumes audiioOutputState is changed after playerState
 	connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
-		this, SLOT(changeSoundDiffusionAccess()));
+			this, SLOT(changeSoundDiffusionAccess()));
+}
+
+void AudioState::registerSoundAmbient(SoundAmbientBase *ambient)
+{
+	connect(ambient, SIGNAL(currentSourceChanged()), this, SLOT(checkLocalSoundDiffusion()));
+}
+
+void AudioState::checkLocalSoundDiffusion()
+{
+	// finds all ambients and checks if 1+ are active on local sound diffusion source
+	QScopedPointer<ObjectModel> ambientModel(new ObjectModel());
+	ambientModel->setFilters(
+				ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSpecialAmbient
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSoundAmbient
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMonoChannelSoundAmbient
+				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiGeneral);
+	for (int i = 0; i < ambientModel->getCount(); ++i)
+	{
+		ItemInterface *item = ambientModel->getObject(i);
+		SoundAmbientBase *ambient = qobject_cast<SoundAmbientBase *>(item);
+		if (!ambient)
+			continue;
+		QObject *o = ambient->getCurrentSource();
+		if (!o)
+			continue;
+		SourceObject *s = qobject_cast<SourceObject *>(o);
+		if (!s)
+			continue;
+		SourceObject::SourceObjectType t = s->getSourceType();
+		if (t == SourceObject::RdsRadio || t == SourceObject::Aux || t == SourceObject::Touch)
+			continue;
+		// one local source found, activates local sound diffusion
+		smartExecute(scs_source_on);
+		return;
+	}
+	// no local source found, deactivates local sound diffusion
+	smartExecute(scs_source_off);
 }
 
 bool AudioState::isDirectAudioAccess() const
@@ -482,11 +520,6 @@ void AudioState::changeSoundDiffusionAccess()
 
 	if (new_sound_diffusion == sound_diffusion)
 		return;
-
-	if (new_sound_diffusion)
-		smartExecute(scs_source_on);
-	else
-		smartExecute(scs_source_off);
 
 	sound_diffusion = new_sound_diffusion;
 }
