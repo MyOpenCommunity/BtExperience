@@ -521,11 +521,6 @@ void AudioState::changeSoundDiffusionAccess()
 	if (new_sound_diffusion == sound_diffusion)
 		return;
 
-	if (new_sound_diffusion)
-		smartExecute(scs_source_on);
-	else
-		qWarning("Add code to disable sound diffusion");
-
 	sound_diffusion = new_sound_diffusion;
 }
 
