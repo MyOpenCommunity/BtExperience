@@ -519,10 +519,6 @@ Name: %1
         <translation>Διόρθωση ονόματος συναγερμού</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>ΔΤΤΠΠΣΚ</translation>
-    </message>
-    <message>
         <source>New name:</source>
         <translation>Νέο όνομα:</translation>
     </message>
@@ -545,6 +541,41 @@ Name: %1
     <message>
         <source>time</source>
         <translation>&apos;Ωρα</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>Δ</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>Τ</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>Τ</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>Π</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>Π</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>Σ</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>K</translation>
     </message>
 </context>
 <context>
@@ -803,29 +834,6 @@ Name: %1
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Αιτείται πιστοποίηση</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>κωδικός</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Μη εμπιστεύσιμη σύνδεση. Θέλετε να συνεχίσετε;</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Μη εμπιστεύσιμη σύνδεση SSL</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Όνομα χρήστη</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -988,10 +996,6 @@ Name: %1
         <translation>Ενεργοποιημένο</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>ΔΤΤΠΠΣΚ</translation>
-    </message>
-    <message>
         <source>repetition</source>
         <translation>επανάληψη</translation>
     </message>
@@ -1006,6 +1010,41 @@ Name: %1
     <message>
         <source>triggers at</source>
         <translation>ξυπνητήρι στις</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>Δ</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>Τ</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>Τ</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>Π</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>Π</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>Σ</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>Κ</translation>
     </message>
 </context>
 <context>
@@ -1881,85 +1920,6 @@ Name: %1
     <message>
         <source>%1 seconds</source>
         <translation>%1 δευτερόλεπτα</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Ενεργοποιημένη</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ΡΟΛΟΙ ΣΥΝΑΓΕΡΜΟΥ</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ΑΝΤΙΚΛΕΠΤΙΚΟ</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Διαθέσιμο </translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Κλείσιμο</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Αποσταλείσα εντολή</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ΔΙΑΧΕΙΡΙΣΗ ΕΝΕΡΓΕΙΑΣ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Μηνιαία Αναφορά Ενέργειας</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Αγνόησε</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>ΜΗΝΥΜΑΤΑ</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Ανάκτηση μηνιαίου κατωφλίου </translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Περισσότερες πληροφορίες</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>νέο (α) μηνύμ(α)τα</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Αναβολή</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Ανάγνωση</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>ΣΕΝΑΡΙΟ</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Προβολή</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Στοπ</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Επίβλεψη</translation>
     </message>
 </context>
 <context>
@@ -3024,29 +2984,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>ταχύτητα ανεμιστήρα πηνίου</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>λειτουργίες</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>ρύθμιση θερμοκρασίας</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές σε εξέλιξη.
-Αν επιλέξετε ok θα χαθούν.
-Συνέχεια;</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3111,6 +3048,29 @@ Continue?</source>
     <message>
         <source>Weekly</source>
         <translation>Εβδομαδιαία</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>ταχύτητα ανεμιστήρα πηνίου</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>λειτουργίες</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>ρύθμιση θερμοκρασίας</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.
+If you choose ok they will be lost.
+Continue?</source>
+        <translation>Υπάρχουν μη αποθηκευμένες αλλαγές σε εξέλιξη.
+Αν επιλέξετε ok θα χαθούν.
+Συνέχεια;</translation>
     </message>
 </context>
 <context>
@@ -3294,6 +3254,111 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>σιώπηση</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Αιτείται πιστοποίηση</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>κωδικός</translation>
+    </message>
+    <message>
+        <source>This connection is untrusted. Do you wish to continue?</source>
+        <translation>Μη εμπιστεύσιμη σύνδεση. Θέλετε να συνεχίσετε;</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Μη εμπιστεύσιμη σύνδεση SSL</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Όνομα χρήστη</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Ενεργοποιημένη</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ΡΟΛΟΙ ΣΥΝΑΓΕΡΜΟΥ</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ΑΝΤΙΚΛΕΠΤΙΚΟ</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Διαθέσιμο </translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Κλείσιμο</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Αποσταλείσα εντολή</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ΔΙΑΧΕΙΡΙΣΗ ΕΝΕΡΓΕΙΑΣ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Μηνιαία Αναφορά Ενέργειας</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Αγνόησε</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>ΜΗΝΥΜΑΤΑ</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Ανάκτηση μηνιαίου κατωφλίου </translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Περισσότερες πληροφορίες</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>νέο (α) μηνύμ(α)τα</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Αναβολή</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Ανάγνωση</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>ΣΕΝΑΡΙΟ</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Προβολή</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Στοπ</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Επίβλεψη</translation>
     </message>
 </context>
 </TS>

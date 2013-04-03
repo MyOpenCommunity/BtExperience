@@ -519,10 +519,6 @@ Address: %2</source>
         <translation>Редактировать имя тревожного сигнала</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>ПВСЧПСВ</translation>
-    </message>
-    <message>
         <source>New name:</source>
         <translation>Новое имя:</translation>
     </message>
@@ -545,6 +541,41 @@ Address: %2</source>
     <message>
         <source>time</source>
         <translation>Время</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>В</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>С</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>Ч</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>С</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>В</translation>
     </message>
 </context>
 <context>
@@ -803,29 +834,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Требуется аутентификация</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>пароль</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Это соединение ненадежное. Вы хотите продолжить?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Ненадежное соединение SSL </translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Имя пользователя</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -988,10 +996,6 @@ Address: %2</source>
         <translation>Включен</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>ПВСЧПСВ</translation>
-    </message>
-    <message>
         <source>repetition</source>
         <translation>Повторение</translation>
     </message>
@@ -1006,6 +1010,41 @@ Address: %2</source>
     <message>
         <source>triggers at</source>
         <translation>Hачало в</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>В</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>С</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>Ч</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>С</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>В</translation>
     </message>
 </context>
 <context>
@@ -1881,85 +1920,6 @@ Address: %2</source>
     <message>
         <source>%1 seconds</source>
         <translation>%1 секунд</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Включено</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ЧАСЫ-БУДИЛЬНИК</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ОХРАННАЯ СИГНАЛИЗАЦИЯ</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Имеющийся в наличии</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Закрыть</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Команда отправлена</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>УПРАВЛЕНИЕ ЭНЕРГИЕЙ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Месячный отчет об энергии</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Игнорировать</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>СООБЩЕНИЯ</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Месячная цель достигнута</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Больше сведений</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>новое(ые) сообщение(я)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Отложить</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Прочитать</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>СЦЕНАРИЙ</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Показать</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Стоп</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Контроль</translation>
     </message>
 </context>
 <context>
@@ -3024,29 +2984,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Cкорость фанкойла</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Pежимы</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Уставка температуры</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Имеются выполняемые несохраненные изменения.
-При выборе ok они будут потеряны.
-Продолжить?</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3111,6 +3048,29 @@ Continue?</source>
     <message>
         <source>Weekly</source>
         <translation>Недельный</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Cкорость фанкойла</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Pежимы</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Уставка температуры</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.
+If you choose ok they will be lost.
+Continue?</source>
+        <translation>Имеются выполняемые несохраненные изменения.
+При выборе ok они будут потеряны.
+Продолжить?</translation>
     </message>
 </context>
 <context>
@@ -3294,6 +3254,112 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>Hемой</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Требуется аутентификация</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>пароль</translation>
+    </message>
+    <message>
+        <source>This connection is untrusted. Do you wish to continue?</source>
+        <translation>Это соединение ненадежное. Вы хотите продолжить?</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Ненадежное соединение SSL </translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Имя пользователя</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Включено</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ЧАСЫ-БУДИЛЬНИК</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ОХРАННАЯ СИГНАЛИЗАЦИЯ</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Имеющийся в наличии</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Команда отправлена</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>УПРАВЛЕНИЕ ЭНЕРГИЕЙ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Месячный отчет об энергии</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Игнорировать</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>СООБЩЕНИЯ</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Месячная цель достигнута</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Больше сведений</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>новое(ые) сообщение(я)</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Отложить</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Прочитать</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>СЦЕНАРИЙ</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Показать</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Стоп</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Контроль</translation>
     </message>
 </context>
 </TS>
