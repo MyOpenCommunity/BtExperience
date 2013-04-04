@@ -1231,9 +1231,13 @@ int EnergyItem::getDecimals() const
 		return data->getRateDecimals();
 
 	// in case of electricity line, we want to show no decimals in case of Watts
-	if (isElectricity())
-		if (value.isValid() && value.toDouble() < 1.0)
+	if (isElectricity() && value.isValid())
+	{
+		if (value.toDouble() < 1.0)
 			return 0;
+		else
+			return 3;
+	}
 
 	return data->getDecimals();
 }
@@ -1288,9 +1292,13 @@ QString EnergyItemCurrent::getMeasureUnit() const
 int EnergyItemCurrent::getDecimals() const
 {
 	// in case of electricity line, we want to show no decimals in case of Watts
-	if (isElectricity())
-		if (value.isValid() && value.toDouble() < 1.0)
+	if (isElectricity() && value.isValid())
+	{
+		if (value.toDouble() < 1.0)
 			return 0;
+		else
+			return 3;
+	}
 
 	return data->getDecimals();
 }
