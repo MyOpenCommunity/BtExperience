@@ -181,50 +181,69 @@ Column {
                                 return "../../images/energy/btn_row_table_green.svg"
                             }
                             width: tableHeader.width - btnLine.width - spacing
-                            UbuntuLightText {
+                            Item {
+                                id: consumptionValueText
+                                width: tableHeader.spacing + privateProps.cellWidth - spacing / 3
+                                height: parent.height
                                 anchors {
                                     left: parent.left
-                                    leftMargin: privateProps.textMargin
-                                    right: parent.right
-                                    rightMargin: privateProps.textMargin
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : "---"
-                                font.pixelSize: 14
-                                color: "white"
-                                horizontalAlignment: Text.AlignRight
+                                UbuntuLightText {
+                                    anchors {
+                                        fill: parent
+                                        rightMargin: privateProps.textMargin
+                                    }
+                                    text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : "---"
+                                    font.pixelSize: 14
+                                    color: "white"
+                                    horizontalAlignment: Text.AlignRight
+                                    verticalAlignment: Text.AlignVCenter
+                                }
                             }
-                            UbuntuLightText {
+                            Item {
+                                id: goalValueText
+                                width: tableHeader.spacing + privateProps.cellWidth - spacing / 3
+                                height: parent.height
                                 anchors {
-                                    left: parent.left
-                                    leftMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
-                                    right: parent.right
-                                    rightMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
+                                    left: consumptionValueText.right
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: tableRow.hasRate() ? tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit : "---"
-                                font.pixelSize: 14
-                                color: "white"
-                                horizontalAlignment: Text.AlignRight
+                                UbuntuLightText {
+                                    anchors {
+                                        fill: parent
+                                        rightMargin: privateProps.textMargin
+                                    }
+                                    text: tableRow.hasRate() ? tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit : "---"
+                                    font.pixelSize: 14
+                                    color: "white"
+                                    horizontalAlignment: Text.AlignRight
+                                    verticalAlignment: Text.AlignVCenter
+                                }
                             }
-
-                            UbuntuMediumText {
+                            Item {
+                                width: tableHeader.spacing + privateProps.cellWidth - spacing / 3
+                                height: parent.height
                                 anchors {
-                                    left: parent.left
-                                    leftMargin: privateProps.textMargin + (tableHeader.spacing + privateProps.cellWidth) * 2
-                                    right: parent.right
-                                    rightMargin: privateProps.textMargin + (tableHeader.spacing + privateProps.cellWidth) * 2
+                                    left: goalValueText.right
                                     verticalCenter: parent.verticalCenter
                                 }
-                                text: {
-                                    if (!tableRow.hasRate())
-                                        return "---"
-                                    var delta = parent.calculateDelta()
-                                    return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(tableRow.itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
+                                UbuntuMediumText {
+                                    anchors {
+                                        fill: parent
+                                        rightMargin: privateProps.textMargin
+                                    }
+                                    text: {
+                                        if (!tableRow.hasRate())
+                                            return "---"
+                                        var delta = line.calculateDelta()
+                                        return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(tableRow.itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
+                                    }
+                                    font.pixelSize: 16
+                                    color: "white"
+                                    horizontalAlignment: Text.AlignRight
+                                    verticalAlignment: Text.AlignVCenter
                                 }
-                                horizontalAlignment: Text.AlignRight
-                                font.pixelSize: 16
-                                color: "white"
                             }
                         }
                         states: State {
