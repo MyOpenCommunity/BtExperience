@@ -185,27 +185,35 @@ Column {
                                 anchors {
                                     left: parent.left
                                     leftMargin: privateProps.textMargin
+                                    right: parent.right
+                                    rightMargin: privateProps.textMargin
                                     verticalCenter: parent.verticalCenter
                                 }
                                 text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : "---"
                                 font.pixelSize: 14
                                 color: "white"
+                                horizontalAlignment: Text.AlignRight
                             }
                             UbuntuLightText {
                                 anchors {
                                     left: parent.left
                                     leftMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
+                                    right: parent.right
+                                    rightMargin: privateProps.textMargin + tableHeader.spacing + privateProps.cellWidth
                                     verticalCenter: parent.verticalCenter
                                 }
                                 text: tableRow.hasRate() ? tableRow.monthItem.consumptionGoal.toFixed(tableRow.itemObject.decimals) + " " + tableRow.monthItem.measureUnit : "---"
                                 font.pixelSize: 14
                                 color: "white"
+                                horizontalAlignment: Text.AlignRight
                             }
 
                             UbuntuMediumText {
                                 anchors {
                                     left: parent.left
                                     leftMargin: privateProps.textMargin + (tableHeader.spacing + privateProps.cellWidth) * 2
+                                    right: parent.right
+                                    rightMargin: privateProps.textMargin + (tableHeader.spacing + privateProps.cellWidth) * 2
                                     verticalCenter: parent.verticalCenter
                                 }
                                 text: {
@@ -214,7 +222,7 @@ Column {
                                     var delta = parent.calculateDelta()
                                     return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(tableRow.itemObject.decimals) +  " " + tableRow.monthItem.measureUnit
                                 }
-
+                                horizontalAlignment: Text.AlignRight
                                 font.pixelSize: 16
                                 color: "white"
                             }
