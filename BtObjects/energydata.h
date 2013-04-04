@@ -558,7 +558,8 @@ public:
 	QVariant getConsumptionGoal() const;
 	bool getGoalEnabled() const;
 
-	int getDecimals() const;
+	virtual int getDecimals() const;
+	bool isElectricity() const;
 
 public slots:
 	/*!
@@ -618,6 +619,7 @@ public:
 
 	virtual QVariant getValue() const;
 	virtual QString getMeasureUnit() const;
+	virtual int getDecimals() const;
 
 signals:
 	void thresholdsChanged(QVariantList thresholds);
