@@ -61,10 +61,13 @@ Column {
                 anchors {
                     left: parent.left
                     leftMargin: privateProps.textMargin
+                    right: parent.right
+                    rightMargin: privateProps.textMargin
                     verticalCenter: parent.verticalCenter
                 }
                 font.pixelSize: 14
                 text: qsTr("line")
+                horizontalAlignment: Text.AlignHCenter
             }
         }
         Rectangle {
@@ -76,12 +79,13 @@ Column {
                     left: parent.left
                     leftMargin: privateProps.textMargin
                     verticalCenter: parent.verticalCenter
+                    right: parent.right
                     rightMargin: privateProps.textMargin
-                    right:parent.right
                 }
                 font.pixelSize: 14
                 text: qsTr("consumption") + " " + Qt.formatDateTime(table.viewDate, "MM/yyyy")
                 wrapMode: Text.WordWrap
+                horizontalAlignment: Text.AlignHCenter
             }
         }
         Rectangle {
@@ -92,10 +96,13 @@ Column {
                 anchors {
                     left: parent.left
                     leftMargin: privateProps.textMargin
+                    right: parent.right
+                    rightMargin: privateProps.textMargin
                     verticalCenter: parent.verticalCenter
                 }
                 font.pixelSize: 14
                 text: qsTr("objective")
+                horizontalAlignment: Text.AlignHCenter
             }
         }
         Rectangle {
@@ -106,10 +113,13 @@ Column {
                 anchors {
                     left: parent.left
                     leftMargin: privateProps.textMargin
+                    right: parent.right
+                    rightMargin: privateProps.textMargin
                     verticalCenter: parent.verticalCenter
                 }
                 font.pixelSize: 14
                 text: qsTr("delta")
+                horizontalAlignment: Text.AlignHCenter
             }
         }
     }

@@ -21,8 +21,11 @@ Column {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
                 font.pixelSize: 14
                 text: tableHeader.label
+                horizontalAlignment: Text.AlignHCenter
             }
         }
 
@@ -34,8 +37,11 @@ Column {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
                 font.pixelSize: 14
                 text: tableHeader.unitMeasure
+                horizontalAlignment: Text.AlignHCenter
             }
         }
     }
