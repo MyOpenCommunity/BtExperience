@@ -53,7 +53,7 @@ void cleanOldFiles(QString id_name, int id)
 	{
 		survivor_base = id_name.mid(id_name.lastIndexOf("/") + 1);
 		survivor_base = survivor_base.left(survivor_base.lastIndexOf("_"));
-		survivor_base.append(QString("_%1.").arg(id - i));
+		survivor_base.append(QString("_%1.").arg(id - i).toLower());
 
 		foreach (QString extension, getFileExtensions(EntryInfo::IMAGE))
 			survivors << survivor_base + extension;
@@ -65,7 +65,7 @@ void cleanOldFiles(QString id_name, int id)
 	search_list << search_path;
 	QStringList file_list = save_dir.entryList(search_list);
 	foreach (QString name, file_list) {
-		if (survivors.contains(name))
+		if (survivors.contains(name.toLower()))
 			continue;
 		save_dir.remove(name);
 	}
