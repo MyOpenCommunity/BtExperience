@@ -1284,9 +1284,9 @@ QString EnergyItemCurrent::getMeasureUnit() const
 	// less than 1.0
 	if (isElectricity())
 		if (value.isValid() && value.toDouble() < 1.0)
-			return data->getCumulativeUnit().mid(1);
+			return data->getCurrentUnit().mid(1);
 
-	return data->getCumulativeUnit();
+	return data->getCurrentUnit();
 }
 
 int EnergyItemCurrent::getDecimals() const
