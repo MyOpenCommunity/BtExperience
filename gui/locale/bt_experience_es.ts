@@ -406,7 +406,7 @@ Dirección: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>M</translation>
+        <translation>J</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Dirección: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>J</translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>W</source>
@@ -519,10 +519,6 @@ Dirección: %2</translation>
         <translation>Modificar nombre de alarma</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>LMMJVSD</translation>
-    </message>
-    <message>
         <source>New name:</source>
         <translation>Nuevo nombre:</translation>
     </message>
@@ -545,6 +541,41 @@ Dirección: %2</translation>
     <message>
         <source>time</source>
         <translation>Horario</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>L</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>J</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>D</translation>
     </message>
 </context>
 <context>
@@ -803,29 +834,6 @@ Dirección: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Es necesario autenticarse</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Contraseña:</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Conexión no de confianza ¿Desea continuar?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Conexión SLL no de confianza</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Nombre de usuario</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -988,10 +996,6 @@ Dirección: %2</translation>
         <translation>Habilitado</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>LMMJVSD</translation>
-    </message>
-    <message>
         <source>repetition</source>
         <translation>Repetición</translation>
     </message>
@@ -1006,6 +1010,41 @@ Dirección: %2</translation>
     <message>
         <source>triggers at</source>
         <translation>se dispara a</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>L</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>J</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>D</translation>
     </message>
 </context>
 <context>
@@ -1881,89 +1920,6 @@ Dirección: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 segundos</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Activado</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>DESPERTADOR</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ANTIRROBO</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Cerrar</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Comando enviado</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>GESTIÓN DE LA ENERGÍA</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Informe mensual energía</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Ignorar</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MENSAJES</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Objetivo mensual alcanzado</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Más info</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>Nuevo(s) mensaje(s)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Aplazar</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Leer</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>ESCENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Mostrar</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Parar</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Supervisión</translation>
-    </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Umbral  %n superado</translation>
     </message>
 </context>
 <context>
@@ -2935,26 +2891,25 @@ No apretar hasta que se haya restablecido
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 días</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Recierre Automático</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Separador</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Recierre </translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Circuito de prueba</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Circuito de Prueba Separador</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2919,15 @@ No apretar hasta que se haya restablecido
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Recierre </translation>
+        <source>Automatic Reclosing</source>
+        <translation>Recierre Automático</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automático</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Recierre Automático</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2948,6 @@ No apretar hasta que se haya restablecido
     <message>
         <source>open</source>
         <translation>Abrir</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Recierre </translation>
     </message>
 </context>
 <context>
@@ -3034,29 +2981,6 @@ No apretar hasta que se haya restablecido
     <message>
         <source>Scenario configuration</source>
         <translation>Configuración Escenarios</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Velocidad fancoil</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modos</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Temperatura configurada</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Hay cambios no guardados en curso.
-Si selecciona OK, se perderán.
-¿Desea continuar?</translation>
     </message>
 </context>
 <context>
@@ -3124,6 +3048,29 @@ Si selecciona OK, se perderán.
     <message>
         <source>Weekly</source>
         <translation>Semanario</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Velocidad fancoil</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modos</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Temperatura configurada</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.
+If you choose ok they will be lost.
+Continue?</source>
+        <translation>Hay cambios no guardados en curso.
+Si selecciona OK, se perderán.
+¿Desea continuar?</translation>
     </message>
 </context>
 <context>
@@ -3307,6 +3254,111 @@ Si selecciona OK, se perderán.
     <message>
         <source>mute</source>
         <translation>Silenciador</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Es necesario autenticarse</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Contraseña:</translation>
+    </message>
+    <message>
+        <source>This connection is untrusted. Do you wish to continue?</source>
+        <translation>Conexión no de confianza ¿Desea continuar?</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Conexión SLL no de confianza</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Nombre de usuario</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Activado</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>DESPERTADOR</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ANTIRROBO</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Cerrar</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Comando enviado</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>GESTIÓN DE LA ENERGÍA</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Informe mensual energía</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignorar</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MENSAJES</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Objetivo mensual alcanzado</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Más info</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>Nuevo(s) mensaje(s)</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Aplazar</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Leer</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>ESCENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Mostrar</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Parar</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Supervisión</translation>
     </message>
 </context>
 </TS>

@@ -341,8 +341,11 @@ void TestEnergyData::testReceiveCurrentValue()
 	t1.checkSignals();
 	t2.checkSignals();
 
+	// instant consumption must never show currency values
 	QCOMPARE(o1->getValue(), QVariant(1234.0));
-	QCOMPARE(o2->getValue(), QVariant(308.5));
+	QCOMPARE(o2->getValue(), QVariant(1234.0));
+	QCOMPARE(o1->getMeasureUnit(), QString("kW"));
+	QCOMPARE(o2->getMeasureUnit(), QString("kW"));
 }
 
 void TestEnergyData::testReceiveCumulativeDayValue()

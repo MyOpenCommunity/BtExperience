@@ -22,20 +22,20 @@ MenuColumn {
         }
 
         ControlSettings {
-            upperLabel: qsTr("triggers at")
-            upperText: privateProps.formatTwoDigits(column.dataModel.hour) + ":" + privateProps.formatTwoDigits(column.dataModel.minute)
-            bottomLabel: qsTr("repetition")
-            bottomText: privateProps.formatRepetionString(qsTr("MTWTFSS"), [
-                                                              column.dataModel.triggerOnMondays,
-                                                              column.dataModel.triggerOnTuesdays,
-                                                              column.dataModel.triggerOnWednesdays,
-                                                              column.dataModel.triggerOnThursdays,
-                                                              column.dataModel.triggerOnFridays,
-                                                              column.dataModel.triggerOnSaturdays,
-                                                              column.dataModel.triggerOnSundays
-                                                          ],
-                                                          column.dataModel.trigger)
-            bottomTextFormat: Text.RichText
+            upperLabel: qsTr("repetition")
+            upperText: privateProps.formatRepetionString([
+                                                             column.dataModel.triggerOnMondays,
+                                                             column.dataModel.triggerOnTuesdays,
+                                                             column.dataModel.triggerOnWednesdays,
+                                                             column.dataModel.triggerOnThursdays,
+                                                             column.dataModel.triggerOnFridays,
+                                                             column.dataModel.triggerOnSaturdays,
+                                                             column.dataModel.triggerOnSundays
+                                                         ],
+                                                         column.dataModel.trigger)
+            upperTextFormat: Text.RichText
+            bottomLabel: qsTr("triggers at")
+            bottomText: privateProps.formatTwoDigits(column.dataModel.hour) + ":" + privateProps.formatTwoDigits(column.dataModel.minute)
             onEditClicked: {
                 column.closeColumn()
                 Stack.pushPage("AlarmClockDateTimePage.qml", {"alarmClock": column.dataModel})
@@ -84,11 +84,27 @@ MenuColumn {
             return value
         }
 
-        function formatRepetionString(days, flags, trigger) {
+        function getDay(index) {
+            if (index === 0)
+                return qsTr("M", "Monday")
+            else if (index === 1)
+                return qsTr("T", "Tuesday")
+            else if (index === 2)
+                return qsTr("W", "Wednesday")
+            else if (index === 3)
+                return qsTr("T", "Thursday")
+            else if (index === 4)
+                return qsTr("F", "Friday")
+            else if (index === 5)
+                return qsTr("S", "Saturday")
+            return qsTr("S", "Sunday")
+        }
+
+        function formatRepetionString(flags, trigger) {
             var result = ""
 
             for (var i = 0; i < 7; ++i)
-                result += "<font color='" + (flags[i] ? "white" : "black") + "'>" + days[i] + "</font>"
+                result += "<font color='" + (flags[i] ? "white" : "black") + "'>" + privateProps.getDay(i) + "</font>"
 
             return result
         }

@@ -413,13 +413,14 @@ Adres: %2</translation>
         <translation>Uur</translation>
     </message>
     <message>
-        <source>Tuesday</source>
-        <translation>D</translation>
-    </message>
-    <message>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>W</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>D</translation>
     </message>
 </context>
 <context>
@@ -518,10 +519,6 @@ Adres: %2</translation>
         <translation>Naam alarm invoeren</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>MDWDVZZ</translation>
-    </message>
-    <message>
         <source>New name:</source>
         <translation>Nieuwe naam:</translation>
     </message>
@@ -544,6 +541,41 @@ Adres: %2</translation>
     <message>
         <source>time</source>
         <translation>TIjdstip:</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>D</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>W</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>D</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>Z</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>Z</translation>
     </message>
 </context>
 <context>
@@ -802,29 +834,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authenticatie verplicht</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Wachtwoord</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>De verbinding is niet veilig. U wilt doorgaan?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Onveilige SSL-verbinding</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Gebruikersnaam</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -987,10 +996,6 @@ Adres: %2</translation>
         <translation>Geactiveerd</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>MDWDVZZ</translation>
-    </message>
-    <message>
         <source>repetition</source>
         <translation>Herhaling</translation>
     </message>
@@ -1005,6 +1010,41 @@ Adres: %2</translation>
     <message>
         <source>triggers at</source>
         <translation>Wordt gestart bij</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>D</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>W</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>D</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>Z</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>Z</translation>
     </message>
 </context>
 <context>
@@ -1880,89 +1920,6 @@ Adres: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 seconden</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Actief</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>WEKKER</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>INBRAAK</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Beschikbaar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Sluiten</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Commando verzonden</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGIEBEHEER</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Maandelijks Energierapport</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Negeren</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MELDINGEN</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Maandelijks doel bereikt</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Meer informatie</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>nieuw(e) bericht(en)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Uitstellen</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lezen</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Tonen</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Nazicht</translation>
-    </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Drempel %/n overschreden</translation>
     </message>
 </context>
 <context>
@@ -2934,26 +2891,25 @@ Doorgaan?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 dagen</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatisch Afsluiting</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Schakelaar</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Afsluiting</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test Circuit</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test Circuit Schakelaar</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2963,19 +2919,15 @@ Doorgaan?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatisch</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Afsluiting</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatisch Afsluiting</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Automatisch Afsluiting</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2996,10 +2948,6 @@ Doorgaan?</translation>
     <message>
         <source>open</source>
         <translation>Openen</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Afsluiting</translation>
     </message>
 </context>
 <context>
@@ -3033,29 +2981,6 @@ Doorgaan?</translation>
     <message>
         <source>Scenario configuration</source>
         <translation>Configuratie Scenario&apos;s</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Snelheid luchtverhitter</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modi</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Temperatuurinstelling</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Niet-opgeslagen wijzigingen zijn gaande.
-Als u op ok drukt gaan deze wijzigingen verloren.
-Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -3123,6 +3048,29 @@ Doorgaan?</translation>
     <message>
         <source>Weekly</source>
         <translation>Wekelijk</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Snelheid luchtverhitter</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modi</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Temperatuurinstelling</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.
+If you choose ok they will be lost.
+Continue?</source>
+        <translation>Niet-opgeslagen wijzigingen zijn gaande.
+Als u op ok drukt gaan deze wijzigingen verloren.
+Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -3306,6 +3254,111 @@ Doorgaan?</translation>
     <message>
         <source>mute</source>
         <translation>Mute</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authenticatie verplicht</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>This connection is untrusted. Do you wish to continue?</source>
+        <translation>De verbinding is niet veilig. U wilt doorgaan?</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Onveilige SSL-verbinding</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Gebruikersnaam</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Actief</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>WEKKER</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>INBRAAK</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Beschikbaar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Commando verzonden</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERGIEBEHEER</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Maandelijks Energierapport</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Negeren</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MELDINGEN</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Maandelijks doel bereikt</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Meer informatie</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>nieuw(e) bericht(en)</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Uitstellen</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Lezen</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SCENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Tonen</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Nazicht</translation>
     </message>
 </context>
 </TS>

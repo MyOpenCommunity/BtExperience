@@ -406,7 +406,7 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>S</translation>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Pe</translation>
+        <translation>S</translation>
     </message>
     <message>
         <source>W</source>
@@ -519,10 +519,6 @@ Adres: %2</translation>
         <translation>Alarm adı düzenleyin</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>PSÇPCCP</translation>
-    </message>
-    <message>
         <source>New name:</source>
         <translation>Yeni ad:</translation>
     </message>
@@ -545,6 +541,41 @@ Adres: %2</translation>
     <message>
         <source>time</source>
         <translation>Saat</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>P</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>Ç</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>P</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>C</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>C</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -803,29 +834,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Kimlik denetimi gerekli</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>şifre</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Güvenli olmayan SSL bağlantısı</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Kullanıcı adı</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -988,10 +996,6 @@ Adres: %2</translation>
         <translation>Aktif</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>PSÇPCCP</translation>
-    </message>
-    <message>
         <source>repetition</source>
         <translation>Tekrar</translation>
     </message>
@@ -1006,6 +1010,41 @@ Adres: %2</translation>
     <message>
         <source>triggers at</source>
         <translation>Harekete geçme</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>P</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>Ç</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>P</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>C</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>C</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -1881,89 +1920,6 @@ Adres: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 saniye</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Etkinleştirildi</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ALARM SAATİ</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>İZİNSİZ GİRME ÖNLEME</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Kullanılabilir</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Kapat</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Komut gönderildi</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERJİ YÖNETİMİ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Enerji Aylık Raporu</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Yoksay</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MESAJLAR</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Aylık sayıya ulaşıldı</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Daha fazla bilgi</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>yeni mesaj(lar)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Ertele</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Oku</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SENARYO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Göster</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Durdur</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Denetleme</translation>
-    </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Eşik %n aşıldı</translation>
     </message>
 </context>
 <context>
@@ -2935,26 +2891,25 @@ Devam?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON (AÇIK)</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 Günler</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Otomatik</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Tekrar Kapama Otomatik</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Kesici</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Tekrar Kapama</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test Devre</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test Devre Kesici</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2919,15 @@ Devam?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Otomatik</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Tekrar Kapama</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Tekrar Kapama Otomatik</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Otomatik</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Tekrar Kapama Otomatik</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2948,6 @@ Devam?</translation>
     <message>
         <source>open</source>
         <translation>Aç</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Tekrar Kapama</translation>
     </message>
 </context>
 <context>
@@ -3034,29 +2981,6 @@ Devam?</translation>
     <message>
         <source>Scenario configuration</source>
         <translation>Senaryoların konfigürasyonu</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Fanlı ısıtıcı hızı</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modlar</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Sıcaklık ayarı</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Kaydedilmemiş değişiklikler sürüyor.
-Ok seçtiğinizde bunlar kaybedilecek.
-Devam?</translation>
     </message>
 </context>
 <context>
@@ -3124,6 +3048,29 @@ Devam?</translation>
     <message>
         <source>Weekly</source>
         <translation>Haftalık</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Fanlı ısıtıcı hızı</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modlar</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Sıcaklık ayarı</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.
+If you choose ok they will be lost.
+Continue?</source>
+        <translation>Kaydedilmemiş değişiklikler sürüyor.
+Ok seçtiğinizde bunlar kaybedilecek.
+Devam?</translation>
     </message>
 </context>
 <context>
@@ -3307,6 +3254,110 @@ Devam?</translation>
     <message>
         <source>mute</source>
         <translation>Sessiz</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Kimlik denetimi gerekli</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>şifre</translation>
+    </message>
+    <message>
+        <source>This connection is untrusted. Do you wish to continue?</source>
+        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Güvenli olmayan SSL bağlantısı</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Kullanıcı adı</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Etkinleştirildi</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ALARM SAATİ</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>İZİNSİZ GİRME ÖNLEME</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Kullanılabilir</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Kapat</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Komut gönderildi</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERJİ YÖNETİMİ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Enerji Aylık Raporu</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Yoksay</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MESAJLAR</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Aylık sayıya ulaşıldı</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Daha fazla bilgi</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>yeni mesaj(lar)</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Ertele</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Oku</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SENARYO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Göster</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Durdur</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Denetleme</translation>
     </message>
 </context>
 </TS>

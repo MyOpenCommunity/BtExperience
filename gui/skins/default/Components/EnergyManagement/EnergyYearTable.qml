@@ -117,6 +117,7 @@ Item {
                         id: tableRowComponent2
                         EnergyTableRow {
                             index: privateProps.isRowValid(model.index - 1) ? energyData.goals[model.index - 1].toFixed(energyData.decimals) : ""
+                            indexHorizontalAlignment: Text.AlignRight
                             value: {
                                 if (privateProps.isRowValid(model.index - 1))
                                     return (delta > 0 ? "+" : "-") + " " + Math.abs(delta).toFixed(energyData.decimals)

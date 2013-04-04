@@ -101,7 +101,7 @@ QString HomeProperties::getHomeBgImage() const
 	if (is_custom)
 		return custom_images_folder + home_bg_image;
 
-	return images_folder + home_bg_image;
+	return images_folder + (getSkin() == Clear ? QString("images/background/home.jpg") : QString("images/background/home_dark.jpg"));
 }
 
 void HomeProperties::setHomeBgImage(QString new_value)

@@ -117,7 +117,7 @@
     </message>
     <message>
         <source>Last scenario</source>
-        <translation>Dernier Sc&amp;eacute;nario</translation>
+        <translation>Dernier Scénario</translation>
     </message>
     <message>
         <source>Level</source>
@@ -406,7 +406,7 @@ Adresse: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>M</translation>
+        <translation>J</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Adresse: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>J</translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>W</source>
@@ -519,10 +519,6 @@ Adresse: %2</translation>
         <translation>Changer le nom de l&apos;alarme</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>LMMJVSD</translation>
-    </message>
-    <message>
         <source>New name:</source>
         <translation>Nouveau nom:</translation>
     </message>
@@ -545,6 +541,41 @@ Adresse: %2</translation>
     <message>
         <source>time</source>
         <translation>Horaire</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>L</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>J</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>D</translation>
     </message>
 </context>
 <context>
@@ -803,29 +834,6 @@ Adresse: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authentification requise</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Mot de passe</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Cette connexion n’est fiable. Continuer?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Connexion SSL non fiable</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Nom Utilisateur</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -988,10 +996,6 @@ Adresse: %2</translation>
         <translation>Habilité</translation>
     </message>
     <message>
-        <source>MTWTFSS</source>
-        <translation>LMMJVSD</translation>
-    </message>
-    <message>
         <source>repetition</source>
         <translation>Répétition</translation>
     </message>
@@ -1006,6 +1010,41 @@ Adresse: %2</translation>
     <message>
         <source>triggers at</source>
         <translation>Déclenchement à</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>L</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>J</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>D</translation>
     </message>
 </context>
 <context>
@@ -1881,89 +1920,6 @@ Adresse: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 secondes</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Active</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>REVEIL</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ANTI-INTRUSION</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Disponible</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Commande envoyée</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>GESTION ÉNERGIE</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Rapport mensuel Énergie</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Ignorer</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MESSAGES</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Objectif atteint mensuel</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Plus d’info</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>nouveau(x) message(s)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Reporter</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lire</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SCÉNARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Montrer</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Arrêter</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Supervision</translation>
-    </message>
-    <message>
-        <source>Threshold %n exceeded</source>
-        <translation>Seuil %n dépassé</translation>
     </message>
 </context>
 <context>
@@ -2935,26 +2891,25 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>Staircase</name>
+    <message>
+        <source>ON</source>
+        <translation>ON</translation>
+    </message>
+</context>
+<context>
     <name>StopAndGoBtest</name>
     <message>
         <source>%1 days</source>
         <translation>%1 jours</translation>
     </message>
     <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Réenclenchement Automatique</translation>
     </message>
     <message>
-        <source>Breaker</source>
-        <translation>Disjoncteur</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Réenclenchement</translation>
-    </message>
-    <message>
-        <source>Test Circuit</source>
-        <translation>Test différentiel</translation>
+        <source>Test Circuit Breaker</source>
+        <translation>Test différentiel de Disjoncteur</translation>
     </message>
     <message>
         <source>Test every</source>
@@ -2964,19 +2919,15 @@ Continuer?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Réenclenchement</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Réenclenchement Automatique</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic</source>
-        <translation>Automatique</translation>
+        <source>Automatic Reclosing</source>
+        <translation>Réenclenchement Automatique</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2997,10 +2948,6 @@ Continuer?</translation>
     <message>
         <source>open</source>
         <translation>Ouvrir</translation>
-    </message>
-    <message>
-        <source>Reclosing</source>
-        <translation>Réenclenchement</translation>
     </message>
 </context>
 <context>
@@ -3037,29 +2984,6 @@ Continuer?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Vitesse ventilateurs</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modes</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Réglage température</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Présence de modifications non sauvegardées.
-Si vous choisissez ok, elles seront perdues.
-Continuer?</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3071,7 +2995,7 @@ Continuer?</translation>
     </message>
     <message>
         <source>Holiday</source>
-        <translation>Jour f&amp;eacute;ri&amp;eacute;</translation>
+        <translation>Jour férié</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -3127,6 +3051,29 @@ Continuer?</translation>
     </message>
 </context>
 <context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Vitesse ventilateurs</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modes</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Réglage température</translation>
+    </message>
+    <message>
+        <source>There are unsaved changes in progress.
+If you choose ok they will be lost.
+Continue?</source>
+        <translation>Présence de modifications non sauvegardées.
+Si vous choisissez ok, elles seront perdues.
+Continuer?</translation>
+    </message>
+</context>
+<context>
     <name>ThermalNames</name>
     <message>
         <source>antifreeze</source>
@@ -3162,7 +3109,7 @@ Continuer?</translation>
     </message>
     <message>
         <source>holiday</source>
-        <translation>Jour f&amp;eacute;ri&amp;eacute;</translation>
+        <translation>Jour férié</translation>
     </message>
     <message>
         <source>Low</source>
@@ -3307,6 +3254,111 @@ Continuer?</translation>
     <message>
         <source>mute</source>
         <translation>Mute</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authentification requise</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Mot de passe</translation>
+    </message>
+    <message>
+        <source>This connection is untrusted. Do you wish to continue?</source>
+        <translation>Cette connexion n’est fiable. Continuer?</translation>
+    </message>
+    <message>
+        <source>Untrusted SSL connection</source>
+        <translation>Connexion SSL non fiable</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Nom Utilisateur</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Active</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>REVEIL</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ANTI-INTRUSION</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Commande envoyée</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>GESTION ÉNERGIE</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Rapport mensuel Énergie</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignorer</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MESSAGES</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Objectif atteint mensuel</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Plus d’info</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>nouveau(x) message(s)</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Reporter</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Lire</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SCÉNARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Montrer</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Arrêter</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Supervision</translation>
     </message>
 </context>
 </TS>

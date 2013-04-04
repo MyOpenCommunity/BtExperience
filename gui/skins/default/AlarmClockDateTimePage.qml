@@ -353,8 +353,19 @@ Page {
         property bool dummy: false // used to trigger updates
 
         function getDay(index) {
-            var days = qsTr("MTWTFSS")
-            return days[index]
+            if (index === 0)
+                return qsTr("M", "Monday")
+            else if (index === 1)
+                return qsTr("T", "Tuesday")
+            else if (index === 2)
+                return qsTr("W", "Wednesday")
+            else if (index === 3)
+                return qsTr("T", "Thursday")
+            else if (index === 4)
+                return qsTr("F", "Friday")
+            else if (index === 5)
+                return qsTr("S", "Saturday")
+            return qsTr("S", "Sunday")
         }
 
         function setStatus(index) {

@@ -9,6 +9,7 @@
 
 class MultiMediaPlayer;
 class SoundPlayer;
+class SoundAmbientBase;
 
 
 class AudioState : public QObject
@@ -81,6 +82,7 @@ public:
 	void registerSoundPlayer(MultiMediaPlayer *player);
 	void registerBeep(SoundPlayer *player);
 	void registerSoundDiffusionPlayer(MultiMediaPlayer *player);
+	void registerSoundAmbient(SoundAmbientBase *ambient);
 
 	bool isDirectAudioAccess() const;
 	bool isDirectVideoAccess() const;
@@ -108,6 +110,7 @@ private slots:
 	void changeSoundDiffusionAccess();
 	void checkPlayerState(MultiMediaPlayer::PlayerState);
 	void runVdeOn();
+	void checkLocalSoundDiffusion();
 
 private:
 	enum PlayerType

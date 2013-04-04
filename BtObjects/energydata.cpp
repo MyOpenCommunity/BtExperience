@@ -1148,10 +1148,15 @@ EnergyItem::EnergyItem(EnergyData *_data, EnergyData::ValueType _type, QDate _da
 
 QVariant EnergyItem::getValue() const
 {
-	if (!value.isValid() || !rate)
-		return value;
-	else
+	if (value.isValid() && rate)
 		return value.toDouble() * rate->getRate();
+
+	// in case of electricity line we want to show Watts if value is less than 1.0
+	if (isElectricity())
+		if (value.isValid() && value.toDouble() < 1.0)
+			return value.toDouble() * 1000.0;
+
+	return value;
 }
 
 EnergyData::ValueType EnergyItem::getValueType() const
@@ -1192,16 +1197,27 @@ QString EnergyItem::getMeasureUnit() const
 {
 	if (rate)
 		return rate->getCurrencySymbol();
-	else
-		return data->getCumulativeUnit();
+
+	// in case of electricity line, we want to remove the initial k if value is
+	// less than 1.0
+	if (isElectricity())
+		if (value.isValid() && value.toDouble() < 1.0)
+			return data->getCumulativeUnit().mid(1);
+
+	return data->getCumulativeUnit();
 }
 
 QVariant EnergyItem::getConsumptionGoal() const
 {
 	if (rate)
 		return data->getGoals().value(date.month() - 1).toDouble() * rate->getRate();
-	else
-		return data->getGoals().value(date.month() - 1);
+
+	// in case of electricity line, we have to adapt the goal if value < 1
+	if (isElectricity())
+		if (value.isValid() && value.toDouble() < 1.0)
+			return data->getGoals().value(date.month() - 1).toDouble() * 1000;
+
+	return data->getGoals().value(date.month() - 1);
 }
 
 bool EnergyItem::getGoalEnabled() const
@@ -1213,8 +1229,22 @@ int EnergyItem::getDecimals() const
 {
 	if (rate)
 		return data->getRateDecimals();
-	else
-		return data->getDecimals();
+
+	// in case of electricity line, we want to show no decimals in case of Watts
+	if (isElectricity() && value.isValid())
+	{
+		if (value.toDouble() < 1.0)
+			return 0;
+		else
+			return 3;
+	}
+
+	return data->getDecimals();
+}
+
+bool EnergyItem::isElectricity() const
+{
+	return (data->getFamilyType() == EnergyFamily::Electricity);
 }
 
 
@@ -1238,12 +1268,39 @@ QVariantList EnergyItemCurrent::getThresholds() const
 	return data->getThresholds();
 }
 
+QVariant EnergyItemCurrent::getValue() const
+{
+	// in case of electricity line we want to show Watts if value is less than 1.0
+	if (isElectricity())
+		if (value.isValid() && value.toDouble() < 1.0)
+			return value.toDouble() * 1000.0;
+
+	return value;
+}
+
 QString EnergyItemCurrent::getMeasureUnit() const
 {
-	if (rate)
-		return rate->getCurrencySymbol() + "/h";
-	else
-		return data->getCurrentUnit();
+	// in case of electricity line, we want to remove the initial k if value is
+	// less than 1.0
+	if (isElectricity())
+		if (value.isValid() && value.toDouble() < 1.0)
+			return data->getCumulativeUnit().mid(1);
+
+	return data->getCumulativeUnit();
+}
+
+int EnergyItemCurrent::getDecimals() const
+{
+	// in case of electricity line, we want to show no decimals in case of Watts
+	if (isElectricity() && value.isValid())
+	{
+		if (value.toDouble() < 1.0)
+			return 0;
+		else
+			return 3;
+	}
+
+	return data->getDecimals();
 }
 
 
