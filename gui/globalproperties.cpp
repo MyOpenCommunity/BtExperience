@@ -225,6 +225,7 @@ void GlobalProperties::initAudio()
 			if (source)
 			{
 				sound_diffusion_player = static_cast<AudioVideoPlayer *>(source->getAudioVideoPlayer());
+				audio_state->registerLocalSource(source->getSource());
 				break;
 			}
 		}
@@ -240,23 +241,6 @@ void GlobalProperties::initAudio()
 			connect(player, SIGNAL(audioOutputStateChanged(MultiMediaPlayer::AudioOutputState)),
 				this, SLOT(updateCpuFrequency()));
 		}
-
-		// finds all ambients and registers them on audio_state
-		QScopedPointer<ObjectModel> ambientModel(new ObjectModel());
-		ambientModel->setFilters(
-					ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSpecialAmbient
-					<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSoundAmbient
-					<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMonoChannelSoundAmbient
-					<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiGeneral);
-		for (int i = 0; i < ambientModel->getCount(); ++i)
-		{
-			ItemInterface *item = ambientModel->getObject(i);
-			SoundAmbientBase *ambient = qobject_cast<SoundAmbientBase *>(item);
-			if (!ambient)
-				continue;
-			audio_state->registerSoundAmbient(ambient);
-		}
-
 
 #if !defined(BT_HARDWARE_X11)
 		// enable sound diffusion source

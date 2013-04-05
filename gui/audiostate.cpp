@@ -274,41 +274,15 @@ void AudioState::registerSoundDiffusionPlayer(MultiMediaPlayer *player)
 			this, SLOT(changeSoundDiffusionAccess()));
 }
 
-void AudioState::registerSoundAmbient(SoundAmbientBase *ambient)
+void AudioState::registerLocalSource(SourceBase *source)
 {
-	connect(ambient, SIGNAL(currentSourceChanged()), this, SLOT(checkLocalSoundDiffusion()));
+	connect(source, SIGNAL(activeChanged()), this, SLOT(sourceActiveChanged()));
 }
 
-void AudioState::checkLocalSoundDiffusion()
+void AudioState::sourceActiveChanged()
 {
-	// finds all ambients and checks if 1+ are active on local sound diffusion source
-	QScopedPointer<ObjectModel> ambientModel(new ObjectModel());
-	ambientModel->setFilters(
-				ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSpecialAmbient
-				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiChannelSoundAmbient
-				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMonoChannelSoundAmbient
-				<< ObjectModelFilters() << "objectId" << ObjectInterface::IdMultiGeneral);
-	for (int i = 0; i < ambientModel->getCount(); ++i)
-	{
-		ItemInterface *item = ambientModel->getObject(i);
-		SoundAmbientBase *ambient = qobject_cast<SoundAmbientBase *>(item);
-		if (!ambient)
-			continue;
-		QObject *o = ambient->getCurrentSource();
-		if (!o)
-			continue;
-		SourceObject *s = qobject_cast<SourceObject *>(o);
-		if (!s)
-			continue;
-		SourceObject::SourceObjectType t = s->getSourceType();
-		if (t == SourceObject::RdsRadio || t == SourceObject::Aux || t == SourceObject::Touch)
-			continue;
-		// one local source found, activates local sound diffusion
-		smartExecute(scs_source_on);
-		return;
-	}
-	// no local source found, deactivates local sound diffusion
-	smartExecute(scs_source_off);
+	SourceBase *s = qobject_cast<SourceBase *>(sender());
+	s->isActive() ? smartExecute(scs_source_on) : smartExecute(scs_source_off);
 }
 
 bool AudioState::isDirectAudioAccess() const
