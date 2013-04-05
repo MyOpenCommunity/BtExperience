@@ -21,7 +21,7 @@ Page {
     /** the container to obtain quicklinks from */
     property int containerId: -1
     /**
-      Quicklink type. The action on item selection will be different for each type.. May be one of:
+      Quicklink type. The action on item selection will be different for each type. May be one of:
       - browser
       - rss
       - webradio
