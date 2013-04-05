@@ -10,6 +10,9 @@
 #include <QDeclarativeContext>
 #include <QDeclarativeProperty>
 
+#define HOME_BG_CLEAR "images/background/home.jpg"
+#define HOME_BG_DARK "images/background/home_dark.jpg"
+
 
 namespace
 {
@@ -96,12 +99,23 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 
 QString HomeProperties::getHomeBgImage() const
 {
-	bool is_custom = (home_bg_image.indexOf("custom_images/") == 0);
+	QString result;
+
+	// if image is set and not a default one, uses it as is
+	if (home_bg_image != "" && home_bg_image != HOME_BG_CLEAR && home_bg_image != HOME_BG_DARK)
+		result = home_bg_image;
+	// if image is not set, uses a default one depending on skin
+	else if (getSkin() == Clear)
+		result = QString(HOME_BG_CLEAR);
+	else
+		result = QString(HOME_BG_DARK);
+
+	bool is_custom = (result.indexOf("custom_images/") == 0);
 
 	if (is_custom)
-		return custom_images_folder + home_bg_image;
+		return custom_images_folder + result;
 
-	return images_folder + (getSkin() == Clear ? QString("images/background/home.jpg") : QString("images/background/home_dark.jpg"));
+	return images_folder + result;
 }
 
 void HomeProperties::setHomeBgImage(QString new_value)
