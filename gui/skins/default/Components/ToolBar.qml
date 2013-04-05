@@ -10,6 +10,26 @@ import "../js/Systems.js" as Script
 import "../js/navigation.js" as Navigation
 
 
+/**
+  \ingroup Core
+
+  \brief The main application toolbar.
+
+  This component defines a toolbar used in several application pages.
+  It contains a home button, actual date and time plus some optional buttons.
+  A temperature probe may be present, too.
+  The home button let the user always navigate back to HomePage.
+  Actual date and time may be clicked and bring the user to the setting page
+  where system date and time may be modified.
+  On the right several optional buttons may appear. These buttons appear when
+  they are configured to do so and if some conditions hold (for example, the
+  alarm clock button appears when at least one alarm clock is active).
+  Clicking on them, the user navigates to the relevant section of the application.
+  For example, clicking on the alarm clock button when present, lead to the
+  alarm clock settings page.
+  Only the scenario recording button is different. It cannot be clicked and it
+  blinks till the scenario recording is in progress.
+  */
 Item {
     id: toolbar
 
@@ -17,7 +37,9 @@ Item {
     property int fontSize: 14
     property alias helpUrl: helpToolbarButton.helpUrl // sets url for context help
 
+    /// home button was clicked
     signal homeClicked
+    /// an optional toolbar button was clicked
     signal toolbarNavigationClicked
 
     width: 1024
