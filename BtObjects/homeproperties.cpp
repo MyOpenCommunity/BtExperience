@@ -120,13 +120,24 @@ QString HomeProperties::getHomeBgImage() const
 
 void HomeProperties::setHomeBgImage(QString new_value)
 {
-	bool is_custom = (new_value.indexOf("/custom_images/") >= 0);
+	QString result;
+
+	// if new_value is set and not a default one, uses it as is
+	if (new_value != "" && new_value != HOME_BG_CLEAR && new_value != HOME_BG_DARK)
+		result = new_value;
+	// if new_value is not set, uses a default one depending on skin
+	else if (getSkin() == Clear)
+		result = QString(HOME_BG_CLEAR);
+	else
+		result = QString(HOME_BG_DARK);
+
+	bool is_custom = (result.indexOf("custom_images/") >= 0);
 
 	QString image_path;
 	if (is_custom)
-		image_path = new_value.mid(new_value.indexOf("/custom_images/") + 1);
+		image_path = result.mid(result.indexOf("/custom_images/") + 1);
 	else
-		image_path = new_value.mid(new_value.indexOf("/images/") + 1);
+		image_path = result.mid(result.indexOf("/images/") + 1);
 
 	if (home_bg_image == image_path)
 		return;
@@ -156,6 +167,13 @@ void HomeProperties::setSkin(HomeProperties::Skin s)
 	if (skin == s)
 		return;
 
+	// I need this on the following setHomeBgImage call
+	skin = s;
+
+	// when changing skin, if home is default it must change to the other default
+	if (home_bg_image == HOME_BG_CLEAR || home_bg_image == HOME_BG_DARK)
+		s == Clear ? setHomeBgImage(HOME_BG_CLEAR) : setHomeBgImage(HOME_BG_DARK);
+
 	foreach (QDomNode container, getChildren(configurations->getConfiguration(LAYOUT_FILE).documentElement(), "container"))
 	{
 		if (getIntAttribute(container, "id") == HomePageContainer)
@@ -167,6 +185,5 @@ void HomeProperties::setSkin(HomeProperties::Skin s)
 	}
 	configurations->saveConfiguration(LAYOUT_FILE);
 
-	skin = s;
 	emit skinChanged();
 }
