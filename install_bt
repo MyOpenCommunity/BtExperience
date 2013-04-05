@@ -44,6 +44,9 @@ trap \"killall BtExperience; trap SIGTERM; trap SIGUSR1; trap SIGUSR2; exit 0\" 
 trap \"killall -SIGUSR1 BtExperience; wait\" SIGUSR1
 trap \"killall -SIGUSR2 BtExperience; wait\" SIGUSR2
 
+killall -9 gstmediaplayer
+killall -9 mplayer
+
 # restart thttpd to link extra 30
 start-stop-daemon --stop --quiet --exec /usr/sbin/thttpd -- -u root
 sleep 1    
