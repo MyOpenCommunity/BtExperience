@@ -236,6 +236,8 @@ int Light::getObjectId() const
 		return ObjectInterface::IdLightFixedPP;
 	else if (!ectime && !point_to_point)
 		return ObjectInterface::IdLightFixedAMBGRGEN;
+	// to silence gcc warnings
+	return ObjectInterface::IdLightCustomPP;
 }
 
 QString Light::getObjectKey() const
@@ -515,6 +517,8 @@ int Dimmer100::getObjectId() const
 		return ObjectInterface::IdDimmer100FixedPP;
 	else if (!ectime && !point_to_point)
 		return ObjectInterface::IdDimmer100FixedAMBGRGEN;
+	// to silence gcc warnings
+	return ObjectInterface::IdDimmer100CustomPP;
 }
 
 void Dimmer100::setOnSpeed(int speed)

@@ -2,6 +2,9 @@ import QtQuick 1.1
 import Components.Text 1.0
 
 
+/**
+  * A popup to edit favorites.
+  */
 Column {
     id: popup
 
@@ -25,6 +28,10 @@ Column {
     }
 
     function cancelClicked() {
+    }
+
+    function selectAll() {
+        descriptionInput.selectAll()
     }
 
     spacing: 4

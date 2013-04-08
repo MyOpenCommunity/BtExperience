@@ -136,6 +136,7 @@ public:
 	Q_INVOKABLE void apply();
 
 	Q_INVOKABLE void stop();
+	/// Postpones the alarm by the preconfigured amount of time (5 minutes)
 	Q_INVOKABLE void postpone();
 	Q_INVOKABLE void incrementVolume();
 	Q_INVOKABLE void decrementVolume();

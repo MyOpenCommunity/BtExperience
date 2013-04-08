@@ -6,6 +6,14 @@ import Components.Browser 1.0
 import "js/MainContainer.js" as Container
 
 
+/**
+  \ingroup Core
+
+  \brief The browser main page.
+
+  The browser is implemented in a separate process and rendered separately.
+  This is the home page for the browser application.
+  */
 BasePage {
     id: webBrowser
 

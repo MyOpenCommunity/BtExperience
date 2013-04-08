@@ -3,27 +3,63 @@ import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
-
 import "../js/Stack.js" as Stack
 import "../js/anchorspositioning.js" as Positioner
 
+
+/**
+  \ingroup Multimedia
+
+  \brief Base component to be used as Quicklink
+
+  This component defines all common features for a QuickLink.
+  A QuickLink has an image and a description. It has a toolbar that can be
+  shown with a pressAndHold operation.
+
+  The toolbar defines the following operations:
+  - edit (the user may change the QuickLink description)
+  - modify (normally a popup appears to change QuickLink properties)
+  - move (the user may change the QuickLink position)
+  - delete (the user may delete the QuickLink)
+
+  The QuickLink can be clicked. In this case a proper action is executed.
+
+  The QuickLink contains refX and refY properties plus the logic to position
+  the toolbar around it. This logic is needed to have the toolbar always
+  fully visible. The toolbar positioning logic has been factored out in a
+  javascript module. The refX and refY coordinates usually refer to the center
+  of the grid where QuickLink may be disposed. In this way, the toolbar will
+  be always positioned toward the center of the grid.
+  */
 Item {
     id: bgQuick
 
+    /// type:url the image to be shown
     property alias imageSource: icon.source
+    /// the QuickLink description
     property string text: itemObject.name
+    /// the page to load when clicked, if empty no page is load
     property string page: "ExternalBrowser.qml"
+    /// is this QuickLink description editable?
     property bool editable: true
+    /// the C++ object corresponding to this QuickLink
     property variant itemObject
     property int refX: -1 // used for editColumn placement, -1 means not used
     property int refY: -1 // used for editColumn placement, -1 means not used
+    /// the profile this QuickLink belongs to if any
     property variant profile: undefined
 
+    /// emitted when this QuickLink is selected with a pressAndHold operation
     signal selected(variant favorite)
+    /// emitted when user clicks on edit button on the toolbar
     signal requestEdit(variant favorite)
+    /// emitted when QuickLink is clicked, navigates to page if any
     signal clicked()
+    /// emitted when user finished editing operation
     signal editCompleted()
+    /// emitted when user clicks on move button on the toolbar
     signal requestMove(variant favorite)
+    /// emitted when user clicks on delete button on the toolbar
     signal requestDelete(variant favorite)
 
     width: column.width + 10

@@ -39,6 +39,7 @@ function status(itemObject) {
     case ObjectInterface.IdAutomation2Normal:
     case ObjectInterface.IdAutomation3:
     case ObjectInterface.IdAutomation3Safe:
+    case ObjectInterface.IdAutomationContact:
     case ObjectInterface.IdAutomationGroup2:
     case ObjectInterface.IdAutomationGroup3:
         return itemObject.active === true ? 1 : 0

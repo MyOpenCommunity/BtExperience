@@ -8,7 +8,7 @@
 #include "applicationcommon.h"
 #include "browserproperties.h"
 #include "imagereader.h"
-#include "main.h"
+#include "bt_global_config.h"
 #include "networkmanager.h"
 #include "medialink.h"
 

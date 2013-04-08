@@ -1,6 +1,5 @@
 #include "watchdog.h"
-
-#include "main.h" // FIILE_WDT
+#include "bt_global_config.h"
 
 #include <QFile>
 

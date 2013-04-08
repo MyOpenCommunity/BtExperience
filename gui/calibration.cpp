@@ -87,6 +87,7 @@ bool Calibration::exists() const
 
 bool Calibration::eventFilter(QObject *obj, QEvent *evt)
 {
+	Q_UNUSED(obj);
 	if (evt->type() != QEvent::MouseButtonRelease)
 		return false;
 	QMouseEvent *mouse_event = static_cast<QMouseEvent *>(evt);

@@ -54,7 +54,7 @@ class EnergyLoadTotal : public QObject
 	Q_PROPERTY(double total READ getTotal NOTIFY totalChanged)
 
 	/*!
-		\brief Economic expense, only valid when a rate is set on the \ref EnergyLoad object
+		\brief Economic expense, only valid when a rate is set on the \ref EnergyLoadManagement object
 	*/
 	Q_PROPERTY(double totalExpense READ getTotalExpense NOTIFY totalExpenseChanged)
 
@@ -389,7 +389,9 @@ public slots:
 	*/
 	void stopForcing();
 
+	/// decreases through all possible force duration level
 	void decreaseForceDuration();
+	/// increases through all possible force duration level
 	void increaseForceDuration();
 	void resetForceDuration();
 

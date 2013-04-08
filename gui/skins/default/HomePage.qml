@@ -6,6 +6,14 @@ import "js/Stack.js" as Stack
 import "js/EventManager.js" as EventManager
 
 
+/**
+  \ingroup Core
+
+  \brief The QML Home page.
+
+  This page implements the home page for the entire application. The HomePage
+  contains a Toolbar on the top.
+  */
 BasePage {
     id: mainarea
 

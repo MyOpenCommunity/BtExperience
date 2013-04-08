@@ -5,6 +5,20 @@ import Components 1.0
 import Components.Text 1.0
 import "js/Stack.js" as Stack
 
+
+/**
+  \ingroup Core
+
+  \brief The Calibration page.
+
+  This page implements the calibration procedure.
+  A crosshair is displayed at the four corners of the video area and finally
+  at the center. Every time the user must click on it to advance to the next
+  point.
+  When user clicked on all points, user has to click on two buttons that
+  appear in sequence.
+  If user succeeds, calibration data is saved.
+  */
 BasePage {
     id: page
 

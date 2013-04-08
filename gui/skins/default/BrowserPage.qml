@@ -3,24 +3,43 @@ import BtObjects 1.0
 import BtExperience 1.0
 import Components 1.0
 import Components.Text 1.0
-
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Multimedia
+
+  \brief A page showing a list of quicklinks in a list.
+
+  This page shows a list of quicklinks. The user may choose one of the list
+  element and the page activates the link. The action is based on the quicklink
+  type.
+  */
 Page {
     id: page
 
+    /** the container to obtain quicklinks from */
     property int containerId: -1
+    /**
+      Quicklink type. The action on item selection will be different for each type. May be one of:
+      - browser
+      - rss
+      - webradio
+      */
     property string type: "browser"
 
+    /**
+      Called when multimedia button on navigation bar is clicked.
+      Navigates back to multimedia page.
+      */
     function multimediaButtonClicked() {
         Stack.backToMultimedia()
     }
 
-    function systemPageClosed() {
-        Stack.backToMultimedia()
-    }
-
+    /**
+      Called when back button on navigation bar is clicked.
+      Navigates back to multimedia page.
+      */
     function backButtonClicked() {
         Stack.backToMultimedia()
     }
@@ -128,6 +147,4 @@ Page {
             }
         }
     }
-
-
 }

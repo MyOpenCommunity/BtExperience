@@ -1,5 +1,4 @@
 #include "imagesaver.h"
-
 #include "generic_functions.h"
 
 #include <QtDebug>

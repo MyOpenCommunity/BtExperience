@@ -2,15 +2,33 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 import BtObjects 1.0
-
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Multimedia
+
+  \brief A photo player implementing a slideshow.
+
+  This page shows a photo player component. This component controls image
+  files rendering. The user can operate the usual play, pause, stop functions.
+  The list of available functions is:
+  - previous image
+  - next image
+  - play the slideshow
+  - increment slideshow interval
+  - decrement slideshow interval
+
+  The player manages a list of images and shows them in a continous loop.
+  */
 Page {
     id: player
 
+    /** the model implementing a list of image files */
     property variant model
+    /** an image inside the model is identified by this index */
     property int index
+    /** is the play list read from a media server? */
     property bool upnp
 
     Rectangle {

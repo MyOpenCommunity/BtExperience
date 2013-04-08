@@ -95,6 +95,7 @@ class ThermalControlUnit : public DeviceObjectInterface
 	Q_PROPERTY(ThermalControlUnitId currentModalityId READ getCurrentModalityId NOTIFY currentModalityIdChanged)
 
 public:
+	/// all possible modalities implementation of \ref ThermalControlUnit
 	enum ThermalControlUnitId
 	{
 		IdHoliday,

@@ -4,6 +4,11 @@ import Components.Antintrusion 1.0
 import "js/datetime.js" as DateTime
 
 
+/**
+  \ingroup Antintrusion
+
+  \brief The Antintrusion system page.
+  */
 SystemPage {
     id: antintrusion
     source: "images/background/burglar_alarm.jpg"

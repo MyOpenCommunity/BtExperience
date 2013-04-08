@@ -6,7 +6,7 @@ import BtObjects 1.0
   * It was not possible to use Components.
   * In case of circular imports, the createObject function hangs forever.
   * Reverting to file names (at least for now).
-  * Another possibility is to use new <<Component>>() in Javascript code, but
+  * Another possibility is to use new Component() in Javascript code, but
   * it is not clear if it is a bug or a feature, so we leave apart at the moment.
   */
 QtObject {
@@ -17,13 +17,13 @@ QtObject {
         case ObjectInterface.IdLightFixedAMBGRGEN:
         case ObjectInterface.IdLightCustomPP:
         case ObjectInterface.IdLightCustomAMBGRGEN:
+        case ObjectInterface.IdDimmerFixedAMBGRGEN:
+        case ObjectInterface.IdDimmer100CustomAMBGRGEN:
+        case ObjectInterface.IdDimmer100FixedAMBGRGEN:
             return Qt.createComponent("Lighting/Light.qml")
         case ObjectInterface.IdDimmerFixedPP:
-        case ObjectInterface.IdDimmerFixedAMBGRGEN:
         case ObjectInterface.IdDimmer100CustomPP:
-        case ObjectInterface.IdDimmer100CustomAMBGRGEN:
         case ObjectInterface.IdDimmer100FixedPP:
-        case ObjectInterface.IdDimmer100FixedAMBGRGEN:
             return Qt.createComponent("Lighting/Dimmer.qml")
         case ObjectInterface.IdLightGroup:
         case ObjectInterface.IdDimmerGroup:
@@ -32,8 +32,9 @@ QtObject {
         case ObjectInterface.IdStaircaseLight:
             return Qt.createComponent("Lighting/Staircase.qml")
         case ObjectInterface.IdAutomation2Normal:
-        case ObjectInterface.IdAutomationContact:
             return Qt.createComponent("Automation/Automation2.qml")
+        case ObjectInterface.IdAutomationContact:
+            return Qt.createComponent("Automation/AutomationContact.qml")
         case ObjectInterface.IdAutomation2GEN:
             return Qt.createComponent("Automation/Automation2GEN.qml")
         case ObjectInterface.IdAutomation3OpenClose:
@@ -48,8 +49,6 @@ QtObject {
             return Qt.createComponent("Automation/AutomationVDE.qml")
         case ObjectInterface.IdAutomationDoor:
             return Qt.createComponent("Automation/Automation1.qml")
-        //case ObjectInterface.IdAutomationCommand2: //!< Automation AMB, GEN, GR
-        //case ObjectInterface.IdAutomationCommand3: //!< Automation 3-states AMB, GEN, GR
         case ObjectInterface.IdAutomationGroup2:
             return Qt.createComponent("Automation/AutomationGroup2.qml")
         case ObjectInterface.IdAutomationGroup3OpenClose:

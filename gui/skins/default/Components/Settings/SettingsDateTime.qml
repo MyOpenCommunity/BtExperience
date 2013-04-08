@@ -7,6 +7,9 @@ import "../../js/EventManager.js" as EventManager
 import "../../js/Stack.js" as Stack
 
 
+/**
+  * A menu to change system date and time.
+  */
 MenuColumn {
     id: column
 

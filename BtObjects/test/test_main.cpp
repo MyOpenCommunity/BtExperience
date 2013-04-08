@@ -46,7 +46,7 @@
 #include "test_myhome_models.h"
 #include "test_screenstate.h"
 #include "test_automation_objects.h"
-#include "main.h"
+#include "bt_global_config.h"
 
 logger *app_logger;
 

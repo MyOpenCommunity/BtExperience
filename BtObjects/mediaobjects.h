@@ -343,6 +343,7 @@ public slots:
 	void restart();
 
 signals:
+	/// returns if first media element was found
 	void firstMediaContentStatus(bool success);
 
 protected:

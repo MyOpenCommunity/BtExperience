@@ -2,21 +2,40 @@ import QtQuick 1.1
 import Components 1.0
 import Components.Text 1.0
 import Components.EnergyManagement 1.0
-
-
 import "js/Stack.js" as Stack
+import "js/navigation.js" as Navigation
 
+
+/**
+  \ingroup EnergyDataSystem
+
+  \brief A report on all lines.
+
+  This page shows a report about all lines present in the system.
+  */
 Page {
+    /**
+      Called when systems button on navigation bar is clicked.
+      Navigates back to system page.
+      */
     function systemsButtonClicked() {
         Stack.backToSystemOrHome()
     }
 
+    /**
+      Called when back button on navigation bar is clicked.
+      Navigates to EnergyManagement page.
+      */
     function backButtonClicked() {
         Stack.backToPage("EnergyManagement.qml")
     }
 
+    /**
+      Called when settings button on navigation bar is clicked.
+      Navigates to energy settings.
+      */
     function settingsButtonClicked() {
-        Stack.backToOptions()
+        Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ENERGY_SETTINGS})
     }
 
     showSystemsButton: true

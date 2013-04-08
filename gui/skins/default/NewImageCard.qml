@@ -4,6 +4,15 @@ import Components.Text 1.0
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Core
+
+  \brief A page to create an image card from a generic image.
+
+  This page let the user highlight a part of an image. This highlight may be
+  saved as image to be used for a card.
+  For example, a user may customize her profile card from a part of a photo.
+  */
 BasePage {
     id: page
 
@@ -329,6 +338,15 @@ BasePage {
         onClicked: privateProps.upArrowClicked()
     }
 
+    states: [
+        State {
+            name: "screenshot"
+            PropertyChanges { target: arrowDown; visible: false; }
+            PropertyChanges { target: arrowLeft; visible: false; }
+            PropertyChanges { target: arrowRight; visible: false; }
+            PropertyChanges { target: arrowUp; visible: false; }
+        }
+    ]
     QtObject {
         id: privateProps
 
@@ -357,17 +375,31 @@ BasePage {
         }
 
         function adjustPosition() {
-            if (transparentRect.x < sourceImage.x)
-                transparentRect.x = sourceImage.x
+            // if selection rect and image have a negative x coordinate, we must
+            // offset image for the minimum negative x to make the image or the
+            // selection completely visible (what "comes" first)
+            sourceImage.x += Math.max(0, Math.min(-transparentRect.x, -sourceImage.x))
+            // once we have adjusted image to be fully visible, we must offset
+            // the selection to stay inside image (if needed)
+            transparentRect.x = Math.max(transparentRect.x, Math.max(sourceImage.x, 0))
 
-            if (transparentRect.x + transparentRect.width > sourceImage.x + sourceImage.width)
-                transparentRect.x = sourceImage.x + sourceImage.width - transparentRect.width
+            // do the same as above for y coordinate
+            sourceImage.y += Math.max(0, Math.min(-transparentRect.y, -sourceImage.y))
+            transparentRect.y = Math.max(transparentRect.y, Math.max(sourceImage.y, 0))
 
-            if (transparentRect.y < sourceImage.y)
-                transparentRect.y = sourceImage.y
+            // do the same on x coordinate, but on right edge
+            var frmX = bgImage.width
+            var selX = transparentRect.x + transparentRect.width // right edge
+            var imgX = sourceImage.x + sourceImage.width // right edge
+            sourceImage.x -= Math.max(0, Math.min(selX - frmX, imgX - frmX))
+            transparentRect.x = Math.min(selX, Math.min(imgX, frmX)) - transparentRect.width
 
-            if (transparentRect.y + transparentRect.height > sourceImage.y + sourceImage.height)
-                transparentRect.y = sourceImage.y + sourceImage.height - transparentRect.height
+            // do the same on y coordinate, but on bottom edge
+            var frmY = bgImage.height
+            var selY = transparentRect.y + transparentRect.height // bottom edge
+            var imgY = sourceImage.y + sourceImage.height // bottom edge
+            sourceImage.y -= Math.max(0, Math.min(selY - frmY, imgY - frmY))
+            transparentRect.y = Math.min(selY, Math.min(imgY, frmY)) - transparentRect.height
         }
 
         function zoomIn() {
@@ -415,7 +447,9 @@ BasePage {
             // customization filenames are in the form uii.extension
             // the string concatenation is needed to convert everything to a string
             var name = page.newFilename + "." + getExtension("" + sourceImage.source)
+            page.state = "screenshot"
             containerWithCard.cardImage = global.takeScreenshot(Qt.rect(x, y, w, h), name)
+            page.state = ""
             // images are internally cached and shared, so a trick is needed
             // to cause a reload of the image from disk
             containerWithCard.setCacheDirty()

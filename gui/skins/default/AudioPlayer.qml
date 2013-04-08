@@ -5,23 +5,63 @@ import Components 1.0
 import Components.Popup 1.0
 import Components.Text 1.0
 import Components.SoundDiffusion 1.0
-
 import "js/Stack.js" as Stack
 import "js/MediaPlayerHelper.js" as Helper
 
 
+/**
+  \ingroup Multimedia
+
+  \brief An audio player page to play audio files.
+
+  This page shows an audio player component. This component controls audio
+  files rendering. The user can operate the usual play, pause, stop functions.
+  The list of available functions is:
+  - previous track
+  - next track
+  - play
+  - pause
+  - resume
+  - stop
+  - mute
+  - volume up
+  - volume down
+  - seek backward
+  - seek forward
+
+  The player shows some track informations (like title or duration), too (when available).
+  A progress indicator is also shown and visualizes the play progress on actual track.
+  The player manages a list of tracks and play them in a continous loop.
+
+  If the user leaves the page without stopping the player, the execution goes on
+  until the user comes back to the audio player page and explicitly stops it.
+  When the audio player is playing, a toolbar button appears to quickly
+  navigate to this page.
+  */
 Page {
     id: player
 
+    /** the model implementing a play list of audio files */
     property variant model
+    /** a track belonging to the play list is identified by this index */
     property int index
+    /** is the play list read from a media server? */
     property bool upnp
+    /** the C++ model object controlling the audio player functionality */
     property variant mediaPlayer: global.audioVideoPlayer
 
+    /**
+      Called when systems button on navigation bar is clicked.
+      Navigates back to multimedia page.
+      */
     function systemsButtonClicked() {
         Stack.backToMultimedia()
     }
 
+    /**
+      Called when back button on navigation bar is clicked.
+      Navigates back to multimedia page.
+      */
     function backButtonClicked() {
         Stack.backToMultimedia()
     }

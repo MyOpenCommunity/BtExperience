@@ -23,7 +23,7 @@
 #include "openserver_mock.h"
 #include "openclient.h"
 #include "objecttester.h"
-#include "main.h" // bt_global::config
+#include "bt_global_config.h"
 
 #include "vct.h"
 #include "videodoorentry_device.h"

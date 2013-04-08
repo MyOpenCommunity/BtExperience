@@ -4,16 +4,35 @@ import Components 1.0
 import Components.Popup 1.0
 import Components.Text 1.0
 import Components.Settings 1.0
-
 import "js/Stack.js" as Stack
 
 
+/**
+  \ingroup Core
+
+  \brief Page to set alarm clock date and time.
+
+  This page contains the logic to set the date and time for an alarm clock.
+  On the left panel, the user may change the weekday the alarm triggers.
+  The option "only once" is used to trigger the alarm only one time and then
+  disable it.
+  The control at the bottom of the page is used to set hour and minute of the
+  alarm clock.
+
+  On the right panel the user can choose or modify the alarm clock name.
+  */
 Page {
     id: page
 
+    /** the alarm clock to be modified */
     property variant alarmClock: undefined
+    /** is this a new alarm or a modification of an already existing one? */
     property bool isNewAlarm: false
 
+    /**
+      Called when back button on navigation bar is clicked.
+      Makes some cleanup in case of a new (but not yet saved) alarm
+      */
     function backButtonClicked() {
         if (isNewAlarm) {
             objectModel.remove(alarmClock)
@@ -23,6 +42,10 @@ Page {
         Stack.popPage()
     }
 
+    /**
+      Called when home button on the toolbar is clicked.
+      Makes some cleanup in case of a new (but not yet saved) alarm
+      */
     function homeButtonClicked() {
         if (isNewAlarm) {
             objectModel.remove(alarmClock)
@@ -235,6 +258,7 @@ Page {
             topInputLabel: qsTr("New name:")
             topInputText: page.alarmClock.description
             bottomVisible: false
+            Component.onCompleted: selectAll()
 
             function okClicked() {
                 page.alarmClock.description = topInputText

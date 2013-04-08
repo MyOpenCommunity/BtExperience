@@ -6,9 +6,19 @@ import Components.VideoDoorEntry 1.0 // some controls are VDE specific
 import "js/Stack.js" as Stack
 
 
+/**
+  * \ingroup VideoDoorEntry
+  *
+  * \brief Page managing a video call.
+  *
+  * This page contain all controls needed to manage a video call and the
+  * area used by the video grabber to render the video stream. The stream is
+  * rendered using the chroma-key technique on the color #010203
+  */
 Page {
     id: control
 
+    /** type:QtObject The camera the page interacts with. */
     property QtObject camera: null
 
     property alias title: controlVideo.label

@@ -3,18 +3,37 @@ import Components 1.0
 import Components.Text 1.0
 import Components.EnergyManagement 1.0
 import BtObjects 1.0
-
 import "js/Stack.js" as Stack
+import "js/navigation.js" as Navigation
 
+
+/**
+  \ingroup EnergyDataSystem
+
+  \brief A page showing all lines belonging to a family.
+
+  When navigating in the energy system, this page shows all lines belonging
+  to a family. Clicking on an item is possible to see details about that
+  particular line.
+  */
 Page {
+    /** the family I am navigating */
     property variant family: null
 
+    /**
+      Called when systems button on navigation bar is clicked.
+      Navigates back to system page.
+      */
     function systemsButtonClicked() {
         Stack.backToSystemOrHome()
     }
 
+    /**
+      Called when settings button on navigation bar is clicked.
+      Navigates to energy settings.
+      */
     function settingsButtonClicked() {
-        Stack.backToOptions()
+        Stack.goToPage("Settings.qml", {"navigationTarget": Navigation.ENERGY_SETTINGS})
     }
 
     showSystemsButton: true

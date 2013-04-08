@@ -29,6 +29,10 @@ QList<ObjectPair> parseAutomationGroup3(const QDomNode &obj, const UiiMapper &ui
 
 
 
+/*!
+	\ingroup Automation
+	\brief Manages a light actuator
+*/
 class AutomationLight: public Light
 {
 	Q_OBJECT
@@ -45,6 +49,10 @@ protected:
 };
 
 
+/*!
+	\ingroup Automation
+	\brief Manages open/release lock
+*/
 class AutomationVDE : public DeviceObjectInterface
 {
 	Q_OBJECT
@@ -97,7 +105,7 @@ private:
 
 
 /*!
-	\ingroup Automation3
+	\ingroup Automation
 	\brief Manages 3-state automation actuators
 
 	The object id is \a ObjectInterface::IdAutomation3, the key is the SCS where.
@@ -141,7 +149,7 @@ private:
 
 
 /*!
-	\ingroup Automation3
+	\ingroup Automation
 	\brief Manages Automation 3-states actuator groups
 
 	The object id is \a ObjectInterface::IdAutomationGroup3

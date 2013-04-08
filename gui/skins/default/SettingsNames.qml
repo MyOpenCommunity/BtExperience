@@ -1,8 +1,14 @@
 import QtQuick 1.1
-import "js/array.js" as Script
 import BtObjects 1.0
 import BtExperience 1.0
+import "js/array.js" as Script
 
+
+/**
+  \ingroup Core
+
+  \brief Translations for the Settings system.
+  */
 QtObject {
     // internal function to load values into the container
     function _init(container) {
@@ -72,7 +78,11 @@ QtObject {
         container['RING_EXCLUSION'][false] = qsTr("Disabled")
     }
 
-    // retrieves the requested value from the local array
+    /**
+      Retrieves the requested value from the local array.
+      @param type:string context The translation context to distinguish between similar id.
+      @param type:int id The id referring to the string to be translated.
+      */
     function get(context, id) {
         if (Script.container.length === 0)
             _init(Script.container)

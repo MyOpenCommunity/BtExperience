@@ -1,12 +1,15 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import Components 1.0
+import Components.Text 1.0
 import "../../js/logging.js" as Log
 import "../../js/Stack.js" as Stack
 import "../../js/EventManager.js" as EventManager
-import Components 1.0
-import Components.Text 1.0
 
 
+/**
+  * A menu to manage network parameters.
+  */
 MenuColumn {
     id: column
 

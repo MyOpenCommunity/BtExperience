@@ -2,6 +2,11 @@ import QtQuick 1.1
 import "js/array.js" as Script
 
 
+/**
+  \ingroup Core
+
+  \brief Component containing all translations.
+  */
 Item {
     AntintrusionNames {
         id: antintrusionNames
@@ -32,7 +37,11 @@ Item {
         thermalNames._init(container)
     }
 
-    // retrieves the requested value from the local array
+    /**
+      Retrieves the requested value from the local array.
+      @param type:string context The translation context to distinguish between similar id.
+      @param type:int id The id referring to the string to be translated.
+      */
     function get(context, id) {
         if (Script.container.length === 0)
             _init(Script.container)

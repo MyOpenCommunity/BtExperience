@@ -3,22 +3,62 @@ import Components 1.0
 import "js/MainContainer.js" as Container
 
 
+/**
+  \ingroup Core
+
+  \brief Component for a base page.
+
+  This component implements all common features for all pages.
+
+  A base page defines what are called page popups.
+  This kind of popup is entirely managed by a single page.
+  Page is responsible for popup creation and destruction.
+  The graphical management for a popup is done in the popup state.
+  When a popup is closed, the page emits BasePage::popupDismissed.
+  Every component may be used as popup. This component must
+  define the BasePage::closePopup signal. When you are done and you want to close
+  the popup, simply emit the BasePage::closePopup signal and this component will make
+  all the cleaning for you. See FavoriteEditPopup as an example
+  for such a popup.
+
+  The base page contains methods to manage page transition animations. They
+  are needed to support the Stack protocol for application pages.
+
+  The base page is responsible for the browser housekeeping, too.
+  The browser is implemented in a separate process, but must coordinates
+  itself with the main application. The base page shows or hides the browser
+  process when needed.
+
+  In some cases, an application restart is needed. For example, when changing
+  system date and time, the application needs to be restarted for changes to
+  take effect. A loadingIndicator puts the page in a loading graphical state
+  while waiting for restarting. In this state no interaction with the
+  application is possible, so maximum care is mandatory to avoid application
+  deadlock. See SettingsDateTime for an example of such a feature.
+  */
 Image {
     id: page
 
+    /** type:LoaderWithProps The object "receiving" the popup component */
     property alias popupLoader: popupLoader
+    /** type:Constants Some common constants used in BasePage */
     property alias constants: constants
-    // all pages are visible, so browser must be shown/hidden not depending on
-    // visible property, but we need a new property to know if we are on top
-    // of the stack or not
-    // browser will be visible when the following property is true
+    /**
+       Is this page on top of the stack?
+
+       All pages are visible, so browser must be shown/hidden not depending on
+       visible property, but we need a new property to know if we are on top
+       of the stack or not; browser will be visible when the property is true
+      */
     property bool topPage: false
-    // Warning: this property must be considered constant.
+    /** The name of the page. Must be considered constant. */
     property string _pageName: ""
 
+    /**
+      The popup has been closed
+     */
     signal popupDismissed
 
-    // The alert management and API.
     function showAlert(sourceElement, message) {
         popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
         popupLoader.item.closeAlert.connect(closeAlert)
@@ -29,24 +69,38 @@ Image {
         closePopup()
     }
 
-    // Warning: please note that popupLoader doesn't take ownership of the
-    // component that you have created. If you try to install a component which
-    // may be destroyed before user input finished, it will not work.
-    // Example: create a popup from a MenuColumn that immediately after is
-    // destroyed.
+    /**
+      Creates a customizable popup associated to this page.
+      The source component must emit the BasePage::closePopup signal at proper
+      times. Due to the fact the popup is customizable, a properties argument
+      is provided. You can use it to pass properties to the popup at creation
+      time.
+      \warning popupLoader doesn't take ownership of the component you create.
+      If you try to install a component which may be destroyed before user
+      interaction finishes, it will not work. For example, if you create a
+      popup in a menu that is immediatly destroyed will lead to problems.
+      @param type:Item sourceComponent The customized popup
+      @param type:array properties Properties to be passed to popup at creation
+     */
     function installPopup(sourceComponent, properties) {
         popupLoader.setComponent(sourceComponent, properties)
         popupConnection.target = popupLoader.item
         page.state = "popup"
     }
 
+    /**
+      Launches the browser process.
+      */
     function processLaunched(processHandle) {
         page.state = "pageLoading"
         privateProps.process = processHandle
     }
 
-    // The hooks called by the Stack javascript manager. See also PageAnimation
-    // If a page want to use a different animation, reimplement these hooks.
+    /**
+      Hook used by the Stack javascript manager.
+      Reimplement this in a page if you want a different animation there.
+      \sa PageAnimation
+      */
     function pushInStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
@@ -56,6 +110,11 @@ Image {
         }
     }
 
+    /**
+      Hook used by the Stack javascript manager.
+      Reimplement this in a page if you want a different animation there.
+      \sa PageAnimation
+      */
     function popInStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
@@ -65,6 +124,11 @@ Image {
         }
     }
 
+    /**
+      Hook used by the Stack javascript manager.
+      Reimplement this in a page if you want a different animation there.
+      \sa PageAnimation
+      */
     function pushOutStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
@@ -74,6 +138,11 @@ Image {
         }
     }
 
+    /**
+      Hook used by the Stack javascript manager.
+      Reimplement this in a page if you want a different animation there.
+      \sa PageAnimation
+      */
     function popOutStart() {
         var animation = Container.mainContainer.animation
         animation.page = page
@@ -95,8 +164,7 @@ Image {
 
     Component {
         id: alertComponent
-        Alert {
-        }
+        Alert {}
     }
 
     Connections {
@@ -146,6 +214,9 @@ Image {
         }
     }
 
+    /**
+       Closes the popup.
+      */
     function closePopup() {
         page.state = ""
         popupLoader.setComponent(undefined)

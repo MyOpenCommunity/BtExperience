@@ -3,6 +3,7 @@
 #include "multimediaplayer.h"
 #include "mediaplayer.h" // SoundPlayer
 #include "generic_functions.h"
+#include "bt_global_config.h"
 #include "mediaobjects.h"
 
 #include <QStringList>

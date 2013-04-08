@@ -34,7 +34,7 @@ MenuColumn {
     }
 
     function cancelClicked() {
-        pageObject.showAlert(column, qsTr("There are unsaved changes in progress.\nIf you choose ok they will be lost.\nContinue?"))
+        closeColumn()
     }
 
     onChildDestroyed: {

@@ -17,7 +17,7 @@
 
 	The \ref AntintrusionSystem class is the single entry point for the whole system.
 
-	After changing partialization state, either using \ref AntintrusionZone::partialization or
+	After changing partialization state, either using \ref AntintrusionZone::selected or
 	\ref AntintrusionScenario::apply(), call \ref AntintrusionSystem::requestPartialization() or
 	\ref AntintrusionSystem::toggleActivation() to apply the new state.
 

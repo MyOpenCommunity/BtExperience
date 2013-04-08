@@ -8,6 +8,7 @@
 #include "mounts.h"
 #include "globalmodels.h"
 #include "medialink.h"
+#include "bt_global_config.h"
 
 #include <QDebug>
 #include <QFutureWatcher>

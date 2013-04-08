@@ -75,11 +75,9 @@ class Light : public DeviceObjectInterface
 	Q_PROPERTY(int seconds READ getSeconds WRITE setSeconds NOTIFY secondsChanged)
 
 	/*!
-		\brief Time interval for  \ref LightingDevice::fixedTiming
+		\brief Time interval for LightingDevice::fixedTiming
 
 		After the specified amount of time, the light will turn off automatically.
-
-		\sa LightingDevice::fixedTiming
 	*/
 	Q_PROPERTY(FixedTimingType ftime READ getFTime NOTIFY fTimeChanged)
 
