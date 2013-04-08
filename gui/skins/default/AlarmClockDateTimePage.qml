@@ -258,6 +258,7 @@ Page {
             topInputLabel: qsTr("New name:")
             topInputText: page.alarmClock.description
             bottomVisible: false
+            Component.onCompleted: selectAll()
 
             function okClicked() {
                 page.alarmClock.description = topInputText

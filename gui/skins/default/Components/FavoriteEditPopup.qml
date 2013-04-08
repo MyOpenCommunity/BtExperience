@@ -30,6 +30,10 @@ Column {
     function cancelClicked() {
     }
 
+    function selectAll() {
+        descriptionInput.selectAll()
+    }
+
     spacing: 4
 
     onFavoriteItemChanged: {
