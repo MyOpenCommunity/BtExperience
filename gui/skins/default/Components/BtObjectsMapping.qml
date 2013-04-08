@@ -32,8 +32,9 @@ QtObject {
         case ObjectInterface.IdStaircaseLight:
             return Qt.createComponent("Lighting/Staircase.qml")
         case ObjectInterface.IdAutomation2Normal:
-        case ObjectInterface.IdAutomationContact:
             return Qt.createComponent("Automation/Automation2.qml")
+        case ObjectInterface.IdAutomationContact:
+            return Qt.createComponent("Automation/AutomationContact.qml")
         case ObjectInterface.IdAutomation2GEN:
             return Qt.createComponent("Automation/Automation2GEN.qml")
         case ObjectInterface.IdAutomation3OpenClose:
