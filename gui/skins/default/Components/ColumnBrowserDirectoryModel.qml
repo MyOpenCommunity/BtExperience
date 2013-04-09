@@ -7,9 +7,10 @@ ColumnBrowserCommon {
     property alias rootPath: localModel.rootPath
     property alias filter: localModel.filter
     property bool restoreState
+    property int level: localModel.currentPath.length - 1
 
     theModel: localModel
-    text: localModel.currentPath[localModel.currentPath.length - 1]
+    text: level === 1 ? dataModel.name : localModel.currentPath[level]
 
     DirectoryListModel {
         id: localModel
