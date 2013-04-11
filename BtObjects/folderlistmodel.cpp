@@ -76,7 +76,10 @@ QString FileObject::getName() const
 
 QUrl FileObject::getPath() const
 {
-	return QUrl::fromUserInput(entry.path);
+	if (entry.path.startsWith("http://"))
+		return QUrl::fromUserInput(entry.path);
+	else
+		return QUrl::fromLocalFile(entry.path);
 }
 
 QVariantList FileObject::getLogicalPath() const

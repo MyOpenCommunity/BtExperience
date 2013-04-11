@@ -134,29 +134,25 @@ MenuColumn {
             text: qsTr("Do you want to change actual image with the one selected?")
 
             function okClicked() {
-                var path = item.path + ""
-                if (path.indexOf("file:///") === 0)
-                    path = path.slice(7)
-
                 if (column.isCard) {
                     if (column._isStock)
-                        column.dataModel.cardImage = path
+                        column.dataModel.cardImage = item.path
                     else
-                        Stack.pushPage("NewImageCard.qml", {containerWithCard: column.dataModel, fullImage: path, newFilename: "custom_images/card/bg_" + column.dataModel.uii})
+                        Stack.pushPage("NewImageCard.qml", {containerWithCard: column.dataModel, fullImage: item.path, newFilename: "custom_images/card/bg_" + column.dataModel.uii})
                 }
                 else if (column.homeCustomization) {
                     if (column._isStock)
-                        homeProperties.homeBgImage = path
+                        homeProperties.homeBgImage = item.path
                     else
-                        global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", path, "custom_images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
+                        global.saveInCustomDirIfNeeded(homeProperties, "homeBgImage", item.path, "custom_images/background/home_bg", Qt.size(global.mainWidth, global.mainHeight))
                 }
                 else {
                     if (column._isStock) {
-                        column.dataModel.image = path
+                        column.dataModel.image = item.path
                     }
                     else {
                         var newFilename = "custom_images/background/bg_" + column.dataModel.uii
-                        global.saveInCustomDirIfNeeded(column.dataModel, "image", path, newFilename, Qt.size(global.mainWidth, global.mainHeight))
+                        global.saveInCustomDirIfNeeded(column.dataModel, "image", item.path, newFilename, Qt.size(global.mainWidth, global.mainHeight))
                     }
                 }
             }
