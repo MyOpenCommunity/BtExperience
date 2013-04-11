@@ -1,0 +1,6 @@
+Doxygen documentation creation needs the doxyqml tool.
+
+You must download latest version from http://agateau.com/projects/doxyqml/
+
+Then follow instructions on the README file there to install it.
+ 
