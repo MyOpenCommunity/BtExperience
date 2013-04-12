@@ -81,8 +81,14 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 			foreach (const QDomNode &ist, getChildren(container, "ist"))
 			{
 				v.setIst(ist);
-				setSkin(v.intValue("img_type") == 0 ? Clear : Dark);
-				setHomeBgImage(v.value("img"));
+				// set logic is a bit convoluted here due to the two default
+				// backgrounds; to be sure to not lose right config data in
+				// set calls let's store the values before setting anything:
+				// in this way, member values may change freely during set calls
+				QString bg = v.value("img");
+				Skin type = v.intValue("img_type") == 0 ? Clear : Dark;
+				setSkin(type);
+				setHomeBgImage(bg);
 			}
 			break;
 		}
