@@ -114,8 +114,18 @@ MenuColumn {
     }
 
     ObjectModel {
-        id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData}]
+        id: energyTariffs
+        filters: [{objectId: ObjectInterface.IdEnergyRate}]
+    }
+
+    ObjectModel {
+        id: energyGoals
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+    }
+
+    ObjectModel {
+        id: energyThresholds
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
     }
 
     ListModel {
@@ -127,7 +137,7 @@ MenuColumn {
                 modelList.append({name: qsTr("Profiles"), component: settingsProfiles})
             if (floorsModel.count > 0)
                 modelList.append({name: qsTr("Rooms"), component: floor})
-            if (scenariosModule.count + cctvModel.count + energiesCounters.count > 0)
+            if (scenariosModule.count + cctvModel.count + energyTariffs.count + energyGoals.count + energyThresholds.count > 0)
                 modelList.append({name: qsTr("Functions"), component: settingsSystems})
             modelList.append({name: qsTr("Alarm Clock"), component: settingsClocks})
             modelList.append({name: qsTr("Multimedia"), component: settingsMultimedia})

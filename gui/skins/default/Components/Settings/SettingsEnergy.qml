@@ -1,9 +1,25 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components 1.0
 
 
 MenuColumn {
     id: column
+
+    ObjectModel {
+        id: energyTariffs
+        filters: [{objectId: ObjectInterface.IdEnergyRate}]
+    }
+
+    ObjectModel {
+        id: energyGoals
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+    }
+
+    ObjectModel {
+        id: energyThresholds
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
+    }
 
     QtObject {
         id: privateProps
@@ -16,6 +32,7 @@ MenuColumn {
 
     Column {
         MenuItem {
+            visible: energyTariffs.count > 0
             name: qsTr("tariffs")
             hasChild: true
             isSelected: privateProps.currentIndex === 1
@@ -34,6 +51,7 @@ MenuColumn {
         }
 
         MenuItem {
+            visible: energyGoals.count > 0
             name: qsTr("consumption goals")
             hasChild: true
             isSelected: privateProps.currentIndex === 2
@@ -52,6 +70,7 @@ MenuColumn {
         }
 
         MenuItem {
+            visible: energyThresholds.count > 0
             name: qsTr("thresholds")
             hasChild: true
             isSelected: privateProps.currentIndex === 3

@@ -86,8 +86,18 @@ MenuColumn {
     }
 
     ObjectModel {
-        id: energiesCounters
-        filters: [{objectId: ObjectInterface.IdEnergyData}]
+        id: energyTariffs
+        filters: [{objectId: ObjectInterface.IdEnergyRate}]
+    }
+
+    ObjectModel {
+        id: energyGoals
+        filters: [{objectId: ObjectInterface.IdEnergyFamily}]
+    }
+
+    ObjectModel {
+        id: energyThresholds
+        filters: [{objectId: ObjectInterface.IdEnergyData, objectKey: EnergyData.Electricity}]
     }
 
     ListModel {
@@ -95,7 +105,7 @@ MenuColumn {
         Component.onCompleted: {
             if (scenariosModule.count > 0)
                 modelList.append({"name": qsTr("Scenarios"), "component": settingsScenario})
-            if (energiesCounters.count > 0)
+            if (energyTariffs.count + energyGoals.count + energyThresholds.count > 0)
                 modelList.append({"name": qsTr("Energy"), "component": settingsEnergy})
             if (cctvModel.count > 0)
                 modelList.append({"name": qsTr("Video Door Entry"), "component": settingsVDE})
