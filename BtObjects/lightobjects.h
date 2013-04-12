@@ -17,6 +17,7 @@ class QDomNode;
 class UiiMapper;
 class ChoiceList;
 class BasicVideoDoorEntryDevice;
+class QTimer;
 
 QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
@@ -54,9 +55,13 @@ public slots:
 	void staircaseLightActivate();
 	void staircaseLightRelease();
 
+private slots:
+	void releaseAfterDelay();
+
 private:
 	BasicVideoDoorEntryDevice *dev;
 	QString where;
+	QTimer *timer_release;
 };
 
 

@@ -10,10 +10,15 @@
 
 #include <QDebug>
 #include <QStringList>
+#include <QTimer>
+
 
 // default values
 #define DIMMER100_STEP 5
 #define DIMMER100_SPEED 255
+
+// the delay between the activate and the release in staircase activation
+#define STAIRCASE_LIGHT_RELEASE_DELAY 100
 
 
 namespace
@@ -227,6 +232,11 @@ StaircaseLight::StaircaseLight(const QString &n, BasicVideoDoorEntryDevice *d, c
 	dev = d;
 	where = w;
 	setName(n);
+	timer_release = new QTimer(this);
+	timer_release->setSingleShot(true);
+	timer_release->setInterval(STAIRCASE_LIGHT_RELEASE_DELAY);
+
+	connect(timer_release, SIGNAL(timeout()), this, SLOT(releaseAfterDelay()));
 }
 
 void StaircaseLight::setActive(bool st)
@@ -235,7 +245,7 @@ void StaircaseLight::setActive(bool st)
 		return;
 	// activate means turn on and then off the contact
 	staircaseLightActivate();
-	staircaseLightRelease();
+	timer_release->start();
 }
 
 void StaircaseLight::staircaseLightActivate()
@@ -246,6 +256,11 @@ void StaircaseLight::staircaseLightActivate()
 void StaircaseLight::staircaseLightRelease()
 {
 	dev->stairLightRelease(where);
+}
+
+void StaircaseLight::releaseAfterDelay()
+{
+	staircaseLightRelease();
 }
 
 Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bool _ectime, bool _point_to_point, LightingDevice *d) :
