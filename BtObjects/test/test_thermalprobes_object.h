@@ -22,7 +22,7 @@
 #define TEST_THERMALPROBES_OBJECT_H
 
 #include "test_btobject.h"
-#include "../devices/probe_device.h" // ControlledProbeDevice::ProbeStatus
+#include "../../../libqtdevices/probe_device.h" // ControlledProbeDevice::ProbeStatus
 #include "thermalprobes.h" // ThermalControlledProbe::ProbeStatus
 
 #include <QObject>

@@ -19,7 +19,7 @@
  */
 
 #include "test_antintrusion_object.h"
-#include "../devices/antintrusion_device.h"
+#include "../../../libqtdevices/antintrusion_device.h"
 #include "openserver_mock.h"
 #include "openclient.h"
 #include "objecttester.h"

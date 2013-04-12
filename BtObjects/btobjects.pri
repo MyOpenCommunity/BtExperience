@@ -48,38 +48,37 @@ HEADERS += \
 	uiimapper.h \
 	vct.h \
 	xmlobject.h \
-	devices/airconditioning_device.h \
-	devices/antintrusion_device.h \
-	devices/automation_device.h \
-	devices/device.h \
-	devices/energy_device.h \
-	devices/lighting_device.h \
-	devices/loads_device.h \
-	devices/media_device.h \
-	devices/message_device.h \
-	devices/platform_device.h \
-	devices/probe_device.h \
-	devices/pulldevice.h \
-	devices/scenario_device.h \
-	devices/stopandgo_device.h \
-	devices/thermal_device.h \
-	devices/videodoorentry_device.h \
-	ts/bttime.h \
+	../../libqtdevices/airconditioning_device.h \
+	../../libqtdevices/antintrusion_device.h \
+	../../libqtdevices/automation_device.h \
+	../../libqtdevices/bttime.h \
+	../../libqtdevices/delayedslotcaller.h \
+	../../libqtdevices/device.h \
+	../../libqtdevices/devices_cache.h \
+	../../libqtdevices/energy_device.h \
+	../../libqtdevices/frame_classes.h \
+	../../libqtdevices/frame_functions.h \
+	../../libqtdevices/lighting_device.h \
+	../../libqtdevices/loads_device.h \
+	../../libqtdevices/media_device.h \
+	../../libqtdevices/message_device.h \
+	../../libqtdevices/openclient.h \
+	../../libqtdevices/platform_device.h \
+	../../libqtdevices/probe_device.h \
+	../../libqtdevices/pulldevice.h \
+	../../libqtdevices/scenario_device.h \
+	../../libqtdevices/stopandgo_device.h \
+	../../libqtdevices/thermal_device.h \
+	../../libqtdevices/videodoorentry_device.h \
+	../../libqtdevices/xml_functions.h \
 	ts/connectiontester.h \
-	ts/delayedslotcaller.h \
-	ts/frame_classes.h \
-	ts/openclient.h \
-	ts/treebrowser.h \
-	ts/frame_functions.h \
 	ts/list_manager.h \
 	ts/mediaplayer.h \
-	ts/devices_cache.h \
-	ts/xml_functions.h \
-	ts/xmldevice.h \
-	ts/xmlclient.h \
 	ts/scaleconversion.h \
-	ts/scenevodevicescond.h
-
+	ts/scenevodevicescond.h \
+	ts/treebrowser.h \
+	ts/xmlclient.h \
+	ts/xmldevice.h
 
 SOURCES += \
 	alarmclock.cpp \
@@ -127,34 +126,34 @@ SOURCES += \
 	thermalprobes.cpp \
 	uiimapper.cpp \
 	vct.cpp \
-	devices/airconditioning_device.cpp \
-	devices/antintrusion_device.cpp \
-	devices/automation_device.cpp \
-	devices/device.cpp \
-	devices/energy_device.cpp \
-	devices/lighting_device.cpp \
-	devices/loads_device.cpp \
-	devices/media_device.cpp \
-	devices/message_device.cpp \
-	devices/platform_device.cpp \
-	devices/probe_device.cpp \
-	devices/pulldevice.cpp \
-	devices/scenario_device.cpp \
-	devices/stopandgo_device.cpp \
-	devices/thermal_device.cpp \
-	devices/videodoorentry_device.cpp \
-	ts/bttime.cpp \
+	../../libqtdevices/airconditioning_device.cpp \
+	../../libqtdevices/antintrusion_device.cpp \
+	../../libqtdevices/automation_device.cpp \
+	../../libqtdevices/bttime.cpp \
+	../../libqtdevices/delayedslotcaller.cpp \
+	../../libqtdevices/device.cpp \
+	../../libqtdevices/devices_cache.cpp \
+	../../libqtdevices/energy_device.cpp \
+	../../libqtdevices/frame_classes.cpp \
+	../../libqtdevices/frame_functions.cpp \
+	../../libqtdevices/lighting_device.cpp \
+	../../libqtdevices/loads_device.cpp \
+	../../libqtdevices/media_device.cpp \
+	../../libqtdevices/message_device.cpp \
+	../../libqtdevices/openclient.cpp \
+	../../libqtdevices/platform_device.cpp \
+	../../libqtdevices/probe_device.cpp \
+	../../libqtdevices/pulldevice.cpp \
+	../../libqtdevices/scenario_device.cpp \
+	../../libqtdevices/stopandgo_device.cpp \
+	../../libqtdevices/thermal_device.cpp \
+	../../libqtdevices/videodoorentry_device.cpp \
+	../../libqtdevices/xml_functions.cpp \
 	ts/connectiontester.cpp \
-	ts/delayedslotcaller.cpp \
-	ts/openclient.cpp \
-	ts/treebrowser.cpp \
-	ts/frame_functions.cpp \
 	ts/list_manager.cpp \
 	ts/mediaplayer.cpp \
-	ts/devices_cache.cpp \
-	ts/xml_functions.cpp \
-	ts/xmldevice.cpp \
-	ts/xmlclient.cpp \
-	ts/frame_classes.cpp \
 	ts/scaleconversion.cpp \
-	ts/scenevodevicescond.cpp
+	ts/scenevodevicescond.cpp \
+	ts/treebrowser.cpp \
+	ts/xmlclient.cpp \
+	ts/xmldevice.cpp

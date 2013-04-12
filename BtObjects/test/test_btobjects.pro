@@ -8,7 +8,7 @@ DEFINES += BT_EXPERIENCE_TODO_REVIEW_ME
 
 INCLUDEPATH+= . .. ../.. ../../../common_files ../../../stackopen
 INCLUDEPATH+= ../../../stackopen/common_develer/lib
-INCLUDEPATH+= ../ts ../devices ../devices/test
+INCLUDEPATH+= ../ts ../../../libqtdevices ../../../libqtdevices/test
 DEPENDPATH+= . .. ../..
 
 TARGET = test
@@ -51,10 +51,11 @@ HEADERS += \
 	test_thermal_objects.h \
 	test_thermalprobes_object.h \
 	test_videodoorentry_objects.h \
+	common_files/logger.h \
 	objecttester.h \
-	devices/test/openserver_mock.h \
 	ts/main.h \
-	common_files/logger.h
+	../../libqtdevices/test/openserver_mock.h \
+	../../libqtdevices/definitions.h
 
 SOURCES += test_main.cpp \
 	test_alarm_clock.cpp \
@@ -78,8 +79,8 @@ SOURCES += test_main.cpp \
 	test_thermalprobes_object.cpp \
 	test_videodoorentry_objects.cpp \
 	objecttester.cpp \
-	devices/test/openserver_mock.cpp \
-	ts/definitions.cpp
+	../../libqtdevices/test/openserver_mock.cpp \
+	../../libqtdevices/definitions.cpp
 
 include(../btobjects.pri)
 include(../../config.pri)

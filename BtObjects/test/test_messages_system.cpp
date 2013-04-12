@@ -20,7 +20,7 @@
 
 #include "test_messages_system.h"
 #include "messagessystem.h"
-#include "../devices/message_device.h"
+#include "../../../libqtdevices/message_device.h"
 #include "objecttester.h"
 
 #include <QtTest/QtTest>

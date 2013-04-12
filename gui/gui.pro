@@ -15,8 +15,8 @@ qtcAddDeployment()
 include(../config.pri)
 
 INCLUDEPATH += ./common_files ../../stackopen/liblghal
-INCLUDEPATH += ../BtObjects ../BtObjects/ts ../BtObjects/devices
-DEPENDPATH += ../BtObjects ../BtObjects/ts ../BtObjects/devices
+INCLUDEPATH += ../BtObjects ../BtObjects/ts ../BtObjects/../../libqtdevices
+DEPENDPATH += ../BtObjects ../BtObjects/ts ../BtObjects/../../libqtdevices
 LIBS += -lssl -L../bin/$${HARDWARE}/BtObjects -lbtobjects
 isArm() {
     LIBS += -L../../stackopen/liblghal -llghal

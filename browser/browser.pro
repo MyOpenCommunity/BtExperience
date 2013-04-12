@@ -19,8 +19,8 @@ maliit {
     DEFINES += BT_MALIIT
 }
 
-INCLUDEPATH += ./common_files ../gui ../BtObjects ../BtObjects/ts ../BtObjects/devices
-DEPENDPATH += . devices ../gui ../BtObjects ../BtObjects/ts
+INCLUDEPATH += ./common_files ../gui ../BtObjects ../BtObjects/ts ../BtObjects/../../libqtdevices
+DEPENDPATH += . ../../libqtdevices ../gui ../BtObjects ../BtObjects/ts
 LIBS += -lssl
 
 DESTDIR = ../bin/$${HARDWARE}
@@ -35,47 +35,47 @@ INSTALLS += target
 
 # Input
 SOURCES += \
-    browser.cpp \
+    ../BtObjects/../../libqtdevices/device.cpp \
+    ../BtObjects/../../libqtdevices/devices_cache.cpp \
+    ../BtObjects/../../libqtdevices/frame_classes.cpp \
+    ../BtObjects/../../libqtdevices/frame_functions.cpp \
+    ../BtObjects/../../libqtdevices/openclient.cpp \
+    ../BtObjects/../../libqtdevices/xml_functions.cpp \
     ../BtObjects/configfile.cpp \
     ../BtObjects/iteminterface.cpp \
     ../BtObjects/linkinterface.cpp \
     ../BtObjects/medialink.cpp \
-    ../BtObjects/devices/device.cpp \
-    ../BtObjects/ts/devices_cache.cpp \
-    ../BtObjects/ts/frame_classes.cpp \
-    ../BtObjects/ts/frame_functions.cpp \
-    ../BtObjects/ts/openclient.cpp \
     ../BtObjects/ts/signalshandler.cpp \
-    ../BtObjects/ts/xml_functions.cpp \
     ../gui/applicationcommon.cpp \
     ../gui/eventfilters.cpp \
     ../gui/globalpropertiescommon.cpp \
     ../gui/guisettings.cpp \
     ../gui/imagereader.cpp \
     ../gui/inputcontextwrapper.cpp \
+    browser.cpp \
+    browserproperties.cpp \
     networkmanager.cpp \
-    networkreply.cpp \
-    browserproperties.cpp
+    networkreply.cpp
 
 HEADERS += \
+    ../BtObjects/../../libqtdevices/device.h \
+    ../BtObjects/../../libqtdevices/devices_cache.h \
+    ../BtObjects/../../libqtdevices/frame_classes.h \
+    ../BtObjects/../../libqtdevices/frame_functions.h \
+    ../BtObjects/../../libqtdevices/openclient.h \
+    ../BtObjects/../../libqtdevices/xml_functions.h \
     ../BtObjects/configfile.h \
     ../BtObjects/iteminterface.h \
     ../BtObjects/linkinterface.h \
     ../BtObjects/medialink.h \
-    ../BtObjects/devices/device.h \
-    ../BtObjects/ts/devices_cache.h \
-    ../BtObjects/ts/frame_classes.h \
-    ../BtObjects/ts/frame_functions.h \
-    ../BtObjects/ts/openclient.h \
     ../BtObjects/ts/signalshandler.h \
-    ../BtObjects/ts/xml_functions.h \
     ../gui/applicationcommon.h \
     ../gui/eventfilters.h \
     ../gui/globalpropertiescommon.h \
     ../gui/guisettings.h \
     ../gui/imagereader.h \
     ../gui/inputcontextwrapper.h \
+    browserproperties.h \
     networkmanager.h \
-    networkreply.h \
-    browserproperties.h
+    networkreply.h
 

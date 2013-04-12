@@ -19,8 +19,7 @@
  */
 
 #include "test_thermalprobes_object.h"
-#include "../devices/probe_device.h"
-#include "../devices/thermal_device.h"
+#include "../../../libqtdevices/thermal_device.h"
 #include "thermalprobes.h"
 #include "thermalobjects.h"
 #include "openserver_mock.h"
