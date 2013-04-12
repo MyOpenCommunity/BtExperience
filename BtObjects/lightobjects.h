@@ -139,7 +139,7 @@ public:
 		/// fixed timing is not enabled/known
 		FixedTimingDisabled = -1,
 		/// 1 minute (11 in xml file)
-		FixedTimingMinutes1 = 0,
+		FixedTimingMinutes1 = 11,
 		/// 2 minutes (12 in xml file)
 		FixedTimingMinutes2,
 		/// 3 minutes (13 in xml file)
