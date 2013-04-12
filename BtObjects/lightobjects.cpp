@@ -4,6 +4,9 @@
 #include "devices_cache.h"
 #include "uiimapper.h"
 #include "choicelist.h"
+#include "videodoorentry_device.h"
+#include "bt_global_config.h"
+#include "xmlobject.h"
 
 #include <QDebug>
 #include <QStringList>
@@ -25,7 +28,8 @@ namespace
 			|| first == ObjectInterface::IdLightCustomAMBGRGEN || second == ObjectInterface::IdLightCustomAMBGRGEN
 			|| first == ObjectInterface::IdDimmerFixedAMBGRGEN || second == ObjectInterface::IdDimmerFixedAMBGRGEN
 			|| first == ObjectInterface::IdDimmer100FixedAMBGRGEN || second == ObjectInterface::IdDimmer100FixedAMBGRGEN
-			|| first == ObjectInterface::IdDimmer100CustomAMBGRGEN || second == ObjectInterface::IdDimmer100CustomAMBGRGEN)
+			|| first == ObjectInterface::IdDimmer100CustomAMBGRGEN || second == ObjectInterface::IdDimmer100CustomAMBGRGEN
+			|| first == ObjectInterface::IdStaircaseLight || second == ObjectInterface::IdStaircaseLight)
 			return ObjectInterface::IdLightFixedPP;
 
 		if (first == ObjectInterface::IdDimmerFixedPP || second == ObjectInterface::IdDimmerFixedPP)
@@ -35,7 +39,8 @@ namespace
 			|| first == ObjectInterface::IdDimmer100CustomPP || second == ObjectInterface::IdDimmer100CustomPP)
 			return ObjectInterface::IdDimmer100FixedPP;
 
-		Q_ASSERT_X(false, "findDumberObject", qPrintable(QString("Invalid light types (%1, %2) in light group").arg(first).arg(second)));
+		QString msg = QString("Invalid light types (%1, %2) in light group. Defaulting to ObjectInterface::IdLightFixedPP.").arg(first).arg(second);
+		qWarning() << __PRETTY_FUNCTION__ << msg;
 
 		return ObjectInterface::IdLightFixedPP; // this I'm sure it can be used by all lights
 	}
@@ -47,12 +52,17 @@ namespace
 
 		foreach (Ts i, list)
 		{
-			Tr r = qobject_cast<Tr>(i);
-
-			Q_ASSERT_X(r, "convertQObjectList", "Invalid object type");
+			Tr r = dynamic_cast<Tr>(i);
 
 			if (r)
+			{
 				res.append(r);
+				continue;
+			}
+
+			ObjectInterface *p_obj = static_cast<ObjectInterface *>(i);
+			QString msg = QString("Invalid object type. Name: %1 ObjectId: %2 ObjectKey: %3 ContainerUii: %4").arg(p_obj->getName()).arg(p_obj->getObjectId()).arg(p_obj->getObjectKey()).arg(p_obj->getContainerUii());
+			qWarning() << __PRETTY_FUNCTION__ << msg;
 		}
 
 		return res;
@@ -181,7 +191,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 		switch (dumber_type)
 		{
 		case ObjectInterface::IdLightFixedPP:
-			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<Light *>(items)));
+			obj_list << ObjectPair(uii, new LightGroup(descr, convertQObjectList<LightInterface *>(items)));
 			break;
 		case ObjectInterface::IdDimmerFixedPP:
 			obj_list << ObjectPair(uii, new DimmerGroup(descr, convertQObjectList<Dimmer *>(items)));
@@ -194,6 +204,49 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 	return obj_list;
 }
 
+QList<ObjectPair> parseStaircaseLight(const QDomNode &xml_node)
+{
+	BasicVideoDoorEntryDevice *d = bt_global::add_device_to_cache(new BasicVideoDoorEntryDevice((*bt_global::config)[PI_ADDRESS], (*bt_global::config)[PI_MODE]));
+	QList<ObjectPair> obj_list;
+	XmlObject v(xml_node);
+
+	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
+	{
+		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
+
+		obj_list << ObjectPair(uii, new StaircaseLight(v.value("descr"), d, (*bt_global::config)[PI_ADDRESS]));
+	}
+	return obj_list;
+}
+
+
+StaircaseLight::StaircaseLight(const QString &n, BasicVideoDoorEntryDevice *d, const QString &w, QObject *parent)
+	: ObjectInterface(parent)
+{
+	dev = d;
+	where = w;
+	setName(n);
+}
+
+void StaircaseLight::setActive(bool st)
+{
+	if (!st)
+		return;
+	// activate means turn on and then off the contact
+	staircaseLightActivate();
+	staircaseLightRelease();
+}
+
+void StaircaseLight::staircaseLightActivate()
+{
+	dev->stairLightActivate(where);
+}
+
+void StaircaseLight::staircaseLightRelease()
+{
+	dev->stairLightRelease(where);
+}
 
 Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bool _ectime, bool _point_to_point, LightingDevice *d) :
 	DeviceObjectInterface(d)
@@ -375,7 +428,7 @@ void Light::valueReceived(const DeviceValues &values_list)
 }
 
 
-LightGroup::LightGroup(QString _name, QList<Light *> d)
+LightGroup::LightGroup(QString _name, QList<LightInterface *> d)
 {
 	name = _name;
 	objects = d;
@@ -383,7 +436,7 @@ LightGroup::LightGroup(QString _name, QList<Light *> d)
 
 void LightGroup::setActive(bool status)
 {
-	foreach (Light *l, objects)
+	foreach (LightInterface *l, objects)
 		l->setActive(status);
 }
 
@@ -479,7 +532,7 @@ void Dimmer::valueReceived(const DeviceValues &values_list)
 	}
 }
 
-DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<Light *>(d))
+DimmerGroup::DimmerGroup(QString name, QList<Dimmer *> d) : LightGroup(name, convertQObjectList<LightInterface *>(d))
 {
 	objects = d;
 }

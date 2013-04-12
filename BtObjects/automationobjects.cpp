@@ -86,7 +86,7 @@ QList<ObjectPair> parseAutomationGroup2(const QDomNode &obj, const UiiMapper &ui
 			if (!item)
 			{
 				qWarning() << "Invalid uii" << object_uii << "in automation 2 set";
-				Q_ASSERT_X(false, "parseLightGroup", "Invalid uii");
+				Q_ASSERT_X(false, __PRETTY_FUNCTION__, "Invalid uii");
 				continue;
 			}
 

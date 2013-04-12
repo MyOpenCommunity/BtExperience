@@ -16,11 +16,48 @@ class Dimmer100Device;
 class QDomNode;
 class UiiMapper;
 class ChoiceList;
+class BasicVideoDoorEntryDevice;
 
 QList<ObjectPair> parseDimmer100(const QDomNode &obj);
 QList<ObjectPair> parseDimmer(const QDomNode &obj);
 QList<ObjectPair> parseLight(const QDomNode &obj);
 QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map);
+QList<ObjectPair> parseStaircaseLight(const QDomNode &xml_node);
+
+
+/*!
+	\ingroup Lighting
+	\brief A base interface for Light and StaircaseLight
+*/
+class LightInterface
+{
+public:
+	virtual void setActive(bool active) = 0;
+};
+
+
+/*!
+	\ingroup Lighting
+	\brief Manages stair case light for this PI
+*/
+class StaircaseLight : public ObjectInterface, public LightInterface
+{
+	Q_OBJECT
+
+public:
+	StaircaseLight(const QString& name, BasicVideoDoorEntryDevice *d, const QString &where, QObject *parent = 0);
+
+	virtual int getObjectId() const { return IdStaircaseLight; }
+	virtual void setActive(bool st);
+
+public slots:
+	void staircaseLightActivate();
+	void staircaseLightRelease();
+
+private:
+	BasicVideoDoorEntryDevice *dev;
+	QString where;
+};
 
 
 /*!
@@ -31,7 +68,7 @@ QList<ObjectPair> parseLightGroup(const QDomNode &obj, const UiiMapper &uii_map)
 
 	The object id is \a ObjectInterface::IdLight, the key is the SCS where.
 */
-class Light : public DeviceObjectInterface
+class Light : public DeviceObjectInterface, public LightInterface
 {
 	friend class TestLight;
 
@@ -180,7 +217,7 @@ class LightGroup : public ObjectInterface
 	Q_OBJECT
 
 public:
-	LightGroup(QString name, QList<Light *> d);
+	LightGroup(QString name, QList<LightInterface *> d);
 
 	virtual int getObjectId() const
 	{
@@ -193,7 +230,7 @@ public:
 	Q_INVOKABLE void setActive(bool status);
 
 private:
-	QList<Light *> objects;
+	QList<LightInterface *> objects;
 };
 
 

@@ -346,9 +346,6 @@ void BtObjectsPlugin::createObjects()
 		case ObjectInterface::IdLightGroup:
 			obj_list = parseLightGroup(xml_obj, uii_map);
 			break;
-		case ObjectInterface::IdStaircaseLight:
-			obj_list = parseStaircaseLight(xml_obj);
-			break;
 
 		case ObjectInterface::IdAutomation2:
 		case ObjectInterface::IdAutomationDoor:
@@ -357,6 +354,11 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdAutomationVDE:
 			obj_list = parseAutomationVDE(xml_obj);
+			break;
+		case ObjectInterface::IdStaircaseLight:
+			// this must follow parseAutomationVDE to avoid creating a BasicVideoDoorEntryDevice
+			// instead of a VideoDoorEntryDevice (first created wins)
+			obj_list = parseStaircaseLight(xml_obj);
 			break;
 		case ObjectInterface::IdAutomation3:
 		case ObjectInterface::IdAutomation3Safe:

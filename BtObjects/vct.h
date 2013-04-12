@@ -23,7 +23,6 @@ QList<ObjectPair> parseInternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseExternalIntercom(const QDomNode &xml_node);
 QList<ObjectPair> parseSwitchboard(const QDomNode &xml_node);
 QList<ObjectPair> parsePager(const QDomNode &xml_node);
-QList<ObjectPair> parseStaircaseLight(const QDomNode &xml_node);
 
 ObjectInterface *createCCTV(QList<ObjectPair> places);
 ObjectInterface *createIntercom(QList<ObjectPair> places, bool pager);
@@ -63,27 +62,6 @@ public:
 private:
 	QString where;
 	int object_id;
-};
-
-/*!
-	\ingroup Lighting
-	\brief Manages stair case light for this PI
-*/
-class StaircaseLight : public ObjectInterface
-{
-	Q_OBJECT
-
-public:
-	StaircaseLight(const QString& name, VideoDoorEntryDevice *d, QObject *parent = 0);
-
-	virtual int getObjectId() const { return IdStaircaseLight; }
-
-public slots:
-	void staircaseLightActivate();
-	void staircaseLightRelease();
-
-private:
-	VideoDoorEntryDevice *dev;
 };
 
 /*!
