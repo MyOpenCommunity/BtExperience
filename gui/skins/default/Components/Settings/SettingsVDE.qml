@@ -35,7 +35,7 @@ MenuColumn {
                 else
                     return qsTr("Disabled")
             }
-            else if (name === qsTr("auto open")) {
+            else if (name === qsTr("Professional studio")) {
                 if (model.autoOpen)
                     return qsTr("Enabled")
                 else
@@ -113,7 +113,7 @@ MenuColumn {
 
         MenuItem {
             id: autoOpenMenuItem
-            name: qsTr("auto open")
+            name: qsTr("Professional studio")
             description: privateProps.description(name)
             hasChild: true
             isSelected: privateProps.currentIndex === 2
