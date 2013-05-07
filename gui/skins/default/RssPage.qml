@@ -3,6 +3,7 @@ import Components 1.0
 import Components.RssReader 1.0
 import Components.Popup 1.0
 import Components.Text 1.0
+import BtObjects 1.0
 import "js/Stack.js" as Stack
 
 
@@ -94,6 +95,7 @@ Page {
             id: noNewsLabel
             anchors.centerIn: parent
             font.pixelSize: 18
+            color:homeProperties.skin === HomeProperties.Clear ? "black" : "white"
             text: qsTr("No news to display")
             visible: false
         }
