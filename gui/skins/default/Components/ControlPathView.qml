@@ -7,6 +7,7 @@ Item {
 
     property int arrowsMargin: 10
     property int pathviewId: 0
+    property int offset_diff: 0
 
     property alias x0FiveElements: pathView.x0FiveElements
     property alias x0ThreeElements: pathView.x0ThreeElements
@@ -33,7 +34,14 @@ Item {
         anchors.fill: parent
         onClicked: control.clicked(delegate)
 
-        onOffsetChanged: global.setPathviewOffset(pathviewId, Math.round(offset))
+        onOffsetChanged: {
+            // remove pressed status when scrolling cards
+            offset_diff = Math.abs(global.getPathviewOffset(pathviewId) - Math.round(offset))
+            if ((offset_diff > 0 ) && (offset_diff < model.count )){
+                currentPressed = -1
+            }
+            global.setPathviewOffset(pathviewId, Math.round(offset))
+        }
 
         Behavior on offset {
             id: offsetBehavior
