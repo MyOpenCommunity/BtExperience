@@ -110,6 +110,9 @@ public:
 	int getContainerId() const;
 	QString getImageConfName() const;
 
+	void setItemOrder(const QList<int> &item_list);
+	QList<int> getItemOrder() const;
+
 signals:
 	void descriptionChanged();
 	void imageChanged();
@@ -125,6 +128,7 @@ private:
 	QString description, image;
 	int id, uii, cache_id;
 	HomeProperties *home_properties;
+	QList<int> item_order;
 };
 
 

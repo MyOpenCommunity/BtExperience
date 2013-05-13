@@ -134,6 +134,16 @@ QString Container::getImageConfName() const
 	return image;
 }
 
+void Container::setItemOrder(const QList<int> &item_list)
+{
+	item_order = item_list;
+}
+
+QList<int> Container::getItemOrder() const
+{
+	return item_order;
+}
+
 QString Container::getImage() const
 {
 	QString result;
