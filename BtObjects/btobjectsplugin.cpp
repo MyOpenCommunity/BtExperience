@@ -162,6 +162,16 @@ namespace
 		return sources;
 	}
 
+	QList<int> extractContainerOrder(const QDomNode &ist)
+	{
+		QList<int> uiis;
+		foreach (const QDomNode &link, getChildren(ist, "link"))
+		{
+			uiis << getIntAttribute(link, "uii");
+		}
+		return uiis;
+	}
+
 	// these are defined here because there is no 1-to-1 correspondence
 	// between used in QML (the ones in objectinterface.h file) and the ones
 	// used in configuration file (defined here)
@@ -1191,6 +1201,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 		v.setIst(instance);
 		int room_uii = getIntAttribute(instance, "uii");
 		Container *room = new ContainerWithCard(room_id, room_uii, v.value("img"), v.value("img_card"), v.value("descr"), &home_properties);
+		room->setItemOrder(extractContainerOrder(instance));
 
 		room_model << room;
 		uii_map.insert(room_uii, room);
@@ -1229,6 +1240,7 @@ void BtObjectsPlugin::parseFloors(const QDomNode &container)
 		v.setIst(instance);
 		int floor_uii = getIntAttribute(instance, "uii");
 		Container *floor = new Container(floor_id, floor_uii, v.value("img"), v.value("descr"));
+		floor->setItemOrder(extractContainerOrder(instance));
 
 		floor_model << floor;
 		uii_map.insert(floor_uii, floor);
@@ -1261,6 +1273,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 		v.setIst(ist);
 		int profile_uii = getIntAttribute(ist, "uii");
 		Container *profile = new ContainerWithCard(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"), &home_properties);
+		profile->setItemOrder(extractContainerOrder(ist));
 
 		profile_model << profile;
 		uii_map.insert(profile_uii, profile);
@@ -1309,6 +1322,7 @@ void BtObjectsPlugin::parseSystem(const QDomNode &container)
 		v.setIst(ist);
 		int system_uii = getIntAttribute(ist, "uii");
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
+		system->setItemOrder(extractContainerOrder(ist));
 
 		systems_model << system;
 		uii_map.insert(system_uii, system);
@@ -1370,6 +1384,7 @@ void BtObjectsPlugin::parseHomepage(const QDomNode &container)
 		v.setIst(ist);
 		int homepage_uii = getIntAttribute(ist, "uii");
 		Container *homepage = new Container(homepage_id, homepage_uii, QString("Use GuiSettings homeBgImage property, not this"), v.value("descr"));
+		homepage->setItemOrder(extractContainerOrder(ist));
 
 		global_models.setHomepageLinks(homepage);
 		uii_map.insert(homepage_uii, homepage);
@@ -1438,6 +1453,7 @@ void BtObjectsPlugin::parseMediaContainers(const QDomNode &container)
 		v.setIst(ist);
 		int media_uii = getIntAttribute(ist, "uii");
 		Container *media = new Container(media_id, media_uii, v.value("img"), v.value("descr"));
+		media->setItemOrder(extractContainerOrder(ist));
 		media->setContainerUii(media_uii);
 
 		media_model << media;
@@ -1521,6 +1537,7 @@ void BtObjectsPlugin::parseSoundAmbientMono(const QDomNode &ambient)
 		int system_uii = getIntAttribute(ist, "uii");
 		int ambient_uii = -2;
 		Container *system = new Container(system_id, system_uii, v.value("img"), v.value("descr"));
+		system->setItemOrder(extractContainerOrder(ist));
 		SoundAmbient *ambient = new SoundAmbient(0, "", ObjectInterface::IdMonoChannelSoundAmbient, ambient_uii);
 
 		objmodel << ambient;
