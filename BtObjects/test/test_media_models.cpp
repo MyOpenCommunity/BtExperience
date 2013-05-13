@@ -2,6 +2,8 @@
 #include "mediamodel.h"
 #include "objecttester.h"
 #include "iteminterface.h"
+#include "container.h"
+#include "uiimapper.h"
 
 #include <QtTest>
 
@@ -42,10 +44,19 @@ void TestMediaModel::initObjects(MediaDataModel *_src, MediaModel *_obj, QList<I
 
 void TestMediaModel::init()
 {
-	QList<ItemInterface *> test_items;
+	uii_map = new UiiMapper();
+	container = new Container(2001, 3, "", "Test container");
+	container->setItemOrder(QList<int>() << 102 << 101 << 100);
+	uii_map->insert(3, container);
+	MediaModel::setUiiMapper(uii_map);
 
+	QList<ItemInterface *> test_items;
 	for (int i = 0; i < 5; ++i)
-		test_items << new ItemInterface;
+	{
+		ItemInterface *it = new ItemInterface;
+		test_items << it;
+		uii_map->insert(100 + i, it);
+	}
 
 	src = new MediaDataModel();
 	obj = new MediaModel();
@@ -58,6 +69,8 @@ void TestMediaModel::cleanup()
 {
 	delete obj;
 	delete src;
+	delete uii_map;
+	delete container;
 }
 
 void TestMediaModel::testInsert()
@@ -303,9 +316,9 @@ void TestMediaModel::testFilterContainer()
 	qApp->processEvents();
 	ts.checkSignalCount(SIGNAL(countChanged()), 2);
 
-	QCOMPARE(obj->getObject(0), items[0]);
+	QCOMPARE(obj->getObject(0), items[2]);
 	QCOMPARE(obj->getObject(1), items[1]);
-	QCOMPARE(obj->getObject(2), items[2]);
+	QCOMPARE(obj->getObject(2), items[0]);
 
 	obj->setContainers(QVariantList() << 1);
 
@@ -352,4 +365,18 @@ void TestMediaModel::testFilterRange()
 	QCOMPARE(obj->getObject(0), items[2]);
 	QCOMPARE(obj->getObject(1), items[3]);
 	QCOMPARE(obj->getObject(2), items[4]);
+}
+
+void TestMediaModel::testSort()
+{
+	foreach (ItemInterface *i, items)
+		(*src) << i;
+	qApp->processEvents(); // flush pending countChanged()
+	obj->setContainers(QVariantList() << 3);
+	obj->rowCount(); // force recount
+	obj->sort(0);
+
+	QCOMPARE(obj->getObject(0), items[2]);
+	QCOMPARE(obj->getObject(1), items[1]);
+	QCOMPARE(obj->getObject(2), items[0]);
 }

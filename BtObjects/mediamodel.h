@@ -4,6 +4,7 @@
 #include <QSortFilterProxyModel>
 
 class ItemInterface;
+class UiiMapper;
 
 
 /*!
@@ -250,11 +251,13 @@ public:
 	QVariantList getContainers() const;
 	void setContainers(QVariantList containers);
 
-	int getCount() const;
-	int getRangeCount() const;
+	int getCount();
+	int getRangeCount();
 
 	void setSource(MediaDataModel *s);
 	MediaDataModel *getSource() const;
+
+	static void setUiiMapper(const UiiMapper *map);
 
 signals:
 	void rangeChanged();
@@ -264,7 +267,7 @@ signals:
 
 protected:
 	bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
-	bool removeRows(int row, int count, const QModelIndex &parent);
+	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const;
 	virtual MediaModel *getUnrangedModel();
 
 	virtual bool acceptsRow(int source_row) const;
@@ -278,6 +281,7 @@ private:
 	QVariantList containers;
 	int min_range, max_range;
 	bool pending_reset;
+	static const UiiMapper *uii_map;
 	// used for the pagination. We need a mutable because the filterAcceptRow
 	// is a const method.
 	mutable int counter;

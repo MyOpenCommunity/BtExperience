@@ -1,5 +1,7 @@
 #include "mediamodel.h"
 #include "iteminterface.h"
+#include "uiimapper.h"
+#include "container.h"
 
 #include <QTimer>
 #include <QtDebug>
@@ -137,16 +139,21 @@ MediaModel::MediaModel(QObject *parent)
 	connect(this, SIGNAL(modelAboutToBeReset()), SLOT(resetCounter()));
 }
 
-int MediaModel::getCount() const
+int MediaModel::getCount()
 {
 	if (counter == 0)
+	{
 		rowCount();
+		sort(0);
+	}
 	return counter;
 }
 
-int MediaModel::getRangeCount() const
+int MediaModel::getRangeCount()
 {
-	return rowCount();
+	int c = rowCount();
+	sort(0);
+	return c;
 }
 
 void MediaModel::setSource(MediaDataModel *s)
@@ -165,6 +172,11 @@ void MediaModel::setSource(MediaDataModel *s)
 MediaDataModel *MediaModel::getSource() const
 {
 	return qobject_cast<MediaDataModel *>(sourceModel());
+}
+
+void MediaModel::setUiiMapper(const UiiMapper *map)
+{
+	uii_map = map;
 }
 
 QVariantList MediaModel::getRange() const
@@ -249,9 +261,30 @@ bool MediaModel::acceptsRow(int source_row) const
 	return containers.contains(item->getContainerUii());
 }
 
-bool MediaModel::removeRows(int row, int count, const QModelIndex &parent)
+bool MediaModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
 {
-	return QSortFilterProxyModel::removeRows(row, count, parent);
+	ItemInterface *left_item = getSource()->getObject(left.row());
+	ItemInterface *right_item = getSource()->getObject(right.row());
+
+	int c = left_item->getContainerUii();
+	if (c == -1)
+		return false;
+
+	Container *container = uii_map->value<Container>(c);
+	if (!container)
+		return false;
+
+	int left_index = -1, right_index = -1;
+	QList<int> uiis = container->getItemOrder();
+	for (int i = 0; i < uiis.size(); ++i)
+	{
+		if (uii_map->value<ItemInterface>(uiis.at(i)) == left_item)
+			left_index = i;
+		if (uii_map->value<ItemInterface>(uiis.at(i)) == right_item)
+			right_index = i;
+	}
+
+	return left_index < right_index;
 }
 
 void MediaModel::resetCounter()
@@ -345,3 +378,6 @@ void MediaModel::prepend(ItemInterface *obj)
 {
 	getSource()->prepend(obj);
 }
+
+
+const UiiMapper *MediaModel::uii_map = 0;
