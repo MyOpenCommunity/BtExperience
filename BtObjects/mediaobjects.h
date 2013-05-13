@@ -844,7 +844,7 @@ class PowerAmplifier : public Amplifier
 	Q_PROPERTY(ObjectDataModel *presets READ getPresets CONSTANT)
 
 public:
-	PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QList<QString> custom_presets);
+	PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QMap<int, QString> custom_presets);
 
 	ObjectDataModel *getPresets() const;
 

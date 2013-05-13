@@ -518,9 +518,14 @@ void TestAmplifier::testReceiveVolume()
 void TestPowerAmplifier::init()
 {
 	PowerAmplifierDevice *d = new PowerAmplifierDevice("32");
-	QList<QString> presets;
+	QMap<int, QString> presets;
 
-	presets << "P1" << "P2" << "P3" << "P4" << "P5";
+	presets[0] = "P1";
+	presets[1] = "P2";
+	presets[2] = "P3";
+	presets[3] = "P4";
+	presets[4] = "P5";
+	presets[11] = "P18";
 
 	obj = new PowerAmplifier(3, "", d, presets);
 	dev = new PowerAmplifierDevice("32", 1);
@@ -573,6 +578,15 @@ void TestPowerAmplifier::testPreset()
 
 	obj->setPreset(12);
 	dev->setPreset(12);
+	compareClientCommand();
+}
+
+void TestPowerAmplifier::testPreset2()
+{
+	ObjectDataModel *dm = obj->getPresets();
+	PowerAmplifierPreset *preset = qobject_cast<PowerAmplifierPreset *>(dm->getObject(dm->rowCount() - 1));
+	obj->setPreset(preset->getObjectId());
+	dev->setPreset(11);
 	compareClientCommand();
 }
 

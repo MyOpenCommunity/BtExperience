@@ -212,16 +212,13 @@ QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multicha
 		int uii = getIntAttribute(ist, "uii");
 		PowerAmplifierDevice *d = bt_global::add_device_to_cache(new PowerAmplifierDevice(v.value("where")));
 		int area = is_multichannel ? d->getArea().toInt() : 0;
-		QList<QString> presets;
+		QMap<int, QString> presets;
 
 		foreach(const QDomNode &p, getChildren(ist, "pre"))
 		{
 			QDomElement preset = p.toElement();
 			QString preset_name = preset.text();
-			int index = preset.tagName().mid(3).toInt() - 11;
-
-			while (presets.count() <= index)
-				presets.append(QString());
+			int index = preset.tagName().mid(3).toInt();
 			presets[index] = preset_name;
 		}
 
@@ -1245,7 +1242,7 @@ QString PowerAmplifierPreset::getName() const
 }
 
 
-PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QList<QString> _presets) :
+PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, QMap<int, QString> _presets) :
 	Amplifier(area, name, d, ObjectInterface::IdPowerAmplifier)
 {
 	dev = d;
@@ -1257,7 +1254,7 @@ PowerAmplifier::PowerAmplifier(int area, QString name, PowerAmplifierDevice *d, 
 	for (int i = 0; i < standard_presets_size; ++i)
 		presets << new PowerAmplifierPreset(i, standard_presets[i]);
 
-	for (int i = 0; i < _presets.size(); ++i)
+	foreach (int i, _presets.keys())
 		presets << new PowerAmplifierPreset(i, _presets[i]);
 }
 
@@ -1411,4 +1408,3 @@ void PowerAmplifier::valueReceived(const DeviceValues &values_list)
 		++it;
 	}
 }
-

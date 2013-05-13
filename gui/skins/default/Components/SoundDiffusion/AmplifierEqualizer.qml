@@ -20,7 +20,7 @@ MenuColumn {
             name: itemObject.name
             selectOnClick: true
             onDelegateTouched: {
-                column.dataModel.preset = index + objectModel.range[0]
+                column.dataModel.preset = itemObject.objectId
                 column.closeColumn()
             }
         }

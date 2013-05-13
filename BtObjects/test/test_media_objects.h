@@ -152,6 +152,7 @@ private slots:
 	void testTreble();
 	void testBalance();
 	void testPreset();
+	void testPreset2();
 	void testLoud();
 
 	void testReceiveBass();
