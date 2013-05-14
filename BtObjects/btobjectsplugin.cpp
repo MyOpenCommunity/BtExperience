@@ -192,6 +192,14 @@ namespace
 		IdTeleloop = 14254,
 		IdVideoSettings = 14268,
 	};
+
+	QList<int> parseUii(const QDomNode &obj)
+	{
+		QList<int> uiis;
+		foreach (const QDomNode &ist, getChildren(obj, "ist"))
+			uiis << getIntAttribute(ist, "uii");
+		return uiis;
+	}
 }
 
 
@@ -294,6 +302,7 @@ void BtObjectsPlugin::createObjects()
 	{
 		QList<ObjectPair> obj_list;
 		int id = getIntAttribute(xml_obj, "id");
+		QList<int> reserved_uiis;
 
 		switch (id)
 		{
@@ -309,21 +318,29 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case IdHandsFree:
 			hands_free = parseEnableFlag(xml_obj);
+			reserved_uiis = parseUii(xml_obj);
 			break;
 		case IdProfessionalStudio:
 			professional_studio = parseEnableFlag(xml_obj);
+			reserved_uiis = parseUii(xml_obj);
 			break;
 		case IdRingExclusion:
 			ring_exclusion = parseEnableFlag(xml_obj);
+			reserved_uiis = parseUii(xml_obj);
 			break;
 		case IdVideoSettings:
 			video_brightness = parseIntSetting(xml_obj, "brightness");
 			video_contrast = parseIntSetting(xml_obj, "contrast");
 			video_color = parseIntSetting(xml_obj, "color");
+			reserved_uiis = parseUii(xml_obj);
 			break;
 		case IdTeleloop:
 			if (parseIntSetting(xml_obj, "enable"))
 				teleloop_id = parseIntSetting(xml_obj, "mode");
+			reserved_uiis = parseUii(xml_obj);
+			break;
+		default:
+			reserved_uiis = parseUii(xml_obj);
 			break;
 		}
 
@@ -336,6 +353,8 @@ void BtObjectsPlugin::createObjects()
 				objmodel << p.second;
 			}
 		}
+		foreach (int uii, reserved_uiis)
+			uii_map.reserveUii(uii);
 	}
 
 	foreach (const QDomNode &xml_obj, getChildren(document.documentElement(), "obj"))

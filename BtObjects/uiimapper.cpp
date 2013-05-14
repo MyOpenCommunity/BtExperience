@@ -10,8 +10,7 @@ void UiiMapper::insert(int uii, QObject *value)
 	connect(value, SIGNAL(destroyed(QObject*)),
 		this, SLOT(elementDestroyed(QObject*)));
 
-	if (uii >= next_uii)
-		next_uii = uii + 1;
+	reserveUii(uii);
 
 	items.insert(uii, value);
 }
@@ -26,6 +25,12 @@ void UiiMapper::remove(QObject *value)
 	}
 
 	items.remove(uii);
+}
+
+void UiiMapper::reserveUii(int uii)
+{
+	if (uii >= next_uii)
+		next_uii = uii + 1;
 }
 
 int UiiMapper::findUii(QObject *value) const

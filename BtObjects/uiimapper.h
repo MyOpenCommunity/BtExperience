@@ -30,6 +30,13 @@ public:
 	void remove(QObject *value);
 
 	/*!
+	 * \brief Reserve a UII value for future use.
+	 *
+	 * This will influence the value of nextUii().
+	 */
+	void reserveUii(int uii);
+
+	/*!
 		\brief Look up an object with type V in the map
 
 		Look up the object in the map and convert it using \c qbject_cast, returns
