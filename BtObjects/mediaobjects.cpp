@@ -22,6 +22,8 @@
 
 namespace
 {
+	const int USER_PRESET_COUNT = 10;
+
 	const char *standard_presets[] =
 	{
 		QT_TRANSLATE_NOOP("PowerAmplifierPreset", "Normal"),
@@ -212,14 +214,25 @@ QList<ObjectPair> parsePowerAmplifier(const QDomNode &xml_node, bool is_multicha
 		int uii = getIntAttribute(ist, "uii");
 		PowerAmplifierDevice *d = bt_global::add_device_to_cache(new PowerAmplifierDevice(v.value("where")));
 		int area = is_multichannel ? d->getArea().toInt() : 0;
-		QMap<int, QString> presets;
 
+		QMap<int, QString> presets;
+		// parse existence attributes
+		for (int i = 0; i < USER_PRESET_COUNT; ++i)
+		{
+			int user_preset = i + 11;
+			QString present = v.value(QString("epre%1").arg(user_preset));
+			if (present == "1")
+				presets[user_preset] = QString("User %1").arg(user_preset - 10);
+		}
+
+		// parse user preset attributes, get the name only for existing presets
 		foreach(const QDomNode &p, getChildren(ist, "pre"))
 		{
 			QDomElement preset = p.toElement();
 			QString preset_name = preset.text();
 			int index = preset.tagName().mid(3).toInt();
-			presets[index] = preset_name;
+			if (presets.contains(index))
+				presets[index] = preset_name;
 		}
 
 		obj_list << ObjectPair(uii, new PowerAmplifier(area, v.value("descr"), d, presets));
