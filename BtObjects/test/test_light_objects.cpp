@@ -39,7 +39,6 @@ void TestLight::cleanup()
 
 void TestLight::testSetStatus()
 {
-	obj->setAutoTurnOff(false);
 	obj->setActive(true);
 	dev->turnOn();
 	compareClientCommand();
@@ -70,7 +69,7 @@ void TestLight::testSetTiming()
 	obj->hours = 15;
 	obj->minutes = 0;
 	obj->seconds = 3;
-	obj->setAutoTurnOff(true);
+	obj->setTimingEnabled(true);
 	obj->setActive(true);
 	dev->variableTiming(15, 0, 3);
 
@@ -123,7 +122,6 @@ void TestLight::testTurnOnWithFTimeDisabled()
 {
 	clearAllClients();
 
-	obj_ftime->setAutoTurnOff(false);
 	obj_ftime->setActive(true);
 	dev->turnOn();
 
@@ -134,7 +132,6 @@ void TestLight::testTurnOnWithFTimeEnabled()
 {
 	clearAllClients();
 
-	obj_ftime->setAutoTurnOff(true);
 	obj_ftime->nextFTime();
 	obj_ftime->nextFTime();
 	obj_ftime->setActive(true);
@@ -180,7 +177,6 @@ void TestDimmer::testTurnOnWithFTimeDisabled()
 {
 	clearAllClients();
 
-	obj_ftime->setAutoTurnOff(false);
 	obj_ftime->setActive(true);
 	dev->turnOn();
 
@@ -287,7 +283,6 @@ void TestDimmer100::testSetLevel()
 
 void TestDimmer100::testSetStatus()
 {
-	obj->setAutoTurnOff(false);
 	obj->setOnSpeed(47);
 	obj->setActive(true);
 	dev->turnOn(47);
@@ -396,7 +391,6 @@ void TestDimmer100::testOnSpeedNotUsed()
 
 	clearAllClients();
 
-	obj->setAutoTurnOff(false);
 	obj->setActive(true);
 
 	LightingDevice *ldev = static_cast<LightingDevice *>(dev);
@@ -409,7 +403,6 @@ void TestDimmer100::testTurnOnWithFTimeDisabled()
 {
 	clearAllClients();
 
-	obj_ftime->setAutoTurnOff(false);
 	obj_ftime->setActive(true);
 	dev->turnOn(255);
 
@@ -420,7 +413,6 @@ void TestDimmer100::testTurnOnWithFTimeEnabled()
 {
 	clearAllClients();
 
-	obj_ftime->setAutoTurnOff(true);
 	obj_ftime->nextFTime();
 	obj_ftime->nextFTime();
 	obj_ftime->setActive(true);
@@ -438,7 +430,7 @@ void TestDimmer100::testSetTiming()
 	obj->setHours(15);
 	obj->setMinutes(0);
 	obj->setSeconds(3);
-	obj->setAutoTurnOff(true);
+	obj->setTimingEnabled(true);
 	obj->setActive(true);
 	dev->turnOn(123);
 	dev->variableTiming(15, 0, 3);

@@ -71,6 +71,12 @@ private:
 
 	Can also be used to control dimmer 10 and dimmer 100 actuators.
 
+	If the object is a fixed timing light, the timing must be controlled using
+	the \a ftimes member property.
+	If the object is a custom timing light, it must be created with \a FixedTimingDisabled
+	fixed time parameter and it must be handled using the \a timingEnabled and
+	\a hours, \a minutes and \a seconds interface.
+
 	The object id is \a ObjectInterface::IdLight, the key is the SCS where.
 */
 class Light : public DeviceObjectInterface, public LightInterface
@@ -87,7 +93,7 @@ class Light : public DeviceObjectInterface, public LightInterface
 	/*!
 		\brief Sets and gets if automatic turn off is enabled or not
 	*/
-	Q_PROPERTY(bool autoTurnOff READ isAutoTurnOff WRITE setAutoTurnOff NOTIFY autoTurnOffChanged)
+	Q_PROPERTY(bool timingEnabled READ isTimingEnabled WRITE setTimingEnabled NOTIFY timingEnabledChanged)
 
 	/*!
 		\brief Time interval for  \ref active
@@ -124,7 +130,7 @@ class Light : public DeviceObjectInterface, public LightInterface
 	Q_PROPERTY(FixedTimingType ftime READ getFTime NOTIFY fTimeChanged)
 
 	/*!
-		\brief Gets the valid ftime list
+		\brief Gets the valid ftime ChoiceList
 	*/
 	Q_PROPERTY(QObject *ftimes READ getFTimes CONSTANT)
 
@@ -166,8 +172,8 @@ public:
 	virtual int getObjectId() const;
 	virtual QString getObjectKey() const;
 	virtual bool isActive() const;
-	virtual bool isAutoTurnOff() const;
-	void setAutoTurnOff(bool enabled);
+	bool isTimingEnabled() const;
+	void setTimingEnabled(bool enabled);
 	void setHours(int h);
 	int getHours();
 	void setMinutes(int m);
@@ -187,7 +193,7 @@ signals:
 	void minutesChanged();
 	void secondsChanged();
 	void fTimeChanged();
-	void autoTurnOffChanged();
+	void timingEnabledChanged();
 
 protected slots:
 	virtual void valueReceived(const DeviceValues &values_list);
@@ -195,11 +201,11 @@ protected slots:
 protected:
 	// manages only turn on or off
 	virtual void turn(bool on);
+	bool isAutoTurnOff() const;
 
 	QString key;
 	bool active;
-	bool ectime;
-	bool autoTurnOff;
+	bool ectime, timing_enabled;
 	int hours, minutes, seconds;
 	bool point_to_point;
 

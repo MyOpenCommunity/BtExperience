@@ -70,7 +70,7 @@ SvgImage {
                 }
                 font.pixelSize: 15
                 color: "white"
-                text: itemObject.autoTurnOff ? qsTr("enabled") : qsTr("disabled")
+                text: itemObject.timingEnabled ? qsTr("enabled") : qsTr("disabled")
             }
 
             Switch {
@@ -87,8 +87,8 @@ SvgImage {
                     right: parent.right
                     rightMargin: 7
                 }
-                onPressed: itemObject.autoTurnOff = !itemObject.autoTurnOff
-                status: !itemObject.autoTurnOff
+                onPressed: itemObject.timingEnabled = !itemObject.timingEnabled
+                status: !itemObject.timingEnabled
             }
 
             ControlDateTime {
@@ -101,7 +101,7 @@ SvgImage {
                     right: parent.right
                     rightMargin: 7
                 }
-                enabled: itemObject.autoTurnOff
+                enabled: itemObject.timingEnabled
                 itemObject: control.itemObject
             }
         }
@@ -118,37 +118,15 @@ SvgImage {
             ControlLeftRight {
                 id: fixedTimeControl
 
-                property int currentIndex // 0 means no auto turn off
-
                 anchors.fill: parent
-                text: currentIndex === 0 ? pageObject.names.get('FIXED_TIMING', -1) : pageObject.names.get('FIXED_TIMING', itemObject.ftimes.values[currentIndex - 1])
-                onLeftClicked: {
-                    if (currentIndex <= 0)
-                        return
-                    currentIndex -= 1
-                    if (currentIndex === 0)
-                        itemObject.autoTurnOff = false
-                    else
-                        itemObject.prevFTime()
-                }
-                onRightClicked: {
-                    if (currentIndex >= itemObject.ftimes.values.length)
-                        return
-                    if (currentIndex === 0)
-                        itemObject.autoTurnOff = true
-                    else
-                        itemObject.nextFTime()
-                    currentIndex += 1
-                }
-                Component.onCompleted: {
-                    currentIndex = 0
-                    var fts = itemObject.ftimes.values
-                    for (var i = 0; i < fts.length; ++i) {
-                        if (itemObject.ftime === fts[i])
-                            currentIndex = i + 1
-                    }
-                    itemObject.autoTurnOff = (currentIndex === 0 ? false : true)
-                }
+                /*
+                  Due to bug https://bugreports.qt-project.org/browse/QTBUG-21672
+                  a -1 defined in enum is converted to undefined in QML
+                  Bug will be solved in Qt 5, for now we have this hack
+                */
+                text: pageObject.names.get('FIXED_TIMING', itemObject.ftime === undefined ? -1 : itemObject.ftime)
+                onLeftClicked: itemObject.prevFTime()
+                onRightClicked: itemObject.nextFTime()
             }
         }
     }
