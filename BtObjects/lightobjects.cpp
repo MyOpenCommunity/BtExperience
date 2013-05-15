@@ -410,7 +410,7 @@ void Light::setActive(bool on)
 		if (ectime)
 			dev->variableTiming(hours, minutes, seconds);
 		else
-			dev->fixedTiming(getFTime());
+			dev->fixedTiming(getFTime() - FixedTimingMinutes1);
 	}
 	else // normal turn on
 		turn(on);
@@ -664,7 +664,7 @@ void Dimmer100::setActive(bool on)
 		if (ectime)
 			dev->variableTiming(hours, minutes, seconds);
 		else
-			dev->fixedTiming(getFTime());
+			dev->fixedTiming(getFTime() - FixedTimingMinutes1);
 	}
 }
 

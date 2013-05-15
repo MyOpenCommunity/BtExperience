@@ -138,7 +138,7 @@ void TestLight::testTurnOnWithFTimeEnabled()
 	obj_ftime->nextFTime();
 	obj_ftime->nextFTime();
 	obj_ftime->setActive(true);
-	dev->fixedTiming(Light::FixedTimingMinutes3);
+	dev->fixedTiming(6);
 
 	compareClientCommand();
 }
@@ -425,7 +425,7 @@ void TestDimmer100::testTurnOnWithFTimeEnabled()
 	obj_ftime->nextFTime();
 	obj_ftime->setActive(true);
 	dev->turnOn(255);
-	dev->fixedTiming(Light::FixedTimingMinutes3);
+	dev->fixedTiming(6);
 
 	compareClientCommand();
 }
