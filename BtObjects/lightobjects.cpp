@@ -277,10 +277,7 @@ Light::Light(QString _name, QString _key, QTime ctime, FixedTimingType ftime, bo
 	seconds = ctime.second();
 	ectime = _ectime;
 	point_to_point = _point_to_point;
-	if (ftime == FixedTimingDisabled)
-		autoTurnOff = false;
-	else
-		autoTurnOff = true;
+	timing_enabled = false;
 
 	ftimes = new ChoiceList(this);
 	// if enums changes, this has to be modified
@@ -327,17 +324,18 @@ bool Light::isActive() const
 	return active;
 }
 
-bool Light::isAutoTurnOff() const
+bool Light::isTimingEnabled() const
 {
-	return autoTurnOff;
+	return timing_enabled;
 }
 
-void Light::setAutoTurnOff(bool enabled)
+void Light::setTimingEnabled(bool enable)
 {
-	if (autoTurnOff == enabled)
-		return;
-	autoTurnOff = enabled;
-	emit autoTurnOffChanged();
+	if (enable != timing_enabled)
+	{
+		timing_enabled = enable;
+		emit timingEnabledChanged();
+	}
 }
 
 void Light::setHours(int h)
@@ -384,8 +382,7 @@ int Light::getSeconds()
 
 Light::FixedTimingType Light::getFTime() const
 {
-	int result = autoTurnOff ? ftimes->value() : -1;
-	return static_cast<Light::FixedTimingType>(result);
+	return static_cast<Light::FixedTimingType>(ftimes->value());
 }
 
 QObject *Light::getFTimes() const
@@ -402,15 +399,20 @@ void Light::turn(bool on)
 		dev->turnOff();
 }
 
+bool Light::isAutoTurnOff() const
+{
+	return timing_enabled || getFTime() != FixedTimingDisabled;
+}
+
 void Light::setActive(bool on)
 {
-	if (on && autoTurnOff)
+	if (on && isAutoTurnOff())
 	{
 		// advanced turn on
 		if (ectime)
 			dev->variableTiming(hours, minutes, seconds);
 		else
-			dev->fixedTiming(getFTime());
+			dev->fixedTiming(getFTime() - FixedTimingMinutes1);
 	}
 	else // normal turn on
 		turn(on);
@@ -658,13 +660,13 @@ void Dimmer100::setActive(bool on)
 {
 	// normal turn on
 	turn(on);
-	if (on && autoTurnOff)
+	if (on && isAutoTurnOff())
 	{
 		// advanced turn on to set timing
 		if (ectime)
 			dev->variableTiming(hours, minutes, seconds);
 		else
-			dev->fixedTiming(getFTime());
+			dev->fixedTiming(getFTime() - FixedTimingMinutes1);
 	}
 }
 
