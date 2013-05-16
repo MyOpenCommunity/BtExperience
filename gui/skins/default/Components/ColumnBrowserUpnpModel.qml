@@ -9,7 +9,7 @@ ColumnBrowserCommon {
     property bool restoreState
 
     theModel: upnpModel
-    text: upnpModel.currentPath[upnpModel.currentPath.length - 1] || "Media server"
+    text: upnpModel.serverList ? "Media Server" : upnpModel.currentPath[upnpModel.currentPath.length - 1]
 
     UPnPListModel {
         id: upnpModel

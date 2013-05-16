@@ -163,7 +163,10 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 	current_path = _path;
 	emit rootPathChanged();
 	if (old_current != current_path)
+	{
 		emit currentPathChanged();
+		emit serverListChanged();
+	}
 	startLoadingItems();
 }
 
@@ -202,6 +205,7 @@ void TreeBrowserListModelBase::setCurrentPath(QVariantList cp)
 	{
 		current_path = cp;
 		emit currentPathChanged();
+		emit serverListChanged();
 	}
 }
 
@@ -228,6 +232,14 @@ void TreeBrowserListModelBase::exitDirectory()
 	// intentionally not the null string, see directoryChanged()
 	pending_dirchange = "";
 	browser->exitDirectory();
+
+	if (browser->isRoot())
+	{
+		current_path.clear();
+		page_position.clear();
+		browser->reset();
+		emit serverListChanged();
+	}
 }
 
 QVariantList TreeBrowserListModelBase::getCurrentPath() const
@@ -276,6 +288,7 @@ void TreeBrowserListModelBase::directoryChanged()
 			resetCurrentRange();
 			current_path.pop_back();
 			setRange(getCurrentRange());
+			emit serverListChanged();
 		}
 		else
 		{
@@ -284,6 +297,7 @@ void TreeBrowserListModelBase::directoryChanged()
 			// but setting it to a range of the same size as the current one should
 			// not have any adverse affect and is probably a bit more efficient
 			setRange(QVariantList() << 0 << max_range - min_range);
+			emit serverListChanged();
 		}
 	}
 
@@ -344,6 +358,11 @@ void TreeBrowserListModelBase::restore(FolderListModelMemento *m)
 	setCurrentPath(m->current_path);
 	setRange(getCurrentRange());
 	setFilter(m->filter);
+}
+
+bool TreeBrowserListModelBase::getServerList() const
+{
+	return current_path.size() == 0;
 }
 
 

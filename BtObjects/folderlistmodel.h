@@ -137,6 +137,11 @@ class TreeBrowserListModelBase : public QAbstractListModel
 	*/
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
+	/*!
+		\brief Are we showing a server list or are we indide a server (used with UPnP servers)?
+	*/
+	Q_PROPERTY(bool serverList READ getServerList NOTIFY serverListChanged)
+
 public:
 	TreeBrowserListModelBase(TreeBrowser *browser, QObject *parent = 0);
 	~TreeBrowserListModelBase();
@@ -176,6 +181,8 @@ public:
 	virtual FolderListModelMemento *clone();
 	virtual void restore(FolderListModelMemento *m);
 
+	bool getServerList() const;
+
 public slots:
 	/*!
 		\brief Navigate into a directory
@@ -203,6 +210,7 @@ signals:
 	void loadingChanged();
 	void rangeChanged();
 	void countChanged();
+	void serverListChanged();
 
 	// error conditions
 	void directoryChangeError();
