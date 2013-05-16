@@ -353,13 +353,16 @@ Page {
     QtObject {
         id: privateProps
         function buildTrackText(info) {
+            var title = ""
             if (info["meta_title"] && info["meta_artist"])
-                return info["meta_title"] + " - " + info["meta_artist"]
+                title = info["meta_title"] + " - " + info["meta_artist"]
             else if (info["meta_title"])
-                return info["meta_title"]
+                title = info["meta_title"]
             else if (info["file_name"])
-                return info["file_name"]
-            else return ""
+                title = info["file_name"]
+            if (player.mediaPlayer.isWebRadio() && info["stream_title"])
+                title = info["stream_title"]
+            return title
         }
 
         function goToSourcePage() {
