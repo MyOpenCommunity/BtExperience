@@ -14,7 +14,7 @@ import "js/MainContainer.js" as Container
   The browser is implemented in a separate process and rendered separately.
   This is the home page for the browser application.
   */
-BasePage {
+Item {
     id: webBrowser
 
     property alias ubuntuLight: ubuntuLightLoader
@@ -44,10 +44,19 @@ BasePage {
     Component {
         id: browserComponent
 
-        Item {
+        BasePage {
             id: browserItem
 
-            anchors.fill: parent
+            Connections {
+                target: global
+                onAuthenticationRequired: {
+                    browserItem.installPopup(credentialsPopup)
+                }
+                onUntrustedSslConnection: {
+                    browserItem.installPopup(untrustedSslPopup)
+                }
+            }
+
             objectName: "browserItem"
 
             Rectangle {
@@ -176,6 +185,7 @@ BasePage {
 
         FavoriteEditPopup {
             id: credentials
+
             function okClicked() {
                 global.setSslAuthentication(topInputText, bottomInputText)
             }
@@ -191,12 +201,14 @@ BasePage {
             bottomInputText: ""
             bottomInputIsPassword: true
         }
+
     }
 
     Component {
         id: untrustedSslPopup
 
         TextDialog {
+
             function okClicked() {
                 global.addSecurityException()
             }
@@ -209,16 +221,6 @@ BasePage {
             titleColor: "red"
             text: qsTr("This connection is untrusted. Do you wish to continue?")
 
-        }
-    }
-
-    Connections {
-        target: global
-        onAuthenticationRequired: {
-            webBrowser.installPopup(credentialsPopup)
-        }
-        onUntrustedSslConnection: {
-            webBrowser.installPopup(untrustedSslPopup)
         }
     }
 }
