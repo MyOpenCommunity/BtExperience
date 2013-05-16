@@ -16,6 +16,7 @@ class ListManager;
 */
 class PlayListPlayer : public QObject
 {
+friend class TestPlaylistPlayer;
 	Q_OBJECT
 
 	/*!

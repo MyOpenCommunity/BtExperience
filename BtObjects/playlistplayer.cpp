@@ -137,7 +137,7 @@ bool PlayListPlayer::checkLoop()
 
 		loop_time_counter.start();
 	}
-	else if (loop_starting_file == actual_list->currentIndex())
+	else if (loop_starting_file == (actual_list->currentIndex() + 1) % actual_list->totalFiles())
 	{
 		if (loop_time_counter.elapsed() < loop_total_time)
 		{
@@ -274,6 +274,8 @@ void PlayListPlayer::reset()
 	actual_list = 0;
 	emit playingChanged();
 
+	// Also reset loop check index, for example when generating a new playlist
+	resetLoopCheck();
 	if (!current.isEmpty())
 	{
 		current = current_name = QString();
