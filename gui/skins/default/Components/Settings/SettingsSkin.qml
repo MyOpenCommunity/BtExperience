@@ -42,6 +42,7 @@ MenuColumn {
         interactive: false
         delegate: MenuItemDelegate {
             name: pageObject.names.get('SKIN', modelData)
+            selectOnClick: false
             onDelegateTouched: {
                 privateProps.skin = modelData
                 pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?")})
