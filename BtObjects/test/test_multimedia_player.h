@@ -63,6 +63,7 @@ private slots:
 	void cleanup();
 
 	void testLoopCheck();
+	void testResetLoopCheck();
 
 private:
 	AudioVideoPlayer *player;

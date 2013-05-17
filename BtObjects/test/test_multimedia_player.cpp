@@ -707,7 +707,7 @@ void TestPlaylistPlayer::testLoopCheck()
 	QVERIFY(next.waitForSignal(TIMEOUT));
 	loop.checkNoSignals();
 
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < model->getCount(); ++i)
 	{
 		QVERIFY(player->isPlaying());
 		loop.checkNoSignals();
@@ -716,6 +716,22 @@ void TestPlaylistPlayer::testLoopCheck()
 
 	QVERIFY(!player->isPlaying());
 	loop.checkSignals();
+}
+
+void TestPlaylistPlayer::testResetLoopCheck()
+{
+	player->loop_starting_file = 3;
+
+	player->terminate();
+	QCOMPARE(player->loop_starting_file, -1);
+
+	player->loop_starting_file = 3;
+	player->generatePlaylistLocal(model, 0, model->getCount(), false);
+	QCOMPARE(player->loop_starting_file, -1);
+
+	player->generatePlaylistLocal(model, 4, model->getCount(), false);
+	player->nextTrack();
+	QCOMPARE(player->loop_starting_file, 4);
 }
 
 void TestPlaylistPlayer::initTestCase()
