@@ -84,6 +84,14 @@ Image {
      */
     function installPopup(sourceComponent, properties) {
         popupLoader.setComponent(sourceComponent, properties)
+        // sometimes it happens that the dynamically created item has the same
+        // address of the last created item; in such a case the target assignment
+        // has no effect and the connection with the closePopup signal doesn't
+        // happen and weird things start to happen (popup is not closed and
+        // application is locked); to avoid such a no go we first assign the
+        // null value and only then we assign the desired value: in this way
+        // the closePopup signal is always connected
+        popupConnection.target = null
         popupConnection.target = popupLoader.item
         page.state = "popup"
     }

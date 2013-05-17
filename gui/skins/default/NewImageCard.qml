@@ -21,6 +21,14 @@ BasePage {
     property alias fullImage: sourceImage.source
     property alias helpUrl: toolbar.helpUrl
 
+    /**
+      Called when home button on the toolbar is clicked.
+      Default implementation navigates to home page.
+      */
+    function homeButtonClicked() {
+        Stack.backToHome()
+    }
+
     Rectangle {
         id: bg
         color: "white"
@@ -37,6 +45,7 @@ BasePage {
             left: parent.left
             right: parent.right
         }
+        onHomeClicked: homeButtonClicked()
     }
 
     SvgImage {
