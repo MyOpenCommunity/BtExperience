@@ -168,6 +168,20 @@ BasePage {
                 bottom: bottomDarkRect.top
             }
         }
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                // centers selection rect on point click
+                var clickedX = mouse.x
+                var clickedY = mouse.y
+                var middleX = transparentRect.x + transparentRect.width / 2
+                var middleY = transparentRect.y + transparentRect.height / 2
+                transparentRect.x += (clickedX - middleX)
+                transparentRect.y += (clickedY - middleY)
+                privateProps.adjustPosition()
+            }
+        }
     }
 
     ButtonImageThreeStates {
