@@ -217,7 +217,7 @@ MenuColumn {
 
         SvgImage {
             source: "../../images/common/panel_zones.svg"
-            height: zoneText.height + zoneView.height + buttonZones.height + parent.height / 100 * 11
+            height: zoneText.height + zoneView.height + buttonZones.height + buttonZones.height / 100 * 128.57
 
             Rectangle {
                 id: zoneDarkRect
