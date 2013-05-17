@@ -59,16 +59,6 @@ Image {
      */
     signal popupDismissed
 
-    function showAlert(sourceElement, message) {
-        popupLoader.setComponent(alertComponent, {"message": message, "source": sourceElement})
-        popupLoader.item.closeAlert.connect(closeAlert)
-        page.state = "alert"
-    }
-
-    function closeAlert() {
-        closePopup()
-    }
-
     /**
       Creates a customizable popup associated to this page.
       The source component must emit the BasePage::closePopup signal at proper
@@ -168,11 +158,6 @@ Image {
     MouseArea {
         id: blockClicks
         anchors.fill: parent
-    }
-
-    Component {
-        id: alertComponent
-        Alert {}
     }
 
     Connections {
@@ -291,11 +276,6 @@ Image {
     }
 
     states: [
-        State {
-            name: "alert"
-            PropertyChanges { target: popupLoader; opacity: 1 }
-            PropertyChanges { target: blackBg; opacity: 0.85; visible: true }
-        },
         State {
             name: "popup"
             PropertyChanges { target: popupLoader; opacity: 1 }

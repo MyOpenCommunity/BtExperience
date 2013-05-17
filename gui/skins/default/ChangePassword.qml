@@ -233,8 +233,13 @@ Page {
                                 oldPasswordInput.focus = false
                                 newPasswordInput.focus = false
                                 repeatPasswordInput.focus = false
-                                page.showAlert(page, page.names.get('REBOOT', 0))
+                                page.installPopup(alertComponent, {"message": page.names.get('REBOOT', 0), "source": page})
                             }
+                        }
+
+                        Component {
+                            id: alertComponent
+                            Alert {}
                         }
 
                         ButtonThreeStates {

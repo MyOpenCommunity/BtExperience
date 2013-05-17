@@ -70,8 +70,13 @@ MenuColumn {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 column.closeChild()
-                pageObject.showAlert(column, qsTr("Pressing ok will delete all browser history.\nContinue?"))
+                pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will delete all browser history.\nContinue?"), "source": column})
             }
+        }
+
+        Component {
+            id: alertComponent
+            Alert {}
         }
     }
 

@@ -121,6 +121,11 @@ MenuColumn {
     }
 
     Component {
+        id: alertComponent
+        Alert {}
+    }
+
+    Component {
         id: summaryItem
         Column {
             ControlTitleValue {
@@ -149,7 +154,7 @@ MenuColumn {
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
+                    pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
                 }
                 onCancelClicked: {
                     privateProps.model.reset()
@@ -245,7 +250,7 @@ MenuColumn {
                 ButtonOkCancel {
                     onOkClicked: {
                         focus = true // to accept current value (if any)
-                        pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
+                        pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
                     }
                     onCancelClicked: {
                         privateProps.model.reset()

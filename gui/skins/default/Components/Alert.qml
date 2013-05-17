@@ -8,7 +8,7 @@ Column {
     property alias message: text.text
     property Item source: null
 
-    signal closeAlert
+    signal closePopup
 
     spacing: 4
 
@@ -70,7 +70,7 @@ Column {
                 onPressed: {
                     alert.source.alertOkClicked()
                     alert.source = null
-                    alert.closeAlert()
+                    alert.closePopup()
                 }
             }
 
@@ -85,7 +85,7 @@ Column {
                     if (alert.source.alertCancelClicked)
                         alert.source.alertCancelClicked()
                     alert.source = null
-                    alert.closeAlert()
+                    alert.closePopup()
                 }
             }
         }

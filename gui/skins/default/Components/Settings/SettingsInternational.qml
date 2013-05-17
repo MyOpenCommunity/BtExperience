@@ -40,8 +40,13 @@ MenuColumn {
         property string keyboardLayout: ""
 
         function showAlert() {
-            pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
+            pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
         }
+    }
+
+    Component {
+        id: alertComponent
+        Alert {}
     }
 
     onChildDestroyed: privateProps.currentIndex = -1

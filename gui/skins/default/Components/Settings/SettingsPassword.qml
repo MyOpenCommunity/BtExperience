@@ -56,6 +56,11 @@ MenuColumn {
     }
 
     Component {
+        id: alertComponent
+        Alert {}
+    }
+
+    Component {
         id: passwordInput
         PasswordInput {
             property bool newValue
@@ -63,7 +68,7 @@ MenuColumn {
                 if (global.password === password) {
                     privateProps.pass = newValue
                     pageObject.closePopup()
-                    pageObject.showAlert(column, pageObject.names.get('REBOOT', 0))
+                    pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
                     return
                 }
 

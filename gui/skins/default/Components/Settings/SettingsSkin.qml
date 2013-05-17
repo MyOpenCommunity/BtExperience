@@ -30,6 +30,11 @@ MenuColumn {
         property int skin
     }
 
+    Component {
+        id: alertComponent
+        Alert {}
+    }
+
     ListView {
         id: view
         currentIndex: homeProperties.skin
@@ -39,7 +44,7 @@ MenuColumn {
             name: pageObject.names.get('SKIN', modelData)
             onDelegateTouched: {
                 privateProps.skin = modelData
-                pageObject.showAlert(column, qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?"))
+                pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?"), "source": column})
             }
         }
         model: [HomeProperties.Clear,
