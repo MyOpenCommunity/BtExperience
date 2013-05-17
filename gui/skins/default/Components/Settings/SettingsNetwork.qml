@@ -33,17 +33,6 @@ MenuColumn {
         filters: [{objectId: ObjectInterface.IdPlatformSettings}]
     }
 
-    function alertCancelClicked() {
-        privateProps.model.reset()
-        column.closeColumn()
-    }
-
-    function alertOkClicked() {
-        privateProps.model.apply()
-        EventManager.eventManager.notificationsEnabled = false
-        Stack.backToHome({state: "pageLoading"})
-    }
-
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
@@ -122,7 +111,17 @@ MenuColumn {
 
     Component {
         id: alertComponent
-        Alert {}
+        Alert {
+            onAlertCancelClicked: {
+                privateProps.model.reset()
+                column.closeColumn()
+            }
+            onAlertOkClicked: {
+                privateProps.model.apply()
+                EventManager.eventManager.notificationsEnabled = false
+                Stack.backToHome({state: "pageLoading"})
+            }
+        }
     }
 
     Component {
@@ -154,7 +153,7 @@ MenuColumn {
             }
             ButtonOkCancel {
                 onOkClicked: {
-                    pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
+                    pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0)})
                 }
                 onCancelClicked: {
                     privateProps.model.reset()
@@ -250,7 +249,7 @@ MenuColumn {
                 ButtonOkCancel {
                     onOkClicked: {
                         focus = true // to accept current value (if any)
-                        pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
+                        pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0)})
                     }
                     onCancelClicked: {
                         privateProps.model.reset()

@@ -6,9 +6,10 @@ Column {
     id: alert
 
     property alias message: text.text
-    property Item source: null
 
     signal closePopup
+    signal alertOkClicked
+    signal alertCancelClicked
 
     spacing: 4
 
@@ -68,8 +69,7 @@ Column {
                 text: qsTr("ok")
                 font.pixelSize: 14
                 onPressed: {
-                    alert.source.alertOkClicked()
-                    alert.source = null
+                    alert.alertOkClicked()
                     alert.closePopup()
                 }
             }
@@ -82,9 +82,7 @@ Column {
                 text: qsTr("cancel")
                 font.pixelSize: 14
                 onPressed: {
-                    if (alert.source.alertCancelClicked)
-                        alert.source.alertCancelClicked()
-                    alert.source = null
+                    alert.alertCancelClicked()
                     alert.closePopup()
                 }
             }

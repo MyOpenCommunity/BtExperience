@@ -19,16 +19,6 @@ MenuColumn {
         KeyboardLanguage {}
     }
 
-    function alertOkClicked() {
-        if (privateProps.currentIndex === 1)
-            global.guiSettings.language = privateProps.language
-        else if (privateProps.currentIndex === 2)
-            global.keyboardLayout = privateProps.keyboardLayout
-
-        EventManager.eventManager.notificationsEnabled = false
-        Stack.backToHome({state: "pageLoading"})
-    }
-
     // we don't have a ListView, so we don't have a currentIndex property: let's define it
     QtObject {
         id: privateProps
@@ -40,13 +30,23 @@ MenuColumn {
         property string keyboardLayout: ""
 
         function showAlert() {
-            pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
+            pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0)})
         }
     }
 
     Component {
         id: alertComponent
-        Alert {}
+        Alert {
+            onAlertOkClicked: {
+                if (privateProps.currentIndex === 1)
+                    global.guiSettings.language = privateProps.language
+                else if (privateProps.currentIndex === 2)
+                    global.keyboardLayout = privateProps.keyboardLayout
+
+                EventManager.eventManager.notificationsEnabled = false
+                Stack.backToHome({state: "pageLoading"})
+            }
+        }
     }
 
     onChildDestroyed: privateProps.currentIndex = -1

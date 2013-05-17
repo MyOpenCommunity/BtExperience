@@ -43,12 +43,6 @@ MenuColumn {
         }
     }
 
-    function alertOkClicked() {
-        global.passwordEnabled = privateProps.pass
-        EventManager.eventManager.notificationsEnabled = false
-        Stack.backToHome({state: "pageLoading"})
-    }
-
     QtObject {
         id: privateProps
 
@@ -57,7 +51,13 @@ MenuColumn {
 
     Component {
         id: alertComponent
-        Alert {}
+        Alert {
+            onAlertOkClicked:  {
+                global.passwordEnabled = privateProps.pass
+                EventManager.eventManager.notificationsEnabled = false
+                Stack.backToHome({state: "pageLoading"})
+            }
+        }
     }
 
     Component {
@@ -68,7 +68,7 @@ MenuColumn {
                 if (global.password === password) {
                     privateProps.pass = newValue
                     pageObject.closePopup()
-                    pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0), "source": column})
+                    pageObject.installPopup(alertComponent, {"message": pageObject.names.get('REBOOT', 0)})
                     return
                 }
 

@@ -12,19 +12,6 @@ MenuColumn {
     width: 212
     height: Math.max(1, 50 * view.count)
 
-    function alertOkClicked() {
-        var isDefault = false
-        if (homeProperties.homeBgImage === Default.getDefaultHomeBg())
-            isDefault = true
-
-        homeProperties.skin = privateProps.skin
-
-        if (isDefault)
-            homeProperties.homeBgImage = Default.getDefaultHomeBg()
-
-        Stack.backToHome()
-    }
-
     QtObject {
         id: privateProps
         property int skin
@@ -32,7 +19,20 @@ MenuColumn {
 
     Component {
         id: alertComponent
-        Alert {}
+        Alert {
+            onAlertOkClicked: {
+                var isDefault = false
+                if (homeProperties.homeBgImage === Default.getDefaultHomeBg())
+                    isDefault = true
+
+                homeProperties.skin = privateProps.skin
+
+                if (isDefault)
+                    homeProperties.homeBgImage = Default.getDefaultHomeBg()
+
+                Stack.backToHome()
+            }
+        }
     }
 
     ListView {
@@ -44,7 +44,7 @@ MenuColumn {
             name: pageObject.names.get('SKIN', modelData)
             onDelegateTouched: {
                 privateProps.skin = modelData
-                pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?"), "source": column})
+                pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?")})
             }
         }
         model: [HomeProperties.Clear,

@@ -15,10 +15,6 @@ MenuColumn {
         privateProps.currentIndex = -1
     }
 
-    function alertOkClicked() {
-        global.deleteHistory()
-    }
-
     Column {
         MenuItem {
             id: homePageItem
@@ -70,15 +66,18 @@ MenuColumn {
                 if (privateProps.currentIndex !== 3)
                     privateProps.currentIndex = 3
                 column.closeChild()
-                pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will delete all browser history.\nContinue?"), "source": column})
+                pageObject.installPopup(alertComponent, {"message": qsTr("Pressing ok will delete all browser history.\nContinue?")})
             }
         }
 
         Component {
             id: alertComponent
-            Alert {}
+            Alert {
+                onAlertOkClicked: {
+                    global.deleteHistory()
+                }
+            }
         }
     }
-
 }
 

@@ -28,12 +28,6 @@ Page {
 
     Component.onCompleted: oldPasswordInputArea.setFocus()
 
-    function alertOkClicked() {
-        global.password = newPasswordInput.text
-        EventManager.eventManager.notificationsEnabled = false
-        Stack.backToHome({state: "pageLoading"})
-    }
-
     Names {
         id: translations
     }
@@ -233,13 +227,19 @@ Page {
                                 oldPasswordInput.focus = false
                                 newPasswordInput.focus = false
                                 repeatPasswordInput.focus = false
-                                page.installPopup(alertComponent, {"message": page.names.get('REBOOT', 0), "source": page})
+                                page.installPopup(alertComponent, {"message": page.names.get('REBOOT', 0)})
                             }
                         }
 
                         Component {
                             id: alertComponent
-                            Alert {}
+                            Alert {
+                                onAlertOkClicked: {
+                                    global.password = newPasswordInput.text
+                                    EventManager.eventManager.notificationsEnabled = false
+                                    Stack.backToHome({state: "pageLoading"})
+                                }
+                            }
                         }
 
                         ButtonThreeStates {
