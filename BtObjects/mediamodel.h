@@ -4,7 +4,6 @@
 #include <QSortFilterProxyModel>
 
 class ItemInterface;
-class UiiMapper;
 
 
 /*!
@@ -257,8 +256,6 @@ public:
 	void setSource(MediaDataModel *s);
 	MediaDataModel *getSource() const;
 
-	static void setUiiMapper(const UiiMapper *map);
-
 signals:
 	void rangeChanged();
 	void sourceChanged();
@@ -281,7 +278,6 @@ private:
 	QVariantList containers;
 	int min_range, max_range;
 	bool pending_reset;
-	static const UiiMapper *uii_map;
 	// used for the pagination. We need a mutable because the filterAcceptRow
 	// is a const method.
 	mutable int counter;

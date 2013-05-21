@@ -276,7 +276,7 @@ BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(
 	if (!is_upnp_source_available && upnp_sound_source)
 		upnp_sound_source->setContainerUii(-1);
 
-	MediaModel::setUiiMapper(&uii_map);
+	UiiMapper::setUiiMapper(&uii_map);
 	device::initDevices();
 	createFlagFile(CONF_LOADED);
 }

@@ -49,3 +49,15 @@ void UiiMapper::elementDestroyed(QObject *obj)
 {
 	remove(obj);
 }
+
+void UiiMapper::setUiiMapper(UiiMapper *map)
+{
+	uii_map = map;
+}
+
+UiiMapper *UiiMapper::getUiiMapper()
+{
+	return uii_map;
+}
+
+UiiMapper *UiiMapper::uii_map = 0;

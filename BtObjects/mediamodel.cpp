@@ -1,7 +1,7 @@
 #include "mediamodel.h"
 #include "iteminterface.h"
-#include "uiimapper.h"
 #include "container.h"
+#include "uiimapper.h"
 
 #include <QTimer>
 #include <QtDebug>
@@ -174,11 +174,6 @@ MediaDataModel *MediaModel::getSource() const
 	return qobject_cast<MediaDataModel *>(sourceModel());
 }
 
-void MediaModel::setUiiMapper(const UiiMapper *map)
-{
-	uii_map = map;
-}
-
 QVariantList MediaModel::getRange() const
 {
 	return QVariantList() << min_range << max_range;
@@ -270,7 +265,7 @@ bool MediaModel::lessThan(const QModelIndex &left, const QModelIndex &right) con
 	if (c == -1)
 		return false;
 
-	Container *container = uii_map->value<Container>(c);
+	Container *container = UiiMapper::getUiiMapper()->value<Container>(c);
 	if (!container)
 		return false;
 
@@ -278,9 +273,9 @@ bool MediaModel::lessThan(const QModelIndex &left, const QModelIndex &right) con
 	QList<int> uiis = container->getItemOrder();
 	for (int i = 0; i < uiis.size(); ++i)
 	{
-		if (uii_map->value<ItemInterface>(uiis.at(i)) == left_item)
+		if (UiiMapper::getUiiMapper()->value<ItemInterface>(uiis.at(i)) == left_item)
 			left_index = i;
-		if (uii_map->value<ItemInterface>(uiis.at(i)) == right_item)
+		if (UiiMapper::getUiiMapper()->value<ItemInterface>(uiis.at(i)) == right_item)
 			right_index = i;
 	}
 
@@ -378,6 +373,3 @@ void MediaModel::prepend(ItemInterface *obj)
 {
 	getSource()->prepend(obj);
 }
-
-
-const UiiMapper *MediaModel::uii_map = 0;

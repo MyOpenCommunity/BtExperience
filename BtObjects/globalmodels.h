@@ -168,6 +168,8 @@ public:
 
 	Q_INVOKABLE ItemInterface *createAlarmClock();
 
+	Q_INVOKABLE ItemInterface *createProfile(QString name=QString());
+
 	void setProfiles(MediaDataModel *profiles);
 	MediaDataModel *getProfiles() const;
 

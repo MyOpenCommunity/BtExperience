@@ -25,6 +25,8 @@ MenuColumn {
     QtObject {
         id: privateProps
 
+        property int currentIndex: -1
+
         function openProfileMenu(navigationData) {
             var absIndex = profilesModel.getAbsoluteIndexOf(navigationData)
             if (absIndex === -1)
@@ -34,21 +36,54 @@ MenuColumn {
         }
     }
 
-    PaginatorList {
-        id: paginator
+    Column {
+        MenuItem {
+            name: qsTr("Add Profile")
+            onTouched: {
+                if (privateProps.currentIndex !== 1) {
+                    privateProps.currentIndex = 1
+                    if (column.child)
+                        column.closeChild()
+                    paginator.currentIndex = -1
+                }
+                pageObject.installPopup(popupAddProfile)
+            }
+            Component {
+                id: popupAddProfile
+                FavoriteEditPopup {
+                    title: qsTr("Insert new profile name")
+                    topInputLabel: qsTr("New Name:")
+                    topInputText: ""
+                    bottomVisible: false
 
-        model: profilesModel
-        onCurrentPageChanged: column.closeChild()
-
-        delegate: MenuItemDelegate {
-            itemObject: profilesModel.getObject(index)
-            hasChild: true
-            name: itemObject.description
-            onDelegateTouched: openColumn(itemObject)
+                    function okClicked() {
+                        myHomeModels.createProfile(topInputText)
+                    }
+                }
+            }
         }
 
-        function openColumn(itemObject) {
-            column.loadColumn(settingsProfileComponent, itemObject.description, itemObject)
+        PaginatorList {
+            id: paginator
+
+            elementsOnPage: elementsOnMenuPage - 1
+            currentIndex: -1
+            model: profilesModel
+            onCurrentPageChanged: column.closeChild()
+
+            delegate: MenuItemDelegate {
+                itemObject: profilesModel.getObject(index)
+                hasChild: true
+                name: itemObject.description
+                onDelegateTouched: {
+                    privateProps.currentIndex = -1
+                    openColumn(itemObject)
+                }
+            }
+
+            function openColumn(itemObject) {
+                column.loadColumn(settingsProfileComponent, itemObject.description, itemObject)
+            }
         }
     }
 

@@ -71,12 +71,28 @@ public:
 		return next_uii;
 	}
 
+	/*!
+	 * \brief setUiiMapper
+	 * Helper function to store a reference to UiiMapper that can be used
+	 * to create BtObjects outside of btobjectsplugin
+	 * \param map the reference to store
+	 */
+	static void setUiiMapper(UiiMapper *map);
+
+	/*!
+	 * \brief getUiiMapper
+	 * Helper function to retrieve the UiiMapper instance
+	 * \return the UiiMapper instance
+	 */
+	static UiiMapper *getUiiMapper();
+
 private slots:
 	void elementDestroyed(QObject *obj);
 
 private:
 	QHash<int, QObject *> items;
 	int next_uii;
+	static UiiMapper *uii_map;
 };
 
 #endif // UIIMAPPER_H

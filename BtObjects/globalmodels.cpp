@@ -6,9 +6,31 @@
 #include "objectmodel.h"
 #include "alarmclocknotifier.h"
 #include "container.h"
+#include "homeproperties.h"
+#include "uiimapper.h"
 
 #include <QDebug>
 
+#include <QApplication>
+#include <QDeclarativeView>
+#include <QDeclarativeContext>
+#include <QDeclarativeProperty>
+
+
+namespace
+{
+	// I need to find the top QDeclarativeView to obtain the root context;
+	// from the root context I will have access to the global property which
+	// contains paths for extra dirs
+	QDeclarativeView *getDeclarativeView()
+	{
+		foreach (QWidget *w, qApp->topLevelWidgets())
+			if (qobject_cast<QDeclarativeView *>(w))
+				return static_cast<QDeclarativeView *>(w);
+
+		return 0;
+	}
+}
 
 GlobalModels::GlobalModels()
 {
@@ -178,6 +200,39 @@ ItemInterface *GlobalModels::createAlarmClock()
 	}
 
 	return alarmClock;
+}
+
+ItemInterface *GlobalModels::createProfile(QString name)
+{
+	// tries to get a pointer to HomeProperties through the root context
+	HomeProperties *h = 0;
+	QDeclarativeView *view = getDeclarativeView();
+	if (view)
+	{
+		QDeclarativeProperty property(qvariant_cast<QObject *>(view->rootContext()->contextProperty("homeProperties")));
+		QObject *o = property.read().value<QObject *>();
+		h = qobject_cast<HomeProperties *>(o);
+	}
+	// gets an uii for the profile to be created
+	int uii = UiiMapper::getUiiMapper()->nextUii();
+	// creates a profile with name and adds it to the container
+	Container *profile = new ContainerWithCard(Container::IdProfile, uii, "", "", name, h);
+	MediaDataModel *profilesContainer = getProfiles();
+	*profilesContainer << profile;
+	// updates items order for profiles
+	QList<int> uiis;
+	for (int i = 0; i < profilesContainer->getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(profilesContainer->getObject(i));
+		uiis << c->getUii();
+	}
+	for (int i = 0; i < profilesContainer->getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(profilesContainer->getObject(i));
+		c->setItemOrder(uiis);
+	}
+
+	return profile;
 }
 
 void GlobalModels::setProfiles(MediaDataModel *_profiles)
