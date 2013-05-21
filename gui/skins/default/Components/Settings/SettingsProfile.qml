@@ -49,6 +49,15 @@ MenuColumn {
                 pageObject.installPopup(okCancelDialogRestore, {"item": column.dataModel})
             }
         }
+
+        MenuItem {
+            name: qsTr("Delete")
+            isSelected: privateProps.currentIndex === 5
+            onTouched: {
+                privateProps.currentIndex = -1
+                pageObject.installPopup(deleteDialog, {"item": column.dataModel})
+            }
+        }
     }
 
     QtObject {
@@ -59,6 +68,47 @@ MenuColumn {
     Component {
         id: settingsImageBrowser
         SettingsImageBrowser {}
+    }
+
+    ObjectModel {
+        id: profilesModel
+        source: myHomeModels.profiles
+    }
+
+    MediaModel {
+        id: userNotes
+        source: myHomeModels.notes
+    }
+
+    MediaModel {
+        id: mediaLinks
+        source: myHomeModels.mediaLinks
+    }
+
+    Component {
+        id: deleteDialog
+
+        TextDialog {
+            property variant item
+
+            title: qsTr("Confirm operation")
+            text: qsTr("Do you want to permanently delete the profile and all associated information?")
+
+            function okClicked() {
+                userNotes.containers = [item.uii]
+                for (var i = 0; i < userNotes.count; ++i) {
+                    var n = userNotes.getObject(i)
+                    userNotes.remove(n)
+                }
+                mediaLinks.containers = [item.uii]
+                for (var i = 0; i < mediaLinks.count; ++i) {
+                    var l = mediaLinks.getObject(i)
+                    mediaLinks.remove(l)
+                }
+                profilesModel.remove(item)
+                column.closeColumn()
+            }
+        }
     }
 
     Component {
