@@ -1,5 +1,6 @@
 # misc
 *.pro.user
+*.pro.user.2.5pre1
 # build
 BtExperience_qws
 Makefile
