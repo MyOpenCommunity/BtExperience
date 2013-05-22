@@ -99,10 +99,10 @@ public:
 	int getUii() const;
 
 	void setImage(QString image);
-	QString getImage() const;
+	QString getImage();
 
-	virtual QString getCardImage() const;
-	virtual QString getCardImageCached() const;
+	virtual QString getCardImage();
+	virtual QString getCardImageCached();
 
 	void setDescription(QString description);
 	QString getDescription() const;
@@ -121,6 +121,7 @@ signals:
 
 protected:
 	QString getCacheId() const;
+	void homePropertiesCheck();
 
 	QString images_folder, custom_images_folder;
 
@@ -148,10 +149,10 @@ public:
 	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description, HomeProperties *home_properties = 0);
 
 	void setCardImage(QString image);
-	virtual QString getCardImage() const;
-	virtual QString getCardImageCached() const;
+	virtual QString getCardImage();
+	virtual QString getCardImageCached();
 
-	QString getCardImageConfName() const;
+	QString getCardImageConfName();
 
 signals:
 	void cardImageChanged();

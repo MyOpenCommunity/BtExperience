@@ -128,6 +128,19 @@ namespace
 		}
 	}
 
+	bool removeLink(QDomNode parent, int uii)
+	{
+		foreach (QDomNode link_node, getChildren(parent, "link")) {
+			int link_uii = getIntAttribute(link_node, "uii");
+			if (link_uii == uii)
+			{
+				parent.removeChild(link_node);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	QDomElement createLink(QDomNode parent, int uii)
 	{
 		QDomElement link_node = parent.ownerDocument().createElement("link");
@@ -891,12 +904,34 @@ void BtObjectsPlugin::updateObject(ItemInterface *obj)
 	}
 	else if (obj_cont)
 	{
+		QPair<QDomNode, QString> container_path;
+
 		ContainerWithCard *obj_card = qobject_cast<ContainerWithCard *>(obj_cont);
 
 		updateContainerNameImage(node_path.first, obj_cont);
 
 		if (obj_card)
 			updateProfileCardImage(node_path.first, obj_card);
+
+		if (obj_cont->getContainerUii() == -1)
+		{
+			// if this is a room and is linked inside a floor we have to remove
+			// the link inside the floor
+			bool save_conf = false;
+			for (int i = 0; i < floor_model.getCount(); ++i)
+			{
+				ItemInterface *item = floor_model.getObject(i);
+				Container *f = qobject_cast<Container *>(item);
+				if (f->getUii() == -1)
+					continue;
+				container_path = findNodeForUii(f->getUii());
+				if (container_path.first.isNull())
+					continue;
+				save_conf |= removeLink(container_path.first, obj_cont->getUii());
+			}
+			if (save_conf)
+				configurations->saveConfiguration(container_path.second);
+		}
 	}
 	else if (obj_media)
 	{

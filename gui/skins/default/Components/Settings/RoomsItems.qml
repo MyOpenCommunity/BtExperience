@@ -16,6 +16,22 @@ MenuColumn {
     }
 
     MediaModel {
+        id: roomLinksModel
+        source: myHomeModels.objectLinks
+    }
+
+    MediaModel {
+        id: allRoomsModel
+        source: myHomeModels.rooms
+        containers: [floorUii]
+    }
+
+    MediaModel {
+        id: floorsModel
+        source: myHomeModels.floors
+    }
+
+    MediaModel {
         id: roomsModel
         source: myHomeModels.rooms
         containers: [floorUii]
@@ -24,23 +40,97 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    PaginatorList {
-        id: paginator
-        function openColumn(itemObject) {
-            column.loadColumn(modifyRoom, itemObject.description, itemObject)
+    Column {
+        MenuItem {
+            name: qsTr("Add Room")
+            onTouched: {
+                if (privateProps.currentIndex !== 1) {
+                    privateProps.currentIndex = 1
+                    if (column.child)
+                        column.closeChild()
+                    paginator.currentIndex = -1
+                }
+                pageObject.installPopup(popupAddRoom)
+            }
+            Component {
+                id: popupAddRoom
+                FavoriteEditPopup {
+                    title: qsTr("Insert new room name")
+                    topInputLabel: qsTr("New Name:")
+                    topInputText: ""
+                    bottomVisible: false
+
+                    function okClicked() {
+                        myHomeModels.createRoom(floorUii, topInputText)
+                    }
+                }
+            }
         }
 
-        delegate: MenuItemDelegate {
-            itemObject: roomsModel.getObject(index)
-            name: itemObject.description
-            hasChild: true
-            onDelegateTouched: openColumn(itemObject)
+        MenuItem {
+            name: qsTr("Delete Floor")
+            onTouched: {
+                if (privateProps.currentIndex !== 2) {
+                    privateProps.currentIndex = 2
+                    if (column.child)
+                        column.closeChild()
+                    paginator.currentIndex = -1
+                }
+                pageObject.installPopup(deleteDialog, {"item": floorUii})
+            }
+            Component {
+                id: deleteDialog
+
+                TextDialog {
+                    property variant item
+
+                    title: qsTr("Confirm operation")
+                    text: qsTr("Do you want to permanently delete the floor, all contained rooms and all associated information?")
+
+                    function okClicked() {
+                        for (var i = 0; i < allRoomsModel.count; ++i) {
+                            var r = allRoomsModel.getObject(i)
+                            roomLinksModel.containers = [r.uii]
+                            for (var j = 0; j < roomLinksModel.count; ++j) {
+                                var l = roomLinksModel.getObject(j)
+                                roomLinksModel.remove(l)
+                            }
+                            r.containerUii = -1
+                            allRoomsModel.remove(r)
+                        }
+                        for (var i = 0; i < floorsModel.count; ++i) {
+                            var f = floorsModel.getObject(i)
+                            if (f.uii === floorUii)
+                                floorsModel.remove(f)
+                        }
+                        column.closeColumn()
+                    }
+                }
+            }
         }
-        model: roomsModel
+
+        PaginatorList {
+            id: paginator
+
+            function openColumn(itemObject) {
+                privateProps.currentIndex = -1
+                column.loadColumn(modifyRoom, itemObject.description, itemObject)
+            }
+
+            delegate: MenuItemDelegate {
+                itemObject: roomsModel.getObject(index)
+                name: itemObject.description
+                hasChild: true
+                onDelegateTouched: openColumn(itemObject)
+            }
+            model: roomsModel
+        }
     }
 
     QtObject {
         id: privateProps
+
+        property int currentIndex: -1
 
         function openRoomMenu(navigationData) {
             var absIndex = roomsModel.getAbsoluteIndexOf(navigationData[0])

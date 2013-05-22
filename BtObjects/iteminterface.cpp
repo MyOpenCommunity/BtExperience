@@ -6,6 +6,8 @@ ItemInterface::ItemInterface(QObject *parent) :
 	QObject(parent)
 {
 	container_uii = -1;
+
+	connect(this, SIGNAL(containerChanged()), this, SIGNAL(persistItem()));
 }
 
 void ItemInterface::setContainerUii(int id)

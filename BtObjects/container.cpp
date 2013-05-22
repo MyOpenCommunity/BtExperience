@@ -57,6 +57,20 @@ namespace
 
 		return result;
 	}
+
+	HomeProperties *getHomeProperties()
+	{
+		// tries to get a pointer to HomeProperties through the root context
+		HomeProperties *h = 0;
+		QDeclarativeView *view = getDeclarativeView();
+		if (view)
+		{
+			QVariant v = view->rootContext()->contextProperty("homeProperties");
+			QObject *o = v.value<QObject *>();
+			h = qobject_cast<HomeProperties *>(o);
+		}
+		return h;
+	}
 }
 
 void updateContainerNameImage(QDomNode node, Container *item)
@@ -144,9 +158,25 @@ QList<int> Container::getItemOrder() const
 	return item_order;
 }
 
-QString Container::getImage() const
+void Container::homePropertiesCheck()
+{
+	// if home_properties is not set tries to retrieve it a last time
+	if (!home_properties)
+	{
+		HomeProperties *h = getHomeProperties();
+		if (h)
+		{
+			home_properties = h;
+			connect(home_properties, SIGNAL(skinChanged()), this, SIGNAL(imageChanged()));
+		}
+	}
+}
+
+QString Container::getImage()
 {
 	QString result;
+
+	homePropertiesCheck();
 
 	// if image is set and not a default one, uses it as is
 	if (image != "" && image != HOME_BG_CLEAR && image != HOME_BG_DARK)
@@ -175,13 +205,15 @@ QString Container::getImage() const
 	return images_folder + result;
 }
 
-QString Container::getCardImage() const
+QString Container::getCardImage()
 {
+	homePropertiesCheck();
 	return getImage();
 }
 
-QString Container::getCardImageCached() const
+QString Container::getCardImageCached()
 {
+	homePropertiesCheck();
 	return getImage() + "?cache_id=" + getCacheId();
 }
 
@@ -230,8 +262,10 @@ void ContainerWithCard::setCardImage(QString image)
 	emit cardImageChanged();
 }
 
-QString ContainerWithCard::getCardImage() const
+QString ContainerWithCard::getCardImage()
 {
+	homePropertiesCheck();
+
 	bool is_custom = (card_image.indexOf("custom_images/") == 0);
 
 	if (is_custom)
@@ -240,12 +274,15 @@ QString ContainerWithCard::getCardImage() const
 	return images_folder + card_image;
 }
 
-QString ContainerWithCard::getCardImageCached() const
+QString ContainerWithCard::getCardImageCached()
 {
+	homePropertiesCheck();
+
 	return getCardImage() + "?cache_id=" + getCacheId();
 }
 
-QString ContainerWithCard::getCardImageConfName() const
+QString ContainerWithCard::getCardImageConfName()
 {
+	homePropertiesCheck();
 	return card_image;
 }

@@ -202,21 +202,63 @@ ItemInterface *GlobalModels::createAlarmClock()
 	return alarmClock;
 }
 
+ItemInterface *GlobalModels::createFloor(QString name)
+{
+	// gets an uii for the floor to be created
+	int uii = UiiMapper::getUiiMapper()->nextUii();
+	// creates a floor with name adds it to the container
+	Container *floor = new Container(Container::IdFloors, uii, "", name);
+	MediaDataModel *floors = getFloors();
+	*floors << floor;
+	// updates items order for profiles
+	QList<int> uiis;
+	for (int i = 0; i < floors->getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(floors->getObject(i));
+		uiis << c->getUii();
+	}
+	for (int i = 0; i < floors->getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(floors->getObject(i));
+		c->setItemOrder(uiis);
+	}
+
+	return floor;
+}
+
+ItemInterface *GlobalModels::createRoom(int floor_uii, QString name)
+{
+	// gets an uii for the room to be created
+	int uii = UiiMapper::getUiiMapper()->nextUii();
+	// creates a room with name and adds it to the container
+	ContainerWithCard *room = new ContainerWithCard(Container::IdRooms, uii, "", "", name, 0);
+	// sets the floor on the room
+	room->setContainerUii(floor_uii);
+	MediaDataModel *roomsContainer = getRooms();
+	*roomsContainer << room;
+	// updates items order for profiles
+	QList<int> uiis;
+	for (int i = 0; i < roomsContainer->getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(roomsContainer->getObject(i));
+		uiis << c->getUii();
+	}
+	for (int i = 0; i < roomsContainer->getCount(); ++i)
+	{
+		Container *c = qobject_cast<Container *>(roomsContainer->getObject(i));
+		c->setItemOrder(uiis);
+	}
+	room->setCardImage("images/card/living_room.jpg");
+
+	return room;
+}
+
 ItemInterface *GlobalModels::createProfile(QString name)
 {
-	// tries to get a pointer to HomeProperties through the root context
-	HomeProperties *h = 0;
-	QDeclarativeView *view = getDeclarativeView();
-	if (view)
-	{
-		QDeclarativeProperty property(qvariant_cast<QObject *>(view->rootContext()->contextProperty("homeProperties")));
-		QObject *o = property.read().value<QObject *>();
-		h = qobject_cast<HomeProperties *>(o);
-	}
 	// gets an uii for the profile to be created
 	int uii = UiiMapper::getUiiMapper()->nextUii();
 	// creates a profile with name and adds it to the container
-	Container *profile = new ContainerWithCard(Container::IdProfile, uii, "", "", name, h);
+	ContainerWithCard *profile = new ContainerWithCard(Container::IdProfile, uii, "", "", name, 0);
 	MediaDataModel *profilesContainer = getProfiles();
 	*profilesContainer << profile;
 	// updates items order for profiles
@@ -231,6 +273,7 @@ ItemInterface *GlobalModels::createProfile(QString name)
 		Container *c = qobject_cast<Container *>(profilesContainer->getObject(i));
 		c->setItemOrder(uiis);
 	}
+	profile->setCardImage("images/card/home_family.png");
 
 	return profile;
 }

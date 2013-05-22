@@ -19,6 +19,9 @@ MenuColumn {
 
     QtObject {
         id: privateProps
+
+        property int currentIndex: -1
+
         function openFloorMenu(navigationData) {
             // we only have the floorUii so we need to find the C++ object
             var floorUii = navigationData.shift()
@@ -45,22 +48,51 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
-    PaginatorList {
-        id: paginator
-        currentIndex: -1
+    Column {
+        MenuItem {
+            name: qsTr("Add Floor")
+            onTouched: {
+                if (privateProps.currentIndex !== 1) {
+                    privateProps.currentIndex = 1
+                    if (column.child)
+                        column.closeChild()
+                    paginator.currentIndex = -1
+                }
+                pageObject.installPopup(popupAddFloor)
+            }
+            Component {
+                id: popupAddFloor
+                FavoriteEditPopup {
+                    title: qsTr("Insert new floor name")
+                    topInputLabel: qsTr("New Name:")
+                    topInputText: ""
+                    bottomVisible: false
 
-        function openColumn(itemObject) {
-            column.loadColumn(roomsItems, itemObject.description, itemObject, {"floorUii": itemObject.uii})
+                    function okClicked() {
+                        myHomeModels.createFloor(topInputText)
+                    }
+                }
+            }
         }
 
-        delegate: MenuItemDelegate {
-            itemObject: floorsModel.getObject(index)
-            name: itemObject.description
-            hasChild: true
-            onDelegateTouched: openColumn(itemObject)
-        }
+        PaginatorList {
+            id: paginator
+            currentIndex: -1
 
-        model: floorsModel
+            function openColumn(itemObject) {
+                privateProps.currentIndex = -1
+                column.loadColumn(roomsItems, itemObject.description, itemObject, {"floorUii": itemObject.uii})
+            }
+
+            delegate: MenuItemDelegate {
+                itemObject: floorsModel.getObject(index)
+                name: itemObject.description
+                hasChild: true
+                onDelegateTouched: openColumn(itemObject)
+            }
+
+            model: floorsModel
+        }
     }
 
     Component {
