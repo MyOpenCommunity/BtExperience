@@ -117,6 +117,7 @@ MenuColumn {
                 column.loadColumn(modifyRoom, itemObject.description, itemObject)
             }
 
+            elementsOnPage: elementsOnMenuPage - 2
             delegate: MenuItemDelegate {
                 itemObject: roomsModel.getObject(index)
                 name: itemObject.description

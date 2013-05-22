@@ -1,7 +1,9 @@
 import QtQuick 1.1
 import BtObjects 1.0
-import "../../js/Stack.js" as Stack
 import Components 1.0
+import "../../js/Stack.js" as Stack
+import "../../js/MenuItem.js" as Script
+
 
 MenuColumn {
     id: column
@@ -16,7 +18,17 @@ MenuColumn {
         source: myHomeModels.rooms
     }
 
-    onChildDestroyed: privateProps.currentIndex = -1
+    MediaModel {
+        id: linksModel
+        source: myHomeModels.objectLinks
+        containers: [column.dataModel.uii]
+        range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
+    }
+
+    onChildDestroyed: {
+        privateProps.currentIndex = -1
+        paginator.currentIndex = -1
+    }
 
     Column {
         MenuItem {
@@ -71,6 +83,24 @@ MenuColumn {
                 }
             }
         }
+
+        PaginatorList {
+            id: paginator
+
+            function openColumn(itemObject, index) {
+                privateProps.currentIndex = -1
+                column.loadColumn(deleteRenameLink, itemObject.name, itemObject, {"index": index})
+            }
+
+            elementsOnPage: elementsOnMenuPage - 3
+            delegate: MenuItemDelegate {
+                itemObject: linksModel.getObject(index).btObject
+                description: Script.description(itemObject)
+                onDelegateTouched: openColumn(itemObject, index)
+                hasChild: true
+            }
+            model: linksModel
+        }
     }
 
     QtObject {
@@ -81,5 +111,10 @@ MenuColumn {
     Component {
         id: settingsImageBrowser
         SettingsImageBrowser {}
+    }
+
+    Component {
+        id: deleteRenameLink
+        SettingsObjectLink { uii: column.dataModel.uii }
     }
 }

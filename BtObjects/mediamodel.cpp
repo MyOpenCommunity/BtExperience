@@ -31,7 +31,7 @@ bool MediaDataModel::remove(ItemInterface *obj)
 {
 	bool ok = removeRows(item_list.indexOf(obj), 1);
 	if (!ok)
-		qWarning() << "MediaDataModel::remove, there was an error when removing object" << obj;
+		qWarning() << __PRETTY_FUNCTION__ << "There was an error when removing object" << obj;
 	return ok;
 }
 
