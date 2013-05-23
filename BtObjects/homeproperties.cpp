@@ -19,6 +19,8 @@ namespace
 }
 
 
+HomeProperties *HomeProperties::the_instance = 0;
+
 HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 {
 	configurations = new ConfigFile(this);
@@ -54,6 +56,16 @@ HomeProperties::HomeProperties(QObject *parent) : QObject(parent)
 #else
 	custom_images_folder = getPath("customBackgroundImagesFolder");
 #endif
+}
+
+HomeProperties *HomeProperties::getHomeProperties()
+{
+	return the_instance;
+}
+
+void HomeProperties::setHomeProperties(HomeProperties *h)
+{
+	the_instance = h;
 }
 
 QString HomeProperties::getHomeBgImage() const

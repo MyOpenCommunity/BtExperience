@@ -43,18 +43,3 @@ QString getPath(QString property_name)
 
 	return result;
 }
-
-HomeProperties *getHomeProperties()
-{
-	// tries to get a pointer to HomeProperties through the root context
-	HomeProperties *h = 0;
-	QDeclarativeView *view = getDeclarativeView();
-	if (view)
-	{
-		QVariant v = view->rootContext()->contextProperty("homeProperties");
-		QObject *o = v.value<QObject *>();
-		h = qobject_cast<HomeProperties *>(o);
-	}
-	return h;
-}
-

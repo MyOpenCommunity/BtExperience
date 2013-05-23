@@ -20,21 +20,22 @@ void updateProfileCardImage(QDomNode node, ContainerWithCard *item)
 }
 
 
-Container::Container(int _id, int _uii, QString _image, QString _description, HomeProperties *_home_properties)
+Container::Container(int _id, int _uii, QString _image, QString _description)
 {
 	id = _id;
 	uii = _uii;
 	image = _image;
 	description = _description;
 	cache_id = 0;
-	home_properties = _home_properties;
 
 	connect(this, SIGNAL(descriptionChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(imageChanged()), this, SIGNAL(persistItem()));
 	connect(this, SIGNAL(cardImageChanged()), this, SIGNAL(cardImageCachedChanged()));
 
-	if (home_properties)
-		connect(home_properties, SIGNAL(skinChanged()), this, SIGNAL(imageChanged()));
+	if (HomeProperties::getHomeProperties())
+		connect(HomeProperties::getHomeProperties(), SIGNAL(skinChanged()), this, SIGNAL(imageChanged()));
+	else
+		qWarning() << __PRETTY_FUNCTION__ << "HomeProperties not correctly defined. The QML homeProperties property will not work as expected.";
 
 	images_folder = getPath("stockBackgroundImagesFolder");
 
@@ -93,25 +94,9 @@ QList<int> Container::getItemOrder() const
 	return item_order;
 }
 
-void Container::homePropertiesCheck()
-{
-	// if home_properties is not set tries to retrieve it a last time
-	if (!home_properties)
-	{
-		HomeProperties *h = getHomeProperties();
-		if (h)
-		{
-			home_properties = h;
-			connect(home_properties, SIGNAL(skinChanged()), this, SIGNAL(imageChanged()));
-		}
-	}
-}
-
 QString Container::getImage()
 {
 	QString result;
-
-	homePropertiesCheck();
 
 	// if image is set and not a default one, uses it as is
 	if (image != "" && image != HOME_BG_CLEAR && image != HOME_BG_DARK)
@@ -119,9 +104,9 @@ QString Container::getImage()
 		result = image;
 	}
 	// if image is not set, uses a default one depending on skin
-	else if (home_properties)
+	else if (HomeProperties::getHomeProperties())
 	{
-		if (home_properties->getSkin() == HomeProperties::Clear)
+		if (HomeProperties::getHomeProperties()->getSkin() == HomeProperties::Clear)
 			result = QString(HOME_BG_CLEAR);
 		else
 			result = QString(HOME_BG_DARK);
@@ -142,13 +127,11 @@ QString Container::getImage()
 
 QString Container::getCardImage()
 {
-	homePropertiesCheck();
 	return getImage();
 }
 
 QString Container::getCardImageCached()
 {
-	homePropertiesCheck();
 	return getImage() + "?cache_id=" + getCacheId();
 }
 
@@ -172,8 +155,8 @@ QString Container::getCacheId() const
 }
 
 
-ContainerWithCard::ContainerWithCard(int id, int uii, QString image, QString _card_image, QString description, HomeProperties *_home_properties) :
-	Container(id, uii, image, description, _home_properties)
+ContainerWithCard::ContainerWithCard(int id, int uii, QString image, QString _card_image, QString description) :
+	Container(id, uii, image, description)
 {
 	card_image = _card_image;
 
@@ -199,8 +182,6 @@ void ContainerWithCard::setCardImage(QString image)
 
 QString ContainerWithCard::getCardImage()
 {
-	homePropertiesCheck();
-
 	bool is_custom = (card_image.indexOf("custom_images/") == 0);
 
 	if (is_custom)
@@ -211,13 +192,10 @@ QString ContainerWithCard::getCardImage()
 
 QString ContainerWithCard::getCardImageCached()
 {
-	homePropertiesCheck();
-
 	return getCardImage() + "?cache_id=" + getCacheId();
 }
 
 QString ContainerWithCard::getCardImageConfName()
 {
-	homePropertiesCheck();
 	return card_image;
 }

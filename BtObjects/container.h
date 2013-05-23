@@ -92,7 +92,7 @@ public:
 		IdProfile = 101
 	};
 
-	Container(int id, int uii, QString image, QString description, HomeProperties *home_properties = 0);
+	Container(int id, int uii, QString image, QString description);
 
 	Q_INVOKABLE void setCacheDirty();
 
@@ -121,14 +121,12 @@ signals:
 
 protected:
 	QString getCacheId() const;
-	void homePropertiesCheck();
 
 	QString images_folder, custom_images_folder;
 
 private:
 	QString description, image;
 	int id, uii, cache_id;
-	HomeProperties *home_properties;
 	QList<int> item_order;
 };
 
@@ -146,7 +144,7 @@ class ContainerWithCard : public Container
 	Q_PROPERTY(QString cardImage READ getCardImage WRITE setCardImage NOTIFY cardImageChanged)
 
 public:
-	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description, HomeProperties *home_properties = 0);
+	ContainerWithCard(int id, int uii, QString image, QString card_image, QString description);
 
 	void setCardImage(QString image);
 	virtual QString getCardImage();

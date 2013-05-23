@@ -217,7 +217,7 @@ ItemInterface *GlobalModels::createRoom(int floor_uii, QString name)
 	// gets an uii for the room to be created
 	int uii = UiiMapper::getUiiMapper()->nextUii();
 	// creates a room with name and adds it to the container
-	ContainerWithCard *room = new ContainerWithCard(Container::IdRooms, uii, "", "", name, 0);
+	ContainerWithCard *room = new ContainerWithCard(Container::IdRooms, uii, "", "", name);
 	// sets the floor on the room
 	room->setContainerUii(floor_uii);
 	MediaDataModel *roomsContainer = getRooms();
@@ -244,7 +244,7 @@ ItemInterface *GlobalModels::createProfile(QString name)
 	// gets an uii for the profile to be created
 	int uii = UiiMapper::getUiiMapper()->nextUii();
 	// creates a profile with name and adds it to the container
-	ContainerWithCard *profile = new ContainerWithCard(Container::IdProfile, uii, "", "", name, 0);
+	ContainerWithCard *profile = new ContainerWithCard(Container::IdProfile, uii, "", "", name);
 	MediaDataModel *profilesContainer = getProfiles();
 	*profilesContainer << profile;
 	// updates items order for profiles

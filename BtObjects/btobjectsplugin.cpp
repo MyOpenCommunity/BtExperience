@@ -218,6 +218,7 @@ namespace
 
 BtObjectsPlugin::BtObjectsPlugin(QObject *parent) : QDeclarativeExtensionPlugin(parent)
 {
+	HomeProperties::setHomeProperties(&home_properties);
 	parseConfFile();
 
 	QStringList mplayer_seek = QList<QString>() << "-ss" << "<SEEK_TIME>";
@@ -1254,7 +1255,7 @@ void BtObjectsPlugin::parseRooms(const QDomNode &container)
 	{
 		v.setIst(instance);
 		int room_uii = getIntAttribute(instance, "uii");
-		Container *room = new ContainerWithCard(room_id, room_uii, v.value("img"), v.value("img_card"), v.value("descr"), &home_properties);
+		Container *room = new ContainerWithCard(room_id, room_uii, v.value("img"), v.value("img_card"), v.value("descr"));
 		room->setItemOrder(extractContainerOrder(instance));
 
 		room_model << room;
@@ -1326,7 +1327,7 @@ void BtObjectsPlugin::parseProfiles(const QDomNode &container)
 	{
 		v.setIst(ist);
 		int profile_uii = getIntAttribute(ist, "uii");
-		Container *profile = new ContainerWithCard(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"), &home_properties);
+		Container *profile = new ContainerWithCard(profile_id, profile_uii, v.value("img"), v.value("img_card"), v.value("descr"));
 		profile->setItemOrder(extractContainerOrder(ist));
 
 		profile_model << profile;

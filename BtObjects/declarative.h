@@ -14,6 +14,5 @@
 
 
 QString getPath(QString property_name);
-HomeProperties *getHomeProperties();
 
 #endif // DECLARATIVE_H

@@ -41,6 +41,9 @@ public:
 		Dark
 	};
 
+	static HomeProperties *getHomeProperties();
+	static void setHomeProperties(HomeProperties *h);
+
 	QString getHomeBgImage() const;
 	void setHomeBgImage(QString new_value);
 	Skin getSkin() const;
@@ -55,6 +58,7 @@ private:
 	QString home_bg_image;
 	Skin skin;
 	ConfigFile *configurations;
+	static HomeProperties *the_instance;
 };
 
 #endif // HOMEPROPERTIES_H
