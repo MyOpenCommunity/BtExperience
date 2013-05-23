@@ -10,7 +10,6 @@ HEADERS += \
 	configfile.h \
 	container.h \
 	dangers.h \
-	declarative.h \
 	energies.h \
 	energydata.h \
 	energyload.h \
@@ -34,6 +33,7 @@ HEADERS += \
 	objectinterface.h \
 	objectmodel.h \
 	objectlink.h \
+	paths.h \
 	platform.h \
 	playlistplayer.h \
 	qmlcache.h \
@@ -90,7 +90,6 @@ SOURCES += \
 	configfile.cpp \
 	container.cpp \
 	dangers.cpp \
-	declarative.cpp \
 	energies.cpp \
 	energydata.cpp \
 	energyload.cpp \
@@ -114,6 +113,7 @@ SOURCES += \
 	objectinterface.cpp \
 	objectmodel.cpp \
 	objectlink.cpp \
+	paths.cpp \
 	platform.cpp \
 	playlistplayer.cpp \
 	qmlcache.cpp \

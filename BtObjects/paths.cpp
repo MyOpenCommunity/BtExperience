@@ -1,4 +1,4 @@
-#include "declarative.h"
+#include "paths.h"
 
 
 // I need to find the top QDeclarativeView to obtain the root context;

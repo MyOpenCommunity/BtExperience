@@ -2,7 +2,7 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "configfile.h"
-#include "declarative.h"
+#include "paths.h"
 
 #include <QDebug>
 

@@ -1,6 +1,7 @@
 #include "container.h"
 #include "xml_functions.h"
-#include "declarative.h"
+#include "homeproperties.h"
+#include "paths.h"
 
 #include <QDebug>
 

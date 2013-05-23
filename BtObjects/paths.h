@@ -1,8 +1,5 @@
-#ifndef DECLARATIVE_H
-#define DECLARATIVE_H
-
-
-#include "homeproperties.h"
+#ifndef PATHS_H
+#define PATHS_H
 
 
 #include <QDebug>
@@ -15,4 +12,4 @@
 
 QString getPath(QString property_name);
 
-#endif // DECLARATIVE_H
+#endif // PATHS_H
