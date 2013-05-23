@@ -6,7 +6,6 @@
 #include "objectmodel.h"
 #include "alarmclocknotifier.h"
 #include "container.h"
-#include "homeproperties.h"
 #include "uiimapper.h"
 
 #include <QDebug>
@@ -92,8 +91,8 @@ Note *GlobalModels::createNote(int profile_uii, QString text)
 }
 
 ItemInterface *GlobalModels::createQuicklink(int uii, int media_type, QString name,
-					     QString address, ObjectInterface *bt_object,
-					     int x, int y, bool is_home_link)
+						 QString address, ObjectInterface *bt_object,
+						 int x, int y, bool is_home_link)
 {
 	if (media_type == MediaLink::BtObject)
 	{
