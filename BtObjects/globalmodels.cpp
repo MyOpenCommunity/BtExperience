@@ -182,6 +182,13 @@ ItemInterface *GlobalModels::createQuicklink(int uii, int media_type, QString na
 	return result;
 }
 
+ItemInterface *GlobalModels::createObjectLink(ObjectInterface *bt_object, int uii)
+{
+	ObjectLink *result = new ObjectLink(bt_object, -1, -1, uii);
+	getObjectLinks()->append(result);
+	return result;
+}
+
 ItemInterface *GlobalModels::createAlarmClock()
 {
 	AlarmClock *alarmClock = new AlarmClock("", false, AlarmClock::AlarmClockBeep, 0, 0, 0);

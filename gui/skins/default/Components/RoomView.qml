@@ -288,15 +288,21 @@ Item {
         }
 
         function createObjects() {
+            privateProps.refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
+            privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
+
             for (var i = 0; i < model.count; ++i) {
                 var obj = model.getObject(i)
                 var y = obj.position.y
                 var x = obj.position.x
-                var res = content.mapFromItem(null, obj.position.x, obj.position.y - constants.navbarTopMargin)
-
-                privateProps.refX = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).x + 0.5 * bgMoveArea.width
-                privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
-
+                var res = content.mapFromItem(null, x, y - constants.navbarTopMargin)
+                if (x < 0 || y < 0) {
+                    var deltaX = Math.random() * (bgMoveArea.width - 1.5 * bgMoveArea.maxItemWidth)
+                    var deltaY = Math.random() * (bgMoveArea.height - 1.5 * bgMoveArea.maxItemHeight)
+                    res = content.mapFromItem(bgMoveArea, deltaX, deltaY)
+                    var abs = content.mapToItem(null, res.x, res.y + constants.navbarTopMargin)
+                    obj.position = Qt.point(abs.x, abs.y)
+                }
                 var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': res.x, 'y': res.y, 'pageObject': pageObject, "itemObject": obj, "elementsOnMenuPage": 6})
                 Script.obj_array.push(object)
             }

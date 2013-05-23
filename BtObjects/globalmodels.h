@@ -165,6 +165,7 @@ public:
 		\endverbatim
 	*/
 	Q_INVOKABLE ItemInterface *createQuicklink(int uii, int media_type, QString name=QString(), QString address=QString(), ObjectInterface *bt_object=0, int x=0, int y=0, bool is_home_link=false);
+	Q_INVOKABLE ItemInterface *createObjectLink(ObjectInterface *bt_object, int uii);
 
 	Q_INVOKABLE ItemInterface *createAlarmClock();
 
