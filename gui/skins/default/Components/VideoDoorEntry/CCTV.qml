@@ -8,7 +8,7 @@ MenuColumn {
 
     onChildDestroyed: paginator.currentIndex = -1
 
-    SystemsModel {id: systemsModel; systemId: Container.IdVideoDoorEntry }
+    SystemsModel { id: systemsModel; systemId: Container.IdVideoDoorEntry }
 
     ObjectModel {
         id: cctvModel

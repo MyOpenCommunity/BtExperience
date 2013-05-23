@@ -51,7 +51,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Delete")
+            name: qsTr("Delete Profile")
             isSelected: privateProps.currentIndex === 5
             onTouched: {
                 privateProps.currentIndex = -1
