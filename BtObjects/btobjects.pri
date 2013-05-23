@@ -10,6 +10,7 @@ HEADERS += \
 	configfile.h \
 	container.h \
 	dangers.h \
+	declarative.h \
 	energies.h \
 	energydata.h \
 	energyload.h \
@@ -89,6 +90,7 @@ SOURCES += \
 	configfile.cpp \
 	container.cpp \
 	dangers.cpp \
+	declarative.cpp \
 	energies.cpp \
 	energydata.cpp \
 	energyload.cpp \

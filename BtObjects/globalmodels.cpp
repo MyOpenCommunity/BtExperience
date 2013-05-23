@@ -11,26 +11,6 @@
 
 #include <QDebug>
 
-#include <QApplication>
-#include <QDeclarativeView>
-#include <QDeclarativeContext>
-#include <QDeclarativeProperty>
-
-
-namespace
-{
-	// I need to find the top QDeclarativeView to obtain the root context;
-	// from the root context I will have access to the global property which
-	// contains paths for extra dirs
-	QDeclarativeView *getDeclarativeView()
-	{
-		foreach (QWidget *w, qApp->topLevelWidgets())
-			if (qobject_cast<QDeclarativeView *>(w))
-				return static_cast<QDeclarativeView *>(w);
-
-		return 0;
-	}
-}
 
 GlobalModels::GlobalModels()
 {
