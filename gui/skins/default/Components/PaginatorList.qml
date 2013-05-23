@@ -36,6 +36,10 @@ Item {
         openFunc(itemObject)
     }
 
+    function refreshSize() {
+        paglistPrivateProps.computeDelegateHeight()
+    }
+
     width: internalList.width
     height: internalList.height + paginator.height * paginator.visible
 

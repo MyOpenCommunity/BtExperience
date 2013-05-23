@@ -84,6 +84,17 @@ MenuColumn {
             }
         }
 
+        MenuItem {
+            name: qsTr("Add Object Link")
+            isSelected: privateProps.currentIndex === 4
+            hasChild: true
+            onTouched: {
+                if (privateProps.currentIndex !== 4)
+                    privateProps.currentIndex = 4
+                column.loadColumn(objectLinkChoice, qsTr("Objectlinks list"), column.dataModel)
+            }
+        }
+
         PaginatorList {
             id: paginator
 
@@ -92,7 +103,7 @@ MenuColumn {
                 column.loadColumn(deleteRenameLink, itemObject.name, itemObject, {"index": index})
             }
 
-            elementsOnPage: elementsOnMenuPage - 3
+            elementsOnPage: elementsOnMenuPage - 4
             delegate: MenuItemDelegate {
                 itemObject: linksModel.getObject(index).btObject
                 description: Script.description(itemObject)
@@ -106,6 +117,11 @@ MenuColumn {
     QtObject {
         id: privateProps
         property int currentIndex: -1
+    }
+
+    Component {
+        id: objectLinkChoice
+        ObjectLinkChoice {}
     }
 
     Component {
