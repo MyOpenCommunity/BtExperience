@@ -64,9 +64,6 @@ class GlobalProperties : public GlobalPropertiesCommon
 	Q_PROPERTY(QVariantList customCardImagesFolder READ getCardCustomImagesFolder CONSTANT)
 	Q_PROPERTY(QVariantList customBackgroundImagesFolder READ getBackgroundCustomImagesFolder CONSTANT)
 
-	// used internally to correct paths for custom folder on pc
-	Q_PROPERTY(QVariantList x11PrependPath READ getX11PrependPath CONSTANT)
-
 	// Screen calibration object
 	Q_PROPERTY(QObject *calibration READ getCalibration CONSTANT)
 
@@ -108,7 +105,6 @@ public:
 	QVariantList getBackgroundStockImagesFolder() const;
 	QVariantList getCardCustomImagesFolder() const;
 	QVariantList getBackgroundCustomImagesFolder() const;
-	QVariantList getX11PrependPath() const;
 	QString getHomePageUrl() const;
 	QString getMultimediaSourceAddress() const;
 	void setHomePageUrl(QString new_value);
@@ -170,7 +166,6 @@ private:
 	void parseSettings();
 	void parseBrowser();
 	void createExtra12Folders();
-	QVariantList getDefaultPathAsVariantList(QString base_dir) const;
 
 	AudioVideoPlayer *video_player;
 	AudioVideoPlayer *sound_diffusion_player;

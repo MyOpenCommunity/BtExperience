@@ -38,12 +38,12 @@ Container::Container(int _id, int _uii, QString _image, QString _description)
 	else
 		qWarning() << __PRETTY_FUNCTION__ << "HomeProperties not correctly defined. The QML homeProperties property will not work as expected.";
 
-	images_folder = getPath("stockBackgroundImagesFolder");
+	images_folder = path_functions::getPath("getBackgroundStockImagesFolder");
 
 #if defined(BT_HARDWARE_X11)
-	custom_images_folder = getPath("x11PrependPath").mid(1);
+	custom_images_folder = path_functions::getPath("getX11PrependPath").mid(1);
 #else
-	custom_images_folder = getPath("customBackgroundImagesFolder");
+	custom_images_folder = path_functions::getPath("getBackgroundCustomImagesFolder");
 #endif
 }
 

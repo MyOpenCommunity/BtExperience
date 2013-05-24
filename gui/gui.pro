@@ -74,6 +74,7 @@ SOURCES += \
         ringtonemanager.cpp \
         watchdog.cpp \
         ../BtObjects/ts/signalshandler.cpp \
+    ../BtObjects/paths.cpp
 
 HEADERS += \
     audiostate.h \
@@ -90,6 +91,7 @@ HEADERS += \
         ringtonemanager.h \
         watchdog.h \
         ../BtObjects/ts/signalshandler.h \
+    ../BtObjects/paths.h
 
 TRANSLATIONS += locale/bt_experience_it.ts \
         locale/bt_experience_fr.ts

@@ -15,6 +15,7 @@
 #include "imagesaver.h"
 #include "medialink.h"
 #include "bt_global_config.h"
+#include "paths.h"
 
 #include <QTimer>
 #include <QDateTime>
@@ -143,7 +144,7 @@ GlobalProperties::GlobalProperties(logger *log) : GlobalPropertiesCommon(log)
 	sound_diffusion_player = 0;
 	audio_state = new AudioState(this);
 	sound_player = 0;
-	ringtone_manager = new RingtoneManager(getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
+	ringtone_manager = new RingtoneManager(path_functions::getExtraPath() + "5/ringtones.xml", new MultiMediaPlayer(this), audio_state, this);
 	hardware_keys = new HwKeys(this);
 	screen_state = new ScreenState(this);
 	calibration = new Calibration(this);
@@ -397,68 +398,24 @@ QObject *GlobalProperties::getBrowser() const
 	return browser;
 }
 
-QVariantList GlobalProperties::getDefaultPathAsVariantList(QString base_dir) const
-{
-	QVariantList result;
-
-#if defined(BT_HARDWARE_X11)
-	Q_UNUSED(base_dir);
-	QString base = getBasePath();
-	QStringList base_list = base.split("/");
-	foreach (const QString &comp, base_list)
-		result.append(comp);
-#else
-	QString extra = getExtraPath();
-	QStringList extra_list = extra.split("/");
-	foreach (const QString &comp, extra_list)
-		result.append(comp);
-	result.append(base_dir);
-#endif
-
-	return result;
-}
-
 QVariantList GlobalProperties::getCardStockImagesFolder() const
 {
-	QVariantList result = getDefaultPathAsVariantList("1");
-	result << "images" << "card";
-	return result;
+	return path_functions::getCardStockImagesFolder();
 }
 
 QVariantList GlobalProperties::getBackgroundStockImagesFolder() const
 {
-	QVariantList result = getDefaultPathAsVariantList("1");
-	result << "images" << "background";
-	return result;
+	return path_functions::getBackgroundStockImagesFolder();
 }
 
 QVariantList GlobalProperties::getCardCustomImagesFolder() const
 {
-	QVariantList result = getDefaultPathAsVariantList("12");
-#if defined(BT_HARDWARE_X11)
-	result << ".." << ".." << ".." << "bin" << "x86" << "12" << "." << ".";
-#endif
-	result << "custom_images" << "card";
-	return result;
+	return path_functions::getCardCustomImagesFolder();
 }
 
 QVariantList GlobalProperties::getBackgroundCustomImagesFolder() const
 {
-	QVariantList result = getDefaultPathAsVariantList("12");
-#if defined(BT_HARDWARE_X11)
-	result << ".." << ".." << ".." << "bin" << "x86" << "12" << "." << ".";
-#endif
-	result << "custom_images" << "background";
-	return result;
-}
-
-QVariantList GlobalProperties::getX11PrependPath() const
-{
-	QVariantList result;
-	// last 2 elements are removed by the getPath function, so adds 2 fake elements
-	// to have right path
-	result << ".." << ".." << ".." << "bin" << "x86" << "12" << "." << ".";
-	return result;
+	return path_functions::getBackgroundCustomImagesFolder();
 }
 
 void GlobalProperties::createExtra12Folders()
@@ -575,7 +532,7 @@ void GlobalProperties::setPathviewOffset(int pathview_id, int value)
 
 void GlobalProperties::beep()
 {
-	QString path = getExtraPath() + "10/beep.wav";
+	QString path = path_functions::getExtraPath() + "10/beep.wav";
 
 	if (QFile::exists(path) && audio_state->getState() == AudioState::Beep)
 		sound_player->play(path);

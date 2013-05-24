@@ -4,6 +4,7 @@
 #include "configfile.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
+#include "paths.h"
 
 #include <logger.h>
 
@@ -20,7 +21,6 @@
 #include <QScreen>
 #endif
 
-#define EXTRA_PATH "/home/bticino/cfg/extra"
 
 namespace
 {
@@ -87,41 +87,12 @@ void GlobalPropertiesCommon::parseSettings(logger *log)
 
 QString GlobalPropertiesCommon::getBasePath() const
 {
-	QFileInfo path = qApp->applicationDirPath();
-
-#ifdef Q_WS_MAC
-	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
-#endif
-
-	// use canonicalFilePath to resolve symlinks, otherwise some files
-	// will be loaded with the symlinked path and some with the canonical
-	// path, and this confuses the code that handles ".pragma library"
-	QFileInfo base(QDir(path.absoluteFilePath()), "gui/skins/default/");
-
-	if (!base.exists())
-		qFatal("Unable to find path for skin files");
-
-	return base.canonicalFilePath() + "/";
+	return path_functions::getBasePath();
 }
 
 QString GlobalPropertiesCommon::getExtraPath() const
 {
-	QFileInfo path = qApp->applicationDirPath();
-
-#ifdef Q_WS_MAC
-	path = QFileInfo(QDir(path.absoluteFilePath()), "../Resources");
-#endif
-
-#if defined(BT_HARDWARE_X11)
-	QFileInfo extra(QDir(path.absoluteFilePath()), "extra");
-#else
-	QFileInfo extra(EXTRA_PATH);
-#endif
-
-	if (!extra.exists())
-		qFatal("Unable to find path for extra files");
-
-	return extra.canonicalFilePath() + "/";
+	return path_functions::getExtraPath();
 }
 
 bool GlobalPropertiesCommon::getDebugTs()

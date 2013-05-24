@@ -45,6 +45,7 @@ SOURCES += \
     ../BtObjects/iteminterface.cpp \
     ../BtObjects/linkinterface.cpp \
     ../BtObjects/medialink.cpp \
+    ../BtObjects/paths.cpp \
     ../BtObjects/ts/signalshandler.cpp \
     ../gui/applicationcommon.cpp \
     ../gui/eventfilters.cpp \
@@ -68,6 +69,7 @@ HEADERS += \
     ../BtObjects/iteminterface.h \
     ../BtObjects/linkinterface.h \
     ../BtObjects/medialink.h \
+    ../BtObjects/paths.h \
     ../BtObjects/ts/signalshandler.h \
     ../gui/applicationcommon.h \
     ../gui/eventfilters.h \
