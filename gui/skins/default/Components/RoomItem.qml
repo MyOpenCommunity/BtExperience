@@ -11,6 +11,7 @@ MenuColumn {
 
     signal requestMove
     signal requestSelect
+    signal requestDelete(variant object)
 
     property alias refX: theMenu.refX
     property alias refY: theMenu.refY
@@ -175,6 +176,30 @@ MenuColumn {
                 BeepingMouseArea {
                     anchors.fill: parent
                     onClicked: column.requestMove()
+                }
+            }
+
+            Rectangle {
+                width: 48
+                height: 48
+                gradient: Gradient {
+                    GradientStop {
+                        position: 0.00;
+                        color: "#b7b7b7";
+                    }
+                    GradientStop {
+                        position: 1.00;
+                        color: "#ffffff";
+                    }
+                }
+                Image {
+                    source: "../images/icon_trash.png"
+                    anchors.fill: parent
+                    anchors.margins: 10
+                }
+                BeepingMouseArea {
+                    anchors.fill: parent
+                    onClicked: column.requestDelete(dataModel)
                 }
             }
         }

@@ -97,6 +97,23 @@ Item {
     }
 
     Component {
+        id: deleteConfirmDialog
+        TextDialog {
+            property variant item
+            function okClicked() {
+                var m = roomView.model
+                for (var i = 0; i < m.count; ++i) {
+                    var l = m.getObject(i)
+                    if (l.btObject === item)
+                        roomView.model.remove(l)
+                }
+            }
+            title: qsTr("Confirm deletion")
+            text: qsTr("Are you sure to delete the selected object link?")
+        }
+    }
+
+    Component {
         id: itemComponent
 
         MenuContainer {
@@ -132,6 +149,9 @@ Item {
                     roomView.state = "menuHightlighted"
                     container.state = "highlight"
                     container.rootObject.select()
+                }
+                onRequestDelete: {
+                    roomView.pageObject.installPopup(deleteConfirmDialog, {"item": object})
                 }
                 ignoreUnknownSignals: true
             }
