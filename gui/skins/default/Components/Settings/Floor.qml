@@ -77,6 +77,8 @@ MenuColumn {
 
         PaginatorList {
             id: paginator
+
+            elementsOnPage: elementsOnMenuPage - 1
             currentIndex: -1
 
             function openColumn(itemObject) {
