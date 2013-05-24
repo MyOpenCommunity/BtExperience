@@ -671,7 +671,7 @@ void GlobalProperties::brightnessChanged()
 void GlobalProperties::screenStateChangedManagement()
 {
 	if (screen_state->getState() == ScreenState::Screensaver ||
-	    screen_state->getState() == ScreenState::ScreenOff)
+		screen_state->getState() == ScreenState::ScreenOff)
 	{
 		audio_state->enableState(AudioState::Screensaver);
 		delayed_frame_timer->start();
@@ -708,7 +708,7 @@ void GlobalProperties::manageUpnpPlayers()
 	if (video_player->isUpnp() && new_status != UpnpLocalMedia && new_status != UpnpInactive)
 		video_player->terminate();
 	if (sound_diffusion_player &&
-	    sound_diffusion_player->isUpnp() && new_status != UpnpSoundDiffusion && new_status != UpnpInactive)
+		sound_diffusion_player->isUpnp() && new_status != UpnpSoundDiffusion && new_status != UpnpInactive)
 		sound_diffusion_player->terminate();
 	if (photo_player->isUpnp() && new_status != UpnpLocalPhoto && new_status != UpnpInactive)
 		photo_player->terminate();
@@ -725,7 +725,7 @@ void GlobalProperties::updateCpuFrequency()
 	int new_cpu_frequency;
 
 	if (audio_state->getState() == AudioState::Screensaver &&
-	    (!player || player->getAudioOutputState() == MultiMediaPlayer::AudioOutputStopped))
+		(!player || player->getAudioOutputState() == MultiMediaPlayer::AudioOutputStopped))
 		new_cpu_frequency = CPU_CLOCK_IDLE;
 	else
 		new_cpu_frequency = CPU_CLOCK_ACTIVE;

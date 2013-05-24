@@ -61,39 +61,38 @@ target.commands += true
 SOURCES += \
     main.cpp \
     audiostate.cpp \
-	calibration.cpp \
-	applicationcommon.cpp \
+        calibration.cpp \
+        applicationcommon.cpp \
     browserprocess.cpp \
-	eventfilters.cpp \
+        eventfilters.cpp \
     globalproperties.cpp \
     globalpropertiescommon.cpp \
     guisettings.cpp \
     hwkeys.cpp \
     imagereader.cpp \
-	inputcontextwrapper.cpp \
-	ringtonemanager.cpp \
-	watchdog.cpp \
-	../BtObjects/ts/signalshandler.cpp
-
+        inputcontextwrapper.cpp \
+        ringtonemanager.cpp \
+        watchdog.cpp \
+        ../BtObjects/ts/signalshandler.cpp \
 
 HEADERS += \
     audiostate.h \
-	calibration.h \
-	applicationcommon.h \
+        calibration.h \
+        applicationcommon.h \
     browserprocess.h \
-	eventfilters.h \
+        eventfilters.h \
     globalproperties.h \
     globalpropertiescommon.h \
     guisettings.h \
     hwkeys.h \
     imagereader.h \
     inputcontextwrapper.h \
-	ringtonemanager.h \
-	watchdog.h \
-	../BtObjects/ts/signalshandler.h
+        ringtonemanager.h \
+        watchdog.h \
+        ../BtObjects/ts/signalshandler.h \
 
 TRANSLATIONS += locale/bt_experience_it.ts \
-	locale/bt_experience_fr.ts
+        locale/bt_experience_fr.ts
 
 mac {
     APP_DIR = $${DESTDIR}/$${TARGET}.app/Contents
