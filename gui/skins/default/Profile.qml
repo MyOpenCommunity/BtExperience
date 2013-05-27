@@ -156,65 +156,48 @@ Page {
                 return
             var refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
 
-            for (var i = 0; i < mediaLinks.count; ++i) {
-                var obj = mediaLinks.getObject(i);
-
+            for (var q = 0; q < mediaLinks.count; ++q) {
+                // gets object
+                var obj = mediaLinks.getObject(q)
+                // gets absolute coordinates from object, they may be unknown (-1, -1)
+                var absX = obj.position.x
+                var absY = obj.position.y
+                // computes area coordinates from absolute ones
+                var areaPt = bgMoveArea.absolute2area(Qt.point(absX, absY))
+                if (absX < 0 && absY < 0) {
+                    // if position is unknown, generates a random one
+                    areaPt = bgMoveArea.randomPosition()
+                }
+                // we add objects to pannableChild, so computes pannableChild coordinates
+                var pannableChildPt = pannableChild.mapFromItem(null, absX, absY)
+                // gets component type
                 var component = getComponentFromType(obj.type)
-
-                // x and y are absolute coordinates
-                var res = pannableChild.mapFromItem(null, obj.position.x, obj.position.y)
-
-                // new quicklink do not have a position yet; they will be positioned after all
-                // other items
-                if (obj.position.x < 0 && obj.position.y < 0)
-                    continue
-
-                var instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": obj, "profile": profilePage.profile})
-
-                // area margins are set to maximum quicklink size / 2; this info is used to draw
-                // an area in which QuickLinks don't overlap the area itself
-                privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
-                privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
-
-                instance.requestEdit.connect(showEditBox)
-                instance.selected.connect(selectObj)
-                instance.requestMove.connect(moveBegin)
-                instance.requestDelete.connect(deleteFavorite)
-
-                Script.container.push(instance)
-            }
-
-            // we need absolute coordinates to position items without a position
-            var absArea = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y)
-
-            for (var j = 0; j < mediaLinks.count; ++j) {
-                var link = mediaLinks.getObject(j)
-
-                // skip already done
-                if (link.position.x >= 0 || link.position.y >= 0)
-                    continue
-
-                // random position inside the move area; we have to remove the margins around the area and
-                // the offset wrt the item center (so we have 1.5)
-                var deltaX = Math.random() * (bgMoveArea.width - 1.5 * privateProps.maxItemWidth)
-                var deltaY = Math.random() * (bgMoveArea.height - 1.5 * privateProps.maxItemHeight)
-                res = pannableChild.mapFromItem(null, absArea.x + deltaX, absArea.y + deltaY)
-
-                component = getComponentFromType(link.type)
-                instance = component.createObject(pannableChild, {'x': res.x, 'y': res.y, "refX": refX, "refY": refY, "itemObject": link, "profile": profilePage.profile})
-                link.position = Qt.point(absArea.x + deltaX, absArea.y + deltaY)
-
-                // area margins are set to maximum quicklink size / 2; this info is used to draw
-                // an area in which QuickLinks don't overlap the area itself
-                privateProps.maxItemWidth = Math.max(privateProps.maxItemWidth, instance.width)
-                privateProps.maxItemHeight = Math.max(privateProps.maxItemHeight, instance.height)
-
-                instance.requestEdit.connect(showEditBox)
-                instance.selected.connect(selectObj)
-                instance.requestMove.connect(moveBegin)
-                instance.requestDelete.connect(deleteFavorite)
-
-                Script.container.push(instance)
+                // creates object in pannableChild coordinates and invisible because it may be outside move area
+                var object = component.createObject(pannableChild, {'x': pannableChildPt.x, 'y': pannableChildPt.y, "refX": refX, "refY": refY, "itemObject": obj, "profile": profilePage.profile, "opacity": 0.01})
+                // now we know object size: reposition object inside move area if needed
+                areaPt.x = bgMoveArea.xInRect(areaPt.x, object.width)
+                areaPt.y = bgMoveArea.yInRect(areaPt.y, object.height)
+                // recomputes pannableChild coordinates and assigns it to object
+                pannableChildPt = pannableChild.mapFromItem(bgMoveArea, areaPt.x, areaPt.y)
+                // disables animations on position
+                object.xBehavior.enabled = false
+                object.yBehavior.enabled = false
+                object.x = pannableChildPt.x
+                object.y = pannableChildPt.y
+                // computes absolute coordinates and saves them in object
+                var absPt = bgMoveArea.area2absolute(areaPt)
+                obj.position = Qt.point(absPt.x, absPt.y)
+                // registers needed signals
+                object.requestEdit.connect(showEditBox)
+                object.selected.connect(selectObj)
+                object.requestMove.connect(moveBegin)
+                object.requestDelete.connect(deleteFavorite)
+                // shows and stores the object
+                object.opacity = 1.0
+                // object is in the right position, enables position animations again
+                object.xBehavior.enabled = true
+                object.yBehavior.enabled = true
+                Script.container.push(object)
             }
         }
 
@@ -555,13 +538,22 @@ Page {
                 id: bgMoveArea
 
                 function moveTo(absX, absY) {
-                    var itemPos = pannableChild.mapFromItem(null, absX, absY)
-                    privateProps.actualFavorite.x = itemPos.x
-                    privateProps.actualFavorite.y = itemPos.y
-                    privateProps.actualFavorite.itemObject.position = Qt.point(absX, absY)
+                    // click refers to item center so computes offsets
+                    var oX = privateProps.actualFavorite.width / 2
+                    var oY = privateProps.actualFavorite.height / 2
+                    // computes area coordinates from absolute ones taking offsets into consideration
+                    var areaPt = bgMoveArea.absolute2area(Qt.point(absX - oX, absY - oY))
+                    // repositions object inside move area if needed
+                    areaPt.x = bgMoveArea.xInRect(areaPt.x, privateProps.actualFavorite.width)
+                    areaPt.y = bgMoveArea.yInRect(areaPt.y, privateProps.actualFavorite.height)
+                    // we move objects inside pannableChild, so computes pannableChild coordinates
+                    var pannableChildPt = pannableChild.mapFromItem(bgMoveArea, areaPt.x, areaPt.y)
+                    privateProps.actualFavorite.x = pannableChildPt.x
+                    privateProps.actualFavorite.y = pannableChildPt.y
+                    // computes absolute coordinates and saves them in object
+                    var absPt = bgMoveArea.area2absolute(areaPt)
+                    privateProps.actualFavorite.itemObject.position = Qt.point(absPt.x, absPt.y)
                 }
-                maxItemHeight: privateProps.maxItemHeight
-                maxItemWidth: privateProps.maxItemWidth
 
                 z: bgPannable.z + 2 // must be on top of quicklinks
                 anchors {

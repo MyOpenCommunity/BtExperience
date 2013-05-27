@@ -66,6 +66,45 @@ Item {
                     }
                 ]
             }
+
+            MoveArea {
+                id: bgMoveArea
+
+                function moveTo(absX, absY) {
+                    // click refers to item center so computes offsets
+                    var oX = bgMoveArea.selectedItem.itemWidth / 2
+                    var oY = bgMoveArea.selectedItem.itemHeight / 2
+                    // computes area coordinates from absolute ones taking offsets into consideration
+                    var areaPt = bgMoveArea.absolute2area(Qt.point(absX - oX, absY - oY))
+                    // repositions object inside move area if needed
+                    areaPt.x = bgMoveArea.xInRect(areaPt.x, bgMoveArea.selectedItem.itemWidth)
+                    // MenuItem have an y = 33 coordinate inside MenuContainer and we are
+                    // positioning the container: let's take that into account
+                    areaPt.y = bgMoveArea.yInRect(areaPt.y, bgMoveArea.selectedItem.itemHeight) - constants.navbarTopMargin
+                    // we move objects inside content, so computes content coordinates
+                    var contentPt = content.mapFromItem(bgMoveArea, areaPt.x, areaPt.y)
+                    // here we manually activate animations
+                    bgMoveArea.selectedItem.xAnimation.to = contentPt.x
+                    bgMoveArea.selectedItem.yAnimation.to = contentPt.y
+                    bgMoveArea.selectedItem.xAnimation.start()
+                    bgMoveArea.selectedItem.yAnimation.start()
+                    // animation started, so we can save coordinates inside item
+                    bgMoveArea.selectedItem.x = contentPt.x
+                    bgMoveArea.selectedItem.y = contentPt.y
+                    // computes absolute coordinates and saves them in object
+                    var absPt = bgMoveArea.area2absolute(areaPt)
+                    // when saving absolute coordinates, we must save MenuItem coordinates
+                    bgMoveArea.selectedItem.itemObject.position = Qt.point(absPt.x, absPt.y + constants.navbarTopMargin)
+                }
+
+                z: darkRect.z + 2 // must be on top of quicklinks
+                anchors.fill: parent
+
+                onMoveEnd: {
+                    bgMoveArea.selectedItem.state = ""
+                    bgMoveArea.state = ""
+                }
+            }
         }
     }
 
@@ -125,6 +164,15 @@ Item {
             property variant itemObject: undefined
             property int refX: -1 // used for editColumn placement, -1 means not used
             property int refY: -1 // used for editColumn placement, -1 means not used
+            property int itemWidth
+            property int itemHeight
+
+            onRootObjectChanged: {
+                if (rootObject) {
+                    itemWidth = rootObject.width
+                    itemHeight = rootObject.height
+                }
+            }
 
             width: 500
             rootColumn: roomItemComponent
@@ -241,29 +289,6 @@ Item {
         id: constants
     }
 
-    MoveArea {
-        id: bgMoveArea
-
-        function moveTo(absX, absY) {
-            var itemPos = roomView.mapFromItem(null, absX, absY - constants.navbarTopMargin)
-            bgMoveArea.selectedItem.xAnimation.to = itemPos.x
-            bgMoveArea.selectedItem.yAnimation.to = itemPos.y
-            bgMoveArea.selectedItem.xAnimation.start()
-            bgMoveArea.selectedItem.yAnimation.start()
-            bgMoveArea.selectedItem.itemObject.position = Qt.point(absX, absY)
-        }
-        maxItemWidth: 212 // assumes menu width is always this value
-        maxItemHeight: 70 // assumes menu height is always this value (must consider shadow!)
-
-        z: roomView.z + 2 // must be on top of quicklinks
-        anchors.fill: parent
-
-        onMoveEnd: {
-            bgMoveArea.selectedItem.state = ""
-            bgMoveArea.state = ""
-        }
-    }
-
     QtObject {
         id: privateProps
 
@@ -312,18 +337,36 @@ Item {
             privateProps.refY = bgMoveArea.mapToItem(null, bgMoveArea.x, bgMoveArea.y).y + 0.5 * bgMoveArea.height
 
             for (var i = 0; i < model.count; ++i) {
+                // gets object
                 var obj = model.getObject(i)
-                var y = obj.position.y
-                var x = obj.position.x
-                var res = content.mapFromItem(null, x, y - constants.navbarTopMargin)
-                if (x < 0 || y < 0) {
-                    var deltaX = Math.random() * (bgMoveArea.width - 1.5 * bgMoveArea.maxItemWidth)
-                    var deltaY = Math.random() * (bgMoveArea.height - 1.5 * bgMoveArea.maxItemHeight)
-                    res = content.mapFromItem(bgMoveArea, deltaX, deltaY)
-                    var abs = content.mapToItem(null, res.x, res.y + constants.navbarTopMargin)
-                    obj.position = Qt.point(abs.x, abs.y)
+                // gets absolute coordinates from object, they may be unknown (-1, -1)
+                var absX = obj.position.x
+                var absY = obj.position.y
+                // computes area coordinates from absolute ones
+                var areaPt = bgMoveArea.absolute2area(Qt.point(absX, absY))
+                if (absX < 0 && absY < 0) {
+                    // if position is unknown, generates a random one
+                    areaPt = bgMoveArea.randomPosition()
                 }
-                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': res.x, 'y': res.y, 'pageObject': pageObject, "itemObject": obj, "elementsOnMenuPage": 6})
+                // we add objects to content, so computes content coordinates
+                var contentPt = content.mapFromItem(bgMoveArea, areaPt.x, areaPt.y)
+                // creates object in content coordinates and invisible because it may be outside move area
+                var object = itemComponent.createObject(content, {"rootData": obj.btObject, 'x': contentPt.x, 'y': contentPt.y, 'pageObject': pageObject, "itemObject": obj, "elementsOnMenuPage": 6, "opacity": 0.01})
+                // now we know object size: reposition object inside move area if needed
+                areaPt.x = bgMoveArea.xInRect(areaPt.x, object.rootObject.width)
+                // MenuItem have an y = 33 coordinate inside MenuContainer and we are
+                // positioning the container: let's take that into account
+                areaPt.y = bgMoveArea.yInRect(areaPt.y, object.rootObject.height) - constants.navbarTopMargin
+                // recomputes content coordinates and assigns it to object
+                contentPt = content.mapFromItem(bgMoveArea, areaPt.x, areaPt.y)
+                object.x = contentPt.x
+                object.y = contentPt.y
+                // computes absolute coordinates and saves them in object
+                var absPt = bgMoveArea.area2absolute(areaPt)
+                // when saving absolute coordinates, we must save MenuItem coordinates
+                obj.position = Qt.point(absPt.x, absPt.y + constants.navbarTopMargin)
+                // shows and stores the object
+                object.opacity = 1.0
                 Script.obj_array.push(object)
             }
         }

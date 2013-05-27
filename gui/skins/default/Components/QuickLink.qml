@@ -48,6 +48,10 @@ Item {
     property int refY: -1 // used for editColumn placement, -1 means not used
     /// the profile this QuickLink belongs to if any
     property variant profile: undefined
+    /// the behavior on x coordinate
+    property alias xBehavior: xBehavior
+    /// the behavior on y coordinate
+    property alias yBehavior: yBehavior
 
     /// emitted when this QuickLink is selected with a pressAndHold operation
     signal selected(variant favorite)
@@ -368,6 +372,7 @@ Item {
     }
 
     Behavior on x {
+        id: xBehavior
         SequentialAnimation {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
             ScriptAction { script: Positioner.computeAnchors(bgQuick, editColumn) }
@@ -375,6 +380,7 @@ Item {
     }
 
     Behavior on y {
+        id: yBehavior
         SequentialAnimation {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
             ScriptAction { script: Positioner.computeAnchors(bgQuick, editColumn) }

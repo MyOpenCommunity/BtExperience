@@ -5,8 +5,6 @@ import QtQuick 1.1
 Item {
     id: bgMoveArea
 
-    property int maxItemWidth: 0
-    property int maxItemHeight: 0
     property Item selectedItem: null
 
     signal moveEnd
@@ -16,6 +14,46 @@ Item {
         // them into selectedItem
         // Optionally, you can also trigger animations for the movement.
         console.log("Implement me.")
+    }
+
+    // maps from absolute coordinates to area coordinates
+    function absolute2area(absPt) {
+        return bgMoveArea.mapFromItem(null, absPt.x, absPt.y)
+    }
+
+    // maps from area coordinates to absolute coordinates
+    function area2absolute(areaPt) {
+        return bgMoveArea.mapToItem(null, areaPt.x, areaPt.y)
+    }
+
+    // ensures an x coordinate inside this area
+    function xInRect(startX, itemWidth) {
+        var destX = startX
+        if (destX < 0)
+            destX = 0
+        else if (destX > bgMoveArea.width - itemWidth)
+            destX = bgMoveArea.width - itemWidth
+
+        return destX
+    }
+
+    // ensures an y coordinate inside this area
+    function yInRect(startY, itemHeight) {
+        var destY = startY
+        if (destY < 0)
+            destY = 0
+        else if (destY > bgMoveArea.height - itemHeight)
+            destY = bgMoveArea.height - itemHeight
+
+        return destY
+    }
+
+    // generates a random position inside this area (without considering item
+    // size)
+    function randomPosition() {
+        var xx = Math.random() * bgMoveArea.width
+        var yy = Math.random() * bgMoveArea.height
+        return Qt.point(xx, yy)
     }
 
     Rectangle {
@@ -34,34 +72,10 @@ Item {
         visible: false
         anchors.fill: parent
 
-        // The functions below ensure that the x or the y are inside the
-        // movearea rect.
-        function xInRect(startX) {
-            var halfItemWidth = bgMoveArea.maxItemWidth / 2
-            var destX = startX
-            if (destX - halfItemWidth < 0)
-                destX = halfItemWidth
-            else if (destX + halfItemWidth > bgMoveArea.width)
-                destX = bgMoveArea.width - halfItemWidth
-
-            return destX
-        }
-
-        function yInRect(startY) {
-            var halfItemHeight = bgMoveArea.maxItemHeight / 2
-            var destY = startY
-            if (destY - halfItemHeight < 0)
-                destY = halfItemHeight
-            else if (destY + halfItemHeight > bgMoveArea.height)
-                destY = bgMoveArea.height - halfItemHeight
-
-            return destY
-        }
-
         onClicked: {
             var absPos = parent.mapToItem(null, xInRect(mouse.x), yInRect(mouse.y))
 
-            bgMoveArea.moveTo(absPos.x - bgMoveArea.maxItemWidth / 2, absPos.y - bgMoveArea.maxItemHeight / 2)
+            bgMoveArea.moveTo(absPos.x, absPos.y)
             bgMoveArea.moveEnd()
             bgMoveArea.selectedItem = null
         }
