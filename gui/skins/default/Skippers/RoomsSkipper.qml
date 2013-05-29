@@ -27,7 +27,7 @@ Item {
       @return type:array An array containing the page and the properties to load if skipping is needed.
       */
     function pageSkip() {
-        if (roomModel.count === 1)
+        if (floorsModel.count ===1 && roomModel.count === 1)
             return {"page": "Room.qml", "properties": {room: roomModel.getObject(0), floorUii: floorsModel.getObject(0).uii}}
 
         return {"page": "", "properties": {}}
