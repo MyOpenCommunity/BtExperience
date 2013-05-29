@@ -122,13 +122,15 @@ QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node)
 	return obj_list;
 }
 
-void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
+QList<ObjectPair> parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
 {
+	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
 
 	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
 	{
 		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
@@ -144,9 +146,15 @@ void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_ma
 			SplitAdvancedProgram *p = new SplitAdvancedProgram(v.value("descr"), SplitAdvancedProgram::int2Mode(v.intValue("mode")),
 									   v.intValue("setpoint"), SplitAdvancedProgram::int2Speed(v.intValue("speed")),
 									   SplitAdvancedProgram::int2Swing(v.intValue("fan_swing")));
+			SplitAdvancedCommand *c = new SplitAdvancedCommand(s);
+
 			s->addProgram(p);
+			c->appendCommand(s, p);
+
+			obj_list << ObjectPair(uii, c);
 		}
 	}
+	return obj_list;
 }
 
 SplitAdvancedProgram::SplitAdvancedProgram(QObject *parent) :
@@ -435,6 +443,23 @@ void SplitAdvancedScenario::apply()
 		sendScenarioCommand();
 }
 
+void SplitAdvancedScenario::execute(SplitAdvancedProgram *program)
+{
+	if (program->mode == SplitAdvancedProgram::ModeOff)
+	{
+		sendOffCommand();
+	}
+	else
+	{
+		dev->setStatus(
+				static_cast<AdvancedAirConditioningDevice::Mode>(program->mode),
+				program->temperature,
+				static_cast<AdvancedAirConditioningDevice::Velocity>(program->speed),
+				static_cast<AdvancedAirConditioningDevice::Swing>(program->swing)
+				);
+	}
+}
+
 void SplitAdvancedScenario::reset()
 {
 	to_apply = current;
@@ -520,4 +545,24 @@ void SplitAdvancedCommandGroup::apply()
 					 command.second->temperature,
 					 static_cast<AdvancedAirConditioningDevice::Velocity>(command.second->speed),
 					 static_cast<AdvancedAirConditioningDevice::Swing>(command.second->swing));
+}
+
+
+SplitAdvancedCommand::SplitAdvancedCommand(QObject *parent) : ObjectInterface(parent)
+{
+	commands.clear();
+}
+
+void SplitAdvancedCommand::appendCommand(SplitAdvancedScenario *scenario, SplitAdvancedProgram *program)
+{
+	setName(program->getName()); // uses last
+	commands.append(qMakePair(scenario, program));
+}
+
+void SplitAdvancedCommand::execute()
+{
+	typedef QPair<SplitAdvancedScenario *, SplitAdvancedProgram *> Command;
+	foreach (Command command, commands) {
+		command.first->execute(command.second);
+	}
 }

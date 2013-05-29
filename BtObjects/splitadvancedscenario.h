@@ -21,7 +21,7 @@ class QDomNode;
 class UiiMapper;
 
 QList<ObjectPair> parseSplitAdvancedScenario(const QDomNode &xml_node);
-void parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
+QList<ObjectPair> parseSplitAdvancedCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
 QList<ObjectPair> parseSplitAdvancedCommandGroup(const QDomNode &xml_node, QHash<int, QPair<QDomNode, QDomNode> > programs);
 
 
@@ -243,6 +243,7 @@ public:
 	 * \endcode
 	 */
 	void addProgram(SplitAdvancedProgram *program);
+	void execute(SplitAdvancedProgram *program);
 
 signals:
 	void modeChanged();
@@ -280,6 +281,25 @@ private:
 	QHash<int, QVariant> current, to_apply;
 };
 
+
+/*!
+	\ingroup AirConditioning
+	\brief Sends a command to a split
+*/
+class SplitAdvancedCommand : public ObjectInterface
+{
+	Q_OBJECT
+public:
+	SplitAdvancedCommand(QObject *parent = 0);
+
+	virtual int getObjectId() const { return IdSplitAdvancedCommand; }
+
+	void appendCommand(SplitAdvancedScenario *scenario, SplitAdvancedProgram *program);
+	Q_INVOKABLE void execute();
+
+private:
+	QList<QPair<SplitAdvancedScenario *, SplitAdvancedProgram *> > commands;
+};
 
 /*!
 	\ingroup AirConditioning

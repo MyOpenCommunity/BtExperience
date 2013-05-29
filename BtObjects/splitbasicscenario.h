@@ -20,7 +20,7 @@ class UiiMapper;
 class ObjectDataModel;
 
 QList<ObjectPair> parseSplitBasicScenario(const QDomNode &xml_node);
-void parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
+QList<ObjectPair> parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map);
 QList<ObjectPair> parseSplitBasicCommandGroup(const QDomNode &xml_node, QHash<int, QPair<QDomNode, QDomNode> > programs);
 
 
@@ -119,6 +119,7 @@ public:
 	Q_INVOKABLE void apply();
 
 	void addProgram(SplitBasicProgram *program);
+	void execute(SplitBasicProgram *program);
 
 signals:
 	void programChanged();
@@ -138,6 +139,24 @@ private:
 	bool is_valid_temperature;
 };
 
+/*!
+	\ingroup AirConditioning
+	\brief Sends a command to a split
+*/
+class SplitBasicCommand : public ObjectInterface
+{
+	Q_OBJECT
+public:
+	SplitBasicCommand(QObject *parent = 0);
+
+	virtual int getObjectId() const { return IdSplitBasicCommand; }
+
+	void appendCommand(SplitBasicScenario *scenario, SplitBasicProgram *program);
+	Q_INVOKABLE void execute();
+
+private:
+	QList<QPair<SplitBasicScenario *, SplitBasicProgram *> > commands;
+};
 
 /*!
 	\ingroup AirConditioning

@@ -70,13 +70,15 @@ QList<ObjectPair> parseSplitBasicScenario(const QDomNode &xml_node)
 	return obj_list;
 }
 
-void parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
+QList<ObjectPair> parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
 {
+	QList<ObjectPair> obj_list;
 	XmlObject v(xml_node);
 
 	foreach (const QDomNode &ist, getChildren(xml_node, "ist"))
 	{
 		v.setIst(ist);
+		int uii = getIntAttribute(ist, "uii");
 
 		foreach (const QDomNode &link, getChildren(ist, "link"))
 		{
@@ -89,9 +91,16 @@ void parseSplitBasicCommand(const QDomNode &xml_node, const UiiMapper &uii_map)
 				continue;
 			}
 
-			s->addProgram(new SplitBasicProgram(v.value("descr"), v.intValue("command")));
+			SplitBasicProgram *p = new SplitBasicProgram(v.value("descr"), v.intValue("command"));
+			SplitBasicCommand *c = new SplitBasicCommand(s);
+
+			s->addProgram(p);
+			c->appendCommand(s, p);
+
+			obj_list << ObjectPair(uii, c);
 		}
 	}
+	return obj_list;
 }
 
 
@@ -184,6 +193,12 @@ void SplitBasicScenario::addProgram(SplitBasicProgram *program)
 		actual_program = program;
 }
 
+void SplitBasicScenario::execute(SplitBasicProgram *program)
+{
+	// see apply for reasons to use getObjectId
+	dev->activateScenario(QString::number(program->getObjectId()));
+}
+
 void SplitBasicScenario::apply()
 {
 	// since program number is correct for all programs (including "off"), just using
@@ -226,4 +241,24 @@ void SplitBasicCommandGroup::apply()
 
 	foreach (Command command, commands)
 		command.first->activateScenario(QString::number(command.second->getObjectId()));
+}
+
+
+SplitBasicCommand::SplitBasicCommand(QObject *parent) : ObjectInterface(parent)
+{
+	commands.clear();
+}
+
+void SplitBasicCommand::appendCommand(SplitBasicScenario *scenario, SplitBasicProgram *program)
+{
+	setName(program->getName()); // uses last
+	commands.append(qMakePair(scenario, program));
+}
+
+void SplitBasicCommand::execute()
+{
+	typedef QPair<SplitBasicScenario *, SplitBasicProgram *> Command;
+	foreach (Command command, commands) {
+		command.first->execute(command.second);
+	}
 }

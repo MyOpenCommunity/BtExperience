@@ -459,11 +459,11 @@ void BtObjectsPlugin::createObjects()
 			break;
 		case ObjectInterface::IdSplitBasicCommand:
 			// updates program list in basic split
-			parseSplitBasicCommand(xml_obj, uii_map);
+			obj_list = parseSplitBasicCommand(xml_obj, uii_map);
 			break;
 		case ObjectInterface::IdSplitAdvancedCommand:
 			// updates program list in advanced split
-			parseSplitAdvancedCommand(xml_obj, uii_map);
+			obj_list = parseSplitAdvancedCommand(xml_obj, uii_map);
 			break;
 		case ObjectInterface::IdSplitBasicGenericCommand:
 		case ObjectInterface::IdSplitAdvancedGenericCommand:
