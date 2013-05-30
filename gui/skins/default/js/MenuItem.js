@@ -267,6 +267,8 @@ function hasChild(itemObject) {
     case ObjectInterface.IdSplitBasicGenericCommandGroup:
     case ObjectInterface.IdSplitAdvancedGenericCommandGroup:
     case ObjectInterface.IdLoadDiagnostic:
+    case ObjectInterface.IdSplitBasicCommand:
+    case ObjectInterface.IdSplitAdvancedCommand:
         return false
     }
     return true

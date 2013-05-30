@@ -110,6 +110,14 @@ MenuColumn {
         ]
     }
 
+    ObjectModel {
+        id: splitCommandObjects
+        filters: [
+            {objectId: ObjectInterface.IdSplitBasicCommand},
+            {objectId: ObjectInterface.IdSplitAdvancedCommand}
+        ]
+    }
+
     ObjectModelSource {
         id: objectModelSource
     }
@@ -154,6 +162,7 @@ MenuColumn {
         privateProps.appendModel(loadManagementObjects)
         privateProps.appendModel(vdeObjects)
         privateProps.appendModel(notFilteredObjects)
+        privateProps.appendModel(splitCommandObjects)
         paginator.refreshSize()
     }
 }
