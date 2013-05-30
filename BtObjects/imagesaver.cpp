@@ -37,7 +37,11 @@ QString computeSaveFilePath(QString no_id_name, int id)
 {
 	QString file_path = no_id_name.left(no_id_name.lastIndexOf("."));
 	file_path.append(QString("_%1").arg(id));
-	file_path.append(no_id_name.mid(no_id_name.lastIndexOf(".")));
+	QString extension = no_id_name.mid(no_id_name.lastIndexOf("."));
+	// Qt cannot write gif files; in this case we fallback to png
+	if (extension.toLower() == ".gif")
+		extension = ".png";
+	file_path.append(extension);
 	return file_path;
 }
 
@@ -135,6 +139,7 @@ void ImageSaver::onFinished(QNetworkReply *reply)
 void ImageSaver::onReadyRead()
 {
 	file.write(reply->readAll());
+	file.flush();
 }
 
 void ImageSaver::saveDestinationFile()
