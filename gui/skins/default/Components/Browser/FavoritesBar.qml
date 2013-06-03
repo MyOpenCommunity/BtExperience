@@ -38,7 +38,7 @@ Item {
         id: choices
 
         ListElement { type: QT_TR_NOOP("web page"); mediaType: MediaLink.Web }
-        ListElement { type: QT_TR_NOOP("web camera"); mediaType: MediaLink.Webcam }
+        ListElement { type: QT_TR_NOOP("Webcam"); mediaType: MediaLink.Webcam }
         ListElement { type: QT_TR_NOOP("rss"); mediaType: MediaLink.Rss }
         ListElement { type: QT_TR_NOOP("weather"); mediaType: MediaLink.RssMeteo }
         ListElement { type: QT_TR_NOOP("web radio"); mediaType: MediaLink.WebRadio }

@@ -14,7 +14,7 @@ namespace
 		"</head>\n"
 		"<body>\n"
 		"<h1>Server not found</h1>\n"
-		"<p>Can't find the server at $SERVER. Please try again</p>\n"
+		"<p>Can't find the server in $SERVER. Please try again</p>\n"
 		"<hr>\n"
 		"<ul>\n"
 		"<li>Check the address for typing errors such as <b>ww.example.com</b> instead of <b>www.example.com</b></li>\n"

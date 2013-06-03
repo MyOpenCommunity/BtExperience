@@ -45,7 +45,7 @@ Item {
             ControlSlider {
                 id: colorSlider
                 percentage: control.camera === undefined ? 0 : control.camera.color
-                description: qsTr("Color")
+                description: qsTr("Colour")
                 onPlusClicked: if (control.camera !== undefined) control.camera.color += 5
                 onMinusClicked: if (control.camera !== undefined) control.camera.color -= 5
                 onSliderClicked: control.camera.color = Math.round(desiredPercentage / 5) * 5

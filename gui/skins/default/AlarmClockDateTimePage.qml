@@ -254,7 +254,7 @@ Page {
     Component {
         id: popupEditName
         FavoriteEditPopup {
-            title: qsTr("Edit alarm name")
+            title: qsTr("Edit alarm clock name")
             topInputLabel: qsTr("New name:")
             topInputText: page.alarmClock.description
             bottomVisible: false

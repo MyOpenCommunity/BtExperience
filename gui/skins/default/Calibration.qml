@@ -50,7 +50,7 @@ BasePage {
 
     UbuntuLightText {
         id: centerText
-        text: qsTr("Click the crosshair")
+        text: qsTr("Click the cross")
         anchors.centerIn: page
         anchors.verticalCenterOffset: -page.height / 4
     }

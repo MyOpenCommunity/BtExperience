@@ -37,7 +37,7 @@ MenuColumn {
             value: global.getPIAddress().slice(1) || qsTr("Unknown")
         }
         ControlTitleValue {
-            title: qsTr("External unit associated")
+            title: qsTr("Associated entrance panel")
             visible: vctModel.count > 0
             value: global.defaultExternalPlace.where.slice(1) || qsTr("Unknown")
         }

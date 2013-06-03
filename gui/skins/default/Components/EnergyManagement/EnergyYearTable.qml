@@ -131,7 +131,7 @@ Item {
                     Component {
                         id: tableHeaderComponent2
                         EnergyTableHeader {
-                            label: qsTr("objective")
+                            label: qsTr("Goal")
                             unitMeasure: qsTr("delta")
                         }
                     }

@@ -490,23 +490,23 @@ void ActionObject::buildDescriptionMap()
 		id_to_descr[27] = QT_TR_NOOP("OFF");
 		id_to_descr[28] = QT_TR_NOOP("Manual Temperature");
 		id_to_descr[68] = QT_TR_NOOP("Automatic");
-		id_to_descr[89] = QT_TR_NOOP("Set the fan-coil speed");
+		id_to_descr[89] = QT_TR_NOOP("Set the fancoil speed");
 		id_to_descr[-1] = id_to_descr[27];
 		break;
 
 	case ActionCen:
-		id_to_descr[94] = QT_TR_NOOP("Start pressure button");
-		id_to_descr[95] = QT_TR_NOOP("Short pressure button");
-		id_to_descr[96] = QT_TR_NOOP("Release after extended pressure button");
-		id_to_descr[97] = QT_TR_NOOP("Extended pressure button");
+		id_to_descr[94] = QT_TR_NOOP("Start pressure of the pushbutton");
+		id_to_descr[95] = QT_TR_NOOP("Short pressure of the pushbutton");
+		id_to_descr[96] = QT_TR_NOOP("Release pushbutton after extended pressure");
+		id_to_descr[97] = QT_TR_NOOP("Pushbutton extended pressure");
 		id_to_descr[-1] = id_to_descr[94];
 		break;
 
 	case ActionCenPlus:
-		id_to_descr[98] = QT_TR_NOOP("Short pressure button");
-		id_to_descr[99] = QT_TR_NOOP("Start pressure button");
-		id_to_descr[100] = QT_TR_NOOP("Release after extended pressure button");
-		id_to_descr[101] = QT_TR_NOOP("Extended pressure button");
+		id_to_descr[98] = QT_TR_NOOP("Short pressure of the pushbutton");
+		id_to_descr[99] = QT_TR_NOOP("Start pressure of the pushbutton");
+		id_to_descr[100] = QT_TR_NOOP("Release pushbutton after extended pressure");
+		id_to_descr[101] = QT_TR_NOOP("Pushbutton extended pressure");
 		id_to_descr[-1] = id_to_descr[98];
 		break;
 

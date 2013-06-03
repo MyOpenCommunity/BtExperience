@@ -110,7 +110,7 @@ MenuColumn {
                 offset += 1
             }
             if (notCotrolledProbesModel.count > 0) {
-                Script.container[modelCU.count + offset] = {"name": qsTr("Not Controlled Probes"), "component": notControlledProbes, "type": "component"}
+                Script.container[modelCU.count + offset] = {"name": qsTr("Non-Controlled Probes"), "component": notControlledProbes, "type": "component"}
                 offset += 1
             }
             if (externalProbesModel.count > 0) {

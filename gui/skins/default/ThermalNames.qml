@@ -23,7 +23,7 @@ QtObject {
         container['CENTRAL_STATUS'][ThermalControlUnit.IdWeeklyPrograms] = qsTr("weekly programs")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdScenarios] = qsTr("scenario")
         container['CENTRAL_STATUS'][ThermalControlUnit.IdHoliday] = qsTr("holiday")
-        container['CENTRAL_STATUS'][ThermalControlUnit.IdWeekday] = qsTr("weekday")
+        container['CENTRAL_STATUS'][ThermalControlUnit.IdWeekday] = qsTr("Weekdays")
 
         container['PROBE_STATUS'] = []
         container['PROBE_STATUS'][ThermalControlledProbe.Auto] = qsTr("auto")
@@ -37,7 +37,7 @@ QtObject {
         container['MODE'][SplitAdvancedProgram.ModeWinter] = qsTr("Heating")
         container['MODE'][SplitAdvancedProgram.ModeSummer] = qsTr("Cooling")
         container['MODE'][SplitAdvancedProgram.ModeFan] = qsTr("Fan")
-        container['MODE'][SplitAdvancedProgram.ModeDehumidification] = qsTr("Dry")
+        container['MODE'][SplitAdvancedProgram.ModeDehumidification] = qsTr("Dehumidifier")
         container['MODE'][SplitAdvancedProgram.ModeAuto] = qsTr("Automatic")
 
         container['SPEED'] = []
