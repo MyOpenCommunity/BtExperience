@@ -15,7 +15,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("reset program")
+            name: qsTr("Delete scenario")
             onTouched: privateProps.deleteProgram()
         }
     }
@@ -66,8 +66,8 @@ MenuColumn {
             }
 
             title: qsTr("Scenario configuration")
-            text: qsTr("If you didn't do a scenario reset, you will add \
-actions to the scenario. Press OK if you want to start scenario programming, \
+            text: qsTr("If you didn't cancel the scenario, you will add \
+actions to the pre-existing scenario. Press OK if you want to start scenario programming, \
 CANCEL if you wish to abort the operation.")
         }
     }

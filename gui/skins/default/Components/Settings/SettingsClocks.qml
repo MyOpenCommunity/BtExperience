@@ -22,7 +22,7 @@ MenuColumn {
 
     Column {
         MenuItem {
-            name: qsTr("Add Clock")
+            name: qsTr("Add Alarm clock")
             isSelected: privateProps.currentIndex === 1
 
             onTouched: {

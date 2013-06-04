@@ -55,7 +55,7 @@ MenuColumn {
         id: privateProps
 
         function openSupervisionMenu(navigationData) {
-            return _openMenu(qsTr("systems supervision"))
+            return _openMenu(qsTr("System supervision"))
         }
 
         function _openMenu(name) {
@@ -92,7 +92,7 @@ MenuColumn {
         id: listModel
         Component.onCompleted: {
             if (stopNGoModel.count + loadDiagnosticModel.count > 0)
-                listModel.append({"name": qsTr("systems supervision"), "component": supervision})
+                listModel.append({"name": qsTr("System supervision"), "component": supervision})
             listModel.append({"name": qsTr("consumption/production"), "component": energyOverview})
             if (loadManagementModel.count > 0)
                 listModel.append({"name": qsTr("load management"), "component": loadManagement})

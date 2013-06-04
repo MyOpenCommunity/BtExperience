@@ -101,7 +101,7 @@ Column {
                     verticalCenter: parent.verticalCenter
                 }
                 font.pixelSize: 14
-                text: qsTr("objective")
+                text: qsTr("Goal")
                 horizontalAlignment: Text.AlignHCenter
             }
         }

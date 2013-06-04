@@ -217,9 +217,9 @@ Item {
                 global.abortConnection()
             }
 
-            title: qsTr("Untrusted SSL connection")
+            title: qsTr("Unreliable SSL connection")
             titleColor: "red"
-            text: qsTr("This connection is untrusted. Do you wish to continue?")
+            text: qsTr("This connection is unreliable. Do you wish to continue?")
 
         }
     }

@@ -47,7 +47,7 @@ MenuColumn {
 
                 ButtonThreeStates {
                     anchors.centerIn: parent
-                    text: qsTr("Force load")
+                    text: qsTr("Force the load")
                     defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
                     pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
                     selectedImage: "../../images/common/btn_apriporta_ok_on.svg"
@@ -105,7 +105,7 @@ MenuColumn {
 
                 ButtonThreeStates {
                     anchors.centerIn: parent
-                    text: qsTr("Force load")
+                    text: qsTr("Force the load")
                     defaultImage: "../../images/common/btn_apriporta_ok_on.svg"
                     pressedImage: "../../images/common/btn_apriporta_ok_on_P.svg"
                     selectedImage: "../../images/common/btn_apriporta_ok_on.svg"

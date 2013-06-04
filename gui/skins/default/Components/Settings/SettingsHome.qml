@@ -34,7 +34,7 @@ MenuColumn {
 
         MenuItem {
             id: skinItem
-            name: qsTr("skin home")
+            name: qsTr("Home page skin")
             description: pageObject.names.get('SKIN', homeProperties.skin)
             hasChild: true
             isSelected: privateProps.currentIndex === 1

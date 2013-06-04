@@ -135,7 +135,7 @@ Page {
                 m.append({"description": qsTr("web browser"), "target": undefined, "cardImageCached": "images/card/browser.jpg", "props": {"urlString": global.homePageUrl}})
 
             if (webLinkModel.count > 0)
-                m.append({"description": qsTr("web link"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink.jpg",
+                m.append({"description": qsTr("Web links"), "target": "BrowserPage.qml", "cardImageCached": "images/card/weblink.jpg",
                                            "props": {"containerId": Container.IdMultimediaWebLink, "type": "browser"}})
             if (rssModel.count > 0)
                 m.append({"description": qsTr("rss"), "target": "BrowserPage.qml", "cardImageCached": "images/card/rss.jpg",
@@ -147,7 +147,7 @@ Page {
                 m.append({"description": qsTr("weather"), "target": "BrowserPage.qml", "cardImageCached": "images/card/meteo.jpg",
                                            "props": {"containerId": Container.IdMultimediaRssMeteo, "type": "rss"}})
             if (webcamModel.count > 0)
-                m.append({"description": qsTr("web cam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/cam.jpg",
+                m.append({"description": qsTr("Webcam"), "target": "BrowserPage.qml", "cardImageCached": "images/card/cam.jpg",
                                            "props": {"containerId": Container.IdMultimediaWebCam, "type": "browser"}})
         }
 

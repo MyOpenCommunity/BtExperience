@@ -66,7 +66,7 @@ MenuColumn {
 
         MenuItem {
             id: modalityItem
-            name: qsTr("modality")
+            name: qsTr("Mode")
             description: {
                 if (dataModel.mode === -1)
                     return ""

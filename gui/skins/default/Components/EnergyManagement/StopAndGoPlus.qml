@@ -12,7 +12,7 @@ MenuColumn {
             source: "../../images/common/bg_panel_212x100.svg"
 
             ControlSwitch {
-                text: qsTr("Automatic Reclosing")
+                text: qsTr("Auto close")
                 pixelSize: 14
                 onPressed: element.dataModel.autoReset = !element.dataModel.autoReset
                 status: !element.dataModel.autoReset

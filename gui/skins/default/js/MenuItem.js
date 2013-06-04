@@ -143,7 +143,7 @@ function description(itemObject) {
             descr = qsTr("Control disabled")
             break
         case EnergyLoadDiagnostic.EnergyLoadDetached:
-            descr = qsTr("Load detached")
+            descr = qsTr("Load disconnected")
             break
         }
         break

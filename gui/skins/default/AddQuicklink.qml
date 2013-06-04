@@ -112,8 +112,8 @@ Page {
                                addText: qsTr("Add new camera:"), mediaType: MediaLink.BtObject, containerUii: -1})
         choices.append({ type: qsTr("web page"), selectText: qsTr("Select existing web page link:"),
                            addText: qsTr("Add new web page link:"), mediaType: MediaLink.Web, containerUii: Container.IdMultimediaWebLink})
-        choices.append({ type: qsTr("web camera"), selectText: qsTr("Select existing web camera:"),
-                           addText: qsTr("Add new web camera:"), mediaType: MediaLink.Webcam, containerUii: Container.IdMultimediaWebCam})
+        choices.append({ type: qsTr("Webcam"), selectText: qsTr("Select existing webcam:"),
+                           addText: qsTr("Add new webcam:"), mediaType: MediaLink.Webcam, containerUii: Container.IdMultimediaWebCam})
         choices.append({ type: qsTr("rss"), selectText: qsTr("Select existing rss link:"),
                            addText: qsTr("Add new rss link:"), mediaType: MediaLink.Rss, containerUii: Container.IdMultimediaRss})
         choices.append({ type: qsTr("weather"), selectText: qsTr("Select existing weather forecast link:"),

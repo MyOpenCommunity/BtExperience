@@ -512,7 +512,7 @@ Page {
             if (kind === 0)
                 return qsTr("beep")
             if (kind === 1)
-                return qsTr("sound diffusion")
+                return qsTr("Sound system")
             return " " // a space to avoid zero height text element
         }
 

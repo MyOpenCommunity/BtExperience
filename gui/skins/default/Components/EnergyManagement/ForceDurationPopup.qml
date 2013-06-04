@@ -10,7 +10,7 @@ Column {
     signal closePopup
 
     ControlMinusPlus {
-        title: qsTr("Force load")
+        title: qsTr("Force the load")
         text: format(loadWithCU.forceDuration)
         fastClickInterval: 50
         onMinusClicked: loadWithCU.decreaseForceDuration()

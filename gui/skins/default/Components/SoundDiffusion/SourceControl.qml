@@ -23,7 +23,7 @@ MenuColumn {
             onTouched: {
                 if (privateProps.currentIndex !== 0)
                     privateProps.currentIndex = 0
-                column.loadColumn(sourceList, qsTr("source change"))
+                column.loadColumn(sourceList, qsTr("Source changed"))
             }
         }
 
