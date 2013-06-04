@@ -43,8 +43,8 @@ Column {
             font.pixelSize: 14
             color: "white"
             text: qsTr("If you didn't cancel the scenario, you will add \
-                       actions to the pre-existing scenario. Press OK if you want to start scenario programming, \
-                       CANCEL if you wish to abort the operation.")
+actions to the pre-existing scenario. Press OK if you want to start scenario programming, \
+CANCEL if you wish to abort the operation.")
             wrapMode: Text.Wrap
             anchors {
                 right: parent.right
