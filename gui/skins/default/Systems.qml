@@ -22,6 +22,10 @@ Page {
         source: myHomeModels.systems
     }
 
+    SystemsNames {
+        id: names
+    }
+
     Loader {
         id: viewLoader
         anchors {
@@ -72,5 +76,11 @@ Page {
         }
     }
 
-    Component.onCompleted: systemsModel.containers = Script.systemsModelContainers(systemsModel)
+    Component.onCompleted: {
+        systemsModel.containers = Script.systemsModelContainers(systemsModel)
+        for (var i = 0; i < systemsModel.count; ++i) {
+            var itemObject = systemsModel.getObject(i)
+            itemObject.description = names.get(itemObject.containerId)
+        }
+    }
 }
