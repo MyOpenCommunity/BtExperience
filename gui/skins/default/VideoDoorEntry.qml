@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components.VideoDoorEntry 1.0
 import "js/Stack.js" as Stack
 import "js/navigation.js" as Navigation
@@ -11,7 +12,7 @@ import "js/navigation.js" as Navigation
   */
 SystemPage {
     source: "images/background/video_door_entry.jpg"
-    text: qsTr("video door entry")
+    text: systemNames.get(Container.IdVideoDoorEntry)
     rootColumn: Component { VideoDoorEntryItems {} }
     showSettingsButton: true
 

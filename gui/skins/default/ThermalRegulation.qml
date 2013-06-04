@@ -1,4 +1,5 @@
 import QtQuick 1.1
+import BtObjects 1.0
 import Components.ThermalRegulation 1.0
 
 
@@ -9,7 +10,7 @@ import Components.ThermalRegulation 1.0
   */
 SystemPage {
     source: "images/background/temperature_control_heating.jpg"
-    text: qsTr("temperature control")
+    text: systemNames.get(Container.IdThermalRegulation)
     rootColumn: Component { ThermalRegulationItems {} }
     names: ThermalNames {}
 }

@@ -1,6 +1,6 @@
 import QtQuick 1.1
 import Components.Messages 1.0
-
+import BtObjects 1.0
 
 /**
   \ingroup Core
@@ -9,6 +9,6 @@ import Components.Messages 1.0
   */
 SystemPage {
     source: "images/background/messages.jpg"
-    text: qsTr("messages")
+    text: systemNames.get(Container.IdMessages)
     rootColumn: Component { MessagesItems { } }
 }

@@ -12,7 +12,7 @@ SystemPage {
     id: sounddiffusion
 
     source: "images/background/sound_diffusion.jpg"
-    text: qsTr("Sound System")
+    text: systemNames.get(Container.IdSoundDiffusionMulti)
     rootColumn: monoChannelAmbient.count > 0 ? monoChannel : multiChannel
     rootData: monoChannelAmbient.count > 0 ? monoChannelAmbient.getObject(0) : null
 

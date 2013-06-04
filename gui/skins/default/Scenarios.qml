@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components.Scenarios 1.0
+import BtObjects 1.0
 import "js/Stack.js" as Stack
 import "js/navigation.js" as Navigation
 
@@ -11,7 +12,7 @@ import "js/navigation.js" as Navigation
   */
 SystemPage {
     source: "images/background/scenario.jpg"
-    text: qsTr("Scenarios")
+    text: systemNames.get(Container.IdScenarios)
     rootColumn: Component { ScenarioSystem {} }
     showSettingsButton: true
 

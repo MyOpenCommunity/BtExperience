@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import Components 1.0
 import Components.Antintrusion 1.0
+import BtObjects 1.0
 import "js/datetime.js" as DateTime
 
 
@@ -12,7 +13,7 @@ import "js/datetime.js" as DateTime
 SystemPage {
     id: antintrusion
     source: "images/background/burglar_alarm.jpg"
-    text: qsTr("Burglar alarm")
+    text: systemNames.get(Container.IdAntintrusion)
     rootColumn: Component { AntintrusionSystem {} }
     names: AntintrusionNames { }
 

@@ -24,6 +24,7 @@ Page {
     property alias rootObject: container.rootObject
     property alias currentObject: container.currentObject
     property QtObject names: null
+    property QtObject systemNames: SystemsNames {}
 
     showSystemsButton: true
 

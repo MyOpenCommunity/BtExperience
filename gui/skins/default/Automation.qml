@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import Components.Automation 1.0
+import BtObjects 1.0
 
 
 /**
@@ -9,6 +10,6 @@ import Components.Automation 1.0
   */
 SystemPage {
     source: "images/background/automation.jpg"
-    text: qsTr("automation")
+    text: systemNames.get(Container.IdAutomation)
     rootColumn: Component { AutomationItems {} }
 }
