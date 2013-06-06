@@ -12,6 +12,10 @@
 
 #include <QtDebug>
 
+#if !defined(BT_HARDWARE_X11)
+#include <liblghal.h>
+#endif
+
 #if defined(BT_HARDWARE_DM3730)
 #define QWS_MOUSE_FILTER 1
 #else
@@ -195,6 +199,13 @@ void Calibration::saveCalibration()
 
 bool Calibration::sanityCheck()
 {
+	capacitive = false;
+#if !defined(BT_HARDWARE_X11)
+	// board can be BAIA or BAIA_CAP
+	if (hal_board() != BAIA) capacitive = true;
+	qDebug() << "capacitive = " << capacitive;
+#endif
+
 	QPoint *points = calibration_data.devPoints;
 
 	QPoint tl = points[QWSPointerCalibrationData::TopLeft];
@@ -245,7 +256,7 @@ bool Calibration::sanityCheck()
 #endif
 	{
 		qDebug() << "Calibration: left and right inverted";
-		return false;
+		if (!capacitive) return false;
 	}
 
 #if defined(BT_HARDWARE_PXA270) || defined(BT_HARDWARE_DM365) || defined(BT_HARDWARE_DM3730)
@@ -266,13 +277,13 @@ bool Calibration::sanityCheck()
 	if (qMin(qAbs(tl.x() - tr.x()), qAbs(bl.x() - br.x())) < MINIMUM_RAW_X_SIZE)
 	{
 		qDebug() << "Calibration: the points on the left are too close to the points on the right.";
-		return false;
+		if (!capacitive) return false;
 	}
 
 	if (qMin(qAbs(tl.y() - bl.y()), qAbs(tr.y() - br.y())) < MINIMUM_RAW_Y_SIZE)
 	{
 		qDebug() << "Calibration: the points on the top are too close to the points on the bottom.";
-		return false;
+		if (!capacitive) return false;
 	}
 #endif
 

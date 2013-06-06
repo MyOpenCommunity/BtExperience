@@ -65,8 +65,12 @@ BasePage {
         target: global.calibration
         onRawMousePress: {
             if (!testButtons) {
+                var scalingFactorX = global.mainWidth / 1024
+                var scalingFactorY = global.mainHeight / 600
+                var screenPoint = Qt.point(page.points[page.currentPoint].p.x * scalingFactorX,
+                                           page.points[page.currentPoint].p.y * scalingFactorY)
                 global.calibration.setCalibrationPoint(page.points[page.currentPoint].where,
-                                                       Qt.point(page.points[page.currentPoint].p.x, page.points[page.currentPoint].p.y),
+                                                       screenPoint,
                                                        Qt.point(x, y))
 
                 page.currentPoint += 1

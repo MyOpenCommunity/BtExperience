@@ -80,7 +80,7 @@ private slots:
 
 private:
 	bool sanityCheck();
-
+	bool capacitive;
 	QString pointercal_file;
 	QWSPointerCalibrationData calibration_data;
 	QList<QPoint> raw_events;
