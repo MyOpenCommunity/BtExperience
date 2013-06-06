@@ -397,8 +397,7 @@ Item {
             id: helpToolbarButton
 
             // fallback url for help system
-            property string helpUrl: "localhost"
-
+            property string helpUrl: "file:///home/bticino/cfg/extra/30/"+global.guiSettings.language+"/index.html"
             height: toolbar_top.height
             visible: true // on ToolbarButton visible property is binded to quantity
             defaultImage: homeProperties.skin === HomeProperties.Clear ?
