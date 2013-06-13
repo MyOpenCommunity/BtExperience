@@ -21,7 +21,7 @@ MenuColumn {
         currentIndex: selectItem()
 
         function selectItem() {
-            for (var i = 0; i < itemList.count; i++) {
+            for (var i = 0; i < scenariosModel.count; i++) {
                 if (scenariosModel.getObject(i).selected === true)
                     return i;
             }
