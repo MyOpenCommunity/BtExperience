@@ -37,6 +37,11 @@ rm -rf images
 ln -s ../../../../../cfg/extra/1/images images
 cd -
 
+# modify powervr.ini for qt5
+echo "[default]
+WindowSystem=libpvrQWSWSEGL.so
+_EOF" > ${ROOTFS}/etc/powervr.ini
+
 #create launcher file
 echo "#!/bin/sh
 
