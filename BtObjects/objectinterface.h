@@ -100,6 +100,7 @@ public:
 		IdAutomationVDE = 3008, //!< A 1-state VDE Gate/Door actuator
 		IdAutomationDoor = 3001, //!< A 1-state Door lock actuator
 		IdAutomationContact = 3004, //!< Automation Contact actuator
+			CidAutomationContact = 3013,
 		//IdAutomationCommand2 = 3007, //!< Automation AMB, GEN, GR
 		//IdAutomationCommand3 = 3008, //!< Automation 3-states AMB, GEN, GR
 		IdAutomationGroup2 = 3006, //!< Group of automation 2-state

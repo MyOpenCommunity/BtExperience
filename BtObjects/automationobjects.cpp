@@ -57,6 +57,11 @@ QList<ObjectPair> parseAutomation2(const QDomNode &obj)
 			d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
 			obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, ObjectInterface::IdAutomation2GEN));
 			break;
+		case ObjectInterface::CidAutomationContact:
+			PPTStatDevice *p;
+			p = bt_global::add_device_to_cache(new PPTStatDevice(where));
+			obj_list << ObjectPair(uii, new AutomationContact(v.value("descr"), p));
+			break;
 		default:
 			d = bt_global::add_device_to_cache(new LightingDevice(where, pul));
 			obj_list << ObjectPair(uii, new AutomationLight(v.value("descr"), where, time, d, id));
@@ -198,6 +203,39 @@ void AutomationLight::activate()
 {
 	setActive(true);
 }
+
+AutomationContact::AutomationContact(QString _name, PPTStatDevice *d) :
+	DeviceObjectInterface(d)
+{
+	name = _name;
+	dev = d;
+	active = false; // initial value
+	connect(dev, SIGNAL(valueReceived(DeviceValues)), SLOT(valueReceived(DeviceValues)));
+
+}
+
+bool AutomationContact::isActive() const
+{
+	return active;
+}
+
+void AutomationContact::valueReceived(const DeviceValues &values_list)
+{
+	DeviceValues::const_iterator it = values_list.constBegin();
+	while (it != values_list.constEnd())
+	{
+			if (it.value().toBool() != active)
+			{
+				active = it.value().toBool() == true;
+
+				emit activeChanged();
+				break;
+			}
+		++it;
+	}
+}
+
+
 
 AutomationVDE::AutomationVDE(QString _name, VideoDoorEntryDevice *d) :
 	DeviceObjectInterface(d)

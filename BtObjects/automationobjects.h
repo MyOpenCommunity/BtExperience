@@ -48,6 +48,41 @@ protected:
 	int myid;
 };
 
+/*!
+	\ingroup Automation
+	\brief Manages contacts
+*/
+class AutomationContact : public DeviceObjectInterface
+{
+	Q_OBJECT
+
+	/*!
+		\brief Sets and gets if the light is active (on) or not (off)
+	*/
+	Q_PROPERTY(bool active READ isActive NOTIFY activeChanged)
+
+public:
+	AutomationContact(QString name, PPTStatDevice *d);
+
+	virtual int getObjectId() const
+	{
+		return ObjectInterface::IdAutomationContact;
+	}
+
+	virtual bool isActive() const;
+
+protected:
+	bool active;
+
+signals:
+	void activeChanged();
+
+protected slots:
+	virtual void valueReceived(const DeviceValues &values_list);
+
+private:
+	PPTStatDevice *dev;
+};
 
 /*!
 	\ingroup Automation
