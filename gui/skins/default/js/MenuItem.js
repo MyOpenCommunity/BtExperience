@@ -269,6 +269,7 @@ function hasChild(itemObject) {
     case ObjectInterface.IdLoadDiagnostic:
     case ObjectInterface.IdSplitBasicCommand:
     case ObjectInterface.IdSplitAdvancedCommand:
+    case ObjectInterface.IdAutomationContact:
         return false
     }
     return true

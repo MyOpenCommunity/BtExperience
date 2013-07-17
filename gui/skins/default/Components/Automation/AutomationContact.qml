@@ -3,9 +3,9 @@ import Components 1.0
 
 
 MenuColumn {
-    ControlOnOff {
-        status: dataModel.active
-        onEnabled: false
-        offEnabled: false
-    }
+//    ControlOnOff {
+//        status: dataModel.active
+//        onEnabled: false
+//        offEnabled: false
+//    }
 }
