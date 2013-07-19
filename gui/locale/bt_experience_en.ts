@@ -96,10 +96,6 @@
         <translation>Down</translation>
     </message>
     <message>
-        <source>Extended pressure button</source>
-        <translation>Extended pressure button</translation>
-    </message>
-    <message>
         <source>Heating Program</source>
         <translation>Heating Program</translation>
     </message>
@@ -148,8 +144,12 @@
         <translation>Open</translation>
     </message>
     <message>
-        <source>Release after extended pressure button</source>
-        <translation>Release after extended pressure button</translation>
+        <source>Pushbutton extended pressure</source>
+        <translation>Pushbutton extended pressure</translation>
+    </message>
+    <message>
+        <source>Release pushbutton after extended pressure</source>
+        <translation>Release pushbutton after extended pressure</translation>
     </message>
     <message>
         <source>Scenario 1.16</source>
@@ -168,20 +168,20 @@
         <translation>Set the air conditioning mode</translation>
     </message>
     <message>
-        <source>Set the fan-coil speed</source>
-        <translation>Set the fan-coil speed</translation>
+        <source>Set the fancoil speed</source>
+        <translation>Set the fancoil speed</translation>
     </message>
     <message>
         <source>Set the heating mode</source>
         <translation>Set the heating mode</translation>
     </message>
     <message>
-        <source>Short pressure button</source>
-        <translation>Short pressure button</translation>
+        <source>Short pressure of the pushbutton</source>
+        <translation>Short pressure of the pushbutton</translation>
     </message>
     <message>
-        <source>Start pressure button</source>
-        <translation>Start pressure button</translation>
+        <source>Start pressure of the pushbutton</source>
+        <translation>Start pressure of the pushbutton</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -223,16 +223,16 @@
         <translation>Add new weather forecast link:</translation>
     </message>
     <message>
-        <source>Add new web camera:</source>
-        <translation>Add new web camera:</translation>
-    </message>
-    <message>
         <source>Add new web page link:</source>
         <translation>Add new web page link:</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
         <translation>Add new web radio:</translation>
+    </message>
+    <message>
+        <source>Add new webcam:</source>
+        <translation>Add new webcam:</translation>
     </message>
     <message>
         <source>Add quicklink</source>
@@ -319,16 +319,16 @@ Address: %2</translation>
         <translation>Select existing weather forecast link:</translation>
     </message>
     <message>
-        <source>Select existing web camera:</source>
-        <translation>Select existing web camera:</translation>
-    </message>
-    <message>
         <source>Select existing web page link:</source>
         <translation>Select existing web page link:</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
         <translation>Select existing web radio:</translation>
+    </message>
+    <message>
+        <source>Select existing webcam:</source>
+        <translation>Select existing webcam:</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -343,16 +343,16 @@ Address: %2</translation>
         <translation>Weather</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Web camera</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Web page</translation>
     </message>
     <message>
         <source>web radio</source>
         <translation>Web radio</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -385,27 +385,27 @@ Address: %2</translation>
     </message>
     <message>
         <source>F</source>
-        <comment>Friday</comment>
+	<comment>Friday</comment>
         <translation>F</translation>
     </message>
     <message>
         <source>M</source>
-        <comment>Monday</comment>
+	<comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
         <source>S</source>
-        <comment>Saturday</comment>
+	<comment>Saturday</comment>
         <translation>S</translation>
     </message>
     <message>
         <source>S</source>
-        <comment>Sunday</comment>
+	<comment>Sunday</comment>
         <translation>S</translation>
     </message>
     <message>
         <source>T</source>
-        <comment>Thursday</comment>
+	<comment>Thursday</comment>
         <translation>T</translation>
     </message>
     <message>
@@ -414,12 +414,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>T</source>
-        <comment>Tuesday</comment>
+	<comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
         <source>W</source>
-        <comment>Wednesday</comment>
+	<comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -461,8 +461,8 @@ Address: %2</translation>
         <translation>Fancoil</translation>
     </message>
     <message>
-        <source>modality</source>
-        <translation>Modality</translation>
+        <source>Mode</source>
+        <translation>Mode</translation>
     </message>
     <message>
         <source>program</source>
@@ -515,8 +515,18 @@ Address: %2</translation>
         <translation>Description</translation>
     </message>
     <message>
-        <source>Edit alarm name</source>
-        <translation>Edit alarm name</translation>
+        <source>Edit alarm clock name</source>
+        <translation>Edit alarm clock name</translation>
+    </message>
+    <message>
+        <source>F</source>
+	<comment>Friday</comment>
+        <translation>F</translation>
+    </message>
+    <message>
+        <source>M</source>
+	<comment>Monday</comment>
+        <translation>M</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -535,47 +545,37 @@ Address: %2</translation>
         <translation>Only once</translation>
     </message>
     <message>
+        <source>S</source>
+	<comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
         <source>Save changes?</source>
         <translation>Save changes?</translation>
+    </message>
+    <message>
+        <source>S</source>
+	<comment>Sunday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>T</source>
+	<comment>Thursday</comment>
+        <translation>T</translation>
     </message>
     <message>
         <source>time</source>
         <translation>Time</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>M</translation>
-    </message>
-    <message>
         <source>T</source>
-        <comment>Tuesday</comment>
+	<comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
         <source>W</source>
-        <comment>Wednesday</comment>
+	<comment>Wednesday</comment>
         <translation>W</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>T</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>F</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>S</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>S</translation>
     </message>
 </context>
 <context>
@@ -625,8 +625,8 @@ Address: %2</translation>
         <translation>Signal:</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
-        <translation>Sound diffusion</translation>
+        <source>Sound system</source>
+        <translation>Sound system</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -793,8 +793,8 @@ Address: %2</translation>
 <context>
     <name>Appliance</name>
     <message>
-        <source>Force load</source>
-        <translation>Force load</translation>
+        <source>Force the load</source>
+        <translation>Force the load</translation>
     </message>
 </context>
 <context>
@@ -834,6 +834,29 @@ Address: %2</translation>
     </message>
 </context>
 <context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authentication required</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>This connection is unreliable. Do you wish to continue?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Unreliable SSL connection</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>User name</translation>
+    </message>
+</context>
+<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -850,7 +873,7 @@ Address: %2</translation>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -865,7 +888,7 @@ Address: %2</translation>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -893,8 +916,8 @@ Address: %2</translation>
         <translation>Click the button</translation>
     </message>
     <message>
-        <source>Click the crosshair</source>
-        <translation>Click the crosshair</translation>
+        <source>Click the cross</source>
+        <translation>Click the cross</translation>
     </message>
     <message>
         <source>ok</source>
@@ -996,6 +1019,16 @@ Address: %2</translation>
         <translation>Enabled</translation>
     </message>
     <message>
+        <source>F</source>
+	<comment>Friday</comment>
+        <translation>F</translation>
+    </message>
+    <message>
+        <source>M</source>
+	<comment>Monday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
         <source>repetition</source>
         <translation>Repetition</translation>
     </message>
@@ -1004,47 +1037,37 @@ Address: %2</translation>
         <translation>Ringtone</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
-        <translation>Sound diffusion</translation>
+        <source>S</source>
+	<comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>Sound system</source>
+        <translation>Sound system</translation>
+    </message>
+    <message>
+        <source>S</source>
+	<comment>Sunday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>T</source>
+	<comment>Thursday</comment>
+        <translation>T</translation>
     </message>
     <message>
         <source>triggers at</source>
         <translation>Triggers at</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>M</translation>
-    </message>
-    <message>
         <source>T</source>
-        <comment>Tuesday</comment>
+	<comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
         <source>W</source>
-        <comment>Wednesday</comment>
+	<comment>Wednesday</comment>
         <translation>W</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>T</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>F</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>S</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>S</translation>
     </message>
 </context>
 <context>
@@ -1115,8 +1138,8 @@ Address: %2</translation>
         <translation>Brightness</translation>
     </message>
     <message>
-        <source>Color</source>
-        <translation>Color</translation>
+        <source>Colour</source>
+        <translation>Colour</translation>
     </message>
     <message>
         <source>Contrast</source>
@@ -1454,28 +1477,28 @@ Address: %2</translation>
         <translation>Gas</translation>
     </message>
     <message>
-        <source>GroundFail</source>
-        <translation>GroundFail</translation>
+        <source>Ground Fault</source>
+        <translation>Ground Fault</translation>
     </message>
     <message>
         <source>Heat</source>
         <translation>Heat</translation>
     </message>
     <message>
-        <source>HotWater</source>
-        <translation>HotWater</translation>
+        <source>Hot Water</source>
+        <translation>Hot Water</translation>
     </message>
     <message>
-        <source>Opened</source>
-        <translation>Opened</translation>
+        <source>Open</source>
+        <translation>Open</translation>
     </message>
     <message>
-        <source>Overtension</source>
-        <translation>Overtension</translation>
+        <source>Overvoltage</source>
+        <translation>Overvoltage</translation>
     </message>
     <message>
-        <source>ShortCircuit</source>
-        <translation>ShortCircuit</translation>
+        <source>Short Circuit</source>
+        <translation>Short Circuit</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -1497,8 +1520,8 @@ Address: %2</translation>
         <translation>Load management</translation>
     </message>
     <message>
-        <source>systems supervision</source>
-        <translation>Systems supervision</translation>
+        <source>System supervision</source>
+        <translation>System supervision</translation>
     </message>
 </context>
 <context>
@@ -1552,12 +1575,12 @@ Address: %2</translation>
         <translation>Delta</translation>
     </message>
     <message>
-        <source>month</source>
-        <translation>Month</translation>
+        <source>Goal</source>
+        <translation>Goal</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>Objective</translation>
+        <source>month</source>
+        <translation>Month</translation>
     </message>
 </context>
 <context>
@@ -1614,10 +1637,6 @@ Address: %2</translation>
         <translation>Weather</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Web camera</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Web page</translation>
     </message>
@@ -1625,12 +1644,31 @@ Address: %2</translation>
         <source>web radio</source>
         <translation>Web radio</translation>
     </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
+    </message>
 </context>
 <context>
     <name>FeedbackPopup</name>
     <message>
         <source>programming impossible</source>
         <translation>Programming impossible</translation>
+    </message>
+</context>
+<context>
+    <name>Floor</name>
+    <message>
+        <source>Add Floor</source>
+        <translation>Add Floor</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>Insert new floor name</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>New name:</translation>
     </message>
 </context>
 <context>
@@ -1644,8 +1682,8 @@ Address: %2</translation>
         <translation>Force</translation>
     </message>
     <message>
-        <source>Force load</source>
-        <translation>Force load</translation>
+        <source>Force the load</source>
+        <translation>Force the load</translation>
     </message>
     <message>
         <source>Time</source>
@@ -1670,12 +1708,12 @@ Address: %2</translation>
         <translation>Delta</translation>
     </message>
     <message>
-        <source>line</source>
-        <translation>Line</translation>
+        <source>Goal</source>
+        <translation>Goal</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>Objective</translation>
+        <source>line</source>
+        <translation>Line</translation>
     </message>
 </context>
 <context>
@@ -1769,8 +1807,8 @@ Address: %2</translation>
         <translation>Danger</translation>
     </message>
     <message>
-        <source>Load detached</source>
-        <translation>Load detached</translation>
+        <source>Load disconnected</source>
+        <translation>Load disconnected</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -1866,12 +1904,12 @@ Address: %2</translation>
         <translation>Web browser</translation>
     </message>
     <message>
-        <source>web cam</source>
-        <translation>Web Cam</translation>
+        <source>Web links</source>
+        <translation>Web links</translation>
     </message>
     <message>
-        <source>web link</source>
-        <translation>Web link</translation>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -1920,6 +1958,85 @@ Address: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 seconds</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Activated</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ALARM CLOCK</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ANTINTRUSION</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Available</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Close</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Command sent</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERGY MANAGEMENT</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Energy Monthly Report</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignore</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MESSAGES</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Monthly goal reached</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>More info</translation>
+    </message>
+    <message>
+        <source>new message(s)</source>
+        <translation>new message(s)</translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Postpone</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Read</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SCENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Show</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Supervision</translation>
     </message>
 </context>
 <context>
@@ -2004,6 +2121,10 @@ Address: %2</translation>
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add MyHome object</source>
+        <translation>Add MyHome object</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Background image</translation>
     </message>
@@ -2019,12 +2140,66 @@ Address: %2</translation>
         <source>Change card image</source>
         <translation>Change card image</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Confirm operation</translation>
+    </message>
+    <message>
+        <source>Delete room</source>
+        <translation>Delete room</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>Do you want to permanently delete the room and all associated information?</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Objectlinks list</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
         <source>rooms</source>
         <translation>Rooms</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsItems</name>
+    <message>
+        <source>Add Room</source>
+        <translation>Add Room</translation>
+    </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Confirm operation</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>Delete Floor</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>Do you want to permanently delete the floor, all contained rooms and all associated information?</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>Insert new room name</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>New name:</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected MyHome object?</source>
+        <translation>Are you sure to delete the selected MyHome object?</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Confirm deletion</translation>
     </message>
 </context>
 <context>
@@ -2056,8 +2231,12 @@ Address: %2</translation>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
+        <source>Delete scenario</source>
+        <translation>Delete scenario</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <translation>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2066,10 +2245,6 @@ Address: %2</translation>
     <message>
         <source>programming impossible</source>
         <translation>Programming impossible</translation>
-    </message>
-    <message>
-        <source>reset program</source>
-        <translation>Reset program</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
@@ -2168,8 +2343,8 @@ Continue?</translation>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <source>Add Clock</source>
-        <translation>Add Clock</translation>
+        <source>Add Alarm clock</source>
+        <translation>Add Alarm clock</translation>
     </message>
 </context>
 <context>
@@ -2394,16 +2569,16 @@ Continue?</translation>
         <translation>Do you want to restore background to default value?</translation>
     </message>
     <message>
+        <source>Home page skin</source>
+        <translation>Home page skin</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Quicklinks</translation>
     </message>
     <message>
         <source>Restore background image</source>
         <translation>Restore background image</translation>
-    </message>
-    <message>
-        <source>skin home</source>
-        <translation>Skin home</translation>
     </message>
 </context>
 <context>
@@ -2640,8 +2815,8 @@ Continue?</translation>
         <translation>MAC address</translation>
     </message>
     <message>
-        <source>network state</source>
-        <translation>Network state</translation>
+        <source>Network status</source>
+        <translation>Network status</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2666,6 +2841,33 @@ Continue?</translation>
     <message>
         <source>Unknown</source>
         <translation>Unknown</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsObjectLink</name>
+    <message>
+        <source>Are you sure to delete the selected MyHome object?</source>
+        <translation>Are you sure to delete the selected MyHome object?</translation>
+    </message>
+    <message>
+        <source>Change MyHome object name</source>
+        <translation>Change MyHome object name</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Confirm deletion</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Delete</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>New name:</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Rename</translation>
     </message>
 </context>
 <context>
@@ -2706,12 +2908,35 @@ Continue?</translation>
         <translation>Confirm operation</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>Delete Profile</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>Do you want to permanently delete the profile and all associated information?</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>Do you want to restore background to default value?</translation>
     </message>
     <message>
         <source>Restore background image</source>
         <translation>Restore background image</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsProfiles</name>
+    <message>
+        <source>Add Profile</source>
+        <translation>Add profile</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>Insert new profile name</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>New name:</translation>
     </message>
 </context>
 <context>
@@ -2776,10 +3001,6 @@ Continue?</translation>
         <translation>Associated</translation>
     </message>
     <message>
-        <source>auto open</source>
-        <translation>Auto open</translation>
-    </message>
-    <message>
         <source>Disabled</source>
         <translation>Disabled</translation>
     </message>
@@ -2796,6 +3017,10 @@ Continue?</translation>
         <translation>Not associated</translation>
     </message>
     <message>
+        <source>Professional studio</source>
+        <translation>Professional studio</translation>
+    </message>
+    <message>
         <source>Ringtone exclusion</source>
         <translation>Ringtone exclusion</translation>
     </message>
@@ -2807,8 +3032,8 @@ Continue?</translation>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <source>External unit associated</source>
-        <translation>External unit associated</translation>
+        <source>Associated entrance panel</source>
+        <translation>Associated entrance panel</translation>
     </message>
     <message>
         <source>Firmware version</source>
@@ -2879,8 +3104,8 @@ Continue?</translation>
         <translation>Source</translation>
     </message>
     <message>
-        <source>source change</source>
-        <translation>Source change</translation>
+        <source>Source changed</source>
+        <translation>Source changed</translation>
     </message>
 </context>
 <context>
@@ -2904,8 +3129,8 @@ Continue?</translation>
         <translation>%1 days</translation>
     </message>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatic Reclosing</translation>
+        <source>Auto close</source>
+        <translation>Auto close</translation>
     </message>
     <message>
         <source>Test Circuit Breaker</source>
@@ -2919,15 +3144,15 @@ Continue?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatic Reclosing</translation>
+        <source>Auto close</source>
+        <translation>Auto close</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatic Reclosing</translation>
+        <source>Auto close</source>
+        <translation>Auto close</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2971,8 +3196,8 @@ Continue?</translation>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2981,6 +3206,21 @@ Continue?</translation>
     <message>
         <source>Scenario configuration</source>
         <translation>Scenario configuration</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Fancoil speed</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modes</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Temperature set</translation>
     </message>
 </context>
 <context>
@@ -3030,14 +3270,6 @@ Continue?</translation>
         <translation>Temperature set</translation>
     </message>
     <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</translation>
-    </message>
-    <message>
         <source>Timed Manual</source>
         <translation>Timed manual</translation>
     </message>
@@ -3048,29 +3280,6 @@ Continue?</translation>
     <message>
         <source>Weekly</source>
         <translation>Weekly</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Fancoil speed</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modes</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Temperature set</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</translation>
     </message>
 </context>
 <context>
@@ -3092,8 +3301,8 @@ Continue?</translation>
         <translation>Cooling</translation>
     </message>
     <message>
-        <source>Dry</source>
-        <translation>Dry</translation>
+        <source>Dehumidifier</source>
+        <translation>Dehumidifier</translation>
     </message>
     <message>
         <source>Fan</source>
@@ -3164,8 +3373,8 @@ Continue?</translation>
         <translation>Timed manual</translation>
     </message>
     <message>
-        <source>weekday</source>
-        <translation>Weekday</translation>
+        <source>Weekdays</source>
+        <translation>Weekdays</translation>
     </message>
     <message>
         <source>weekly programs</source>
@@ -3194,8 +3403,8 @@ Continue?</translation>
         <translation>External probes</translation>
     </message>
     <message>
-        <source>Not Controlled Probes</source>
-        <translation>Not Controlled Probes</translation>
+        <source>Non-Controlled Probes</source>
+        <translation>Non-Controlled Probes</translation>
     </message>
 </context>
 <context>
@@ -3254,111 +3463,6 @@ Continue?</translation>
     <message>
         <source>mute</source>
         <translation>Mute</translation>
-    </message>
-</context>
-<context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authentication required</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Password</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>This connection is untrusted. Do you wish to continue?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Untrusted SSL connection</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>User name</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Activated</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ALARM CLOCK</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ANTINTRUSION</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Available</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Close</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Command sent</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGY MANAGEMENT</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Energy Monthly Report</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Ignore</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MESSAGES</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Monthly goal reached</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>More info</translation>
-    </message>
-    <message numerus="yes">
-        <source>new message(s)</source>
-        <translation>
-            <numerusform>new message(s)</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Postpone</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Read</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Show</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Supervision</translation>
     </message>
 </context>
 </TS>

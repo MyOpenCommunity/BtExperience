@@ -5,7 +5,7 @@
     <name>ActionObject</name>
     <message>
         <source>1 min.</source>
-        <translation>1 dak.</translation>
+        <translation>1 dk.</translation>
     </message>
     <message>
         <source>100%</source>
@@ -13,11 +13,11 @@
     </message>
     <message>
         <source>15 min.</source>
-        <translation>15 dak.</translation>
+        <translation>15 dk.</translation>
     </message>
     <message>
         <source>2 min.</source>
-        <translation>2 dak.</translation>
+        <translation>2 dk.</translation>
     </message>
     <message>
         <source>20%</source>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>3 min.</source>
-        <translation>3 dak.</translation>
+        <translation>3 dk.</translation>
     </message>
     <message>
         <source>30%</source>
@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>5 min.</source>
-        <translation>5 dak.</translation>
+        <translation>5 dk.</translation>
     </message>
     <message>
         <source>50%</source>
@@ -77,7 +77,7 @@
     </message>
     <message>
         <source>Antifreeze/thermal protection</source>
-        <translation>Antifriz/termal koruma</translation>
+        <translation>Termik koruma/Donma önleyici</translation>
     </message>
     <message>
         <source>Automatic</source>
@@ -94,10 +94,6 @@
     <message>
         <source>Down</source>
         <translation>Aşağı</translation>
-    </message>
-    <message>
-        <source>Extended pressure button</source>
-        <translation>Butona uzun süre basılması</translation>
     </message>
     <message>
         <source>Heating Program</source>
@@ -148,7 +144,11 @@
         <translation>Aç</translation>
     </message>
     <message>
-        <source>Release after extended pressure button</source>
+        <source>Pushbutton extended pressure</source>
+        <translation>Butona uzun süre basılması</translation>
+    </message>
+    <message>
+        <source>Release pushbutton after extended pressure</source>
         <translation>Butona uzun süre basmadan sonra bırakılması</translation>
     </message>
     <message>
@@ -165,22 +165,22 @@
     </message>
     <message>
         <source>Set the air conditioning mode</source>
-        <translation>Havalandırma modunu ayarlayın</translation>
+        <translation>Klima yöntemi ayarla</translation>
     </message>
     <message>
-        <source>Set the fan-coil speed</source>
-        <translation>Fan bobini hızını ayarlayın</translation>
+        <source>Set the fancoil speed</source>
+        <translation>Fanlı ısıtıcı hızı ayarla</translation>
     </message>
     <message>
         <source>Set the heating mode</source>
-        <translation>Isıtma modunu ayarlayın</translation>
+        <translation>Isıtma yöntemi ayarla</translation>
     </message>
     <message>
-        <source>Short pressure button</source>
+        <source>Short pressure of the pushbutton</source>
         <translation>Butona kısa süre basılması</translation>
     </message>
     <message>
-        <source>Start pressure button</source>
+        <source>Start pressure of the pushbutton</source>
         <translation>Butona basma başlangıcı</translation>
     </message>
     <message>
@@ -223,20 +223,20 @@
         <translation>Yeni hava durumu bağlantısı ekleyin:</translation>
     </message>
     <message>
-        <source>Add new web camera:</source>
-        <translation>Yeni web kamerası ekleyin:</translation>
-    </message>
-    <message>
         <source>Add new web page link:</source>
-        <translation>Yeni web sayfası bağlantısı ekleyin:</translation>
+        <translation>Bir web sayfasına yeni link ekle:</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
         <translation>Yeni web radyosu ekleyin:</translation>
     </message>
     <message>
+        <source>Add new webcam:</source>
+        <translation>Yeni web kamerası ekleyin:</translation>
+    </message>
+    <message>
         <source>Add quicklink</source>
-        <translation>Hızlı bağlantı ekleyin</translation>
+        <translation>Hızlı bağlantı ekleyin:</translation>
     </message>
     <message>
         <source>Address:</source>
@@ -276,7 +276,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Home</translation>
+        <translation>Anasayfa</translation>
     </message>
     <message>
         <source>Multimedia</source>
@@ -319,16 +319,16 @@ Adres: %2</translation>
         <translation>Mevcut hava durumu bağlantısı seçin:</translation>
     </message>
     <message>
-        <source>Select existing web camera:</source>
-        <translation>Mevcut web kamerası seçin:</translation>
-    </message>
-    <message>
         <source>Select existing web page link:</source>
-        <translation>Mevcut web sayfası bağlantısı seçin:</translation>
+        <translation>Mevcut linkler arasından web sayfasına ilişkin bir link seç</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
         <translation>Mevcut web radyosu seçin:</translation>
+    </message>
+    <message>
+        <source>Select existing webcam:</source>
+        <translation>Mevcut web kamerası seçin:</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -343,16 +343,16 @@ Adres: %2</translation>
         <translation>Hava durumu</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Web kamerası</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Web sayfası</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web radyo</translation>
+        <translation>İnternet radyosu</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Web Kamera</translation>
     </message>
 </context>
 <context>
@@ -370,7 +370,7 @@ Adres: %2</translation>
     <name>AdvancedScenarioAction</name>
     <message>
         <source>action</source>
-        <translation>İş</translation>
+        <translation>İşlem</translation>
     </message>
 </context>
 <context>
@@ -396,7 +396,7 @@ Adres: %2</translation>
     <message>
         <source>S</source>
         <comment>Saturday</comment>
-        <translation>S</translation>
+        <translation>Ct</translation>
     </message>
     <message>
         <source>S</source>
@@ -406,16 +406,16 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>Pe</translation>
+        <translation>S</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>Saat</translation>
+        <translation>Süre</translation>
     </message>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>S</translation>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>W</source>
@@ -458,11 +458,11 @@ Adres: %2</translation>
     <name>AdvancedSplit</name>
     <message>
         <source>fancoil</source>
-        <translation>Havalandırma</translation>
+        <translation>Fanlı ısıtıcı</translation>
     </message>
     <message>
-        <source>modality</source>
-        <translation>Mod</translation>
+        <source>Mode</source>
+        <translation>Yöntem</translation>
     </message>
     <message>
         <source>program</source>
@@ -515,8 +515,18 @@ Adres: %2</translation>
         <translation>Tanım</translation>
     </message>
     <message>
-        <source>Edit alarm name</source>
+        <source>Edit alarm clock name</source>
         <translation>Alarm adı düzenleyin</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>C</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>P</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -535,47 +545,37 @@ Adres: %2</translation>
         <translation>Sadece bir kez</translation>
     </message>
     <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>Pz</translation>
+    </message>
+    <message>
         <source>Save changes?</source>
         <translation>Değişiklikler kaydedilsin mi?</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>Ct</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>S</translation>
     </message>
     <message>
         <source>time</source>
         <translation>Saat</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>P</translation>
-    </message>
-    <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>S</translation>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>Ç</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>P</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>C</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>C</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -598,7 +598,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>No amplifier set</source>
-        <translation>Amplifikatör ayarı yok</translation>
+        <translation>Ayarlanmış amplikatör yok</translation>
     </message>
     <message>
         <source>No source set</source>
@@ -618,14 +618,14 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Select an amplifier:</source>
-        <translation>Bir amplifikatör seç:</translation>
+        <translation>Bir amplifikatör seçin:</translation>
     </message>
     <message>
         <source>Signal:</source>
         <translation>Sinyal:</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
+        <source>Sound system</source>
         <translation>Ses difüzyonu</translation>
     </message>
     <message>
@@ -645,7 +645,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>Dikkat</translation>
     </message>
 </context>
 <context>
@@ -659,7 +659,7 @@ Adres: %2</translation>
     <name>AmplifierSettings</name>
     <message>
         <source>bass</source>
-        <translation>Bass</translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <source>equalizer</source>
@@ -667,7 +667,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>loud</source>
-        <translation>Loud</translation>
+        <translation>Loud (yüksek ses)</translation>
     </message>
     <message>
         <source>off</source>
@@ -787,13 +787,13 @@ Adres: %2</translation>
     </message>
     <message>
         <source>zone settings</source>
-        <translation>Bölge ayarları</translation>
+        <translation>Alan ayarları</translation>
     </message>
 </context>
 <context>
     <name>Appliance</name>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Yük zorla</translation>
     </message>
 </context>
@@ -809,7 +809,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>No tunable web radio</source>
-        <translation>Ayarlanabilir web radyosu yok</translation>
+        <translation>Ayarlanabilir internet radyosu yok</translation>
     </message>
 </context>
 <context>
@@ -831,6 +831,29 @@ Adres: %2</translation>
     <message>
         <source>brightness</source>
         <translation>Parlaklık</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Kimlik denetimi gerekli</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Güvenli olmayan SSL bağlantısı</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Kullanıcı adı</translation>
     </message>
 </context>
 <context>
@@ -893,7 +916,7 @@ Adres: %2</translation>
         <translation>Butona tıklayın</translation>
     </message>
     <message>
-        <source>Click the crosshair</source>
+        <source>Click the cross</source>
         <translation>Artıya tıkla</translation>
     </message>
     <message>
@@ -909,7 +932,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Değiştirmek şifre</translation>
+        <translation>Şifre değiştir</translation>
     </message>
     <message>
         <source>Insert new password:</source>
@@ -955,7 +978,7 @@ Adres: %2</translation>
     <name>ColumnMessages</name>
     <message>
         <source> message</source>
-        <translation>mesaj</translation>
+        <translation>Mesaj</translation>
     </message>
     <message>
         <source> messages</source>
@@ -985,7 +1008,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>DELETE</source>
-        <translation>SIL</translation>
+        <translation>SİL</translation>
     </message>
     <message>
         <source>disabled</source>
@@ -996,6 +1019,16 @@ Adres: %2</translation>
         <translation>Aktif</translation>
     </message>
     <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>C</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>P</translation>
+    </message>
+    <message>
         <source>repetition</source>
         <translation>Tekrar</translation>
     </message>
@@ -1004,47 +1037,37 @@ Adres: %2</translation>
         <translation>Zil tonu</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>Pz</translation>
+    </message>
+    <message>
+        <source>Sound system</source>
         <translation>Ses difüzyonu</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>Pz</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>S</translation>
     </message>
     <message>
         <source>triggers at</source>
         <translation>Harekete geçme</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>P</translation>
-    </message>
-    <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>S</translation>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>Ç</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>P</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>C</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>C</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>P</translation>
     </message>
 </context>
 <context>
@@ -1115,7 +1138,7 @@ Adres: %2</translation>
         <translation>Parlaklık</translation>
     </message>
     <message>
-        <source>Color</source>
+        <source>Colour</source>
         <translation>Renk</translation>
     </message>
     <message>
@@ -1186,7 +1209,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Mute on</source>
-        <translation>Sessiz on</translation>
+        <translation>Sessiz açık</translation>
     </message>
     <message>
         <source>No answer</source>
@@ -1329,7 +1352,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>day cumulative consumption</source>
-        <translation>Gün kümülatif tüketim</translation>
+        <translation>Günlük kümülatif tüketim</translation>
     </message>
     <message>
         <source>energy consumption</source>
@@ -1345,7 +1368,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>month cumulative consumption</source>
-        <translation>Ay kümülatif tüketim</translation>
+        <translation>Aylık kümülatif tüketim</translation>
     </message>
     <message>
         <source>Overall</source>
@@ -1357,7 +1380,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>year cumulative consumption</source>
-        <translation>Yıl kümülatif tüketim</translation>
+        <translation>Yıllık kümülatif tüketim</translation>
     </message>
 </context>
 <context>
@@ -1372,7 +1395,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>AA/yyyy</translation>
+        <translation>MM/yyyy</translation>
     </message>
     <message>
         <source>month</source>
@@ -1439,7 +1462,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation>Kapandı</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>Consumption Management</source>
@@ -1454,7 +1477,7 @@ Adres: %2</translation>
         <translation>Gaz</translation>
     </message>
     <message>
-        <source>GroundFail</source>
+        <source>Ground Fault</source>
         <translation>ToprakArızası</translation>
     </message>
     <message>
@@ -1462,20 +1485,20 @@ Adres: %2</translation>
         <translation>Isıtma</translation>
     </message>
     <message>
-        <source>HotWater</source>
-        <translation>SıcakSu</translation>
+        <source>Hot Water</source>
+        <translation>Sıcak Su</translation>
     </message>
     <message>
-        <source>Opened</source>
-        <translation>Açık</translation>
+        <source>Open</source>
+        <translation>Aç</translation>
     </message>
     <message>
-        <source>Overtension</source>
-        <translation>AşırıGerilim</translation>
+        <source>Overvoltage</source>
+        <translation>Aşırı Gerilim</translation>
     </message>
     <message>
-        <source>ShortCircuit</source>
-        <translation>KısaDevre</translation>
+        <source>Short Circuit</source>
+        <translation>Kısa Devre</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -1497,8 +1520,8 @@ Adres: %2</translation>
         <translation>Yük yönetimi</translation>
     </message>
     <message>
-        <source>systems supervision</source>
-        <translation>Sistemlerin gözetimi</translation>
+        <source>System supervision</source>
+        <translation>Sistem denetimi</translation>
     </message>
 </context>
 <context>
@@ -1549,15 +1572,15 @@ Adres: %2</translation>
     <name>EnergyYearTable</name>
     <message>
         <source>delta</source>
-        <translation>delta</translation>
+        <translation>Delta</translation>
+    </message>
+    <message>
+        <source>Goal</source>
+        <translation>Hedef</translation>
     </message>
     <message>
         <source>month</source>
         <translation>Ay</translation>
-    </message>
-    <message>
-        <source>objective</source>
-        <translation>nesnel</translation>
     </message>
 </context>
 <context>
@@ -1614,16 +1637,16 @@ Adres: %2</translation>
         <translation>Hava durumu</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Web kamerası</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Web sayfası</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web radyo</translation>
+        <translation>İnternet radyosu</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Web Kamera</translation>
     </message>
 </context>
 <context>
@@ -1631,6 +1654,13 @@ Adres: %2</translation>
     <message>
         <source>programming impossible</source>
         <translation>Programlama imkansız</translation>
+    </message>
+</context>
+<context>
+    <name>Floor</name>
+    <message>
+        <source>New Name:</source>
+        <translation>Yeni ad:</translation>
     </message>
 </context>
 <context>
@@ -1644,7 +1674,7 @@ Adres: %2</translation>
         <translation>Zorla</translation>
     </message>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Yük zorla</translation>
     </message>
     <message>
@@ -1667,15 +1697,15 @@ Adres: %2</translation>
     </message>
     <message>
         <source>delta</source>
-        <translation>delta</translation>
+        <translation>Delta</translation>
+    </message>
+    <message>
+        <source>Goal</source>
+        <translation>Hedef</translation>
     </message>
     <message>
         <source>line</source>
         <translation>Hat</translation>
-    </message>
-    <message>
-        <source>objective</source>
-        <translation>nesnel</translation>
     </message>
 </context>
 <context>
@@ -1747,14 +1777,14 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Devre Dışı Bırakıldı</translation>
+        <translation>Devre dışı</translation>
     </message>
 </context>
 <context>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
-        <translation>Kapandı</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>Control disabled</source>
@@ -1769,12 +1799,12 @@ Adres: %2</translation>
         <translation>Tehlike</translation>
     </message>
     <message>
-        <source>Load detached</source>
+        <source>Load disconnected</source>
         <translation>Yük ayrıldı</translation>
     </message>
     <message>
         <source>No amplifier set</source>
-        <translation>Amplifikatör ayarı yok</translation>
+        <translation>Ayarlanmış amplikatör yok</translation>
     </message>
     <message>
         <source>No name set</source>
@@ -1814,7 +1844,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Uyarı</translation>
+        <translation>Dikkat</translation>
     </message>
     <message>
         <source>°C</source>
@@ -1825,7 +1855,7 @@ Adres: %2</translation>
     <name>Messages</name>
     <message>
         <source>messages</source>
-        <translation>İletiler</translation>
+        <translation>Mesajlar</translation>
     </message>
 </context>
 <context>
@@ -1866,12 +1896,12 @@ Adres: %2</translation>
         <translation>Web tarayıcısı</translation>
     </message>
     <message>
-        <source>web cam</source>
-        <translation>Web Kamerası</translation>
+        <source>Web links</source>
+        <translation>Web bağlantısı</translation>
     </message>
     <message>
-        <source>web link</source>
-        <translation>Web bağlantısı</translation>
+        <source>Webcam</source>
+        <translation>Web Kamera</translation>
     </message>
 </context>
 <context>
@@ -1920,6 +1950,85 @@ Adres: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 saniye</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Etkinleştirildi</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ALARM SAATİ</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>İZİNSİZ GİRME ÖNLEME</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Kullanılabilir</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Kapat</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Komut gönderildi</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERJİ YÖNETİMİ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Aylık Enerji Raporu</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Yoksay</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MESAJLAR</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Aylık sayıya ulaşıldı</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Daha fazla bilgi</translation>
+    </message>
+    <message>
+        <source>new message(s)</source>
+        <translation>yeni mesaj(lar)</translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Ertele</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Oku</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SENARYO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Göster</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Durdur</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Denetleme</translation>
     </message>
 </context>
 <context>
@@ -2005,19 +2114,23 @@ Adres: %2</translation>
     <name>RoomModify</name>
     <message>
         <source>Background image</source>
-        <translation>Arkadaki görüntü</translation>
+        <translation>Arka plan fonu</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Kart görüntü</translation>
+        <translation>Kart görüntüsü</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Arkadaki görüntü değiştir</translation>
+        <translation>Arka plan fonunu değiştir</translation>
     </message>
     <message>
         <source>Change card image</source>
         <translation>Kart görüntüsü değiştir</translation>
+    </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>İşlemi onaylayın</translation>
     </message>
 </context>
 <context>
@@ -2025,6 +2138,24 @@ Adres: %2</translation>
     <message>
         <source>rooms</source>
         <translation>Odalar</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsItems</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>İşlemi onaylayın</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Yeni ad:</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Silmeyi onaylayın</translation>
     </message>
 </context>
 <context>
@@ -2049,15 +2180,19 @@ Adres: %2</translation>
     <name>ScenarioModuleSettings</name>
     <message>
         <source>Are you sure to reset the scenario?</source>
-        <translation>Senaryoyu resetlemekten emin misiniz?</translation>
+        <translation>Senaryoyu resetlemek istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <source>cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız OK&apos;a, işlemi iptal etmek istiyorsanız İPTAL ET&apos;e basın.</translation>
+        <source>Delete scenario</source>
+        <translation>Senaryo sil</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız TAMAM ikonuna, işlemi iptal etmek istiyorsanız İPTAL ikonuna basın.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2068,12 +2203,8 @@ Adres: %2</translation>
         <translation>Programlama imkansız</translation>
     </message>
     <message>
-        <source>reset program</source>
-        <translation>Program reset</translation>
-    </message>
-    <message>
         <source>Scenario configuration</source>
-        <translation>Senaryoların konfigürasyonu</translation>
+        <translation>Senaryo konfigürasyonu</translation>
     </message>
     <message>
         <source>start programming</source>
@@ -2161,14 +2292,14 @@ Adres: %2</translation>
     <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
-        <translation>Ok&apos;a basıldığında tüm tarayıcı geçmişi silinecek.
+        <translation>Tamam&apos;a basıldığında tüm tarayıcı geçmişi silinecek.
 Devam?</translation>
     </message>
 </context>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <source>Add Clock</source>
+        <source>Add Alarm clock</source>
         <translation>Saat Ekle</translation>
     </message>
 </context>
@@ -2195,7 +2326,7 @@ Devam?</translation>
     </message>
     <message>
         <source>Calibration</source>
-        <translation>Ayar</translation>
+        <translation>Kalibrasyon</translation>
     </message>
     <message>
         <source>Clean</source>
@@ -2206,7 +2337,7 @@ Devam?</translation>
     <name>SettingsEnergy</name>
     <message>
         <source>consumption goals</source>
-        <translation>Tüketim sayıları</translation>
+        <translation>Tüketim hedefleri</translation>
     </message>
     <message>
         <source>tariffs</source>
@@ -2244,7 +2375,7 @@ Devam?</translation>
     </message>
     <message>
         <source>goals enabled</source>
-        <translation>Sayılar etkin</translation>
+        <translation>Hedefler etkinleştirilmiş</translation>
     </message>
     <message>
         <source>January</source>
@@ -2317,7 +2448,7 @@ Devam?</translation>
     <name>SettingsEnergyThresholds</name>
     <message>
         <source>alerts %1</source>
-        <translation>uyarı %1</translation>
+        <translation>Uyarı %1</translation>
     </message>
     <message>
         <source>disabled</source>
@@ -2372,18 +2503,18 @@ Devam?</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>şifre</translation>
+        <translation>Şifre</translation>
     </message>
 </context>
 <context>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
-        <translation>Arkadaki görüntü</translation>
+        <translation>Arka plan fonu</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Arkadaki görüntü değiştir</translation>
+        <translation>Arka plan fonunu değiştir</translation>
     </message>
     <message>
         <source>Confirm operation</source>
@@ -2391,7 +2522,11 @@ Devam?</translation>
     </message>
     <message>
         <source>Do you want to restore background to default value?</source>
-        <translation>Arka plana varsayılan değeri geri yüklemek istiyor musunuz?</translation>
+        <translation>Arka plan fonuna varsayılan görüntüyü geri yüklemek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Home page skin</source>
+        <translation>Anasayfa dış görünümü</translation>
     </message>
     <message>
         <source>Quicklinks</source>
@@ -2399,11 +2534,7 @@ Devam?</translation>
     </message>
     <message>
         <source>Restore background image</source>
-        <translation>Arka plan görüntüsü geri yükleyin</translation>
-    </message>
-    <message>
-        <source>skin home</source>
-        <translation>Home dış görünümü</translation>
+        <translation>Arka plan fonunu geri yükle</translation>
     </message>
 </context>
 <context>
@@ -2429,7 +2560,7 @@ Devam?</translation>
     <name>SettingsHomeQuicklinks</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Hızlı bağlantı ekle</translation>
+        <translation>Hızlı bağlantı ekleyin:</translation>
     </message>
 </context>
 <context>
@@ -2466,7 +2597,7 @@ Devam?</translation>
     <name>SettingsItems</name>
     <message>
         <source>Alarm Clock</source>
-        <translation>Çalar saat</translation>
+        <translation>Alarm saati</translation>
     </message>
     <message>
         <source>Functions</source>
@@ -2478,7 +2609,7 @@ Devam?</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Home</translation>
+        <translation>Anasayfa</translation>
     </message>
     <message>
         <source>Multimedia</source>
@@ -2490,7 +2621,7 @@ Devam?</translation>
     </message>
     <message>
         <source>Ringtones</source>
-        <translation>Zil tonları</translation>
+        <translation>Zil sesleri</translation>
     </message>
     <message>
         <source>Rooms</source>
@@ -2501,7 +2632,7 @@ Devam?</translation>
     <name>SettingsMultimedia</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Hızlı bağlantı ekle</translation>
+        <translation>Hızlı bağlantı ekleyin:</translation>
     </message>
     <message>
         <source>Browser</source>
@@ -2512,7 +2643,7 @@ Devam?</translation>
     <name>SettingsNames</name>
     <message>
         <source>Clear</source>
-        <translation>Temiz</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>Connect</source>
@@ -2556,7 +2687,7 @@ Devam?</translation>
     </message>
     <message>
         <source>French</source>
-        <translation>Türkçe</translation>
+        <translation>Fransızca</translation>
     </message>
     <message>
         <source>German</source>
@@ -2581,7 +2712,7 @@ Devam?</translation>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
 Continue?</source>
-        <translation>Ok&apos;a basılması, birkaç saniye içinde bir aygıt yeniden başlatılmasına neden olacaktır.
+        <translation>Tamam&apos;a basılması, birkaç saniye içinde bir aygıt yeniden başlatılmasına neden olacaktır.
 Devam?</translation>
     </message>
     <message>
@@ -2640,7 +2771,7 @@ Devam?</translation>
         <translation>MAC adresi</translation>
     </message>
     <message>
-        <source>network state</source>
+        <source>Network status</source>
         <translation>Ağ durumu</translation>
     </message>
     <message>
@@ -2669,10 +2800,29 @@ Devam?</translation>
     </message>
 </context>
 <context>
+    <name>SettingsObjectLink</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Silmeyi onaylayın</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Yeni ad:</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Yeniden adlandır</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPassword</name>
     <message>
         <source>Change password</source>
-        <translation>Değiştirmek şifre</translation>
+        <translation>Şifre değiştir</translation>
     </message>
     <message>
         <source>Incorrect password</source>
@@ -2683,19 +2833,19 @@ Devam?</translation>
     <name>SettingsProfile</name>
     <message>
         <source>Add Quicklink</source>
-        <translation>Hızlı bağlantı ekle</translation>
+        <translation>Hızlı bağlantı ekleyin:</translation>
     </message>
     <message>
         <source>Background image</source>
-        <translation>Arkadaki görüntü</translation>
+        <translation>Arka plan fonu</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Kart görüntü</translation>
+        <translation>Kart görüntüsü</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Arkadaki görüntü değiştir</translation>
+        <translation>Arka plan fonunu değiştir</translation>
     </message>
     <message>
         <source>Change card image</source>
@@ -2707,25 +2857,36 @@ Devam?</translation>
     </message>
     <message>
         <source>Do you want to restore background to default value?</source>
-        <translation>Arka plana varsayılan değeri geri yüklemek istiyor musunuz?</translation>
+        <translation>Arka plan fonuna varsayılan görüntüyü geri yüklemek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Restore background image</source>
-        <translation>Arka plan görüntüsü geri yükleyin</translation>
+        <translation>Arka plan fonunu geri yükle</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsProfiles</name>
+    <message>
+        <source>Add Profile</source>
+        <translation>Profil ekle</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Yeni ad:</translation>
     </message>
 </context>
 <context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
-        <translation>Zil tonları</translation>
+        <translation>Zil sesleri</translation>
     </message>
 </context>
 <context>
     <name>SettingsRingtones</name>
     <message>
         <source>Ringtone volume</source>
-        <translation>Zil sesi ayarı</translation>
+        <translation>Zil sesi seviyesi</translation>
     </message>
 </context>
 <context>
@@ -2734,7 +2895,7 @@ Devam?</translation>
         <source>Pressing ok will cause a device reboot in a few moments.
 Please, do not use the touch till it is restarted.
 Continue?</source>
-        <translation>Ok&apos;a basılması, birkaç saniye içinde bir aygıt yeniden başlatılmasına neden olacaktır.
+        <translation>Tamam&apos;a basılması, birkaç saniye içinde bir aygıt yeniden başlatılmasına neden olacaktır.
 Bu yeniden başlatılana kadar lütfen dokunmatik ekranı kullanmayın.
 Devam?</translation>
     </message>
@@ -2751,7 +2912,7 @@ Devam?</translation>
     </message>
     <message>
         <source>Video Door Entry</source>
-        <translation>Video kapısı girişi</translation>
+        <translation>Video dahili ünite</translation>
     </message>
 </context>
 <context>
@@ -2762,22 +2923,18 @@ Devam?</translation>
     </message>
     <message>
         <source>Associated</source>
-        <translation>Eşleştirildi</translation>
+        <translation>İlişkilendirildi</translation>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Ilişkilendirilmemiş</translation>
+        <translation>İlişkilendirilmedi</translation>
     </message>
 </context>
 <context>
     <name>SettingsVDE</name>
     <message>
         <source>Associated</source>
-        <translation>Eşleştirildi</translation>
-    </message>
-    <message>
-        <source>auto open</source>
-        <translation>Otomatik açık</translation>
+        <translation>İlişkilendirildi</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2793,7 +2950,11 @@ Devam?</translation>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Ilişkilendirilmemiş</translation>
+        <translation>İlişkilendirilmedi</translation>
+    </message>
+    <message>
+        <source>Professional studio</source>
+        <translation>Mesleki büro</translation>
     </message>
     <message>
         <source>Ringtone exclusion</source>
@@ -2807,20 +2968,20 @@ Devam?</translation>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <source>External unit associated</source>
-        <translation>Giriş paneli eşleştirildi</translation>
+        <source>Associated entrance panel</source>
+        <translation>Giriş paneli ilişkilendirildi</translation>
     </message>
     <message>
         <source>Firmware version</source>
-        <translation>FIRMWARE VERSİYONU</translation>
+        <translation>Donanım yazılımı sürümü</translation>
     </message>
     <message>
         <source>Internal unit address</source>
-        <translation>Dahili birim adresi</translation>
+        <translation>Dahili ünite adresi</translation>
     </message>
     <message>
         <source>Kernel version</source>
-        <translation>Kernel versiyonu</translation>
+        <translation>Kernel sürümü</translation>
     </message>
     <message>
         <source>Multimedia source address</source>
@@ -2853,14 +3014,14 @@ Devam?</translation>
     <name>SoundDiffusion</name>
     <message>
         <source>Sound System</source>
-        <translation>Sesli yayın</translation>
+        <translation>Ses difüzyonu</translation>
     </message>
 </context>
 <context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
-        <translation>Tarayıcı</translation>
+        <translation>Gözat</translation>
     </message>
     <message>
         <source>no album</source>
@@ -2872,14 +3033,14 @@ Devam?</translation>
     </message>
     <message>
         <source>saved IP radios</source>
-        <translation>Kaydedilmiş IP radyolar</translation>
+        <translation>Kaydedilmiş radyo IP&apos;leri</translation>
     </message>
     <message>
         <source>source</source>
         <translation>Kaynak</translation>
     </message>
     <message>
-        <source>source change</source>
+        <source>Source changed</source>
         <translation>Kaynak değiştirme</translation>
     </message>
 </context>
@@ -2904,30 +3065,30 @@ Devam?</translation>
         <translation>%1 Günler</translation>
     </message>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Tekrar Kapama Otomatik</translation>
+        <source>Auto close</source>
+        <translation>Otomatik Tekrar Kapama</translation>
     </message>
     <message>
         <source>Test Circuit Breaker</source>
-        <translation>Test Devre Kesici</translation>
+        <translation>Diferansiyel şalter test et</translation>
     </message>
     <message>
         <source>Test every</source>
-        <translation>Her birini test et</translation>
+        <translation>Her aşağıdaki gün sayısında test et</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Tekrar Kapama Otomatik</translation>
+        <source>Auto close</source>
+        <translation>Otomatik Tekrar Kapama</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Tekrar Kapama Otomatik</translation>
+        <source>Auto close</source>
+        <translation>Otomatik Tekrar Kapama</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2971,8 +3132,8 @@ Devam?</translation>
         <translation>İptal</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız OK&apos;a, işlemi iptal etmek istiyorsanız İPTAL ET&apos;e basın.</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız TAMAM ikonuna, işlemi iptal etmek istiyorsanız İPTAL ikonuna basın.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2980,7 +3141,22 @@ Devam?</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
-        <translation>Senaryoların konfigürasyonu</translation>
+        <translation>Senaryo konfigürasyonu</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Fanlı ısıtıcı hızı</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Yöntemler</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Sıcaklık ayarı</translation>
     </message>
 </context>
 <context>
@@ -3030,16 +3206,8 @@ Devam?</translation>
         <translation>Sıcaklık ayarı</translation>
     </message>
     <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Kaydedilmemiş değişiklikler sürüyor.
-Ok seçtiğinizde bunlar kaybedilecek.
-Devam?</translation>
-    </message>
-    <message>
         <source>Timed Manual</source>
-        <translation>Zamanlanmış manuel</translation>
+        <translation>Zamanlamalı manuel</translation>
     </message>
     <message>
         <source>Weekday</source>
@@ -3048,29 +3216,6 @@ Devam?</translation>
     <message>
         <source>Weekly</source>
         <translation>Haftalık</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Fanlı ısıtıcı hızı</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modlar</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Sıcaklık ayarı</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Kaydedilmemiş değişiklikler sürüyor.
-Ok seçtiğinizde bunlar kaybedilecek.
-Devam?</translation>
     </message>
 </context>
 <context>
@@ -3092,7 +3237,7 @@ Devam?</translation>
         <translation>Soğutma</translation>
     </message>
     <message>
-        <source>Dry</source>
+        <source>Dehumidifier</source>
         <translation>Nem Giderici</translation>
     </message>
     <message>
@@ -3129,7 +3274,7 @@ Devam?</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation>Ortam</translation>
+        <translation>Orta</translation>
     </message>
     <message>
         <source>min</source>
@@ -3161,11 +3306,11 @@ Devam?</translation>
     </message>
     <message>
         <source>timed manual</source>
-        <translation>Zamanlanmış manuel</translation>
+        <translation>Zamanlamalı manuel</translation>
     </message>
     <message>
-        <source>weekday</source>
-        <translation>İş günü</translation>
+        <source>Weekdays</source>
+        <translation>İş günleri</translation>
     </message>
     <message>
         <source>weekly programs</source>
@@ -3191,11 +3336,11 @@ Devam?</translation>
     </message>
     <message>
         <source>External Probes</source>
-        <translation>Harici problar</translation>
+        <translation>Dış sondalar</translation>
     </message>
     <message>
-        <source>Not Controlled Probes</source>
-        <translation>Kontrol Edilmemiş Sondalar</translation>
+        <source>Non-Controlled Probes</source>
+        <translation>Kontrol Edilmeyen Sondalar</translation>
     </message>
 </context>
 <context>
@@ -3217,18 +3362,18 @@ Devam?</translation>
     <name>VideoDoorEntry</name>
     <message>
         <source>video door entry</source>
-        <translation>Video kapısı girişi</translation>
+        <translation>Video dahili ünite</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntryItems</name>
     <message>
         <source>intercom</source>
-        <translation>Bina içi sistem</translation>
+        <translation>İnterkom</translation>
     </message>
     <message>
         <source>pager</source>
-        <translation>çağrı cihazı</translation>
+        <translation>Çağrı cihazı</translation>
     </message>
     <message>
         <source>video control</source>
@@ -3254,110 +3399,6 @@ Devam?</translation>
     <message>
         <source>mute</source>
         <translation>Sessiz</translation>
-    </message>
-</context>
-<context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Kimlik denetimi gerekli</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>şifre</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Güvenli olmayan SSL bağlantısı</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Kullanıcı adı</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Etkinleştirildi</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ALARM SAATİ</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>İZİNSİZ GİRME ÖNLEME</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Kullanılabilir</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Kapat</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Komut gönderildi</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERJİ YÖNETİMİ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Enerji Aylık Raporu</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Yoksay</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MESAJLAR</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Aylık sayıya ulaşıldı</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Daha fazla bilgi</translation>
-    </message>
-    <message numerus="yes">
-        <source>new message(s)</source>
-        <translation>
-            <numerusform>yeni mesaj(lar)</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Ertele</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Oku</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SENARYO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Göster</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Durdur</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Denetleme</translation>
     </message>
 </context>
 </TS>

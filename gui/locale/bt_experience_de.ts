@@ -96,10 +96,6 @@
         <translation>Ab</translation>
     </message>
     <message>
-        <source>Extended pressure button</source>
-        <translation>Langer Tastendruck</translation>
-    </message>
-    <message>
         <source>Heating Program</source>
         <translation>Programm Heizen</translation>
     </message>
@@ -148,7 +144,11 @@
         <translation>Öffnen</translation>
     </message>
     <message>
-        <source>Release after extended pressure button</source>
+        <source>Pushbutton extended pressure</source>
+        <translation>Langer Tastendruck</translation>
+    </message>
+    <message>
+        <source>Release pushbutton after extended pressure</source>
         <translation>Nach langem Tastendruck loslassen</translation>
     </message>
     <message>
@@ -168,7 +168,7 @@
         <translation>Klimatisierungsmodus einstellen</translation>
     </message>
     <message>
-        <source>Set the fan-coil speed</source>
+        <source>Set the fancoil speed</source>
         <translation>Fan-coil-Geschwindigkeit einstellen</translation>
     </message>
     <message>
@@ -176,16 +176,16 @@
         <translation>Heizungsmodus einstellen</translation>
     </message>
     <message>
-        <source>Short pressure button</source>
+        <source>Short pressure of the pushbutton</source>
         <translation>Kurzer Tastendruck</translation>
     </message>
     <message>
-        <source>Start pressure button</source>
+        <source>Start pressure of the pushbutton</source>
         <translation>Start Tastendruck</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Ausschalten</translation>
     </message>
     <message>
         <source>Timed manual Temperature</source>
@@ -223,16 +223,16 @@
         <translation>Neuer Wetter-Link hinzufügen:</translation>
     </message>
     <message>
-        <source>Add new web camera:</source>
-        <translation>Neue Web-Kamera hinzufügen:</translation>
-    </message>
-    <message>
         <source>Add new web page link:</source>
-        <translation>Neuer Web-Seiten-Link hinzufügen:</translation>
+        <translation>Einen neuen Link zu einer Webseite hinzufügen:</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
         <translation>Neues Web-Radio hinzufügen:</translation>
+    </message>
+    <message>
+        <source>Add new webcam:</source>
+        <translation>Neue Webcam hinzufügen:</translation>
     </message>
     <message>
         <source>Add quicklink</source>
@@ -248,15 +248,15 @@
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>KÜNDIGEN</translation>
+        <translation>LÖSCHEN</translation>
     </message>
     <message>
         <source>Click to enter link...</source>
-        <translation>Klicken, um den Link zu öffnen...</translation>
+        <translation>Drücken, um den Link zu öffnen...</translation>
     </message>
     <message>
         <source>Click to enter name...</source>
-        <translation>Klicken, um den Namen einzufügen...</translation>
+        <translation>Drücken, um den Namen einzufügen...</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
@@ -319,16 +319,16 @@ Adresse: %2</translation>
         <translation>Vorhandener Wetter-Link wählen:</translation>
     </message>
     <message>
-        <source>Select existing web camera:</source>
-        <translation>Vorhandene Web-Kamera wählen:</translation>
-    </message>
-    <message>
         <source>Select existing web page link:</source>
         <translation>Vorhandener Web-Seiten-Link wählen:</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
         <translation>Vorhandenes Web-Radio wählen:</translation>
+    </message>
+    <message>
+        <source>Select existing webcam:</source>
+        <translation>Vorhandene Webcam wählen:</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -343,16 +343,16 @@ Adresse: %2</translation>
         <translation>Wetter</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Web-Kamera</translation>
-    </message>
-    <message>
         <source>web page</source>
-        <translation>Web-Seite</translation>
+        <translation>Webseite</translation>
     </message>
     <message>
         <source>web radio</source>
         <translation>Web-Radio</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -363,7 +363,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>enabled</source>
-        <translation>Freigegeben</translation>
+        <translation>Aktiviert</translation>
     </message>
 </context>
 <context>
@@ -461,7 +461,7 @@ Adresse: %2</translation>
         <translation>Fan coil</translation>
     </message>
     <message>
-        <source>modality</source>
+        <source>Mode</source>
         <translation>Modus</translation>
     </message>
     <message>
@@ -481,7 +481,7 @@ Adresse: %2</translation>
     <name>AlarmClock</name>
     <message>
         <source>Click to enter name...</source>
-        <translation>Klicken, um den Namen einzufügen...</translation>
+        <translation>Drücken, um den Namen einzufügen...</translation>
     </message>
 </context>
 <context>
@@ -504,7 +504,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>KÜNDIGEN</translation>
+        <translation>LÖSCHEN</translation>
     </message>
     <message>
         <source>days</source>
@@ -515,8 +515,18 @@ Adresse: %2</translation>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <source>Edit alarm name</source>
+        <source>Edit alarm clock name</source>
         <translation>Bearbeiten Alarmnamen</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>F</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>M</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -535,17 +545,27 @@ Adresse: %2</translation>
         <translation>Nur ein Mal</translation>
     </message>
     <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
         <source>Save changes?</source>
         <translation>Änderungen speichern?</translation>
     </message>
     <message>
-        <source>time</source>
-        <translation>Uhrzeit</translation>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>S</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>M</translation>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>D</translation>
+    </message>
+    <message>
+        <source>time</source>
+        <translation>Uhrzeit</translation>
     </message>
     <message>
         <source>T</source>
@@ -556,26 +576,6 @@ Adresse: %2</translation>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>M</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>D</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>F</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>S</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>S</translation>
     </message>
 </context>
 <context>
@@ -594,7 +594,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>KÜNDIGEN</translation>
+        <translation>LÖSCHEN</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -625,7 +625,7 @@ Adresse: %2</translation>
         <translation>Signal:</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
+        <source>Sound system</source>
         <translation>Schalldiffusion</translation>
     </message>
     <message>
@@ -663,7 +663,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>equalizer</source>
-        <translation>Equalizer</translation>
+        <translation>Entzerrer</translation>
     </message>
     <message>
         <source>loud</source>
@@ -679,7 +679,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>treble</source>
-        <translation>Hoch</translation>
+        <translation>Höhen</translation>
     </message>
 </context>
 <context>
@@ -697,7 +697,7 @@ Adresse: %2</translation>
     <name>AntintrusionAlarms</name>
     <message>
         <source>date and time</source>
-        <translation>Datum und Stunden</translation>
+        <translation>Datum und Uhrzeit</translation>
     </message>
     <message>
         <source>No Alarm Present</source>
@@ -739,7 +739,7 @@ Adresse: %2</translation>
     <name>AntintrusionSystem</name>
     <message>
         <source>alarm log</source>
-        <translation>Alarm Log             </translation>
+        <translation>Alarmregister</translation>
     </message>
     <message>
         <source>disable system</source>
@@ -793,7 +793,7 @@ Adresse: %2</translation>
 <context>
     <name>Appliance</name>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Stromlast forcieren</translation>
     </message>
 </context>
@@ -831,6 +831,29 @@ Adresse: %2</translation>
     <message>
         <source>brightness</source>
         <translation>Helligkeit</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authentifizierung erforderlich</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Diese Verbindung ist nicht vertrauenswürdig Wollen Sie fortfahren?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Nicht vertrauenswürdige Verbindung</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Benutzername</translation>
     </message>
 </context>
 <context>
@@ -893,7 +916,7 @@ Adresse: %2</translation>
         <translation>Auf die Taste klicken</translation>
     </message>
     <message>
-        <source>Click the crosshair</source>
+        <source>Click the cross</source>
         <translation>Klicken Sie auf das Fadenkreuz</translation>
     </message>
     <message>
@@ -985,7 +1008,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>DELETE</source>
-        <translation>LÖSCHEN</translation>
+        <translation>KÜNDIGEN</translation>
     </message>
     <message>
         <source>disabled</source>
@@ -996,6 +1019,16 @@ Adresse: %2</translation>
         <translation>Aktiviert</translation>
     </message>
     <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>F</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>M</translation>
+    </message>
+    <message>
         <source>repetition</source>
         <translation>Widerholen</translation>
     </message>
@@ -1004,17 +1037,27 @@ Adresse: %2</translation>
         <translation>Rufton</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>Sound system</source>
         <translation>Schalldiffusion</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>D</translation>
     </message>
     <message>
         <source>triggers at</source>
         <translation>Auslösen um</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>M</translation>
     </message>
     <message>
         <source>T</source>
@@ -1026,39 +1069,19 @@ Adresse: %2</translation>
         <comment>Wednesday</comment>
         <translation>M</translation>
     </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>D</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>F</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>S</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>S</translation>
-    </message>
 </context>
 <context>
     <name>ControlBalance</name>
     <message>
         <source>balance</source>
-        <translation>Ausgleich</translation>
+        <translation>Balance</translation>
     </message>
 </context>
 <context>
     <name>ControlCall</name>
     <message>
         <source>push to talk</source>
-        <translation>Drücken um zu sprechen</translation>
+        <translation>Drücken, um zu sprechen</translation>
     </message>
     <message>
         <source>volume</source>
@@ -1105,7 +1128,7 @@ Adresse: %2</translation>
     <name>ControlPullDown</name>
     <message>
         <source>Video settings</source>
-        <translation>Video-Einstellungen</translation>
+        <translation>Videoeinstellungen</translation>
     </message>
 </context>
 <context>
@@ -1115,7 +1138,7 @@ Adresse: %2</translation>
         <translation>Helligkeit</translation>
     </message>
     <message>
-        <source>Color</source>
+        <source>Colour</source>
         <translation>Farbe</translation>
     </message>
     <message>
@@ -1178,7 +1201,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>Call in progress</source>
-        <translation>Anruf im Gang</translation>
+        <translation>Ruf im Gang</translation>
     </message>
     <message>
         <source>Incoming call from</source>
@@ -1227,21 +1250,21 @@ Adresse: %2</translation>
     <name>Devices</name>
     <message>
         <source>Devices</source>
-        <translation>Geräte</translation>
+        <translation>Vorrichtungen</translation>
     </message>
 </context>
 <context>
     <name>Dimmer</name>
     <message>
         <source>light intensity</source>
-        <translation>Lichtintensität</translation>
+        <translation>Helligkeit</translation>
     </message>
 </context>
 <context>
     <name>EditNote</name>
     <message>
         <source>CANCEL</source>
-        <translation>KÜNDIGEN</translation>
+        <translation>LÖSCHEN</translation>
     </message>
     <message>
         <source>Note</source>
@@ -1329,7 +1352,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>day cumulative consumption</source>
-        <translation>Täglich kumulative Stromaufnahme</translation>
+        <translation>Täglicher Gesamtverbrauch</translation>
     </message>
     <message>
         <source>energy consumption</source>
@@ -1345,7 +1368,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>month cumulative consumption</source>
-        <translation>Monatliche kumulative Stromaufnahme</translation>
+        <translation>Monatlicher Gesamtverbrauch</translation>
     </message>
     <message>
         <source>Overall</source>
@@ -1372,7 +1395,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>MM/JJ</translation>
+        <translation>MM/yyyy</translation>
     </message>
     <message>
         <source>month</source>
@@ -1384,7 +1407,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>yyyy</source>
-        <translation>JJJJ</translation>
+        <translation>yyyy</translation>
     </message>
 </context>
 <context>
@@ -1409,7 +1432,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>Global View</source>
-        <translation>Globale Ansicht</translation>
+        <translation>Allgemeine Ansicht</translation>
     </message>
     <message>
         <source>units</source>
@@ -1428,7 +1451,7 @@ Adresse: %2</translation>
     <name>EnergyManagement</name>
     <message>
         <source>Energy management</source>
-        <translation>Energiemanagement</translation>
+        <translation>Energieverwaltung</translation>
     </message>
 </context>
 <context>
@@ -1439,7 +1462,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation>Abgestellt</translation>
+        <translation>Geschlossen</translation>
     </message>
     <message>
         <source>Consumption Management</source>
@@ -1454,28 +1477,28 @@ Adresse: %2</translation>
         <translation>Gas</translation>
     </message>
     <message>
-        <source>GroundFail</source>
-        <translation>Erdfehler </translation>
+        <source>Ground Fault</source>
+        <translation>Erdfehler</translation>
     </message>
     <message>
         <source>Heat</source>
         <translation>Heizen</translation>
     </message>
     <message>
-        <source>HotWater</source>
-        <translation>Warmwasser </translation>
+        <source>Hot Water</source>
+        <translation>Warmwasser</translation>
     </message>
     <message>
-        <source>Opened</source>
-        <translation>geöffnet</translation>
+        <source>Open</source>
+        <translation>Öffnen</translation>
     </message>
     <message>
-        <source>Overtension</source>
+        <source>Overvoltage</source>
         <translation>Überspannung</translation>
     </message>
     <message>
-        <source>ShortCircuit</source>
-        <translation>Kurzschluss </translation>
+        <source>Short Circuit</source>
+        <translation>Kurzschluss</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -1494,11 +1517,11 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>load management</source>
-        <translation>Last-Management</translation>
+        <translation>Stromlast-Management</translation>
     </message>
     <message>
-        <source>systems supervision</source>
-        <translation>Überwachung Anlage</translation>
+        <source>System supervision</source>
+        <translation>Supervisionssystem</translation>
     </message>
 </context>
 <context>
@@ -1531,7 +1554,7 @@ Adresse: %2</translation>
     <name>EnergyOverview</name>
     <message>
         <source>Global View</source>
-        <translation>Globale Ansicht</translation>
+        <translation>Allgemeine Ansicht</translation>
     </message>
 </context>
 <context>
@@ -1552,12 +1575,12 @@ Adresse: %2</translation>
         <translation>Delta</translation>
     </message>
     <message>
-        <source>month</source>
-        <translation>Monat</translation>
+        <source>Goal</source>
+        <translation>Ziel</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>Ziel</translation>
+        <source>month</source>
+        <translation>Monat</translation>
     </message>
 </context>
 <context>
@@ -1614,16 +1637,16 @@ Adresse: %2</translation>
         <translation>Wetter</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Web-Kamera</translation>
-    </message>
-    <message>
         <source>web page</source>
-        <translation>Web-Seite</translation>
+        <translation>Webseite</translation>
     </message>
     <message>
         <source>web radio</source>
         <translation>Web-Radio</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -1631,6 +1654,13 @@ Adresse: %2</translation>
     <message>
         <source>programming impossible</source>
         <translation>Programmieren unmöglich</translation>
+    </message>
+</context>
+<context>
+    <name>Floor</name>
+    <message>
+        <source>New Name:</source>
+        <translation>Neuer Name:</translation>
     </message>
 </context>
 <context>
@@ -1644,7 +1674,7 @@ Adresse: %2</translation>
         <translation>Forcieren</translation>
     </message>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Stromlast forcieren</translation>
     </message>
     <message>
@@ -1670,12 +1700,12 @@ Adresse: %2</translation>
         <translation>Delta</translation>
     </message>
     <message>
-        <source>line</source>
-        <translation>Linie</translation>
+        <source>Goal</source>
+        <translation>Ziel</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>Ziel</translation>
+        <source>line</source>
+        <translation>Linie</translation>
     </message>
 </context>
 <context>
@@ -1690,7 +1720,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>rooms</source>
-        <translation>Zimmer</translation>
+        <translation>Räume</translation>
     </message>
     <message>
         <source>settings</source>
@@ -1754,7 +1784,7 @@ Adresse: %2</translation>
     <name>MenuItem</name>
     <message>
         <source>Closed</source>
-        <translation>Abgestellt</translation>
+        <translation>Geschlossen</translation>
     </message>
     <message>
         <source>Control disabled</source>
@@ -1762,15 +1792,15 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>Control enabled</source>
-        <translation>Steuerung aktiviert</translation>
+        <translation>Aktivierte Kontrolle</translation>
     </message>
     <message>
         <source>Danger</source>
         <translation>Gefahr</translation>
     </message>
     <message>
-        <source>Load detached</source>
-        <translation>Stromlast abgetrennt</translation>
+        <source>Load disconnected</source>
+        <translation>Abgetrennte Stromlast</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -1843,7 +1873,7 @@ Adresse: %2</translation>
     <name>Multimedia</name>
     <message>
         <source>devices</source>
-        <translation>Geräte</translation>
+        <translation>Vorrichtungen</translation>
     </message>
     <message>
         <source>ip radio</source>
@@ -1863,22 +1893,22 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>web browser</source>
-        <translation>Web-Browser</translation>
+        <translation>Webbrowser</translation>
     </message>
     <message>
-        <source>web cam</source>
+        <source>Web links</source>
+        <translation>Web-Verbindungen</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
         <translation>Webcam</translation>
-    </message>
-    <message>
-        <source>web link</source>
-        <translation>Web-Link</translation>
     </message>
 </context>
 <context>
     <name>NewImageCard</name>
     <message>
         <source>CANCEL</source>
-        <translation>KÜNDIGEN</translation>
+        <translation>LÖSCHEN</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1920,6 +1950,85 @@ Adresse: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 Sekunden</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Aktiv</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>WECKER</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>EINBRUCHSICHERHEIT</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Verfügbar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Schliessen</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Befehl wurde gesendet</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERGIE MANAGEMENT</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Energie-Monatsbericht</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignorieren</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MELDUNGEN</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Monatliches Ziel erreicht</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Mehr Informationen</translation>
+    </message>
+    <message>
+        <source>new message(s)</source>
+        <translation>Neue Meldung(en)</translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Verschieben</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Lesen</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SZENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Zeigen</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Ausschalten</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Supervision</translation>
     </message>
 </context>
 <context>
@@ -1987,7 +2096,7 @@ Adresse: %2</translation>
     <name>Profile</name>
     <message>
         <source>Add note</source>
-        <translation>Bemerkung hinzufügen</translation>
+        <translation>Anmerkung hinzufügen</translation>
     </message>
     <message>
         <source>Max notes limit reached</source>
@@ -2009,22 +2118,44 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Bild der Karte </translation>
+        <translation>Bild der Card</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Bild im Hintergrund ändern</translation>
+        <translation>Hintergrund ändern</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Bild der Karte ändern</translation>
+        <translation>Bild der Card ändern</translation>
+    </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Vorgang bestätigen</translation>
     </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
         <source>rooms</source>
-        <translation>Zimmer</translation>
+        <translation>Räume</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsItems</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Vorgang bestätigen</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Neuer Name:</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Löschen bestätigen</translation>
     </message>
 </context>
 <context>
@@ -2049,15 +2180,19 @@ Adresse: %2</translation>
     <name>ScenarioModuleSettings</name>
     <message>
         <source>Are you sure to reset the scenario?</source>
-        <translation>Wollen Sie das Szenario wirklich rückstellen?</translation>
+        <translation>Das Szenario wirklich wieder herstellen?</translation>
     </message>
     <message>
         <source>cancel</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Wenn Sie das Szenario nicht zurückstellen, werden dem Szenario Aktionen hinzugefügt. OK drücken, wenn Sie die Szenario-Programmierung starten wollen, LÖSCHEN, wenn Sie den Vorgang abbrechen wollen.</translation>
+        <source>Delete scenario</source>
+        <translation>Szenario löschen</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <translation>Wenn Sie das Szenario nicht gelöscht haben, werden die Aktionen dem vorhandenen Szenario hinzugefügt. OK drücken, um die Programmierung des Szenarios zu starten; LÖSCHEN drücken, um den Vorgang abzubrechen.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2068,20 +2203,16 @@ Adresse: %2</translation>
         <translation>Programmieren unmöglich</translation>
     </message>
     <message>
-        <source>reset program</source>
-        <translation>Programm zurückstellen</translation>
-    </message>
-    <message>
         <source>Scenario configuration</source>
         <translation>Konfiguration Szenarien</translation>
     </message>
     <message>
         <source>start programming</source>
-        <translation>Programmieren starten</translation>
+        <translation>Programmierung starten</translation>
     </message>
     <message>
         <source>stop programming</source>
-        <translation>Programmieren stoppen</translation>
+        <translation>Programmierung stoppen</translation>
     </message>
 </context>
 <context>
@@ -2095,11 +2226,11 @@ Adresse: %2</translation>
     <name>ScheduledScenario</name>
     <message>
         <source>start</source>
-        <translation>Starten</translation>
+        <translation>Einschalten</translation>
     </message>
     <message>
         <source>stop</source>
-        <translation>Stop</translation>
+        <translation>Ausschalten</translation>
     </message>
 </context>
 <context>
@@ -2117,7 +2248,7 @@ Adresse: %2</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>KÜNDIGEN</translation>
+        <translation>LÖSCHEN</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2168,8 +2299,8 @@ Wollen Sie fortfahren?</translation>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <source>Add Clock</source>
-        <translation>Uhr hinzufügen</translation>
+        <source>Add Alarm clock</source>
+        <translation>Wecker hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -2195,7 +2326,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Calibration</source>
-        <translation>Kalibrierung</translation>
+        <translation>Kalibrieren</translation>
     </message>
     <message>
         <source>Clean</source>
@@ -2383,7 +2514,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Bild im Hintergrund ändern</translation>
+        <translation>Hintergrund ändern</translation>
     </message>
     <message>
         <source>Confirm operation</source>
@@ -2394,16 +2525,16 @@ Wollen Sie fortfahren?</translation>
         <translation>Wollen Sie den Hintergrund auf Default-Wert wiederherstellen?</translation>
     </message>
     <message>
+        <source>Home page skin</source>
+        <translation>Skin Home</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Quicklinks</translation>
     </message>
     <message>
         <source>Restore background image</source>
-        <translation>Bild im Hintergrund wieder herstellen</translation>
-    </message>
-    <message>
-        <source>skin home</source>
-        <translation>Skin Home</translation>
+        <translation>Hintergrund wieder herstellen</translation>
     </message>
 </context>
 <context>
@@ -2455,7 +2586,7 @@ Wollen Sie fortfahren?</translation>
     <name>SettingsInternational</name>
     <message>
         <source>keyboard language</source>
-        <translation>Tastatursprache</translation>
+        <translation>Sprache der Tastatur</translation>
     </message>
     <message>
         <source>text language</source>
@@ -2494,7 +2625,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Rooms</source>
-        <translation>Zimmer</translation>
+        <translation>Räume</translation>
     </message>
 </context>
 <context>
@@ -2512,7 +2643,7 @@ Wollen Sie fortfahren?</translation>
     <name>SettingsNames</name>
     <message>
         <source>Clear</source>
-        <translation>Blank</translation>
+        <translation>Hell</translation>
     </message>
     <message>
         <source>Connect</source>
@@ -2536,7 +2667,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>Ausschalten</translation>
+        <translation>Abschalten</translation>
     </message>
     <message>
         <source>Dutch</source>
@@ -2544,7 +2675,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Freigeben</translation>
+        <translation>Aktivieren</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -2598,7 +2729,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Static IP address</source>
-        <translation>Statische IP-Adresse</translation>
+        <translation>Adresse IP statisch</translation>
     </message>
     <message>
         <source>Turkish</source>
@@ -2629,19 +2760,19 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>IP address</source>
-        <translation>IP-Adresse</translation>
+        <translation>Adresse IP</translation>
     </message>
     <message>
         <source>IP configuration</source>
-        <translation>IP-Konfiguration</translation>
+        <translation>Konfiguration IP</translation>
     </message>
     <message>
         <source>MAC address</source>
         <translation>MAC-Adresse</translation>
     </message>
     <message>
-        <source>network state</source>
-        <translation>Netzwerkstatus</translation>
+        <source>Network status</source>
+        <translation>Netzstatus</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2669,6 +2800,25 @@ Wollen Sie fortfahren?</translation>
     </message>
 </context>
 <context>
+    <name>SettingsObjectLink</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Löschen bestätigen</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Neuer Name:</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Umbenennen</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPassword</name>
     <message>
         <source>Change password</source>
@@ -2691,15 +2841,15 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Bild der Karte </translation>
+        <translation>Bild der Card</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Bild im Hintergrund ändern</translation>
+        <translation>Hintergrund ändern</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Bild der Karte ändern</translation>
+        <translation>Bild der Card ändern</translation>
     </message>
     <message>
         <source>Confirm operation</source>
@@ -2711,7 +2861,18 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Restore background image</source>
-        <translation>Bild im Hintergrund wieder herstellen</translation>
+        <translation>Hintergrund wieder herstellen</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsProfiles</name>
+    <message>
+        <source>Add Profile</source>
+        <translation>Profil hinzufügen</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Neuer Name:</translation>
     </message>
 </context>
 <context>
@@ -2725,7 +2886,7 @@ Wollen Sie fortfahren?</translation>
     <name>SettingsRingtones</name>
     <message>
         <source>Ringtone volume</source>
-        <translation>Klingelton-Lautstärke</translation>
+        <translation>Rufton-Lautstärke</translation>
     </message>
 </context>
 <context>
@@ -2776,10 +2937,6 @@ Wollen Sie fortfahren?</translation>
         <translation>Zugeordnet</translation>
     </message>
     <message>
-        <source>auto open</source>
-        <translation>Automatisches Öffnen</translation>
-    </message>
-    <message>
         <source>Disabled</source>
         <translation>Gesperrt</translation>
     </message>
@@ -2789,15 +2946,19 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>hands free</source>
-        <translation>Lautsprecher</translation>
+        <translation>Freihand</translation>
     </message>
     <message>
         <source>Not associated</source>
         <translation>Nicht zugeteilt</translation>
     </message>
     <message>
+        <source>Professional studio</source>
+        <translation>Profession. Studio</translation>
+    </message>
+    <message>
         <source>Ringtone exclusion</source>
-        <translation>Klingelton ausschließen</translation>
+        <translation>Rufton ausschließen</translation>
     </message>
     <message>
         <source>Teleloop</source>
@@ -2807,7 +2968,7 @@ Wollen Sie fortfahren?</translation>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <source>External unit associated</source>
+        <source>Associated entrance panel</source>
         <translation>Türstation zugeordnet</translation>
     </message>
     <message>
@@ -2879,8 +3040,8 @@ Wollen Sie fortfahren?</translation>
         <translation>Quelle</translation>
     </message>
     <message>
-        <source>source change</source>
-        <translation>Quelle ändern</translation>
+        <source>Source changed</source>
+        <translation>Quelle geändert</translation>
     </message>
 </context>
 <context>
@@ -2904,8 +3065,8 @@ Wollen Sie fortfahren?</translation>
         <translation>%1 Tage</translation>
     </message>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatisch  Wieder schließen</translation>
+        <source>Auto close</source>
+        <translation>Wieder schließen Automatisch</translation>
     </message>
     <message>
         <source>Test Circuit Breaker</source>
@@ -2913,21 +3074,21 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Test every</source>
-        <translation>Testen alle </translation>
+        <translation>Test alls…</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatisch  Wieder schließen</translation>
+        <source>Auto close</source>
+        <translation>Wieder schließen Automatisch</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatisch  Wieder schließen</translation>
+        <source>Auto close</source>
+        <translation>Wieder schließen Automatisch</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2954,7 +3115,7 @@ Wollen Sie fortfahren?</translation>
     <name>Supervision</name>
     <message>
         <source>load diagnostic</source>
-        <translation>Last-Diagnose</translation>
+        <translation>Stromlastdiagnostik</translation>
     </message>
 </context>
 <context>
@@ -2971,8 +3132,8 @@ Wollen Sie fortfahren?</translation>
         <translation>Löschen</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Wenn Sie das Szenario nicht zurückstellen, werden dem Szenario Aktionen hinzugefügt. OK drücken, wenn Sie die Szenario-Programmierung starten wollen, LÖSCHEN, wenn Sie den Vorgang abbrechen wollen.</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Wenn Sie das Szenario nicht gelöscht haben, werden die Aktionen dem vorhandenen Szenario hinzugefügt. OK drücken, um die Programmierung des Szenarios zu starten; LÖSCHEN drücken, um den Vorgang abzubrechen.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2981,6 +3142,21 @@ Wollen Sie fortfahren?</translation>
     <message>
         <source>Scenario configuration</source>
         <translation>Konfiguration Szenarien</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Fancoil-Geschwindigkeit</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modi</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Eingestellte Temperatur</translation>
     </message>
 </context>
 <context>
@@ -3011,7 +3187,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>next scenario</source>
-        <translation>Nächstes Szenario</translation>
+        <translation>Nachfolgendes Szenario</translation>
     </message>
     <message>
         <source>Off</source>
@@ -3023,19 +3199,11 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>season</source>
-        <translation>Saison</translation>
+        <translation>Jahreszeit</translation>
     </message>
     <message>
         <source>temperature set</source>
-        <translation>Temperatur einrichten</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Vorgenommene Änderungen wurden nicht gespeichert.
-Wenn Sie OK drücken, gehen sie verloren.
-Wollen Sie fortfahren?</translation>
+        <translation>Eingestellte Temperatur</translation>
     </message>
     <message>
         <source>Timed Manual</source>
@@ -3048,29 +3216,6 @@ Wollen Sie fortfahren?</translation>
     <message>
         <source>Weekly</source>
         <translation>Wöchentlich</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Fancoil-Geschwindigkeit</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modi</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Temperatur einrichten</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Vorgenommene Änderungen wurden nicht gespeichert.
-Wenn Sie OK drücken, gehen sie verloren.
-Wollen Sie fortfahren?</translation>
     </message>
 </context>
 <context>
@@ -3092,8 +3237,8 @@ Wollen Sie fortfahren?</translation>
         <translation>Kühlen</translation>
     </message>
     <message>
-        <source>Dry</source>
-        <translation>Entfeuchten</translation>
+        <source>Dehumidifier</source>
+        <translation>Entfeucheuchter</translation>
     </message>
     <message>
         <source>Fan</source>
@@ -3101,7 +3246,7 @@ Wollen Sie fortfahren?</translation>
     </message>
     <message>
         <source>Heating</source>
-        <translation>Heizung</translation>
+        <translation>Heizen</translation>
     </message>
     <message>
         <source>High</source>
@@ -3164,7 +3309,7 @@ Wollen Sie fortfahren?</translation>
         <translation>Manuell zeitgesteuert</translation>
     </message>
     <message>
-        <source>weekday</source>
+        <source>Weekdays</source>
         <translation>Wochentag</translation>
     </message>
     <message>
@@ -3194,15 +3339,15 @@ Wollen Sie fortfahren?</translation>
         <translation>Außensonden</translation>
     </message>
     <message>
-        <source>Not Controlled Probes</source>
-        <translation>Keine kontrollierten Sensoren</translation>
+        <source>Non-Controlled Probes</source>
+        <translation>Nicht kontrollierte Sonden</translation>
     </message>
 </context>
 <context>
     <name>VideoCamera</name>
     <message>
         <source>door lock</source>
-        <translation>Öffnen</translation>
+        <translation>Türschloss</translation>
     </message>
     <message>
         <source>stairlight</source>
@@ -3254,111 +3399,6 @@ Wollen Sie fortfahren?</translation>
     <message>
         <source>mute</source>
         <translation>Stumm</translation>
-    </message>
-</context>
-<context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authentifizierung erforderlich</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Passwort</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Diese Verbindung ist nicht vertrauenswürdig Wollen Sie fortfahren?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Nicht vertrauenswürdige Verbindung</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Benutzername</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Aktiv</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>WECKER</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>EINBRUCHSICHERHEIT</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Verfügbar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Schliessen</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Befehl wurde gesendet</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGIE MANAGEMENT</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Energie-Monatsbericht</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Ignorieren</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MELDUNGEN</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Monatliches Ziel erreicht</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Mehr Infos</translation>
-    </message>
-    <message numerus="yes">
-        <source>new message(s)</source>
-        <translation>
-            <numerusform>Neue Meldung(en)</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Verschieben</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lesen</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SZENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Zeigen</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Supervision</translation>
     </message>
 </context>
 </TS>

@@ -77,11 +77,11 @@
     </message>
     <message>
         <source>Antifreeze/thermal protection</source>
-        <translation>Защита антифриза/тепловая защита</translation>
+        <translation>Противоморозная защита/тепловая защита</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Автоматически</translation>
+        <translation>Автоматический</translation>
     </message>
     <message>
         <source>Close</source>
@@ -94,10 +94,6 @@
     <message>
         <source>Down</source>
         <translation>Вниз</translation>
-    </message>
-    <message>
-        <source>Extended pressure button</source>
-        <translation>Длительное нажатие на кнопку</translation>
     </message>
     <message>
         <source>Heating Program</source>
@@ -137,18 +133,22 @@
     </message>
     <message>
         <source>On 1 sec.</source>
-        <translation>Вкл. 1 с</translation>
+        <translation>ON 1 с</translation>
     </message>
     <message>
         <source>On 2 sec.</source>
-        <translation>Вкл. 2 с</translation>
+        <translation>ON 2 с</translation>
     </message>
     <message>
         <source>Open</source>
         <translation>Открыть</translation>
     </message>
     <message>
-        <source>Release after extended pressure button</source>
+        <source>Pushbutton extended pressure</source>
+        <translation>Длительное нажатие на кнопку</translation>
+    </message>
+    <message>
+        <source>Release pushbutton after extended pressure</source>
         <translation>Отпускание после длительного нажатия на кнопку</translation>
     </message>
     <message>
@@ -161,31 +161,31 @@
     </message>
     <message>
         <source>Scenario OFF</source>
-        <translation>ВЫКЛ. сценарий </translation>
+        <translation>OFF сценарий</translation>
     </message>
     <message>
         <source>Set the air conditioning mode</source>
         <translation>Установите режим кондиционирования</translation>
     </message>
     <message>
-        <source>Set the fan-coil speed</source>
-        <translation>Установите скорость вентиляторного доводчика</translation>
+        <source>Set the fancoil speed</source>
+        <translation>Установите скорость фанкойла</translation>
     </message>
     <message>
         <source>Set the heating mode</source>
         <translation>Установите режим отопления</translation>
     </message>
     <message>
-        <source>Short pressure button</source>
+        <source>Short pressure of the pushbutton</source>
         <translation>Короткое нажатие на кнопку</translation>
     </message>
     <message>
-        <source>Start pressure button</source>
+        <source>Start pressure of the pushbutton</source>
         <translation>Начало нажатия на кнопку</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Остановка</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <source>Timed manual Temperature</source>
@@ -223,16 +223,16 @@
         <translation>Добавить новую ссылку на прогноз погоды:</translation>
     </message>
     <message>
-        <source>Add new web camera:</source>
-        <translation>Добавить новую веб-камеру:</translation>
-    </message>
-    <message>
         <source>Add new web page link:</source>
         <translation>Добавить новую ссылку на веб-страницу:</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
         <translation>Добавить новое веб-радио:</translation>
+    </message>
+    <message>
+        <source>Add new webcam:</source>
+        <translation>Добавить новую веб-камеру:</translation>
     </message>
     <message>
         <source>Add quicklink</source>
@@ -248,7 +248,7 @@
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>ОТМЕНИТЕ</translation>
+        <translation>ОТМЕНИТЬ</translation>
     </message>
     <message>
         <source>Click to enter link...</source>
@@ -319,16 +319,16 @@ Address: %2</source>
         <translation>Выбрать имеющуюся ссылку на прогноз погоды:</translation>
     </message>
     <message>
-        <source>Select existing web camera:</source>
-        <translation>Выбрать имеющуюся веб-камеру:</translation>
-    </message>
-    <message>
         <source>Select existing web page link:</source>
         <translation>Выбрать имеющуюся ссылку на веб-страницу:</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
         <translation>Выбрать имеющееся веб-радио:</translation>
+    </message>
+    <message>
+        <source>Select existing webcam:</source>
+        <translation>Выбрать имеющуюся веб-камеру:</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -343,16 +343,16 @@ Address: %2</source>
         <translation>Погода</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>веб-камера</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Веб-страница</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web-радио</translation>
+        <translation>Веб-радио</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Веб-камера</translation>
     </message>
 </context>
 <context>
@@ -406,7 +406,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>Ч</translation>
+        <translation>В</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>В</translation>
+        <translation>Ч</translation>
     </message>
     <message>
         <source>W</source>
@@ -458,11 +458,11 @@ Address: %2</source>
     <name>AdvancedSplit</name>
     <message>
         <source>fancoil</source>
-        <translation>Вентилятор</translation>
+        <translation>Фанкойл</translation>
     </message>
     <message>
-        <source>modality</source>
-        <translation>Режим</translation>
+        <source>Mode</source>
+        <translation>Режим работы</translation>
     </message>
     <message>
         <source>program</source>
@@ -470,7 +470,7 @@ Address: %2</source>
     </message>
     <message>
         <source>swing</source>
-        <translation>Качание</translation>
+        <translation>Жалюзи</translation>
     </message>
     <message>
         <source>temperature</source>
@@ -504,7 +504,7 @@ Address: %2</source>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>ОТМЕНИТЕ</translation>
+        <translation>ОТМЕНИТЬ</translation>
     </message>
     <message>
         <source>days</source>
@@ -515,8 +515,18 @@ Address: %2</source>
         <translation>Описание</translation>
     </message>
     <message>
-        <source>Edit alarm name</source>
+        <source>Edit alarm clock name</source>
         <translation>Редактировать имя тревожного сигнала</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>П</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -535,47 +545,37 @@ Address: %2</source>
         <translation>Только один раз</translation>
     </message>
     <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>В</translation>
+    </message>
+    <message>
         <source>Save changes?</source>
         <translation>Сохранить изменения?</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>с</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>В</translation>
     </message>
     <message>
         <source>time</source>
         <translation>Время</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>П</translation>
-    </message>
-    <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>В</translation>
+        <translation>Ч</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>С</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>Ч</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>П</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>С</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>В</translation>
     </message>
 </context>
 <context>
@@ -590,11 +590,11 @@ Address: %2</source>
     </message>
     <message>
         <source>beep</source>
-        <translation>Сигнал</translation>
+        <translation>Звуковой сигнал</translation>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>ОТМЕНИТЕ</translation>
+        <translation>ОТМЕНИТЬ</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -625,8 +625,8 @@ Address: %2</source>
         <translation>Сигнал:</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
-        <translation>Распространение звука</translation>
+        <source>Sound system</source>
+        <translation>Звуковая трансляция</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -667,15 +667,15 @@ Address: %2</source>
     </message>
     <message>
         <source>loud</source>
-        <translation>Громко</translation>
+        <translation>Loud</translation>
     </message>
     <message>
         <source>off</source>
-        <translation>Выкл.</translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>on</source>
-        <translation>ВКЛ.</translation>
+        <translation>ON</translation>
     </message>
     <message>
         <source>treble</source>
@@ -720,7 +720,7 @@ Address: %2</source>
     <name>AntintrusionNames</name>
     <message>
         <source>anti-panic</source>
-        <translation>срочный вызов</translation>
+        <translation>антипаника</translation>
     </message>
     <message>
         <source>intrusion detection</source>
@@ -728,11 +728,11 @@ Address: %2</source>
     </message>
     <message>
         <source>tamper</source>
-        <translation>самозащита</translation>
+        <translation>вмешательство</translation>
     </message>
     <message>
         <source>technical</source>
-        <translation>технич.тревога</translation>
+        <translation>технический</translation>
     </message>
 </context>
 <context>
@@ -793,7 +793,7 @@ Address: %2</source>
 <context>
     <name>Appliance</name>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Принудительно активировать нагрузку</translation>
     </message>
 </context>
@@ -831,6 +831,29 @@ Address: %2</source>
     <message>
         <source>brightness</source>
         <translation>Яркость</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Требуется аутентификация</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>пароль</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Это соединение ненадежное. Вы хотите продолжить?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Ненадежное соединение SSL</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Имя пользователя</translation>
     </message>
 </context>
 <context>
@@ -893,7 +916,7 @@ Address: %2</source>
         <translation>Нажать на кнопку</translation>
     </message>
     <message>
-        <source>Click the crosshair</source>
+        <source>Click the cross</source>
         <translation>Нажмите crosshair</translation>
     </message>
     <message>
@@ -909,7 +932,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Изменение пароля</translation>
+        <translation>Изменить пароль</translation>
     </message>
     <message>
         <source>Insert new password:</source>
@@ -981,7 +1004,7 @@ Address: %2</source>
     <name>ControlAlarmClock</name>
     <message>
         <source>beep</source>
-        <translation>Сигнал</translation>
+        <translation>Звуковой сигнал</translation>
     </message>
     <message>
         <source>DELETE</source>
@@ -996,6 +1019,16 @@ Address: %2</source>
         <translation>Включен</translation>
     </message>
     <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>П</translation>
+    </message>
+    <message>
         <source>repetition</source>
         <translation>Повторение</translation>
     </message>
@@ -1004,47 +1037,37 @@ Address: %2</source>
         <translation>Сигнал звонка</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
-        <translation>Распространение звука</translation>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>В</translation>
+    </message>
+    <message>
+        <source>Sound system</source>
+        <translation>Звуковая трансляция</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>В</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>В</translation>
     </message>
     <message>
         <source>triggers at</source>
         <translation>Hачало в</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>П</translation>
-    </message>
-    <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>В</translation>
+        <translation>Ч</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>С</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>Ч</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>П</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>С</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>В</translation>
     </message>
 </context>
 <context>
@@ -1076,7 +1099,7 @@ Address: %2</source>
     <name>ControlIPRadio</name>
     <message>
         <source>IP radio</source>
-        <translation>IP-radio</translation>
+        <translation>IP-радио</translation>
     </message>
 </context>
 <context>
@@ -1115,12 +1138,12 @@ Address: %2</source>
         <translation>Яркость</translation>
     </message>
     <message>
-        <source>Color</source>
+        <source>Colour</source>
         <translation>Цвет</translation>
     </message>
     <message>
         <source>Contrast</source>
-        <translation>Контраст</translation>
+        <translation>Контрастность</translation>
     </message>
 </context>
 <context>
@@ -1186,7 +1209,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Mute on</source>
-        <translation>Немой на</translation>
+        <translation>Вкл. Немой</translation>
     </message>
     <message>
         <source>No answer</source>
@@ -1234,14 +1257,14 @@ Address: %2</source>
     <name>Dimmer</name>
     <message>
         <source>light intensity</source>
-        <translation>интенсивность света</translation>
+        <translation>интенсивность освещения</translation>
     </message>
 </context>
 <context>
     <name>EditNote</name>
     <message>
         <source>CANCEL</source>
-        <translation>ОТМЕНИТЕ</translation>
+        <translation>ОТМЕНИТЬ</translation>
     </message>
     <message>
         <source>Note</source>
@@ -1372,7 +1395,7 @@ Address: %2</source>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>ММ/гггг</translation>
+        <translation>MM/yyyy</translation>
     </message>
     <message>
         <source>month</source>
@@ -1384,7 +1407,7 @@ Address: %2</source>
     </message>
     <message>
         <source>yyyy</source>
-        <translation>гггг</translation>
+        <translation>yyyy</translation>
     </message>
 </context>
 <context>
@@ -1409,7 +1432,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Global View</source>
-        <translation>Глобальный вид</translation>
+        <translation>Общий вид</translation>
     </message>
     <message>
         <source>units</source>
@@ -1428,7 +1451,7 @@ Address: %2</source>
     <name>EnergyManagement</name>
     <message>
         <source>Energy management</source>
-        <translation>Управление энергоснабжением</translation>
+        <translation>Управление энергией</translation>
     </message>
 </context>
 <context>
@@ -1454,7 +1477,7 @@ Address: %2</source>
         <translation>Газ</translation>
     </message>
     <message>
-        <source>GroundFail</source>
+        <source>Ground Fault</source>
         <translation>Замыкание на землю</translation>
     </message>
     <message>
@@ -1462,19 +1485,19 @@ Address: %2</source>
         <translation>Отопление</translation>
     </message>
     <message>
-        <source>HotWater</source>
+        <source>Hot Water</source>
         <translation>Горячая вода</translation>
     </message>
     <message>
-        <source>Opened</source>
-        <translation>Разомкнута</translation>
+        <source>Open</source>
+        <translation>Открыть</translation>
     </message>
     <message>
-        <source>Overtension</source>
+        <source>Overvoltage</source>
         <translation>Перенапряжение</translation>
     </message>
     <message>
-        <source>ShortCircuit</source>
+        <source>Short Circuit</source>
         <translation>Короткое замыкание</translation>
     </message>
     <message>
@@ -1494,11 +1517,11 @@ Address: %2</source>
     </message>
     <message>
         <source>load management</source>
-        <translation>Управление нагрузкой</translation>
+        <translation>Управление нагрузками</translation>
     </message>
     <message>
-        <source>systems supervision</source>
-        <translation>Контроль систем</translation>
+        <source>System supervision</source>
+        <translation>Система наблюдения</translation>
     </message>
 </context>
 <context>
@@ -1531,7 +1554,7 @@ Address: %2</source>
     <name>EnergyOverview</name>
     <message>
         <source>Global View</source>
-        <translation>Глобальный вид</translation>
+        <translation>Общий вид</translation>
     </message>
 </context>
 <context>
@@ -1552,12 +1575,12 @@ Address: %2</source>
         <translation>дельта</translation>
     </message>
     <message>
-        <source>month</source>
-        <translation>Месяц</translation>
+        <source>Goal</source>
+        <translation>цель</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>цель</translation>
+        <source>month</source>
+        <translation>Месяц</translation>
     </message>
 </context>
 <context>
@@ -1614,16 +1637,16 @@ Address: %2</source>
         <translation>Погода</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>веб-камера</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Веб-страница</translation>
     </message>
     <message>
         <source>web radio</source>
-        <translation>Web-радио</translation>
+        <translation>Веб-радио</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Веб-камера</translation>
     </message>
 </context>
 <context>
@@ -1634,6 +1657,13 @@ Address: %2</source>
     </message>
 </context>
 <context>
+    <name>Floor</name>
+    <message>
+        <source>New Name:</source>
+        <translation>Новое имя:</translation>
+    </message>
+</context>
+<context>
     <name>ForceDurationPopup</name>
     <message>
         <source>cancel</source>
@@ -1641,10 +1671,10 @@ Address: %2</source>
     </message>
     <message>
         <source>force</source>
-        <translation>Принудительно</translation>
+        <translation>Принудительно активировать</translation>
     </message>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Принудительно активировать нагрузку</translation>
     </message>
     <message>
@@ -1670,12 +1700,12 @@ Address: %2</source>
         <translation>дельта</translation>
     </message>
     <message>
-        <source>line</source>
-        <translation>Линия</translation>
+        <source>Goal</source>
+        <translation>цель</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>цель</translation>
+        <source>line</source>
+        <translation>Линия</translation>
     </message>
 </context>
 <context>
@@ -1769,8 +1799,8 @@ Address: %2</source>
         <translation>Опасность</translation>
     </message>
     <message>
-        <source>Load detached</source>
-        <translation>Отсоединенная нагрузка</translation>
+        <source>Load disconnected</source>
+        <translation>Нагрузка отключена</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -1847,7 +1877,7 @@ Address: %2</source>
     </message>
     <message>
         <source>ip radio</source>
-        <translation>IP-radio</translation>
+        <translation>IP-радио</translation>
     </message>
     <message>
         <source>multimedia</source>
@@ -1866,19 +1896,19 @@ Address: %2</source>
         <translation>Веб-браузер</translation>
     </message>
     <message>
-        <source>web cam</source>
-        <translation>Web-камера</translation>
+        <source>Web links</source>
+        <translation>Веб-ссылка</translation>
     </message>
     <message>
-        <source>web link</source>
-        <translation>Веб-ссылка</translation>
+        <source>Webcam</source>
+        <translation>Веб-камера</translation>
     </message>
 </context>
 <context>
     <name>NewImageCard</name>
     <message>
         <source>CANCEL</source>
-        <translation>ОТМЕНИТЕ</translation>
+        <translation>ОТМЕНИТЬ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1893,7 +1923,7 @@ Address: %2</source>
     <name>Partial</name>
     <message>
         <source>Partial </source>
-        <translation>Частичный</translation>
+        <translation>Частичное</translation>
     </message>
     <message>
         <source>reset</source>
@@ -1923,6 +1953,85 @@ Address: %2</source>
     </message>
 </context>
 <context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Включено</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ЧАСЫ-БУДИЛЬНИК</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ОХРАННАЯ СИГНАЛИЗАЦИЯ</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Имеющийся в наличии</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Команда отправлена</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>УПРАВЛЕНИЕ ЭНЕРГИЕЙ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Месячный отчет об энергии</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Игнорировать</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>СООБЩЕНИЯ</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Месячная цель достигнута</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Дополнительная информация</translation>
+    </message>
+    <message>
+        <source>new message(s)</source>
+        <translation>новое(ые) сообщение(я)</translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Отложить</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Читать</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>СЦЕНАРИЙ</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Показать</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Стоп</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Контроль</translation>
+    </message>
+</context>
+<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -1944,11 +2053,11 @@ Address: %2</source>
     <name>PowerAmplifierPreset</name>
     <message>
         <source>Classical</source>
-        <translation>Классический</translation>
+        <translation>Классика</translation>
     </message>
     <message>
         <source>Dance</source>
-        <translation>Танцевальный</translation>
+        <translation>Танцы</translation>
     </message>
     <message>
         <source>Full Bass</source>
@@ -1960,7 +2069,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Normal</source>
-        <translation>Нормальный</translation>
+        <translation>Нормально</translation>
     </message>
     <message>
         <source>Party</source>
@@ -1976,7 +2085,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Soft</source>
-        <translation>Спокойный</translation>
+        <translation>Софт</translation>
     </message>
     <message>
         <source>Techno</source>
@@ -1998,26 +2107,30 @@ Address: %2</source>
     <name>QObject</name>
     <message>
         <source>IP radio</source>
-        <translation>IP-radio</translation>
+        <translation>IP-радио</translation>
     </message>
 </context>
 <context>
     <name>RoomModify</name>
     <message>
         <source>Background image</source>
-        <translation>Изображение фона</translation>
+        <translation>Фоновое изображение</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Изображение карты</translation>
+        <translation>Изображение карточки</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Изменить изображение фона</translation>
+        <translation>Изменить фоновое изображение</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Изменить изображение карты</translation>
+        <translation>Изменить изображение карточек</translation>
+    </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Подтвердить операцию</translation>
     </message>
 </context>
 <context>
@@ -2025,6 +2138,24 @@ Address: %2</source>
     <message>
         <source>rooms</source>
         <translation>Помещения</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsItems</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Подтвердить операцию</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Новое имя:</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Подтвердить удаление</translation>
     </message>
 </context>
 <context>
@@ -2056,8 +2187,12 @@ Address: %2</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Если вы не сбросили сценарий, вы сможете добавить действия к сценарию. Нажмите OK, чтобы начать программирование сценария, CANCEL, чтобы отменить операцию.</translation>
+        <source>Delete scenario</source>
+        <translation>Удалить сценарий</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <translation>Если вы не сбросили сценарий, вы сможете добавить действия к сценарию. Нажмите OK, чтобы начать программирование сценария, ОТМЕНИТЬ, чтобы отменить операцию.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2066,10 +2201,6 @@ Address: %2</source>
     <message>
         <source>programming impossible</source>
         <translation>Программирование невозможно</translation>
-    </message>
-    <message>
-        <source>reset program</source>
-        <translation>Cбросить программу</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
@@ -2117,7 +2248,7 @@ Address: %2</source>
     </message>
     <message>
         <source>CANCEL</source>
-        <translation>ОТМЕНИТЕ</translation>
+        <translation>ОТМЕНИТЬ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2136,7 +2267,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Clear History</source>
-        <translation>Очистить историю</translation>
+        <translation>Удалить хронологию</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2144,7 +2275,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Enable history</source>
-        <translation>Подключить историю</translation>
+        <translation>Подключить хронологию</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -2161,15 +2292,15 @@ Address: %2</source>
     <message>
         <source>Pressing ok will delete all browser history.
 Continue?</source>
-        <translation>Нажатие на ok удалит всю историю браузера.
+        <translation>Нажатие на ok удалит всю хронологию браузера.
 Продолжить?</translation>
     </message>
 </context>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <source>Add Clock</source>
-        <translation>Добавить часы</translation>
+        <source>Add Alarm clock</source>
+        <translation>Добавить будильник</translation>
     </message>
 </context>
 <context>
@@ -2199,7 +2330,7 @@ Continue?</source>
     </message>
     <message>
         <source>Clean</source>
-        <translation>Почистить</translation>
+        <translation>Очистить</translation>
     </message>
 </context>
 <context>
@@ -2332,7 +2463,7 @@ Continue?</source>
     <name>SettingsGenerals</name>
     <message>
         <source>Beep</source>
-        <translation>Сигнал</translation>
+        <translation>Звуковой сигнал</translation>
     </message>
     <message>
         <source>Connected</source>
@@ -2379,11 +2510,11 @@ Continue?</source>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
-        <translation>Изображение фона</translation>
+        <translation>Фоновое изображение</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Изменить изображение фона</translation>
+        <translation>Изменить фоновое изображение</translation>
     </message>
     <message>
         <source>Confirm operation</source>
@@ -2394,16 +2525,16 @@ Continue?</source>
         <translation>Вы хотите восстановить значение фона по умолчанию?</translation>
     </message>
     <message>
+        <source>Home page skin</source>
+        <translation>скин главной</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Быстрые ссылки</translation>
     </message>
     <message>
         <source>Restore background image</source>
         <translation>Восстановить фоновое изображение</translation>
-    </message>
-    <message>
-        <source>skin home</source>
-        <translation>скин главной</translation>
     </message>
 </context>
 <context>
@@ -2490,7 +2621,7 @@ Continue?</source>
     </message>
     <message>
         <source>Ringtones</source>
-        <translation>Сигналы звонка</translation>
+        <translation>Мелодии</translation>
     </message>
     <message>
         <source>Rooms</source>
@@ -2512,7 +2643,7 @@ Continue?</source>
     <name>SettingsNames</name>
     <message>
         <source>Clear</source>
-        <translation>Чистый</translation>
+        <translation>Светлый</translation>
     </message>
     <message>
         <source>Connect</source>
@@ -2544,7 +2675,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Активировать</translation>
+        <translation>Подключить</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -2580,7 +2711,7 @@ Continue?</source>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
-Continue?</source>
+	Continue?</source>
         <translation>Нажатие на ok вызовет перезагрузку устройства через несколько секунд.
 Продолжить?</translation>
     </message>
@@ -2640,7 +2771,7 @@ Continue?</source>
         <translation>MAC-адрес</translation>
     </message>
     <message>
-        <source>network state</source>
+        <source>Network status</source>
         <translation>Cостояние сети</translation>
     </message>
     <message>
@@ -2669,10 +2800,29 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>SettingsObjectLink</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Подтвердить удаление</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Новое имя:</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Переименовать</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPassword</name>
     <message>
         <source>Change password</source>
-        <translation>Изменение пароля</translation>
+        <translation>Изменить пароль</translation>
     </message>
     <message>
         <source>Incorrect password</source>
@@ -2687,19 +2837,19 @@ Continue?</source>
     </message>
     <message>
         <source>Background image</source>
-        <translation>Изображение фона</translation>
+        <translation>Фоновое изображение</translation>
     </message>
     <message>
         <source>Card image</source>
-        <translation>Изображение карты</translation>
+        <translation>Изображение карточки</translation>
     </message>
     <message>
         <source>Change background image</source>
-        <translation>Изменить изображение фона</translation>
+        <translation>Изменить фоновое изображение</translation>
     </message>
     <message>
         <source>Change card image</source>
-        <translation>Изменить изображение карты</translation>
+        <translation>Изменить изображение карточек</translation>
     </message>
     <message>
         <source>Confirm operation</source>
@@ -2715,17 +2865,28 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>SettingsProfiles</name>
+    <message>
+        <source>Add Profile</source>
+        <translation>Добавить профиль</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Новое имя:</translation>
+    </message>
+</context>
+<context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
-        <translation>Сигналы звонка</translation>
+        <translation>Мелодии</translation>
     </message>
 </context>
 <context>
     <name>SettingsRingtones</name>
     <message>
         <source>Ringtone volume</source>
-        <translation>Громкость мелодии</translation>
+        <translation>Громкость мелодий</translation>
     </message>
 </context>
 <context>
@@ -2751,14 +2912,14 @@ Continue?</source>
     </message>
     <message>
         <source>Video Door Entry</source>
-        <translation>Ввод видео двери</translation>
+        <translation>Видеодомофония</translation>
     </message>
 </context>
 <context>
     <name>SettingsTeleloop</name>
     <message>
         <source>Associate</source>
-        <translation>Связать</translation>
+        <translation>Сопряжение</translation>
     </message>
     <message>
         <source>Associated</source>
@@ -2766,7 +2927,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Hет ассоциации</translation>
+        <translation>Hе сопряжено</translation>
     </message>
 </context>
 <context>
@@ -2774,10 +2935,6 @@ Continue?</source>
     <message>
         <source>Associated</source>
         <translation>Сопряжено</translation>
-    </message>
-    <message>
-        <source>auto open</source>
-        <translation>Aвто открытие</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2793,11 +2950,15 @@ Continue?</source>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>Hет ассоциации</translation>
+        <translation>Hе сопряжено</translation>
+    </message>
+    <message>
+        <source>Professional studio</source>
+        <translation>Профессиональная студия</translation>
     </message>
     <message>
         <source>Ringtone exclusion</source>
-        <translation>Отключение мелодии звонка</translation>
+        <translation>Отключение мелодии</translation>
     </message>
     <message>
         <source>Teleloop</source>
@@ -2807,8 +2968,8 @@ Continue?</source>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <source>External unit associated</source>
-        <translation>Вызывным панелям связан</translation>
+        <source>Associated entrance panel</source>
+        <translation>Сопряженный внешний блок</translation>
     </message>
     <message>
         <source>Firmware version</source>
@@ -2816,7 +2977,7 @@ Continue?</source>
     </message>
     <message>
         <source>Internal unit address</source>
-        <translation>Внутренний адрес блока</translation>
+        <translation>Адрес внутреннего блока</translation>
     </message>
     <message>
         <source>Kernel version</source>
@@ -2824,7 +2985,7 @@ Continue?</source>
     </message>
     <message>
         <source>Multimedia source address</source>
-        <translation>Адрес мультимедиа источника</translation>
+        <translation>Адрес мультимедийного источника</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -2835,7 +2996,7 @@ Continue?</source>
     <name>SimpleScenario</name>
     <message>
         <source>activate</source>
-        <translation>Подключить</translation>
+        <translation>Активировать</translation>
     </message>
     <message>
         <source>Command sent</source>
@@ -2879,15 +3040,15 @@ Continue?</source>
         <translation>Источник</translation>
     </message>
     <message>
-        <source>source change</source>
-        <translation>Изменение источника</translation>
+        <source>Source changed</source>
+        <translation>Смена источника</translation>
     </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
     <message>
         <source>off</source>
-        <translation>Выкл.</translation>
+        <translation>Off</translation>
     </message>
 </context>
 <context>
@@ -2904,30 +3065,30 @@ Continue?</source>
         <translation>%1 дней</translation>
     </message>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Автоматически Повторное включение</translation>
+        <source>Auto close</source>
+        <translation>Автоматическое включение</translation>
     </message>
     <message>
         <source>Test Circuit Breaker</source>
-        <translation>Схема испытания Выключатель</translation>
+        <translation>Тест дифференциального выключателя</translation>
     </message>
     <message>
         <source>Test every</source>
-        <translation>Тестировать каждое</translation>
+        <translation>Тестировать через каждые</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Автоматически Повторное включение</translation>
+        <source>Auto close</source>
+        <translation>Автоматическое включение</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Автоматически Повторное включение</translation>
+        <source>Auto close</source>
+        <translation>Автоматическое включение</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2954,7 +3115,7 @@ Continue?</source>
     <name>Supervision</name>
     <message>
         <source>load diagnostic</source>
-        <translation>Диагностика нагрузки</translation>
+        <translation>Диагностика нагрузок</translation>
     </message>
 </context>
 <context>
@@ -2971,8 +3132,8 @@ Continue?</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Если вы не сбросили сценарий, вы сможете добавить действия к сценарию. Нажмите OK, чтобы начать программирование сценария, CANCEL, чтобы отменить операцию.</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Если вы не сбросили сценарий, вы сможете добавить действия к сценарию. Нажмите OK, чтобы начать программирование сценария, ОТМЕНИТЬ, чтобы отменить операцию.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2981,73 +3142,6 @@ Continue?</source>
     <message>
         <source>Scenario configuration</source>
         <translation>Конфигурация сценариев</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlUnit</name>
-    <message>
-        <source>Antifreeze</source>
-        <translation>Защита от замерзания</translation>
-    </message>
-    <message>
-        <source>duration</source>
-        <translation>Длительность</translation>
-    </message>
-    <message>
-        <source>Holiday</source>
-        <translation>Праздничный день</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Ручной</translation>
-    </message>
-    <message>
-        <source>mode</source>
-        <translation>Режим работы</translation>
-    </message>
-    <message>
-        <source>next program</source>
-        <translation>Cледующая программа</translation>
-    </message>
-    <message>
-        <source>next scenario</source>
-        <translation>Cледующий сценарий</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Выкл.</translation>
-    </message>
-    <message>
-        <source>Scenarios</source>
-        <translation>Сценарии</translation>
-    </message>
-    <message>
-        <source>season</source>
-        <translation>Время года</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Уставка температуры</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Имеются выполняемые несохраненные изменения.
-При выборе ok они будут потеряны.
-Продолжить?</translation>
-    </message>
-    <message>
-        <source>Timed Manual</source>
-        <translation>Синхрониз. ручной</translation>
-    </message>
-    <message>
-        <source>Weekday</source>
-        <translation>Будний день</translation>
-    </message>
-    <message>
-        <source>Weekly</source>
-        <translation>Недельный</translation>
     </message>
 </context>
 <context>
@@ -3062,22 +3156,73 @@ Continue?</source>
     </message>
     <message>
         <source>temperature set</source>
-        <translation>Уставка температуры</translation>
+        <translation>Заданная температура</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlUnit</name>
+    <message>
+        <source>Antifreeze</source>
+        <translation>Противоморозная защита</translation>
     </message>
     <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Имеются выполняемые несохраненные изменения.
-При выборе ok они будут потеряны.
-Продолжить?</translation>
+        <source>duration</source>
+        <translation>Длительность</translation>
+    </message>
+    <message>
+        <source>Holiday</source>
+        <translation>Выходной</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Ручной</translation>
+    </message>
+    <message>
+        <source>mode</source>
+        <translation>Режим</translation>
+    </message>
+    <message>
+        <source>next program</source>
+        <translation>Cледующая программа</translation>
+    </message>
+    <message>
+        <source>next scenario</source>
+        <translation>Cледующий сценарий</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Off</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Сценарии</translation>
+    </message>
+    <message>
+        <source>season</source>
+        <translation>Время года</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Заданная температура</translation>
+    </message>
+    <message>
+        <source>Timed Manual</source>
+        <translation>Ручной с выдержкой времени</translation>
+    </message>
+    <message>
+        <source>Weekday</source>
+        <translation>Будний день</translation>
+    </message>
+    <message>
+        <source>Weekly</source>
+        <translation>Недельный</translation>
     </message>
 </context>
 <context>
     <name>ThermalNames</name>
     <message>
         <source>antifreeze</source>
-        <translation>Защита от замерзания</translation>
+        <translation>Противоморозная защита</translation>
     </message>
     <message>
         <source>auto</source>
@@ -3085,15 +3230,15 @@ Continue?</source>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Автоматически</translation>
+        <translation>Автоматический</translation>
     </message>
     <message>
         <source>Cooling</source>
         <translation>Охлаждение</translation>
     </message>
     <message>
-        <source>Dry</source>
-        <translation>Поглощение влаги</translation>
+        <source>Dehumidifier</source>
+        <translation>Осушение</translation>
     </message>
     <message>
         <source>Fan</source>
@@ -3101,7 +3246,7 @@ Continue?</source>
     </message>
     <message>
         <source>Heating</source>
-        <translation>Отопление</translation>
+        <translation>Обогрев</translation>
     </message>
     <message>
         <source>High</source>
@@ -3109,7 +3254,7 @@ Continue?</source>
     </message>
     <message>
         <source>holiday</source>
-        <translation>Праздничный день</translation>
+        <translation>Выходной</translation>
     </message>
     <message>
         <source>Low</source>
@@ -3137,15 +3282,15 @@ Continue?</source>
     </message>
     <message>
         <source>off</source>
-        <translation>Выкл.</translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Выкл.</translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>ВКЛ.</translation>
+        <translation>ON</translation>
     </message>
     <message>
         <source>scenario</source>
@@ -3161,11 +3306,11 @@ Continue?</source>
     </message>
     <message>
         <source>timed manual</source>
-        <translation>Синхрониз. ручной</translation>
+        <translation>Ручной с выдержкой времени</translation>
     </message>
     <message>
-        <source>weekday</source>
-        <translation>Будний день</translation>
+        <source>Weekdays</source>
+        <translation>Будние дни</translation>
     </message>
     <message>
         <source>weekly programs</source>
@@ -3180,21 +3325,21 @@ Continue?</source>
     <name>ThermalRegulation</name>
     <message>
         <source>temperature control</source>
-        <translation>Терморегулятор</translation>
+        <translation>Терморегулирование</translation>
     </message>
 </context>
 <context>
     <name>ThermalRegulationItems</name>
     <message>
         <source>Air Conditioning</source>
-        <translation>Искусственный климат</translation>
+        <translation>Кондиционирование воздуха</translation>
     </message>
     <message>
         <source>External Probes</source>
         <translation>Внешние датчики</translation>
     </message>
     <message>
-        <source>Not Controlled Probes</source>
+        <source>Non-Controlled Probes</source>
         <translation>Неконтролируемые датчики</translation>
     </message>
 </context>
@@ -3206,7 +3351,7 @@ Continue?</source>
     </message>
     <message>
         <source>stairlight</source>
-        <translation>Светильник лестницы</translation>
+        <translation>Освещение лестницы</translation>
     </message>
     <message>
         <source>volume</source>
@@ -3217,14 +3362,14 @@ Continue?</source>
     <name>VideoDoorEntry</name>
     <message>
         <source>video door entry</source>
-        <translation>Ввод видео двери</translation>
+        <translation>Видеодомофония</translation>
     </message>
 </context>
 <context>
     <name>VideoDoorEntryItems</name>
     <message>
         <source>intercom</source>
-        <translation>Домофон</translation>
+        <translation>Интерком</translation>
     </message>
     <message>
         <source>pager</source>
@@ -3254,112 +3399,6 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>Hемой</translation>
-    </message>
-</context>
-<context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Требуется аутентификация</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>пароль</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>Это соединение ненадежное. Вы хотите продолжить?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Ненадежное соединение SSL </translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Имя пользователя</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Включено</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ЧАСЫ-БУДИЛЬНИК</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ОХРАННАЯ СИГНАЛИЗАЦИЯ</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Имеющийся в наличии</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Закрыть</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Команда отправлена</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>УПРАВЛЕНИЕ ЭНЕРГИЕЙ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Месячный отчет об энергии</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Игнорировать</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>СООБЩЕНИЯ</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Месячная цель достигнута</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Больше сведений</translation>
-    </message>
-    <message numerus="yes">
-        <source>new message(s)</source>
-        <translation>
-            <numerusform>новое(ые) сообщение(я)</numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Отложить</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Прочитать</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>СЦЕНАРИЙ</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Показать</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Стоп</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Контроль</translation>
     </message>
 </context>
 </TS>

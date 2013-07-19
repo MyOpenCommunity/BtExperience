@@ -96,16 +96,12 @@
         <translation>下</translation>
     </message>
     <message>
-        <source>Extended pressure button</source>
-        <translation>长按键</translation>
-    </message>
-    <message>
         <source>Heating Program</source>
-        <translation>暖气程序</translation>
+        <translation>取暖程序</translation>
     </message>
     <message>
         <source>Heating scenario</source>
-        <translation>加温场景</translation>
+        <translation>取暖场景</translation>
     </message>
     <message>
         <source>Increase level</source>
@@ -129,11 +125,11 @@
     </message>
     <message>
         <source>OFF</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
     <message>
         <source>On 1 sec.</source>
@@ -148,7 +144,11 @@
         <translation>打开</translation>
     </message>
     <message>
-        <source>Release after extended pressure button</source>
+        <source>Pushbutton extended pressure</source>
+        <translation>长按键</translation>
+    </message>
+    <message>
+        <source>Release pushbutton after extended pressure</source>
         <translation>长按键后放开</translation>
     </message>
     <message>
@@ -168,19 +168,19 @@
         <translation>设定空调模式</translation>
     </message>
     <message>
-        <source>Set the fan-coil speed</source>
+        <source>Set the fancoil speed</source>
         <translation>设置盘管式风机速度</translation>
     </message>
     <message>
         <source>Set the heating mode</source>
-        <translation>设定加热模式</translation>
+        <translation>设定取暖模式</translation>
     </message>
     <message>
-        <source>Short pressure button</source>
+        <source>Short pressure of the pushbutton</source>
         <translation>短按键</translation>
     </message>
     <message>
-        <source>Start pressure button</source>
+        <source>Start pressure of the pushbutton</source>
         <translation>开始按键</translation>
     </message>
     <message>
@@ -223,16 +223,16 @@
         <translation>添加新的天气预报链接：</translation>
     </message>
     <message>
-        <source>Add new web camera:</source>
-        <translation>添加新的网络摄像头：</translation>
-    </message>
-    <message>
         <source>Add new web page link:</source>
         <translation>添加新的网页链接：</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
         <translation>添加新的网络广播：</translation>
+    </message>
+    <message>
+        <source>Add new webcam:</source>
+        <translation>添加新的网络摄像头：</translation>
     </message>
     <message>
         <source>Add quicklink</source>
@@ -252,11 +252,11 @@
     </message>
     <message>
         <source>Click to enter link...</source>
-        <translation>点击进入链接......</translation>
+        <translation>点击输入链接......</translation>
     </message>
     <message>
         <source>Click to enter name...</source>
-        <translation>点击进入名称......</translation>
+        <translation>点击输入名称......</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
@@ -266,7 +266,9 @@
         <source>Do you want to remove the selected quicklink?
 Name: %1
 Address: %2</source>
-        <translation>需要移除选定的快捷链接吗？?/n名称：%1/n地址：%2</translation>
+        <translation>需要移除选定的快捷链接吗？?
+名称：%1
+地址：%2</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
@@ -282,11 +284,11 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>特性</translation>
+        <translation>简介</translation>
     </message>
     <message>
         <source>rss</source>
@@ -317,16 +319,16 @@ Address: %2</source>
         <translation>选择现有天气预报链接：</translation>
     </message>
     <message>
-        <source>Select existing web camera:</source>
-        <translation>选择现有网络摄像头：</translation>
-    </message>
-    <message>
         <source>Select existing web page link:</source>
         <translation>选择现有网页链接：</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
         <translation>选择现有网络广播：</translation>
+    </message>
+    <message>
+        <source>Select existing webcam:</source>
+        <translation>选择现有网络摄像头：</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -341,16 +343,16 @@ Address: %2</source>
         <translation>天气</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>网络摄像头</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>网页</translation>
     </message>
     <message>
         <source>web radio</source>
         <translation>网络广播</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>网络摄像头</translation>
     </message>
 </context>
 <context>
@@ -361,14 +363,14 @@ Address: %2</source>
     </message>
     <message>
         <source>enabled</source>
-        <translation>已启动</translation>
+        <translation>已启用</translation>
     </message>
 </context>
 <context>
     <name>AdvancedScenarioAction</name>
     <message>
         <source>action</source>
-        <translation>行动</translation>
+        <translation>动作</translation>
     </message>
 </context>
 <context>
@@ -379,7 +381,7 @@ Address: %2</source>
     </message>
     <message>
         <source>days</source>
-        <translation>日</translation>
+        <translation>天</translation>
     </message>
     <message>
         <source>F</source>
@@ -404,7 +406,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>周四</translation>
+        <translation>周二</translation>
     </message>
     <message>
         <source>time</source>
@@ -413,7 +415,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>周二</translation>
+        <translation>周四</translation>
     </message>
     <message>
         <source>W</source>
@@ -433,11 +435,11 @@ Address: %2</source>
     </message>
     <message>
         <source>OFF</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
     <message>
         <source>Temperature</source>
@@ -456,10 +458,10 @@ Address: %2</source>
     <name>AdvancedSplit</name>
     <message>
         <source>fancoil</source>
-        <translation>风机盘管</translation>
+        <translation>盘管风机</translation>
     </message>
     <message>
-        <source>modality</source>
+        <source>Mode</source>
         <translation>模式</translation>
     </message>
     <message>
@@ -479,7 +481,7 @@ Address: %2</source>
     <name>AlarmClock</name>
     <message>
         <source>Click to enter name...</source>
-        <translation>点击进入名称......</translation>
+        <translation>点击输入名称......</translation>
     </message>
 </context>
 <context>
@@ -506,15 +508,25 @@ Address: %2</source>
     </message>
     <message>
         <source>days</source>
-        <translation>日</translation>
+        <translation>天</translation>
     </message>
     <message>
         <source>description</source>
         <translation>描述</translation>
     </message>
     <message>
-        <source>Edit alarm name</source>
+        <source>Edit alarm clock name</source>
         <translation>编辑防盗报警名称</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>周五</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>周一</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -526,54 +538,44 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Only once</source>
         <translation>只有一次</translation>
     </message>
     <message>
+        <source>S</source>
+        <comment>Saturday</comment>
+        <translation>周日</translation>
+    </message>
+    <message>
         <source>Save changes?</source>
         <translation>保存修改吗？</translation>
+    </message>
+    <message>
+        <source>S</source>
+        <comment>Sunday</comment>
+        <translation>周六</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>周二</translation>
     </message>
     <message>
         <source>time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>周一</translation>
-    </message>
-    <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>周二</translation>
+        <translation>周四</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Wednesday</comment>
         <translation>周三</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>周四</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>周五</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>周六</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>周日</translation>
     </message>
 </context>
 <context>
@@ -588,7 +590,7 @@ Address: %2</source>
     </message>
     <message>
         <source>beep</source>
-        <translation>嘟嘟声</translation>
+        <translation>蜂鸣音</translation>
     </message>
     <message>
         <source>CANCEL</source>
@@ -604,7 +606,7 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -623,8 +625,8 @@ Address: %2</source>
         <translation>信号：</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
-        <translation>声音系统</translation>
+        <source>Sound system</source>
+        <translation>播音</translation>
     </message>
     <message>
         <source>Volume</source>
@@ -665,15 +667,15 @@ Address: %2</source>
     </message>
     <message>
         <source>loud</source>
-        <translation>响亮</translation>
+        <translation>响度</translation>
     </message>
     <message>
         <source>off</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>on</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
     <message>
         <source>treble</source>
@@ -718,7 +720,7 @@ Address: %2</source>
     <name>AntintrusionNames</name>
     <message>
         <source>anti-panic</source>
-        <translation>免惊慌</translation>
+        <translation>紧急报警</translation>
     </message>
     <message>
         <source>intrusion detection</source>
@@ -753,7 +755,7 @@ Address: %2</source>
     </message>
     <message>
         <source>enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>modify zones</source>
@@ -785,13 +787,13 @@ Address: %2</source>
     </message>
     <message>
         <source>zone settings</source>
-        <translation>区域设置</translation>
+        <translation>区域参数</translation>
     </message>
 </context>
 <context>
     <name>Appliance</name>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>强制负荷</translation>
     </message>
 </context>
@@ -832,6 +834,29 @@ Address: %2</source>
     </message>
 </context>
 <context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>需要验证</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>这个连接不可信。需要继续吗？</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>不可信的SSL连接</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>用户名</translation>
+    </message>
+</context>
+<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -859,14 +884,14 @@ Address: %2</source>
         <translation>&lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
-&lt;title&gt;问题加载页面&lt;/title&gt;
+&lt;title&gt;加载页面问题&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;服务器未找到&lt;/h1&gt;
-&lt;p&gt;在$服务器上无法找到服务器. 请重试&lt;/p&gt;
+&lt;p&gt;在$服务器上无法找到服务器。请重试&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
-&lt;li&gt;请检查地址输入的错误，不是 &lt;b&gt;ww.example.com&lt;/b&gt; 应该是 &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;请检查地址输入的错误，例如：不是 &lt;b&gt;ww.example.com&lt;/b&gt;应该是 &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
 &lt;li&gt;如果无法加载页面，请检查网络连接。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/body&gt;
@@ -891,7 +916,7 @@ Address: %2</source>
         <translation>点击此按钮</translation>
     </message>
     <message>
-        <source>Click the crosshair</source>
+        <source>Click the cross</source>
         <translation>按一下十字</translation>
     </message>
     <message>
@@ -968,7 +993,7 @@ Address: %2</source>
     <name>ConfirmationBar</name>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Save scenario recording?</source>
@@ -979,7 +1004,7 @@ Address: %2</source>
     <name>ControlAlarmClock</name>
     <message>
         <source>beep</source>
-        <translation>嘟嘟声</translation>
+        <translation>蜂鸣音</translation>
     </message>
     <message>
         <source>DELETE</source>
@@ -991,7 +1016,17 @@ Address: %2</source>
     </message>
     <message>
         <source>enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
+    </message>
+    <message>
+        <source>F</source>
+        <comment>Friday</comment>
+        <translation>周五</translation>
+    </message>
+    <message>
+        <source>M</source>
+        <comment>Monday</comment>
+        <translation>周一</translation>
     </message>
     <message>
         <source>repetition</source>
@@ -1002,47 +1037,37 @@ Address: %2</source>
         <translation>铃音</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
-        <translation>声音系统</translation>
-    </message>
-    <message>
-        <source>triggers at</source>
-        <translation>触发器在</translation>
-    </message>
-    <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>周一</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
-        <translation>周二</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <comment>Wednesday</comment>
-        <translation>周三</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>周四</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>周五</translation>
-    </message>
-    <message>
         <source>S</source>
         <comment>Saturday</comment>
-        <translation>周六</translation>
+        <translation>周日</translation>
+    </message>
+    <message>
+        <source>Sound system</source>
+        <translation>播音</translation>
     </message>
     <message>
         <source>S</source>
         <comment>Sunday</comment>
         <translation>周日</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Thursday</comment>
+        <translation>周二</translation>
+    </message>
+    <message>
+        <source>triggers at</source>
+        <translation>触发</translation>
+    </message>
+    <message>
+        <source>T</source>
+        <comment>Tuesday</comment>
+        <translation>周四</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Wednesday</comment>
+        <translation>周三</translation>
     </message>
 </context>
 <context>
@@ -1081,11 +1106,11 @@ Address: %2</source>
     <name>ControlOnOff</name>
     <message>
         <source>OFF</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>ON</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1113,7 +1138,7 @@ Address: %2</source>
         <translation>亮度</translation>
     </message>
     <message>
-        <source>Color</source>
+        <source>Colour</source>
         <translation>颜色</translation>
     </message>
     <message>
@@ -1158,14 +1183,14 @@ Address: %2</source>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
 </context>
 <context>
     <name>ControlTextCommand</name>
     <message>
         <source>ON</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -1203,7 +1228,7 @@ Address: %2</source>
     </message>
     <message>
         <source>enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>timer</source>
@@ -1247,7 +1272,7 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -1323,7 +1348,7 @@ Address: %2</source>
     <name>EnergyDataGraph</name>
     <message>
         <source>day</source>
-        <translation>天</translation>
+        <translation>日</translation>
     </message>
     <message>
         <source>day cumulative consumption</source>
@@ -1362,7 +1387,7 @@ Address: %2</source>
     <name>EnergyDateSelector</name>
     <message>
         <source>day</source>
-        <translation>天</translation>
+        <translation>日</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
@@ -1370,7 +1395,7 @@ Address: %2</source>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>月/年</translation>
+        <translation>MM/yyyy</translation>
     </message>
     <message>
         <source>month</source>
@@ -1382,7 +1407,7 @@ Address: %2</source>
     </message>
     <message>
         <source>yyyy</source>
-        <translation>年</translation>
+        <translation>yyyy</translation>
     </message>
 </context>
 <context>
@@ -1452,7 +1477,7 @@ Address: %2</source>
         <translation>燃气</translation>
     </message>
     <message>
-        <source>GroundFail</source>
+        <source>Ground Fault</source>
         <translation>接地故障</translation>
     </message>
     <message>
@@ -1460,19 +1485,19 @@ Address: %2</source>
         <translation>取暖</translation>
     </message>
     <message>
-        <source>HotWater</source>
+        <source>Hot Water</source>
         <translation>热水</translation>
     </message>
     <message>
-        <source>Opened</source>
+        <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <source>Overtension</source>
+        <source>Overvoltage</source>
         <translation>电压过高</translation>
     </message>
     <message>
-        <source>ShortCircuit</source>
+        <source>Short Circuit</source>
         <translation>短路</translation>
     </message>
     <message>
@@ -1495,15 +1520,15 @@ Address: %2</source>
         <translation>负荷管理</translation>
     </message>
     <message>
-        <source>systems supervision</source>
-        <translation>系统监督</translation>
+        <source>System supervision</source>
+        <translation>系统管理</translation>
     </message>
 </context>
 <context>
     <name>EnergyMonthGraph</name>
     <message>
         <source>day</source>
-        <translation>天</translation>
+        <translation>日</translation>
     </message>
     <message>
         <source>dd/MM/yyyy</source>
@@ -1511,7 +1536,7 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>select a date</source>
@@ -1522,7 +1547,7 @@ Address: %2</source>
     <name>EnergyMonthTable</name>
     <message>
         <source>day</source>
-        <translation>天</translation>
+        <translation>日</translation>
     </message>
 </context>
 <context>
@@ -1540,22 +1565,22 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>EnergyYearTable</name>
     <message>
         <source>delta</source>
-        <translation>差異</translation>
+        <translation>差异</translation>
+    </message>
+    <message>
+        <source>Goal</source>
+        <translation>目标</translation>
     </message>
     <message>
         <source>month</source>
         <translation>月</translation>
-    </message>
-    <message>
-        <source>objective</source>
-        <translation>目標</translation>
     </message>
 </context>
 <context>
@@ -1612,10 +1637,6 @@ Address: %2</source>
         <translation>天气</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>网络摄像头</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>网页</translation>
     </message>
@@ -1623,12 +1644,23 @@ Address: %2</source>
         <source>web radio</source>
         <translation>网络广播</translation>
     </message>
+    <message>
+        <source>Webcam</source>
+        <translation>网络摄像头</translation>
+    </message>
 </context>
 <context>
     <name>FeedbackPopup</name>
     <message>
         <source>programming impossible</source>
         <translation>无法编程</translation>
+    </message>
+</context>
+<context>
+    <name>Floor</name>
+    <message>
+        <source>New Name:</source>
+        <translation>新名称：</translation>
     </message>
 </context>
 <context>
@@ -1642,7 +1674,7 @@ Address: %2</source>
         <translation>强制</translation>
     </message>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>强制负荷</translation>
     </message>
     <message>
@@ -1661,19 +1693,19 @@ Address: %2</source>
     <name>GlobalViewTable</name>
     <message>
         <source>consumption</source>
-        <translation>消耗</translation>
+        <translation>能耗</translation>
     </message>
     <message>
         <source>delta</source>
-        <translation>差異</translation>
+        <translation>差异</translation>
+    </message>
+    <message>
+        <source>Goal</source>
+        <translation>目标</translation>
     </message>
     <message>
         <source>line</source>
         <translation>线条</translation>
-    </message>
-    <message>
-        <source>objective</source>
-        <translation>目標</translation>
     </message>
 </context>
 <context>
@@ -1688,7 +1720,7 @@ Address: %2</source>
     </message>
     <message>
         <source>rooms</source>
-        <translation>场所</translation>
+        <translation>环境</translation>
     </message>
     <message>
         <source>settings</source>
@@ -1767,8 +1799,8 @@ Address: %2</source>
         <translation>危险</translation>
     </message>
     <message>
-        <source>Load detached</source>
-        <translation>载荷分离</translation>
+        <source>Load disconnected</source>
+        <translation>负荷断开</translation>
     </message>
     <message>
         <source>No amplifier set</source>
@@ -1800,7 +1832,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Open - Over Current</source>
-        <translation>打开 – 电流过高</translation>
+        <translation>打开 – 电压过高</translation>
     </message>
     <message>
         <source>Open - Short Circuit</source>
@@ -1864,12 +1896,12 @@ Address: %2</source>
         <translation>网络浏览器</translation>
     </message>
     <message>
-        <source>web cam</source>
-        <translation>摄像头</translation>
+        <source>Web links</source>
+        <translation>网络链接</translation>
     </message>
     <message>
-        <source>web link</source>
-        <translation>网络链接</translation>
+        <source>Webcam</source>
+        <translation>网络摄像头</translation>
     </message>
 </context>
 <context>
@@ -1880,7 +1912,7 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Save configuration changes?</source>
@@ -1918,6 +1950,85 @@ Address: %2</source>
     <message>
         <source>%1 seconds</source>
         <translation>%1秒</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>启动</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>闹钟</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>防盗</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>可用</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>指令已发送</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>能耗管理</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>能耗月报表</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>信息</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>月达成目标</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>更多信息</translation>
+    </message>
+    <message>
+        <source>new message(s)</source>
+        <translation>新的信息</translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>推迟</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>读取</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>场景</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>停止</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>监督</translation>
     </message>
 </context>
 <context>
@@ -1970,7 +2081,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Rock</source>
-        <translation>摇滚</translation>
+        <translation>摇滚乐</translation>
     </message>
     <message>
         <source>Soft</source>
@@ -1978,7 +2089,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Techno</source>
-        <translation>Techno音乐</translation>
+        <translation>电子音乐</translation>
     </message>
 </context>
 <context>
@@ -2017,12 +2128,34 @@ Address: %2</source>
         <source>Change card image</source>
         <translation>更换卡片</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>确认操作</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
         <source>rooms</source>
-        <translation>场所</translation>
+        <translation>环境</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsItems</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>确认操作</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>新名称：</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>确认删除</translation>
     </message>
 </context>
 <context>
@@ -2047,15 +2180,19 @@ Address: %2</source>
     <name>ScenarioModuleSettings</name>
     <message>
         <source>Are you sure to reset the scenario?</source>
-        <translation>确定要重设场景吗？</translation>
+        <translation>确定要恢复场景吗？</translation>
     </message>
     <message>
         <source>cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>如果没有重设场景，则需要添加场景动作。按OK键开始场景编程，按CANCEL键取消操作。</translation>
+        <source>Delete scenario</source>
+        <translation>删除场景</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <translation>如果没有删除场景，将添加动作到之前存在的场景。按Ok键开始场景编程，按取消键取消操作。</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2064,10 +2201,6 @@ Address: %2</source>
     <message>
         <source>programming impossible</source>
         <translation>无法编程</translation>
-    </message>
-    <message>
-        <source>reset program</source>
-        <translation>重设程序</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
@@ -2119,7 +2252,7 @@ Address: %2</source>
     </message>
     <message>
         <source>OK</source>
-        <translation>可以</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -2146,7 +2279,7 @@ Address: %2</source>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>Insert new home page</source>
@@ -2166,8 +2299,8 @@ Continue?</source>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <source>Add Clock</source>
-        <translation>添加时钟</translation>
+        <source>Add Alarm clock</source>
+        <translation>添加闹钟</translation>
     </message>
 </context>
 <context>
@@ -2289,7 +2422,7 @@ Continue?</source>
     </message>
     <message>
         <source>enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>threshold 1</source>
@@ -2323,14 +2456,14 @@ Continue?</source>
     </message>
     <message>
         <source>enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
 </context>
 <context>
     <name>SettingsGenerals</name>
     <message>
         <source>Beep</source>
-        <translation>嘟嘟声</translation>
+        <translation>蜂鸣音</translation>
     </message>
     <message>
         <source>Connected</source>
@@ -2354,7 +2487,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>Info</source>
@@ -2392,16 +2525,16 @@ Continue?</source>
         <translation>要恢复背景为默认值吗？</translation>
     </message>
     <message>
+        <source>Home page skin</source>
+        <translation>主页主题</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>快捷链接</translation>
     </message>
     <message>
         <source>Restore background image</source>
         <translation>恢复背景图像</translation>
-    </message>
-    <message>
-        <source>skin home</source>
-        <translation>主页皮肤</translation>
     </message>
 </context>
 <context>
@@ -2484,7 +2617,7 @@ Continue?</source>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>特性</translation>
+        <translation>简介</translation>
     </message>
     <message>
         <source>Ringtones</source>
@@ -2492,7 +2625,7 @@ Continue?</source>
     </message>
     <message>
         <source>Rooms</source>
-        <translation>场所</translation>
+        <translation>环境</translation>
     </message>
 </context>
 <context>
@@ -2546,7 +2679,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>English</source>
@@ -2579,7 +2712,7 @@ Continue?</source>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
 Continue?</source>
-        <translation>按ok键将使设备在几分钟内重启。
+        <translation>按ok键将使设备立即重启。
 继续吗？</translation>
     </message>
     <message>
@@ -2638,7 +2771,7 @@ Continue?</source>
         <translation>MAC地址</translation>
     </message>
     <message>
-        <source>network state</source>
+        <source>Network status</source>
         <translation>网络状态</translation>
     </message>
     <message>
@@ -2664,6 +2797,25 @@ Continue?</source>
     <message>
         <source>Unknown</source>
         <translation>未知</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsObjectLink</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>确认删除</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>清除</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>新名称：</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>重命名</translation>
     </message>
 </context>
 <context>
@@ -2713,6 +2865,17 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>SettingsProfiles</name>
+    <message>
+        <source>Add Profile</source>
+        <translation>添加特性</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>新名称：</translation>
+    </message>
+</context>
+<context>
     <name>SettingsRingtone</name>
     <message>
         <source>Ringtones</source>
@@ -2732,7 +2895,7 @@ Continue?</source>
         <source>Pressing ok will cause a device reboot in a few moments.
 Please, do not use the touch till it is restarted.
 Continue?</source>
-        <translation>按ok键将使设备在几分钟内重启。
+        <translation>按ok键将使设备立即重启。
 请不要使用触摸键，直到设备重新启动。
 继续吗？</translation>
     </message>
@@ -2749,14 +2912,14 @@ Continue?</source>
     </message>
     <message>
         <source>Video Door Entry</source>
-        <translation>视频入门系统</translation>
+        <translation>可视对讲系统</translation>
     </message>
 </context>
 <context>
     <name>SettingsTeleloop</name>
     <message>
         <source>Associate</source>
-        <translation>结合</translation>
+        <translation>关联</translation>
     </message>
     <message>
         <source>Associated</source>
@@ -2764,7 +2927,7 @@ Continue?</source>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>未结合</translation>
+        <translation>未关联</translation>
     </message>
 </context>
 <context>
@@ -2772,10 +2935,6 @@ Continue?</source>
     <message>
         <source>Associated</source>
         <translation>关联</translation>
-    </message>
-    <message>
-        <source>auto open</source>
-        <translation>自动打开</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2791,7 +2950,11 @@ Continue?</source>
     </message>
     <message>
         <source>Not associated</source>
-        <translation>未结合</translation>
+        <translation>未关联</translation>
+    </message>
+    <message>
+        <source>Professional studio</source>
+        <translation>专业工作室</translation>
     </message>
     <message>
         <source>Ringtone exclusion</source>
@@ -2805,7 +2968,7 @@ Continue?</source>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <source>External unit associated</source>
+        <source>Associated entrance panel</source>
         <translation>关联的室外单元</translation>
     </message>
     <message>
@@ -2851,7 +3014,7 @@ Continue?</source>
     <name>SoundDiffusion</name>
     <message>
         <source>Sound System</source>
-        <translation>声音系统</translation>
+        <translation>播音</translation>
     </message>
 </context>
 <context>
@@ -2877,7 +3040,7 @@ Continue?</source>
         <translation>声源</translation>
     </message>
     <message>
-        <source>source change</source>
+        <source>Source changed</source>
         <translation>更换声源</translation>
     </message>
 </context>
@@ -2885,14 +3048,14 @@ Continue?</source>
     <name>SplitBasicOffProgram</name>
     <message>
         <source>off</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
 </context>
 <context>
     <name>Staircase</name>
     <message>
         <source>ON</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
 </context>
 <context>
@@ -2902,7 +3065,7 @@ Continue?</source>
         <translation>%1天</translation>
     </message>
     <message>
-        <source>Automatic Reclosing</source>
+        <source>Auto close</source>
         <translation>自动重合闸</translation>
     </message>
     <message>
@@ -2917,14 +3080,14 @@ Continue?</source>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic Reclosing</source>
+        <source>Auto close</source>
         <translation>自动重合闸</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic Reclosing</source>
+        <source>Auto close</source>
         <translation>自动重合闸</translation>
     </message>
     <message>
@@ -2941,7 +3104,7 @@ Continue?</source>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>启动的</translation>
+        <translation>已启用</translation>
     </message>
     <message>
         <source>open</source>
@@ -2969,8 +3132,8 @@ Continue?</source>
         <translation>取消</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>如果没有重设场景，则需要添加场景动作。按OK键开始场景编程，按CANCEL键取消操作。</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>如果没有删除场景，将添加动作到之前存在的场景。按Ok键开始场景编程，按取消键取消操作。</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2979,6 +3142,21 @@ Continue?</source>
     <message>
         <source>Scenario configuration</source>
         <translation>场景配置</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>盘管风机速度</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>模式</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>温度设置</translation>
     </message>
 </context>
 <context>
@@ -3013,7 +3191,7 @@ Continue?</source>
     </message>
     <message>
         <source>Off</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>Scenarios</source>
@@ -3028,14 +3206,6 @@ Continue?</source>
         <translation>温度设置</translation>
     </message>
     <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>有未保存的修改正在进行中。
-如果选择ok键将丢失修改。
-继续吗？</translation>
-    </message>
-    <message>
         <source>Timed Manual</source>
         <translation>定时手动</translation>
     </message>
@@ -3046,29 +3216,6 @@ Continue?</source>
     <message>
         <source>Weekly</source>
         <translation>每周</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>盘管风机速度</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>模式</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>温度设置</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>有未保存的修改正在进行中。
-如果选择ok键将丢失修改。
-继续吗？</translation>
     </message>
 </context>
 <context>
@@ -3087,10 +3234,10 @@ Continue?</source>
     </message>
     <message>
         <source>Cooling</source>
-        <translation>降温</translation>
+        <translation>制冷</translation>
     </message>
     <message>
-        <source>Dry</source>
+        <source>Dehumidifier</source>
         <translation>去湿</translation>
     </message>
     <message>
@@ -3099,7 +3246,7 @@ Continue?</source>
     </message>
     <message>
         <source>Heating</source>
-        <translation>暖气</translation>
+        <translation>取暖</translation>
     </message>
     <message>
         <source>High</source>
@@ -3135,15 +3282,15 @@ Continue?</source>
     </message>
     <message>
         <source>off</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>关闭</translation>
+        <translation>OFF</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>开启</translation>
+        <translation>ON</translation>
     </message>
     <message>
         <source>scenario</source>
@@ -3162,12 +3309,12 @@ Continue?</source>
         <translation>定时手动</translation>
     </message>
     <message>
-        <source>weekday</source>
+        <source>Weekdays</source>
         <translation>平日</translation>
     </message>
     <message>
         <source>weekly programs</source>
-        <translation>每周程序</translation>
+        <translation>周程序</translation>
     </message>
     <message>
         <source>winter</source>
@@ -3192,7 +3339,7 @@ Continue?</source>
         <translation>外部探测器</translation>
     </message>
     <message>
-        <source>Not Controlled Probes</source>
+        <source>Non-Controlled Probes</source>
         <translation>未受控的探测器</translation>
     </message>
 </context>
@@ -3215,7 +3362,7 @@ Continue?</source>
     <name>VideoDoorEntry</name>
     <message>
         <source>video door entry</source>
-        <translation>视频入门系统</translation>
+        <translation>可视对讲系统</translation>
     </message>
 </context>
 <context>
@@ -3252,110 +3399,6 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>静音</translation>
-    </message>
-</context>
-<context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>需要验证</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密码</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>这个连接不可信。需要继续吗？</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>不可信的SSL连接</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>用户名</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>启动</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>闹钟</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>防盗</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>可用</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>指令已发送</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>能耗管理</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>能耗月报表</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>忽略</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>信息</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>月达成目标</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>更多信息</translation>
-    </message>
-    <message numerus="yes">
-        <source>new message(s)</source>
-        <translation>
-            <numerusform>新的信息</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>推迟</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>读取</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>场景</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>显示</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>停止</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>监督</translation>
     </message>
 </context>
 </TS>

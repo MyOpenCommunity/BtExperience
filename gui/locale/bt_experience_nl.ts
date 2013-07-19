@@ -96,10 +96,6 @@
         <translation>Omlaag</translation>
     </message>
     <message>
-        <source>Extended pressure button</source>
-        <translation>De knop lang indrukken</translation>
-    </message>
-    <message>
         <source>Heating Program</source>
         <translation>Programma Verwarming</translation>
     </message>
@@ -148,7 +144,11 @@
         <translation>Openen</translation>
     </message>
     <message>
-        <source>Release after extended pressure button</source>
+        <source>Pushbutton extended pressure</source>
+        <translation>De knop lang indrukken</translation>
+    </message>
+    <message>
+        <source>Release pushbutton after extended pressure</source>
         <translation>De knop lang indrukken en loslaten</translation>
     </message>
     <message>
@@ -168,7 +168,7 @@
         <translation>Stel modaliteit conditionering in</translation>
     </message>
     <message>
-        <source>Set the fan-coil speed</source>
+        <source>Set the fancoil speed</source>
         <translation>Stel snelheid ventilator in</translation>
     </message>
     <message>
@@ -176,11 +176,11 @@
         <translation>Stel modaliteit verwarming in</translation>
     </message>
     <message>
-        <source>Short pressure button</source>
+        <source>Short pressure of the pushbutton</source>
         <translation>De knop kort indrukken</translation>
     </message>
     <message>
-        <source>Start pressure button</source>
+        <source>Start pressure of the pushbutton</source>
         <translation>Aanvangen met knop indrukken</translation>
     </message>
     <message>
@@ -223,16 +223,16 @@
         <translation>Nieuwe weerbericht link toevoegen:</translation>
     </message>
     <message>
-        <source>Add new web camera:</source>
-        <translation>Nieuwe webcamera toevoegen:</translation>
-    </message>
-    <message>
         <source>Add new web page link:</source>
         <translation>Nieuwe webpagina link toevoegen:</translation>
     </message>
     <message>
         <source>Add new web radio:</source>
         <translation>Nieuwe webradio toevoegen:</translation>
+    </message>
+    <message>
+        <source>Add new webcam:</source>
+        <translation>Nieuwe webcamera toevoegen:</translation>
     </message>
     <message>
         <source>Add quicklink</source>
@@ -263,12 +263,8 @@
         <translation>Wissen bevestigen</translation>
     </message>
     <message>
-        <source>Do you want to remove the selected quicklink?
-Name: %1
-Address: %2</source>
-        <translation>De gekozen quicklink verwijderen?
-Naam: %1
-Adres: %2</translation>
+        <source>Do you want to remove the selected quicklink?\nName: %1\nAddress: %2</source>
+        <translation>De gekozen quicklink verwijderen?n\Naam: %1/nAdres: %2</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
@@ -280,7 +276,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation>Multi media</translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>OK</source>
@@ -319,16 +315,16 @@ Adres: %2</translation>
         <translation>Bestaand weerbericht link selecteren:</translation>
     </message>
     <message>
-        <source>Select existing web camera:</source>
-        <translation>Bestaande webcamera selecteren:</translation>
-    </message>
-    <message>
         <source>Select existing web page link:</source>
         <translation>Bestaand webpagina link selecteren:</translation>
     </message>
     <message>
         <source>Select existing web radio:</source>
         <translation>Bestaande webradio selecteren:</translation>
+    </message>
+    <message>
+        <source>Select existing webcam:</source>
+        <translation>Bestaande webcamera selecteren:</translation>
     </message>
     <message>
         <source>Title:</source>
@@ -343,16 +339,16 @@ Adres: %2</translation>
         <translation>Meteo</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Webcamera</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Webpagina</translation>
     </message>
     <message>
         <source>web radio</source>
         <translation>Web radio</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -370,7 +366,7 @@ Adres: %2</translation>
     <name>AdvancedScenarioAction</name>
     <message>
         <source>action</source>
-        <translation>Daad</translation>
+        <translation>Actie</translation>
     </message>
 </context>
 <context>
@@ -384,28 +380,23 @@ Adres: %2</translation>
         <translation>Dagen</translation>
     </message>
     <message>
-        <source>F</source>
-        <comment>Friday</comment>
+        <source>Friday</source>
         <translation>V</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
+        <source>Monday</source>
         <translation>M</translation>
     </message>
     <message>
-        <source>S</source>
-        <comment>Saturday</comment>
+        <source>Saturday</source>
         <translation>S</translation>
     </message>
     <message>
-        <source>S</source>
-        <comment>Sunday</comment>
+        <source>Sunday</source>
         <translation>Z</translation>
     </message>
     <message>
-        <source>T</source>
-        <comment>Thursday</comment>
+        <source>Thursday</source>
         <translation>D</translation>
     </message>
     <message>
@@ -413,14 +404,12 @@ Adres: %2</translation>
         <translation>Uur</translation>
     </message>
     <message>
-        <source>W</source>
-        <comment>Wednesday</comment>
-        <translation>W</translation>
+        <source>Tuesday</source>
+        <translation>D</translation>
     </message>
     <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
-        <translation>D</translation>
+        <source>Wednesday</source>
+        <translation>W</translation>
     </message>
 </context>
 <context>
@@ -461,8 +450,8 @@ Adres: %2</translation>
         <translation>Fancoil</translation>
     </message>
     <message>
-        <source>modality</source>
-        <translation>Modus</translation>
+        <source>Mode</source>
+        <translation>Modaliteit</translation>
     </message>
     <message>
         <source>program</source>
@@ -515,8 +504,16 @@ Adres: %2</translation>
         <translation>Beschrijving</translation>
     </message>
     <message>
-        <source>Edit alarm name</source>
+        <source>Edit alarm clock name</source>
         <translation>Naam alarm invoeren</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation>M</translation>
     </message>
     <message>
         <source>New name:</source>
@@ -535,47 +532,32 @@ Adres: %2</translation>
         <translation>Slechts eenmaal</translation>
     </message>
     <message>
+        <source>Saturday</source>
+        <translation>Z</translation>
+    </message>
+    <message>
         <source>Save changes?</source>
         <translation>Wijzigingen opslaan?</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>S</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>D</translation>
     </message>
     <message>
         <source>time</source>
         <translation>TIjdstip:</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>M</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
+        <source>Tuesday</source>
         <translation>D</translation>
     </message>
     <message>
-        <source>W</source>
-        <comment>Wednesday</comment>
+        <source>wednesday</source>
         <translation>W</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>D</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>V</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>Z</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>Z</translation>
     </message>
 </context>
 <context>
@@ -590,7 +572,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>beep</source>
-        <translation>Beep</translation>
+        <translation>Pieptoon</translation>
     </message>
     <message>
         <source>CANCEL</source>
@@ -625,7 +607,7 @@ Adres: %2</translation>
         <translation>Signaal:</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
+        <source>Sound system</source>
         <translation>Geluidsdiffusie</translation>
     </message>
     <message>
@@ -739,7 +721,7 @@ Adres: %2</translation>
     <name>AntintrusionSystem</name>
     <message>
         <source>alarm log</source>
-        <translation>Alarm Log</translation>
+        <translation>Alarm Log             </translation>
     </message>
     <message>
         <source>disable system</source>
@@ -793,7 +775,7 @@ Adres: %2</translation>
 <context>
     <name>Appliance</name>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Lading forceren</translation>
     </message>
 </context>
@@ -830,49 +812,44 @@ Adres: %2</translation>
     <name>Brightness</name>
     <message>
         <source>brightness</source>
-        <translation>Lichtsterkte</translation>
+        <translation>Helderheid</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authenticatie verplicht</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>De verbinding is niet veilig. U wilt doorgaan?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Onveilige SSL-verbinding</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Gebruikersnaam</translation>
     </message>
 </context>
 <context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
-        <translation>Multi media</translation>
+        <translation>Multimedia</translation>
     </message>
 </context>
 <context>
     <name>BtNetworkReply</name>
     <message>
-        <source>&lt;html&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
-&lt;title&gt;Problem loading page&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
-&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
-&lt;li&gt;If you are unable to load any pages, check the network connection.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/body&gt;
-&lt;/html&gt;</source>
-        <translation>&lt;html&gt;
-&lt;head&gt;
-&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
-&lt;title&gt;Probleem tijdens laden pagina&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h1&gt;Server niet gevonden&lt;/h1&gt;
-&lt;p&gt;Kan de server niet vinden op $SERVER. Probeer het nogmaals&lt;/p&gt;
-&lt;hr&gt;
-&lt;ul&gt;
-&lt;li&gt;Controleer het adres op schrijffouten zoals &lt;b&gt;ww.example.com&lt;/b&gt; in plaats van &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
-&lt;li&gt;Controleer de aansluiting van het netwerk als u geen enkele pagina kunt laden.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/body&gt;
-&lt;/html&gt;</translation>
+        <source>Problem loading page\nServer not found\nCan&apos;t find the server in $SERVER. Please try again\nCheck the address for typing errors such as ww.example.com instead of www.example.com\nIf yo</source>
+        <translation>Probleem tijdens laden pagina\nServer niet gevonden\nKan de server niet vinden op $SERVER. Probeer het nogmaals\nControleer het adres op schrijffouten zoals ww.example.com in plaats van www.example.com\nControleer de aansluiting van het netwerk als u geen enkele pagina kunt laden.</translation>
     </message>
 </context>
 <context>
@@ -893,7 +870,7 @@ Adres: %2</translation>
         <translation>De knop aanklikken</translation>
     </message>
     <message>
-        <source>Click the crosshair</source>
+        <source>Click the cross</source>
         <translation>Klik op het kruisje</translation>
     </message>
     <message>
@@ -981,7 +958,7 @@ Adres: %2</translation>
     <name>ControlAlarmClock</name>
     <message>
         <source>beep</source>
-        <translation>Beep</translation>
+        <translation>Pieptoon</translation>
     </message>
     <message>
         <source>DELETE</source>
@@ -996,6 +973,14 @@ Adres: %2</translation>
         <translation>Geactiveerd</translation>
     </message>
     <message>
+        <source>Friday</source>
+        <translation>V</translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation>M</translation>
+    </message>
+    <message>
         <source>repetition</source>
         <translation>Herhaling</translation>
     </message>
@@ -1004,47 +989,32 @@ Adres: %2</translation>
         <translation>Beltoon</translation>
     </message>
     <message>
-        <source>sound diffusion</source>
+        <source>Saturday</source>
+        <translation>Z</translation>
+    </message>
+    <message>
+        <source>Sound system</source>
         <translation>Geluidsdiffusie</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Z</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>D</translation>
     </message>
     <message>
         <source>triggers at</source>
         <translation>Wordt gestart bij</translation>
     </message>
     <message>
-        <source>M</source>
-        <comment>Monday</comment>
-        <translation>M</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Tuesday</comment>
+        <source>Tuesday</source>
         <translation>D</translation>
     </message>
     <message>
-        <source>W</source>
-        <comment>Wednesday</comment>
+        <source>Wednesday</source>
         <translation>W</translation>
-    </message>
-    <message>
-        <source>T</source>
-        <comment>Thursday</comment>
-        <translation>D</translation>
-    </message>
-    <message>
-        <source>F</source>
-        <comment>Friday</comment>
-        <translation>V</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Saturday</comment>
-        <translation>Z</translation>
-    </message>
-    <message>
-        <source>S</source>
-        <comment>Sunday</comment>
-        <translation>Z</translation>
     </message>
 </context>
 <context>
@@ -1076,7 +1046,7 @@ Adres: %2</translation>
     <name>ControlIPRadio</name>
     <message>
         <source>IP radio</source>
-        <translation>Radio IP</translation>
+        <translation>IP-radio</translation>
     </message>
 </context>
 <context>
@@ -1112,10 +1082,10 @@ Adres: %2</translation>
     <name>ControlPullDownVideo</name>
     <message>
         <source>Brightness</source>
-        <translation>Lichtsterkte</translation>
+        <translation>Helderheid</translation>
     </message>
     <message>
-        <source>Color</source>
+        <source>Colour</source>
         <translation>Kleur</translation>
     </message>
     <message>
@@ -1311,7 +1281,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>instant consumption</source>
-        <translation>Verbruik momen</translation>
+        <translation>Actueel verbruik</translation>
     </message>
 </context>
 <context>
@@ -1337,7 +1307,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>instant consumption</source>
-        <translation>Verbruik momen</translation>
+        <translation>Actueel verbruik</translation>
     </message>
     <message>
         <source>month</source>
@@ -1372,7 +1342,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>MM/yyyy</source>
-        <translation>MM/jjjj</translation>
+        <translation>MM/yyyy</translation>
     </message>
     <message>
         <source>month</source>
@@ -1384,7 +1354,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>yyyy</source>
-        <translation>jjjj</translation>
+        <translation>yyyy</translation>
     </message>
 </context>
 <context>
@@ -1454,7 +1424,7 @@ Adres: %2</translation>
         <translation>Gas</translation>
     </message>
     <message>
-        <source>GroundFail</source>
+        <source>Ground Fault</source>
         <translation>StoringAarde</translation>
     </message>
     <message>
@@ -1462,19 +1432,19 @@ Adres: %2</translation>
         <translation>Verwarming</translation>
     </message>
     <message>
-        <source>HotWater</source>
-        <translation>WarmWater</translation>
+        <source>Hot Water</source>
+        <translation>Warm Water</translation>
     </message>
     <message>
-        <source>Opened</source>
-        <translation>Geopend</translation>
+        <source>Open</source>
+        <translation>Openen</translation>
     </message>
     <message>
-        <source>Overtension</source>
+        <source>Overvoltage</source>
         <translation>Overspanning</translation>
     </message>
     <message>
-        <source>ShortCircuit</source>
+        <source>Short Circuit</source>
         <translation>Kortsluiting</translation>
     </message>
     <message>
@@ -1497,8 +1467,8 @@ Adres: %2</translation>
         <translation>Lading Management</translation>
     </message>
     <message>
-        <source>systems supervision</source>
-        <translation>Nazicht installatie</translation>
+        <source>System supervision</source>
+        <translation>Systeemtoezicht</translation>
     </message>
 </context>
 <context>
@@ -1552,12 +1522,12 @@ Adres: %2</translation>
         <translation>delta</translation>
     </message>
     <message>
-        <source>month</source>
-        <translation>Maand</translation>
+        <source>Goal</source>
+        <translation>doel</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>objectief</translation>
+        <source>month</source>
+        <translation>Maand</translation>
     </message>
 </context>
 <context>
@@ -1614,16 +1584,16 @@ Adres: %2</translation>
         <translation>Meteo</translation>
     </message>
     <message>
-        <source>web camera</source>
-        <translation>Webcamera</translation>
-    </message>
-    <message>
         <source>web page</source>
         <translation>Webpagina</translation>
     </message>
     <message>
         <source>web radio</source>
         <translation>Web radio</translation>
+    </message>
+    <message>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -1634,6 +1604,13 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
+    <name>Floor</name>
+    <message>
+        <source>New Name:</source>
+        <translation>Nieuwe naam:</translation>
+    </message>
+</context>
+<context>
     <name>ForceDurationPopup</name>
     <message>
         <source>cancel</source>
@@ -1641,10 +1618,10 @@ Adres: %2</translation>
     </message>
     <message>
         <source>force</source>
-        <translation>Kracht</translation>
+        <translation>Forceren</translation>
     </message>
     <message>
-        <source>Force load</source>
+        <source>Force the load</source>
         <translation>Lading forceren</translation>
     </message>
     <message>
@@ -1670,12 +1647,12 @@ Adres: %2</translation>
         <translation>delta</translation>
     </message>
     <message>
-        <source>line</source>
-        <translation>Lijn</translation>
+        <source>Goal</source>
+        <translation>doel</translation>
     </message>
     <message>
-        <source>objective</source>
-        <translation>objectief</translation>
+        <source>line</source>
+        <translation>Lijn</translation>
     </message>
 </context>
 <context>
@@ -1686,7 +1663,7 @@ Adres: %2</translation>
     </message>
     <message>
         <source>multimedia</source>
-        <translation>Multi media</translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>rooms</source>
@@ -1701,7 +1678,7 @@ Adres: %2</translation>
     <name>InstantConsumption</name>
     <message>
         <source>Instant consumption</source>
-        <translation>Verbruik momen</translation>
+        <translation>Actueel verbruik</translation>
     </message>
 </context>
 <context>
@@ -1769,7 +1746,7 @@ Adres: %2</translation>
         <translation>Gevaarlijk</translation>
     </message>
     <message>
-        <source>Load detached</source>
+        <source>Load disconnected</source>
         <translation>Lading losgekoppeld</translation>
     </message>
     <message>
@@ -1825,7 +1802,7 @@ Adres: %2</translation>
     <name>Messages</name>
     <message>
         <source>messages</source>
-        <translation>Bericht</translation>
+        <translation>Berichten</translation>
     </message>
 </context>
 <context>
@@ -1847,11 +1824,11 @@ Adres: %2</translation>
     </message>
     <message>
         <source>ip radio</source>
-        <translation>Radio IP</translation>
+        <translation>IP-radio</translation>
     </message>
     <message>
         <source>multimedia</source>
-        <translation>Multi media</translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>rss</source>
@@ -1866,12 +1843,12 @@ Adres: %2</translation>
         <translation>Webbrowser</translation>
     </message>
     <message>
-        <source>web cam</source>
-        <translation>Web Cam</translation>
+        <source>Web links</source>
+        <translation>Weblink</translation>
     </message>
     <message>
-        <source>web link</source>
-        <translation>Weblink</translation>
+        <source>Webcam</source>
+        <translation>Webcam</translation>
     </message>
 </context>
 <context>
@@ -1920,6 +1897,85 @@ Adres: %2</translation>
     <message>
         <source>%1 seconds</source>
         <translation>%1 seconden</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Actief</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>WEKKER</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>INBRAAKALARM</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Beschikbaar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Commando verzonden</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERGIEBEHEER</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Maandelijks Energierapport</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Negeren</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MELDINGEN</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Maandelijks doel bereikt</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Meer informatie</translation>
+    </message>
+    <message>
+        <source>new message(s)</source>
+        <translation>nieuw(e) bericht(en)</translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Uitstellen</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Lezen</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SCENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Tonen</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Nazicht</translation>
     </message>
 </context>
 <context>
@@ -1998,14 +2054,14 @@ Adres: %2</translation>
     <name>QObject</name>
     <message>
         <source>IP radio</source>
-        <translation>Radio IP</translation>
+        <translation>IP-radio</translation>
     </message>
 </context>
 <context>
     <name>RoomModify</name>
     <message>
         <source>Background image</source>
-        <translation>Beeld achtergrond</translation>
+        <translation>Achtergrondbeeld</translation>
     </message>
     <message>
         <source>Card image</source>
@@ -2019,12 +2075,34 @@ Adres: %2</translation>
         <source>Change card image</source>
         <translation>Beeld kaart wijzigen</translation>
     </message>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Handeling bevestigen</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
     <message>
         <source>rooms</source>
         <translation>Kamers</translation>
+    </message>
+</context>
+<context>
+    <name>RoomsItems</name>
+    <message>
+        <source>Confirm operation</source>
+        <translation>Handeling bevestigen</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Nieuwe naam:</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Wissen bevestigen</translation>
     </message>
 </context>
 <context>
@@ -2056,7 +2134,11 @@ Adres: %2</translation>
         <translation>Annuleer</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <source>Delete scenario</source>
+        <translation>Scenario wissen</translation>
+    </message>
+    <message>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
         <translation>Als u het scenario niet heeft gereset, zult u handelingen aan het scenario toevoegen. Druk op OK als u de programmering van het scenario wilt opstarten, of druk op ANNULEREN als u de handeling wilt annuleren.</translation>
     </message>
     <message>
@@ -2066,10 +2148,6 @@ Adres: %2</translation>
     <message>
         <source>programming impossible</source>
         <translation>Programmering niet mogelijk</translation>
-    </message>
-    <message>
-        <source>reset program</source>
-        <translation>Programma resetten</translation>
     </message>
     <message>
         <source>Scenario configuration</source>
@@ -2159,16 +2237,14 @@ Adres: %2</translation>
         <translation>Nieuwe URL:</translation>
     </message>
     <message>
-        <source>Pressing ok will delete all browser history.
-Continue?</source>
-        <translation>Met een druk op OK wist u de zoekgeschiedenis van uw browser.
-Doorgaan?</translation>
+        <source>Pressing ok will delete all browser history.\nContinue?</source>
+        <translation>Met een druk op OK wist u de zoekgeschiedenis van uw browser.\nDoorgaan?</translation>
     </message>
 </context>
 <context>
     <name>SettingsClocks</name>
     <message>
-        <source>Add Clock</source>
+        <source>Add Alarm clock</source>
         <translation>Klok toevoegen</translation>
     </message>
 </context>
@@ -2191,7 +2267,7 @@ Doorgaan?</translation>
     <name>SettingsDisplay</name>
     <message>
         <source>Brightness</source>
-        <translation>Lichtsterkte</translation>
+        <translation>Helderheid</translation>
     </message>
     <message>
         <source>Calibration</source>
@@ -2332,7 +2408,7 @@ Doorgaan?</translation>
     <name>SettingsGenerals</name>
     <message>
         <source>Beep</source>
-        <translation>Beep</translation>
+        <translation>Pieptoon</translation>
     </message>
     <message>
         <source>Connected</source>
@@ -2379,7 +2455,7 @@ Doorgaan?</translation>
     <name>SettingsHome</name>
     <message>
         <source>Background image</source>
-        <translation>Beeld achtergrond</translation>
+        <translation>Achtergrondbeeld</translation>
     </message>
     <message>
         <source>Change background image</source>
@@ -2394,16 +2470,16 @@ Doorgaan?</translation>
         <translation>De default waarde van de achtergrond herstellen?</translation>
     </message>
     <message>
+        <source>Home page skin</source>
+        <translation>Skin home</translation>
+    </message>
+    <message>
         <source>Quicklinks</source>
         <translation>Quicklinks</translation>
     </message>
     <message>
         <source>Restore background image</source>
-        <translation>Beeld achtergrond herstellen</translation>
-    </message>
-    <message>
-        <source>skin home</source>
-        <translation>Skin home</translation>
+        <translation>Achtergrondbeeld herstellen</translation>
     </message>
 </context>
 <context>
@@ -2482,7 +2558,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>Multimedia</source>
-        <translation>Multi media</translation>
+        <translation>Multimedia</translation>
     </message>
     <message>
         <source>Profiles</source>
@@ -2536,7 +2612,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation>Uit geschakeld</translation>
+        <translation>Uitschakelen</translation>
     </message>
     <message>
         <source>Dutch</source>
@@ -2579,10 +2655,8 @@ Doorgaan?</translation>
         <translation>Portugees</translation>
     </message>
     <message>
-        <source>Pressing ok will cause a device reboot in a few moments.
-Continue?</source>
-        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.
-Doorgaan?</translation>
+        <source>Pressing ok will cause a device reboot in a few moments.\nContinue?</source>
+        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.\nDoorgaan?</translation>
     </message>
     <message>
         <source>Russian</source>
@@ -2640,7 +2714,7 @@ Doorgaan?</translation>
         <translation>MAC address</translation>
     </message>
     <message>
-        <source>network state</source>
+        <source>Network status</source>
         <translation>Status netwerk</translation>
     </message>
     <message>
@@ -2669,6 +2743,25 @@ Doorgaan?</translation>
     </message>
 </context>
 <context>
+    <name>SettingsObjectLink</name>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Wissen bevestigen</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Nieuwe naam:</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation>Herbenaam</translation>
+    </message>
+</context>
+<context>
     <name>SettingsPassword</name>
     <message>
         <source>Change password</source>
@@ -2687,7 +2780,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>Background image</source>
-        <translation>Beeld achtergrond</translation>
+        <translation>Achtergrondbeeld</translation>
     </message>
     <message>
         <source>Card image</source>
@@ -2711,7 +2804,18 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>Restore background image</source>
-        <translation>Beeld achtergrond herstellen</translation>
+        <translation>Achtergrondbeeld herstellen</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsProfiles</name>
+    <message>
+        <source>Add Profile</source>
+        <translation>Voeg profiel toe</translation>
+    </message>
+    <message>
+        <source>New Name:</source>
+        <translation>Nieuwe naam:</translation>
     </message>
 </context>
 <context>
@@ -2731,12 +2835,8 @@ Doorgaan?</translation>
 <context>
     <name>SettingsSkin</name>
     <message>
-        <source>Pressing ok will cause a device reboot in a few moments.
-Please, do not use the touch till it is restarted.
-Continue?</source>
-        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.
-Raak het niet aan tot het opnieuw is opgestart.
-Doorgaan?</translation>
+        <source>Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?</source>
+        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.\nRaak het niet aan tot het opnieuw is opgestart.\nDoorgaan?</translation>
     </message>
 </context>
 <context>
@@ -2751,7 +2851,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>Video Door Entry</source>
-        <translation>Beeldhuistelefoon</translation>
+        <translation>Beeldhuistelefonie</translation>
     </message>
 </context>
 <context>
@@ -2776,10 +2876,6 @@ Doorgaan?</translation>
         <translation>Geassocieerd</translation>
     </message>
     <message>
-        <source>auto open</source>
-        <translation>Auto openen</translation>
-    </message>
-    <message>
         <source>Disabled</source>
         <translation>Gedeactiveerd</translation>
     </message>
@@ -2796,6 +2892,10 @@ Doorgaan?</translation>
         <translation>Niet gecombineerd</translation>
     </message>
     <message>
+        <source>Professional studio</source>
+        <translation>Professionele studio</translation>
+    </message>
+    <message>
         <source>Ringtone exclusion</source>
         <translation>Beltoon uitsluiten</translation>
     </message>
@@ -2807,7 +2907,7 @@ Doorgaan?</translation>
 <context>
     <name>SettingsVersion</name>
     <message>
-        <source>External unit associated</source>
+        <source>Associated entrance panel</source>
         <translation>Geassocieerde deurstation</translation>
     </message>
     <message>
@@ -2872,15 +2972,15 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>saved IP radios</source>
-        <translation>Opgeslagen IP radio&apos;s</translation>
+        <translation>Opgeslagen IP-radio&apos;s</translation>
     </message>
     <message>
         <source>source</source>
         <translation>Bron</translation>
     </message>
     <message>
-        <source>source change</source>
-        <translation>Wijziging bron</translation>
+        <source>Source changed</source>
+        <translation>Bron gewijzigd</translation>
     </message>
 </context>
 <context>
@@ -2904,8 +3004,8 @@ Doorgaan?</translation>
         <translation>%1 dagen</translation>
     </message>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatisch Afsluiting</translation>
+        <source>Auto close</source>
+        <translation>Automatische Afsluiting</translation>
     </message>
     <message>
         <source>Test Circuit Breaker</source>
@@ -2919,15 +3019,15 @@ Doorgaan?</translation>
 <context>
     <name>StopAndGoMenu</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatisch Afsluiting</translation>
+        <source>Auto close</source>
+        <translation>Automatische Afsluiting</translation>
     </message>
 </context>
 <context>
     <name>StopAndGoPlus</name>
     <message>
-        <source>Automatic Reclosing</source>
-        <translation>Automatisch Afsluiting</translation>
+        <source>Auto close</source>
+        <translation>Automatische Afsluiting</translation>
     </message>
     <message>
         <source>Check Faults</source>
@@ -2971,7 +3071,7 @@ Doorgaan?</translation>
         <translation>Annuleer</translation>
     </message>
     <message>
-        <source>If you didn&apos;t do a scenario reset, you will add actions to the scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
         <translation>Als u het scenario niet heeft gereset, zult u handelingen aan het scenario toevoegen. Druk op OK als u de programmering van het scenario wilt opstarten, of druk op ANNULEREN als u de handeling wilt annuleren.</translation>
     </message>
     <message>
@@ -2981,6 +3081,21 @@ Doorgaan?</translation>
     <message>
         <source>Scenario configuration</source>
         <translation>Configuratie Scenario&apos;s</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Snelheid luchtverhitter</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modi</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Temperatuurinstelling</translation>
     </message>
 </context>
 <context>
@@ -2995,7 +3110,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>Holiday</source>
-        <translation>Feestdag</translation>
+        <translation>Zon-/feestdag</translation>
     </message>
     <message>
         <source>Manual</source>
@@ -3003,7 +3118,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>mode</source>
-        <translation>Modaliteit</translation>
+        <translation>Modus</translation>
     </message>
     <message>
         <source>next program</source>
@@ -3030,14 +3145,6 @@ Doorgaan?</translation>
         <translation>Temperatuurinstelling</translation>
     </message>
     <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Niet-opgeslagen wijzigingen zijn gaande.
-Als u op ok drukt gaan deze wijzigingen verloren.
-Doorgaan?</translation>
-    </message>
-    <message>
         <source>Timed Manual</source>
         <translation>Manueel getimed</translation>
     </message>
@@ -3048,29 +3155,6 @@ Doorgaan?</translation>
     <message>
         <source>Weekly</source>
         <translation>Wekelijk</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Snelheid luchtverhitter</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modi</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Temperatuurinstelling</translation>
-    </message>
-    <message>
-        <source>There are unsaved changes in progress.
-If you choose ok they will be lost.
-Continue?</source>
-        <translation>Niet-opgeslagen wijzigingen zijn gaande.
-Als u op ok drukt gaan deze wijzigingen verloren.
-Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -3092,7 +3176,7 @@ Doorgaan?</translation>
         <translation>Koeling</translation>
     </message>
     <message>
-        <source>Dry</source>
+        <source>Dehumidifier</source>
         <translation>Droog</translation>
     </message>
     <message>
@@ -3109,7 +3193,7 @@ Doorgaan?</translation>
     </message>
     <message>
         <source>holiday</source>
-        <translation>Feestdag</translation>
+        <translation>Zon-/feestdag</translation>
     </message>
     <message>
         <source>Low</source>
@@ -3140,7 +3224,7 @@ Doorgaan?</translation>
         <translation>Off</translation>
     </message>
     <message>
-        <source>Off</source>
+        <source>Off 2</source>
         <translation>Off</translation>
     </message>
     <message>
@@ -3164,8 +3248,8 @@ Doorgaan?</translation>
         <translation>Manueel getimed</translation>
     </message>
     <message>
-        <source>weekday</source>
-        <translation>Weekdag</translation>
+        <source>Weekdays</source>
+        <translation>Werkdag</translation>
     </message>
     <message>
         <source>weekly programs</source>
@@ -3194,7 +3278,7 @@ Doorgaan?</translation>
         <translation>Externe sondes</translation>
     </message>
     <message>
-        <source>Not Controlled Probes</source>
+        <source>Non-Controlled Probes</source>
         <translation>Niet-gecontroleerd meters</translation>
     </message>
 </context>
@@ -3217,7 +3301,7 @@ Doorgaan?</translation>
     <name>VideoDoorEntry</name>
     <message>
         <source>video door entry</source>
-        <translation>Beeldhuistelefoon</translation>
+        <translation>Beeldhuistelefonie</translation>
     </message>
 </context>
 <context>
@@ -3254,111 +3338,6 @@ Doorgaan?</translation>
     <message>
         <source>mute</source>
         <translation>Mute</translation>
-    </message>
-</context>
-<context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authenticatie verplicht</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Wachtwoord</translation>
-    </message>
-    <message>
-        <source>This connection is untrusted. Do you wish to continue?</source>
-        <translation>De verbinding is niet veilig. U wilt doorgaan?</translation>
-    </message>
-    <message>
-        <source>Untrusted SSL connection</source>
-        <translation>Onveilige SSL-verbinding</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Gebruikersnaam</translation>
-    </message>
-</context>
-<context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Actief</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>WEKKER</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>INBRAAK</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Beschikbaar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Sluiten</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Commando verzonden</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGIEBEHEER</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Maandelijks Energierapport</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Negeren</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MELDINGEN</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Maandelijks doel bereikt</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Meer informatie</translation>
-    </message>
-    <message numerus="yes">
-        <source>new message(s)</source>
-        <translation>
-            <numerusform>nieuw(e) bericht(en)</numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Uitstellen</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lezen</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Tonen</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Nazicht</translation>
     </message>
 </context>
 </TS>
