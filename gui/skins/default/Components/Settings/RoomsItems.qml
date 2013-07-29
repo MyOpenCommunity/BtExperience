@@ -43,6 +43,7 @@ MenuColumn {
     Column {
         MenuItem {
             name: qsTr("Add Room")
+            enabled: roomsModel.count < 7
             onTouched: {
                 if (privateProps.currentIndex !== 1) {
                     privateProps.currentIndex = 1

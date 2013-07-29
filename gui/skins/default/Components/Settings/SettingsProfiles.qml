@@ -39,6 +39,7 @@ MenuColumn {
     Column {
         MenuItem {
             name: qsTr("Add Profile")
+            enabled: profilesModel.count < 10
             onTouched: {
                 if (privateProps.currentIndex !== 1) {
                     privateProps.currentIndex = 1
