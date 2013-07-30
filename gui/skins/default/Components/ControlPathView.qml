@@ -40,7 +40,8 @@ Item {
             if ((offset_diff > 0 ) && (offset_diff < model.count )){
                 currentPressed = -1
             }
-            global.setPathviewOffset(pathviewId, Math.round(offset))
+            if (offsetBehavior.enabled)
+                global.setPathviewOffset(pathviewId, Math.round(offset))
         }
 
         Behavior on offset {
