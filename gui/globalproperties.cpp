@@ -520,9 +520,13 @@ void GlobalProperties::cleanImageSaver(ImageSaver *cleanee)
 	cleanee->deleteLater();
 }
 
+// TODO: We could also worry about OOM conditions if the user inserts *MANY*
+// rooms from the UI, since currently are using floor UII as pathview ids and
+// we don't purge removed floors; anyway, such user is going to die of boredom
+// before memory usage starts to be noticeably higher...
 int GlobalProperties::getPathviewOffset(int pathview_id)
 {
-	return pathview_offsets[pathview_id];
+	return pathview_offsets.value(pathview_id, 0);
 }
 
 void GlobalProperties::setPathviewOffset(int pathview_id, int value)
