@@ -128,12 +128,22 @@ MenuColumn {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
+    // Select all btobjects already present in the room. We want to avoid
+    // adding the same object twice to a room, it's not allowed.
+    MediaModel {
+        id: roomObjects
+        source: myHomeModels.objectLinks
+        containers: [column.dataModel.uii]
+    }
+
     PaginatorList {
         id: paginator
 
         elementsOnPage: elementsOnMenuPage
         delegate: MenuItemDelegate {
             itemObject: objectModel.getObject(index)
+            enabled: !privateProps.objectInRoom(itemObject)
+            selectOnClick: false
             description: Script.description(itemObject)
             onDelegateTouched: myHomeModels.createObjectLink(itemObject, column.dataModel.uii)
         }
@@ -142,6 +152,13 @@ MenuColumn {
 
     QtObject {
         id: privateProps
+
+        function objectInRoom(itemObject) {
+            for (var i = 0; i < roomObjects.count; ++i)
+                if (roomObjects.getObject(i).btObject === itemObject)
+                    return true
+            return false
+        }
 
         function appendModel(model) {
             for (var i = 0; i < model.count; ++i) {
