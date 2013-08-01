@@ -148,7 +148,7 @@ Item {
                 }
             }
             title: qsTr("Confirm deletion")
-            text: qsTr("Are you sure to delete the selected MyHome object?")
+            text: qsTr("Are you sure to delete the selected object?")
         }
     }
 

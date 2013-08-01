@@ -39,7 +39,7 @@ MenuColumn {
         FavoriteEditPopup {
             property variant item
 
-            title: qsTr("Change MyHome object name")
+            title: qsTr("Change object name")
             topInputLabel: qsTr("New Name:")
             topInputText: objectLinksModel.getObject(index).btObject.name
             bottomVisible: false
@@ -58,7 +58,7 @@ MenuColumn {
             }
 
             title: qsTr("Confirm deletion")
-            text: qsTr("Are you sure to delete the selected MyHome object?")
+            text: qsTr("Are you sure to delete the selected object?")
         }
     }
 }

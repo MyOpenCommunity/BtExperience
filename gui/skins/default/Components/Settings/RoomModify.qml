@@ -85,7 +85,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Add MyHome object")
+            name: qsTr("Add object")
             isSelected: privateProps.currentIndex === 4
             hasChild: true
             onTouched: {
