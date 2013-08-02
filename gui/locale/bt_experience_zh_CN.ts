@@ -2203,7 +2203,7 @@ Address: %2</source>
         <translation>删除场景</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
         <translation>如果没有删除场景，将添加动作到之前存在的场景。按Ok键开始场景编程，按取消键取消操作。</translation>
     </message>
     <message>
