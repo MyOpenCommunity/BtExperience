@@ -685,10 +685,6 @@ Address: %2</source>
 <context>
     <name>Antintrusion</name>
     <message>
-        <source>Burglar alarm</source>
-        <translation>Охранная сигнализация</translation>
-    </message>
-    <message>
         <source>enter code</source>
         <translation>Bвести код</translation>
     </message>
@@ -813,13 +809,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>Автоматизация</translation>
-    </message>
-</context>
-<context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
@@ -873,7 +862,7 @@ Address: %2</source>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -1448,13 +1437,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>Управление энергией</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1659,6 +1641,14 @@ Address: %2</source>
 <context>
     <name>Floor</name>
     <message>
+        <source>Add Floor</source>
+        <translation>Добавить этаж</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>Ввести новое имя этажа</translation>
+    </message>
+    <message>
         <source>New Name:</source>
         <translation>Новое имя:</translation>
     </message>
@@ -1732,13 +1722,6 @@ Address: %2</source>
     <message>
         <source>Instant consumption</source>
         <translation>Мгновенное потребление</translation>
-    </message>
-</context>
-<context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>Освещение</translation>
     </message>
 </context>
 <context>
@@ -1849,13 +1832,6 @@ Address: %2</source>
     <message>
         <source>°C</source>
         <translation>°C</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>Сообщения</translation>
     </message>
 </context>
 <context>
@@ -2113,6 +2089,10 @@ Address: %2</source>
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add object</source>
+        <translation>Добавить объект</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Фоновое изображение</translation>
     </message>
@@ -2132,6 +2112,18 @@ Address: %2</source>
         <source>Confirm operation</source>
         <translation>Подтвердить операцию</translation>
     </message>
+    <message>
+        <source>Delete room</source>
+        <translation>Удалить комнату</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>Вы хотите окончательно удалить комнату и всю сопряженную информацию?</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Список ссылок на объекты</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
@@ -2143,8 +2135,24 @@ Address: %2</source>
 <context>
     <name>RoomsItems</name>
     <message>
+        <source>Add Room</source>
+        <translation>Добавить комнату</translation>
+    </message>
+    <message>
         <source>Confirm operation</source>
         <translation>Подтвердить операцию</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>Удалить этаж</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>Вы хотите окончательно удалить этаж, все содержащиеся комнаты и всю сопряженную информацию?</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>Ввести новое имя комнаты</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2153,6 +2161,10 @@ Address: %2</source>
 </context>
 <context>
     <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Вы действительно хотите удалить выбранный объект?</translation>
+    </message>
     <message>
         <source>Confirm deletion</source>
         <translation>Подтвердить удаление</translation>
@@ -2191,8 +2203,8 @@ Address: %2</source>
         <translation>Удалить сценарий</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
-        <translation>Если вы не сбросили сценарий, вы сможете добавить действия к сценарию. Нажмите OK, чтобы начать программирование сценария, ОТМЕНИТЬ, чтобы отменить операцию.</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Если сценарий не был удален, действия будут добавлены к уже существующему сценарию. Нажать Ok, чтобы начать программирование сценария, ОТМЕНИТЬ, чтобы отменить операцию.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2213,13 +2225,6 @@ Address: %2</source>
     <message>
         <source>stop programming</source>
         <translation>Oстановить программирование</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>Сценарии</translation>
     </message>
 </context>
 <context>
@@ -2711,7 +2716,7 @@ Continue?</source>
     </message>
     <message>
         <source>Pressing ok will cause a device reboot in a few moments.
-	Continue?</source>
+Continue?</source>
         <translation>Нажатие на ok вызовет перезагрузку устройства через несколько секунд.
 Продолжить?</translation>
     </message>
@@ -2802,6 +2807,14 @@ Continue?</source>
 <context>
     <name>SettingsObjectLink</name>
     <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Вы действительно хотите удалить выбранный объект?</translation>
+    </message>
+    <message>
+        <source>Change object name</source>
+        <translation>Изменить имя объекта</translation>
+    </message>
+    <message>
         <source>Confirm deletion</source>
         <translation>Подтвердить удаление</translation>
     </message>
@@ -2856,6 +2869,14 @@ Continue?</source>
         <translation>Подтвердить операцию</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>Удалить профиль</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>Вы хотите окончательно удалить профиль и всю сопряженную информацию?</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>Вы хотите восстановить значение фона по умолчанию?</translation>
     </message>
@@ -2869,6 +2890,10 @@ Continue?</source>
     <message>
         <source>Add Profile</source>
         <translation>Добавить профиль</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>Ввести новое имя профиля</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -3011,13 +3036,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>Звуковая трансляция</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3126,6 +3144,45 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>Автоматизация</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>Охранная сигнализация</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>Управление энергией</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>Освещение</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>Сообщения</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Сценарии</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>Звуковая трансляция</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>Терморегулирование</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>Видеодомофония</translation>
+    </message>
+</context>
+<context>
     <name>TextDialog</name>
     <message>
         <source>cancel</source>
@@ -3133,7 +3190,7 @@ Continue?</source>
     </message>
     <message>
         <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Если вы не сбросили сценарий, вы сможете добавить действия к сценарию. Нажмите OK, чтобы начать программирование сценария, ОТМЕНИТЬ, чтобы отменить операцию.</translation>
+        <translation>Если сценарий не был удален, действия будут добавлены к уже существующему сценарию. Нажать Ok, чтобы начать программирование сценария, ОТМЕНИТЬ, чтобы отменить операцию.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -3298,7 +3355,7 @@ Continue?</source>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Без звука</translation>
+        <translation>Бесшумный</translation>
     </message>
     <message>
         <source>summer</source>
@@ -3319,13 +3376,6 @@ Continue?</source>
     <message>
         <source>winter</source>
         <translation>Зима</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>Терморегулирование</translation>
     </message>
 </context>
 <context>
@@ -3356,13 +3406,6 @@ Continue?</source>
     <message>
         <source>volume</source>
         <translation>Громкость</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>Видеодомофония</translation>
     </message>
 </context>
 <context>

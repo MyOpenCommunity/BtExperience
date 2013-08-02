@@ -685,10 +685,6 @@ Adres: %2</translation>
 <context>
     <name>Antintrusion</name>
     <message>
-        <source>Burglar alarm</source>
-        <translation>Hırsızlık alarmı</translation>
-    </message>
-    <message>
         <source>enter code</source>
         <translation>Kodu girin</translation>
     </message>
@@ -813,13 +809,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>Otomasyon</translation>
-    </message>
-</context>
-<context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
@@ -873,7 +862,7 @@ Adres: %2</translation>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -1448,13 +1437,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>Enerji Yönetimi</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1659,6 +1641,14 @@ Adres: %2</translation>
 <context>
     <name>Floor</name>
     <message>
+        <source>Add Floor</source>
+        <translation>Kat Ekleyin</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>Yeni kat adı girin</translation>
+    </message>
+    <message>
         <source>New Name:</source>
         <translation>Yeni ad:</translation>
     </message>
@@ -1732,13 +1722,6 @@ Adres: %2</translation>
     <message>
         <source>Instant consumption</source>
         <translation>Anlık tüketim</translation>
-    </message>
-</context>
-<context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>Aydınlatma</translation>
     </message>
 </context>
 <context>
@@ -1849,13 +1832,6 @@ Adres: %2</translation>
     <message>
         <source>°C</source>
         <translation>°C</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>Mesajlar</translation>
     </message>
 </context>
 <context>
@@ -2113,6 +2089,10 @@ Adres: %2</translation>
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add object</source>
+        <translation>Nesnesi ekleyin</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Arka plan fonu</translation>
     </message>
@@ -2132,6 +2112,18 @@ Adres: %2</translation>
         <source>Confirm operation</source>
         <translation>İşlemi onaylayın</translation>
     </message>
+    <message>
+        <source>Delete room</source>
+        <translation>Oda sil</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>Odayı ve tüm ilgili bilgileri kalıcı şekilde silmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Objectlinks listesi</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
@@ -2143,8 +2135,24 @@ Adres: %2</translation>
 <context>
     <name>RoomsItems</name>
     <message>
+        <source>Add Room</source>
+        <translation>Oda Ekleyin</translation>
+    </message>
+    <message>
         <source>Confirm operation</source>
         <translation>İşlemi onaylayın</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>Kat Sil</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>Katı, tüm içerilen odaları ve tüm ilgili bilgileri kalıcı şekilde silmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>Yeni oda adı girin</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2153,6 +2161,10 @@ Adres: %2</translation>
 </context>
 <context>
     <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Seçilen nesnesini silmek istediğinizden emin misiniz?</translation>
+    </message>
     <message>
         <source>Confirm deletion</source>
         <translation>Silmeyi onaylayın</translation>
@@ -2191,8 +2203,8 @@ Adres: %2</translation>
         <translation>Senaryo sil</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
-        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız TAMAM ikonuna, işlemi iptal etmek istiyorsanız İPTAL ikonuna basın.</translation>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
+        <translation>Bir senaryo reset yapmadıysanız,önceden mevcut olan senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız TAMAM ikonuna, işlemi iptal etmek istiyorsanız İPTAL ikonuna basın.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -2213,13 +2225,6 @@ Adres: %2</translation>
     <message>
         <source>stop programming</source>
         <translation>Programlama stop</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>Senaryolar</translation>
     </message>
 </context>
 <context>
@@ -2802,6 +2807,14 @@ Devam?</translation>
 <context>
     <name>SettingsObjectLink</name>
     <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Seçilen nesnesini silmek istediğinizden emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Change object name</source>
+        <translation>Nesnesi adı değiştirin</translation>
+    </message>
+    <message>
         <source>Confirm deletion</source>
         <translation>Silmeyi onaylayın</translation>
     </message>
@@ -2856,6 +2869,14 @@ Devam?</translation>
         <translation>İşlemi onaylayın</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>Profil Sil</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>Profili ve tüm ilgili bilgileri silmek istiyor musunuz?</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>Arka plan fonuna varsayılan görüntüyü geri yüklemek istiyor musunuz?</translation>
     </message>
@@ -2869,6 +2890,10 @@ Devam?</translation>
     <message>
         <source>Add Profile</source>
         <translation>Profil ekle</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>Yeni profil adı girin</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -3011,13 +3036,6 @@ Devam?</translation>
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>Ses difüzyonu</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3126,6 +3144,45 @@ Devam?</translation>
     </message>
 </context>
 <context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>Otomasyon</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>Hırsızlık alarmı</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>Enerji Yönetimi</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>Aydınlatma</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>Mesajlar</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Senaryolar</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>Ses difüzyonu</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>Isı regülasyonu</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>Video dahili ünite</translation>
+    </message>
+</context>
+<context>
     <name>TextDialog</name>
     <message>
         <source>cancel</source>
@@ -3133,7 +3190,7 @@ Devam?</translation>
     </message>
     <message>
         <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
-        <translation>Bir senaryo reset yapmadıysanız, senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız TAMAM ikonuna, işlemi iptal etmek istiyorsanız İPTAL ikonuna basın.</translation>
+        <translation>Bir senaryo reset yapmadıysanız,önceden mevcut olan senaryoya işlemler ekleyeceksiniz. Senaryo programlama başlatmak istiyorsanız TAMAM ikonuna, işlemi iptal etmek istiyorsanız İPTAL ikonuna basın.</translation>
     </message>
     <message>
         <source>ok</source>
@@ -3322,13 +3379,6 @@ Devam?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>Isı regülasyonu</translation>
-    </message>
-</context>
-<context>
     <name>ThermalRegulationItems</name>
     <message>
         <source>Air Conditioning</source>
@@ -3356,13 +3406,6 @@ Devam?</translation>
     <message>
         <source>volume</source>
         <translation>Ses seviyesi</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>Video dahili ünite</translation>
     </message>
 </context>
 <context>

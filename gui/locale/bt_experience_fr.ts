@@ -685,10 +685,6 @@ Adresse : %2</translation>
 <context>
     <name>Antintrusion</name>
     <message>
-        <source>Burglar alarm</source>
-        <translation>Antivol</translation>
-    </message>
-    <message>
         <source>enter code</source>
         <translation>Saisir code</translation>
     </message>
@@ -813,13 +809,6 @@ Adresse : %2</translation>
     </message>
 </context>
 <context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>Automatisme</translation>
-    </message>
-</context>
-<context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
@@ -873,7 +862,7 @@ Adresse : %2</translation>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -1448,13 +1437,6 @@ Adresse : %2</translation>
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>Gestion énergie</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1659,6 +1641,14 @@ Adresse : %2</translation>
 <context>
     <name>Floor</name>
     <message>
+        <source>Add Floor</source>
+        <translation>Ajouter Étage</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>Saisir nouveau nom étage</translation>
+    </message>
+    <message>
         <source>New Name:</source>
         <translation>Nouveau nom:</translation>
     </message>
@@ -1732,13 +1722,6 @@ Adresse : %2</translation>
     <message>
         <source>Instant consumption</source>
         <translation>Consommation instantanée</translation>
-    </message>
-</context>
-<context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>Éclairage</translation>
     </message>
 </context>
 <context>
@@ -1849,13 +1832,6 @@ Adresse : %2</translation>
     <message>
         <source>°C</source>
         <translation>°C</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>Messages</translation>
     </message>
 </context>
 <context>
@@ -2113,6 +2089,10 @@ Adresse : %2</translation>
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add object</source>
+        <translation>Ajouter objet</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Image de fond</translation>
     </message>
@@ -2132,6 +2112,18 @@ Adresse : %2</translation>
         <source>Confirm operation</source>
         <translation>Confirmer l&apos;opération</translation>
     </message>
+    <message>
+        <source>Delete room</source>
+        <translation>Éliminer pièce</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>Souhaitez-vous éliminer définitivement la pièce et toutes les informations associées ?</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Liste des liens objets</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
@@ -2143,8 +2135,24 @@ Adresse : %2</translation>
 <context>
     <name>RoomsItems</name>
     <message>
+        <source>Add Room</source>
+        <translation>Ajouter Pièce</translation>
+    </message>
+    <message>
         <source>Confirm operation</source>
         <translation>Confirmer l&apos;opération</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>Éliminer Étage</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>Souhaitez-vous éliminer définitivement l’étage, toutes les pièces qu’il contient et les informations associées ?</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>Saisir nouveau nom pièce</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2153,6 +2161,10 @@ Adresse : %2</translation>
 </context>
 <context>
     <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Êtes-vous sûr de vouloir éliminer l’objet sélectionné?</translation>
+    </message>
     <message>
         <source>Confirm deletion</source>
         <translation>Confirmer élimination</translation>
@@ -2191,7 +2203,7 @@ Adresse : %2</translation>
         <translation>Éliminer le scénario</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
         <translation>Si le scénario n&apos;est pas éliminé, les actions sont ajoutées au scénario préexistant. Appuyer sur OK pour entamer la programmation du scénario ou sur ANNULER pour annuler l’opération.</translation>
     </message>
     <message>
@@ -2213,13 +2225,6 @@ Adresse : %2</translation>
     <message>
         <source>stop programming</source>
         <translation>Arrêter la programmation</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>Scénarios</translation>
     </message>
 </context>
 <context>
@@ -2802,6 +2807,14 @@ Continuer ?</translation>
 <context>
     <name>SettingsObjectLink</name>
     <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Êtes-vous sûr de vouloir éliminer l’objet sélectionné?</translation>
+    </message>
+    <message>
+        <source>Change object name</source>
+        <translation>Modifier nom de l’objet</translation>
+    </message>
+    <message>
         <source>Confirm deletion</source>
         <translation>Confirmer élimination</translation>
     </message>
@@ -2856,6 +2869,14 @@ Continuer ?</translation>
         <translation>Confirmer l&apos;opération</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>Éliminer Profil</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>Souhaitez-vous éliminer définitivement le profil et toutes les informations associées ?</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>Rétablir le fond par défaut ?</translation>
     </message>
@@ -2869,6 +2890,10 @@ Continuer ?</translation>
     <message>
         <source>Add Profile</source>
         <translation>Ajouter profil</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>Saisir nouveau nom profil</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2892,9 +2917,11 @@ Continuer ?</translation>
 <context>
     <name>SettingsSkin</name>
     <message>
-        <source>Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.
+        <source>Pressing ok will cause a device reboot in a few moments.
+Please, do not use the touch till it is restarted.
 Continue?</source>
-        <translation>En appuyant sur OK, le dispositif sera aussitôt redémarré.\nNe pas toucher l’écran tactile jusqu’au redémarrage.
+        <translation>En appuyant sur OK, le dispositif sera aussitôt redémarré.
+Ne pas toucher l’écran tactile jusqu’au redémarrage.
 Continuer ?</translation>
     </message>
 </context>
@@ -3009,13 +3036,6 @@ Continuer ?</translation>
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>Diffusion sonore</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3121,6 +3141,45 @@ Continuer ?</translation>
     <message>
         <source>functions</source>
         <translation>Fonctions</translation>
+    </message>
+</context>
+<context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>Automatisme</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>Antivol</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>Gestion énergie</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>Éclairage</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>Messages</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Scénarios</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>Diffusion sonore</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>Thermorégulation</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>Vidéophonie</translation>
     </message>
 </context>
 <context>
@@ -3320,13 +3379,6 @@ Continuer ?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>Thermorégulation</translation>
-    </message>
-</context>
-<context>
     <name>ThermalRegulationItems</name>
     <message>
         <source>Air Conditioning</source>
@@ -3354,13 +3406,6 @@ Continuer ?</translation>
     <message>
         <source>volume</source>
         <translation>Volume</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>Vidéophonie</translation>
     </message>
 </context>
 <context>

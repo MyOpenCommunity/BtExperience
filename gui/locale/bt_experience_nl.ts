@@ -263,8 +263,12 @@
         <translation>Wissen bevestigen</translation>
     </message>
     <message>
-        <source>Do you want to remove the selected quicklink?\nName: %1\nAddress: %2</source>
-        <translation>De gekozen quicklink verwijderen?n\Naam: %1/nAdres: %2</translation>
+        <source>Do you want to remove the selected quicklink?
+Name: %1
+Address: %2</source>
+        <translation>De gekozen quicklink verwijderen?
+Naam: %1
+Adres: %2</translation>
     </message>
     <message>
         <source>Edit quicklink properties</source>
@@ -380,23 +384,28 @@
         <translation>Dagen</translation>
     </message>
     <message>
-        <source>Friday</source>
+        <source>F</source>
+        <comment>Friday</comment>
         <translation>V</translation>
     </message>
     <message>
-        <source>Monday</source>
+        <source>M</source>
+        <comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
-        <source>Saturday</source>
+        <source>S</source>
+        <comment>Saturday</comment>
         <translation>S</translation>
     </message>
     <message>
-        <source>Sunday</source>
+        <source>S</source>
+        <comment>Sunday</comment>
         <translation>Z</translation>
     </message>
     <message>
-        <source>Thursday</source>
+        <source>T</source>
+        <comment>Thursday</comment>
         <translation>D</translation>
     </message>
     <message>
@@ -404,11 +413,13 @@
         <translation>Uur</translation>
     </message>
     <message>
-        <source>Tuesday</source>
+        <source>T</source>
+        <comment>Tuesday</comment>
         <translation>D</translation>
     </message>
     <message>
-        <source>Wednesday</source>
+        <source>W</source>
+        <comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -508,11 +519,13 @@
         <translation>Naam alarm invoeren</translation>
     </message>
     <message>
-        <source>Friday</source>
+        <source>F</source>
+        <comment>Friday</comment>
         <translation>V</translation>
     </message>
     <message>
-        <source>Monday</source>
+        <source>M</source>
+        <comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
@@ -532,7 +545,8 @@
         <translation>Slechts eenmaal</translation>
     </message>
     <message>
-        <source>Saturday</source>
+        <source>S</source>
+        <comment>Saturday</comment>
         <translation>Z</translation>
     </message>
     <message>
@@ -540,11 +554,13 @@
         <translation>Wijzigingen opslaan?</translation>
     </message>
     <message>
-        <source>Sunday</source>
+        <source>S</source>
+        <comment>Sunday</comment>
         <translation>S</translation>
     </message>
     <message>
-        <source>Thursday</source>
+        <source>T</source>
+        <comment>Thursday</comment>
         <translation>D</translation>
     </message>
     <message>
@@ -552,11 +568,13 @@
         <translation>TIjdstip:</translation>
     </message>
     <message>
-        <source>Tuesday</source>
+        <source>T</source>
+        <comment>Tuesday</comment>
         <translation>D</translation>
     </message>
     <message>
-        <source>wednesday</source>
+        <source>W</source>
+        <comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -667,10 +685,6 @@
 <context>
     <name>Antintrusion</name>
     <message>
-        <source>Burglar alarm</source>
-        <translation>Inbraak</translation>
-    </message>
-    <message>
         <source>enter code</source>
         <translation>Code invoeren</translation>
     </message>
@@ -721,7 +735,7 @@
     <name>AntintrusionSystem</name>
     <message>
         <source>alarm log</source>
-        <translation>Alarm Log             </translation>
+        <translation>Alarm Log</translation>
     </message>
     <message>
         <source>disable system</source>
@@ -795,13 +809,6 @@
     </message>
 </context>
 <context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>Automatiseringen</translation>
-    </message>
-</context>
-<context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
@@ -848,8 +855,36 @@
 <context>
     <name>BtNetworkReply</name>
     <message>
-        <source>Problem loading page\nServer not found\nCan&apos;t find the server in $SERVER. Please try again\nCheck the address for typing errors such as ww.example.com instead of www.example.com\nIf yo</source>
-        <translation>Probleem tijdens laden pagina\nServer niet gevonden\nKan de server niet vinden op $SERVER. Probeer het nogmaals\nControleer het adres op schrijffouten zoals ww.example.com in plaats van www.example.com\nControleer de aansluiting van het netwerk als u geen enkele pagina kunt laden.</translation>
+        <source>&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
+&lt;title&gt;Problem loading page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Server not found&lt;/h1&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;If you are unable to load any pages, check the network connection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</source>
+        <translation>&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&apos;Content-Type&apos; content=&apos;text/html; charset=utf-8&apos;&gt;
+&lt;title&gt;Probleem tijdens laden pagina&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Server niet gevonden&lt;/h1&gt;
+&lt;p&gt;Kan de server niet vinden op $SERVER. Probeer het nogmaals&lt;/p&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;Controleer het adres op schrijffouten zoals &lt;b&gt;ww.example.com&lt;/b&gt; in plaats van &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
+&lt;li&gt;Controleer de aansluiting van het netwerk als u geen enkele pagina kunt laden.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -973,11 +1008,13 @@
         <translation>Geactiveerd</translation>
     </message>
     <message>
-        <source>Friday</source>
+        <source>F</source>
+        <comment>Friday</comment>
         <translation>V</translation>
     </message>
     <message>
-        <source>Monday</source>
+        <source>M</source>
+        <comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
@@ -989,7 +1026,8 @@
         <translation>Beltoon</translation>
     </message>
     <message>
-        <source>Saturday</source>
+        <source>S</source>
+        <comment>Saturday</comment>
         <translation>Z</translation>
     </message>
     <message>
@@ -997,11 +1035,13 @@
         <translation>Geluidsdiffusie</translation>
     </message>
     <message>
-        <source>Sunday</source>
+        <source>S</source>
+        <comment>Sunday</comment>
         <translation>Z</translation>
     </message>
     <message>
-        <source>Thursday</source>
+        <source>T</source>
+        <comment>Thursday</comment>
         <translation>D</translation>
     </message>
     <message>
@@ -1009,11 +1049,13 @@
         <translation>Wordt gestart bij</translation>
     </message>
     <message>
-        <source>Tuesday</source>
+        <source>T</source>
+        <comment>Tuesday</comment>
         <translation>D</translation>
     </message>
     <message>
-        <source>Wednesday</source>
+        <source>W</source>
+        <comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -1395,13 +1437,6 @@
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>Bestuur Energie</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1606,6 +1641,14 @@
 <context>
     <name>Floor</name>
     <message>
+        <source>Add Floor</source>
+        <translation>Verdieping toevoegen</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>Nieuwe naam verdieping invoeren</translation>
+    </message>
+    <message>
         <source>New Name:</source>
         <translation>Nieuwe naam:</translation>
     </message>
@@ -1679,13 +1722,6 @@
     <message>
         <source>Instant consumption</source>
         <translation>Actueel verbruik</translation>
-    </message>
-</context>
-<context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>Verlichting</translation>
     </message>
 </context>
 <context>
@@ -1796,13 +1832,6 @@
     <message>
         <source>°C</source>
         <translation>°C</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>Berichten</translation>
     </message>
 </context>
 <context>
@@ -2060,6 +2089,10 @@
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add object</source>
+        <translation>Voorwerp toevoegen</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Achtergrondbeeld</translation>
     </message>
@@ -2079,6 +2112,18 @@
         <source>Confirm operation</source>
         <translation>Handeling bevestigen</translation>
     </message>
+    <message>
+        <source>Delete room</source>
+        <translation>Vertrek elimineren</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>Het vertrek en de aanverwante informatie definitief elimineren?</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Lijst van Objectlinks</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
@@ -2090,8 +2135,24 @@
 <context>
     <name>RoomsItems</name>
     <message>
+        <source>Add Room</source>
+        <translation>Vertrek toevoegen</translation>
+    </message>
+    <message>
         <source>Confirm operation</source>
         <translation>Handeling bevestigen</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>Verdieping elimineren</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>De verdieping, de vertrekken en de aanverwante informatie definitief elimineren?</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>Nieuwe naam vertrek invoeren</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2100,6 +2161,10 @@
 </context>
 <context>
     <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Het gekozen voorwerp elimineren?</translation>
+    </message>
     <message>
         <source>Confirm deletion</source>
         <translation>Wissen bevestigen</translation>
@@ -2138,7 +2203,7 @@
         <translation>Scenario wissen</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
         <translation>Als u het scenario niet heeft gereset, zult u handelingen aan het scenario toevoegen. Druk op OK als u de programmering van het scenario wilt opstarten, of druk op ANNULEREN als u de handeling wilt annuleren.</translation>
     </message>
     <message>
@@ -2160,13 +2225,6 @@
     <message>
         <source>stop programming</source>
         <translation>Programmering stoppen</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>Scenario&apos;s</translation>
     </message>
 </context>
 <context>
@@ -2237,8 +2295,10 @@
         <translation>Nieuwe URL:</translation>
     </message>
     <message>
-        <source>Pressing ok will delete all browser history.\nContinue?</source>
-        <translation>Met een druk op OK wist u de zoekgeschiedenis van uw browser.\nDoorgaan?</translation>
+        <source>Pressing ok will delete all browser history.
+Continue?</source>
+        <translation>Met een druk op OK wist u de zoekgeschiedenis van uw browser.
+Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -2655,8 +2715,10 @@
         <translation>Portugees</translation>
     </message>
     <message>
-        <source>Pressing ok will cause a device reboot in a few moments.\nContinue?</source>
-        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.\nDoorgaan?</translation>
+        <source>Pressing ok will cause a device reboot in a few moments.
+Continue?</source>
+        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.
+Doorgaan?</translation>
     </message>
     <message>
         <source>Russian</source>
@@ -2745,6 +2807,14 @@
 <context>
     <name>SettingsObjectLink</name>
     <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Het gekozen voorwerp elimineren?</translation>
+    </message>
+    <message>
+        <source>Change object name</source>
+        <translation>Naam voorwerp wijzigen</translation>
+    </message>
+    <message>
         <source>Confirm deletion</source>
         <translation>Wissen bevestigen</translation>
     </message>
@@ -2799,6 +2869,14 @@
         <translation>Handeling bevestigen</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>Profiel elimineren</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>Het profiel en alle aanverwante informatie definitief elimineren?</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>De default waarde van de achtergrond herstellen?</translation>
     </message>
@@ -2812,6 +2890,10 @@
     <message>
         <source>Add Profile</source>
         <translation>Voeg profiel toe</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>Nieuwe naam profiel invoeren</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2835,8 +2917,12 @@
 <context>
     <name>SettingsSkin</name>
     <message>
-        <source>Pressing ok will cause a device reboot in a few moments.\nPlease, do not use the touch till it is restarted.\nContinue?</source>
-        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.\nRaak het niet aan tot het opnieuw is opgestart.\nDoorgaan?</translation>
+        <source>Pressing ok will cause a device reboot in a few moments.
+Please, do not use the touch till it is restarted.
+Continue?</source>
+        <translation>Met een druk op ok zal het toestel binnen een aantal seconden opnieuw worden opgestart.
+Raak het niet aan tot het opnieuw is opgestart.
+Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -2950,13 +3036,6 @@
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>Geluidsdiffusie</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3062,6 +3141,45 @@
     <message>
         <source>functions</source>
         <translation>Functies</translation>
+    </message>
+</context>
+<context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>Automatiseringen</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>Inbraak</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>Bestuur Energie</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>Verlichting</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>Berichten</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Scenario&apos;s</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>Geluidsdiffusie</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>Thermische regeling</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>Beeldhuistelefonie</translation>
     </message>
 </context>
 <context>
@@ -3224,7 +3342,7 @@
         <translation>Off</translation>
     </message>
     <message>
-        <source>Off 2</source>
+        <source>Off</source>
         <translation>Off</translation>
     </message>
     <message>
@@ -3237,7 +3355,7 @@
     </message>
     <message>
         <source>Silent</source>
-        <translation>Stil alarm</translation>
+        <translation>Geruisloos</translation>
     </message>
     <message>
         <source>summer</source>
@@ -3258,13 +3376,6 @@
     <message>
         <source>winter</source>
         <translation>Winter</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>Thermische regeling</translation>
     </message>
 </context>
 <context>
@@ -3295,13 +3406,6 @@
     <message>
         <source>volume</source>
         <translation>Volume</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>Beeldhuistelefonie</translation>
     </message>
 </context>
 <context>

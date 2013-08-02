@@ -385,27 +385,27 @@ Address: %2</translation>
     </message>
     <message>
         <source>F</source>
-	<comment>Friday</comment>
+        <comment>Friday</comment>
         <translation>F</translation>
     </message>
     <message>
         <source>M</source>
-	<comment>Monday</comment>
+        <comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
         <source>S</source>
-	<comment>Saturday</comment>
+        <comment>Saturday</comment>
         <translation>S</translation>
     </message>
     <message>
         <source>S</source>
-	<comment>Sunday</comment>
+        <comment>Sunday</comment>
         <translation>S</translation>
     </message>
     <message>
         <source>T</source>
-	<comment>Thursday</comment>
+        <comment>Thursday</comment>
         <translation>T</translation>
     </message>
     <message>
@@ -414,12 +414,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>T</source>
-	<comment>Tuesday</comment>
+        <comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
         <source>W</source>
-	<comment>Wednesday</comment>
+        <comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -520,12 +520,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>F</source>
-	<comment>Friday</comment>
+        <comment>Friday</comment>
         <translation>F</translation>
     </message>
     <message>
         <source>M</source>
-	<comment>Monday</comment>
+        <comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
@@ -546,7 +546,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>S</source>
-	<comment>Saturday</comment>
+        <comment>Saturday</comment>
         <translation>S</translation>
     </message>
     <message>
@@ -555,12 +555,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>S</source>
-	<comment>Sunday</comment>
+        <comment>Sunday</comment>
         <translation>S</translation>
     </message>
     <message>
         <source>T</source>
-	<comment>Thursday</comment>
+        <comment>Thursday</comment>
         <translation>T</translation>
     </message>
     <message>
@@ -569,12 +569,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>T</source>
-	<comment>Tuesday</comment>
+        <comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
         <source>W</source>
-	<comment>Wednesday</comment>
+        <comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -684,10 +684,6 @@ Address: %2</translation>
 </context>
 <context>
     <name>Antintrusion</name>
-    <message>
-        <source>Burglar alarm</source>
-        <translation>Burglar alarm</translation>
-    </message>
     <message>
         <source>enter code</source>
         <translation>Enter code</translation>
@@ -810,13 +806,6 @@ Address: %2</translation>
     <message>
         <source>No tunable web radio</source>
         <translation>No tunable web radio</translation>
-    </message>
-</context>
-<context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>Automation</translation>
     </message>
 </context>
 <context>
@@ -1020,12 +1009,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>F</source>
-	<comment>Friday</comment>
+        <comment>Friday</comment>
         <translation>F</translation>
     </message>
     <message>
         <source>M</source>
-	<comment>Monday</comment>
+        <comment>Monday</comment>
         <translation>M</translation>
     </message>
     <message>
@@ -1038,7 +1027,7 @@ Address: %2</translation>
     </message>
     <message>
         <source>S</source>
-	<comment>Saturday</comment>
+        <comment>Saturday</comment>
         <translation>S</translation>
     </message>
     <message>
@@ -1047,12 +1036,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>S</source>
-	<comment>Sunday</comment>
+        <comment>Sunday</comment>
         <translation>S</translation>
     </message>
     <message>
         <source>T</source>
-	<comment>Thursday</comment>
+        <comment>Thursday</comment>
         <translation>T</translation>
     </message>
     <message>
@@ -1061,12 +1050,12 @@ Address: %2</translation>
     </message>
     <message>
         <source>T</source>
-	<comment>Tuesday</comment>
+        <comment>Tuesday</comment>
         <translation>T</translation>
     </message>
     <message>
         <source>W</source>
-	<comment>Wednesday</comment>
+        <comment>Wednesday</comment>
         <translation>W</translation>
     </message>
 </context>
@@ -1448,13 +1437,6 @@ Address: %2</translation>
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>Energy Management</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1743,13 +1725,6 @@ Address: %2</translation>
     </message>
 </context>
 <context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>Lighting</translation>
-    </message>
-</context>
-<context>
     <name>LightingNames</name>
     <message>
         <source>0.5 Seconds</source>
@@ -1857,13 +1832,6 @@ Address: %2</translation>
     <message>
         <source>°C</source>
         <translation>°C</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>Messages</translation>
     </message>
 </context>
 <context>
@@ -2121,8 +2089,8 @@ Address: %2</translation>
 <context>
     <name>RoomModify</name>
     <message>
-        <source>Add MyHome object</source>
-        <translation>Add MyHome object</translation>
+        <source>Add object</source>
+        <translation>Add object</translation>
     </message>
     <message>
         <source>Background image</source>
@@ -2194,8 +2162,8 @@ Address: %2</translation>
 <context>
     <name>RoomView</name>
     <message>
-        <source>Are you sure to delete the selected MyHome object?</source>
-        <translation>Are you sure to delete the selected MyHome object?</translation>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Are you sure to delete the selected object?</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
@@ -2235,7 +2203,7 @@ Address: %2</translation>
         <translation>Delete scenario</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
         <translation>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</translation>
     </message>
     <message>
@@ -2257,13 +2225,6 @@ Address: %2</translation>
     <message>
         <source>stop programming</source>
         <translation>Stop programming</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>Scenarios</translation>
     </message>
 </context>
 <context>
@@ -2846,12 +2807,12 @@ Continue?</translation>
 <context>
     <name>SettingsObjectLink</name>
     <message>
-        <source>Are you sure to delete the selected MyHome object?</source>
-        <translation>Are you sure to delete the selected MyHome object?</translation>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Are you sure to delete the selected object?</translation>
     </message>
     <message>
-        <source>Change MyHome object name</source>
-        <translation>Change MyHome object name</translation>
+        <source>Change object name</source>
+        <translation>Change object name</translation>
     </message>
     <message>
         <source>Confirm deletion</source>
@@ -3075,13 +3036,6 @@ Continue?</translation>
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>Sound system</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3187,6 +3141,45 @@ Continue?</translation>
     <message>
         <source>functions</source>
         <translation>Functions</translation>
+    </message>
+</context>
+<context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>Automation</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>Burglar alarm</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>Energy Management</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>Lighting</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>Messages</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Scenarios</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>Sound system</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>Temperature control</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>Video door entry</translation>
     </message>
 </context>
 <context>
@@ -3386,13 +3379,6 @@ Continue?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>Temperature control</translation>
-    </message>
-</context>
-<context>
     <name>ThermalRegulationItems</name>
     <message>
         <source>Air Conditioning</source>
@@ -3420,13 +3406,6 @@ Continue?</translation>
     <message>
         <source>volume</source>
         <translation>Volume</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>Video door entry</translation>
     </message>
 </context>
 <context>

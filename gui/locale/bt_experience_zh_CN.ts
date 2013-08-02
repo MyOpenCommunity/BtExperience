@@ -685,10 +685,6 @@ Address: %2</source>
 <context>
     <name>Antintrusion</name>
     <message>
-        <source>Burglar alarm</source>
-        <translation>防盗警报</translation>
-    </message>
-    <message>
         <source>enter code</source>
         <translation>输入代码</translation>
     </message>
@@ -813,13 +809,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>自动控制</translation>
-    </message>
-</context>
-<context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
@@ -873,7 +862,7 @@ Address: %2</source>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -1448,13 +1437,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>能耗管理</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1659,6 +1641,14 @@ Address: %2</source>
 <context>
     <name>Floor</name>
     <message>
+        <source>Add Floor</source>
+        <translation>添加楼层</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>输入新的楼层名称</translation>
+    </message>
+    <message>
         <source>New Name:</source>
         <translation>新名称：</translation>
     </message>
@@ -1732,13 +1722,6 @@ Address: %2</source>
     <message>
         <source>Instant consumption</source>
         <translation>即时能耗</translation>
-    </message>
-</context>
-<context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>照明</translation>
     </message>
 </context>
 <context>
@@ -1849,13 +1832,6 @@ Address: %2</source>
     <message>
         <source>°C</source>
         <translation>攝氏度</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>信息</translation>
     </message>
 </context>
 <context>
@@ -2113,6 +2089,10 @@ Address: %2</source>
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add object</source>
+        <translation>添加事项</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>背景图片</translation>
     </message>
@@ -2132,6 +2112,18 @@ Address: %2</source>
         <source>Confirm operation</source>
         <translation>确认操作</translation>
     </message>
+    <message>
+        <source>Delete room</source>
+        <translation>删除房间</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>要彻底删除房间和相关的信息吗？</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Objectlinks列表</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
@@ -2143,8 +2135,24 @@ Address: %2</source>
 <context>
     <name>RoomsItems</name>
     <message>
+        <source>Add Room</source>
+        <translation>添加房间</translation>
+    </message>
+    <message>
         <source>Confirm operation</source>
         <translation>确认操作</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>删除楼层</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>要彻底删除楼层、所包括的房间和相关的信息吗？</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>输入新的房间名称</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2153,6 +2161,10 @@ Address: %2</source>
 </context>
 <context>
     <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>确定要删除所选的事项吗？</translation>
+    </message>
     <message>
         <source>Confirm deletion</source>
         <translation>确认删除</translation>
@@ -2191,7 +2203,7 @@ Address: %2</source>
         <translation>删除场景</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation</source>
         <translation>如果没有删除场景，将添加动作到之前存在的场景。按Ok键开始场景编程，按取消键取消操作。</translation>
     </message>
     <message>
@@ -2213,13 +2225,6 @@ Address: %2</source>
     <message>
         <source>stop programming</source>
         <translation>停止编程</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>场景</translation>
     </message>
 </context>
 <context>
@@ -2802,6 +2807,14 @@ Continue?</source>
 <context>
     <name>SettingsObjectLink</name>
     <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>确定要删除所选的事项吗？</translation>
+    </message>
+    <message>
+        <source>Change object name</source>
+        <translation>更改事项名称</translation>
+    </message>
+    <message>
         <source>Confirm deletion</source>
         <translation>确认删除</translation>
     </message>
@@ -2856,6 +2869,14 @@ Continue?</source>
         <translation>确认操作</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>删除简介</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>确定要删除简介和相关的信息吗？</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>要恢复背景为默认值吗？</translation>
     </message>
@@ -2869,6 +2890,10 @@ Continue?</source>
     <message>
         <source>Add Profile</source>
         <translation>添加特性</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>输入新的简介名称</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -3011,13 +3036,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>播音</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3123,6 +3141,45 @@ Continue?</source>
     <message>
         <source>functions</source>
         <translation>功能</translation>
+    </message>
+</context>
+<context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>自动控制</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>防盗警报</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>能耗管理</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>照明</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>信息</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>场景</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>播音</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>温度控制</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>可视对讲系统</translation>
     </message>
 </context>
 <context>
@@ -3298,7 +3355,7 @@ Continue?</source>
     </message>
     <message>
         <source>Silent</source>
-        <translation>无声</translation>
+        <translation>安静</translation>
     </message>
     <message>
         <source>summer</source>
@@ -3319,13 +3376,6 @@ Continue?</source>
     <message>
         <source>winter</source>
         <translation>冬季</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>温度控制</translation>
     </message>
 </context>
 <context>
@@ -3356,13 +3406,6 @@ Continue?</source>
     <message>
         <source>volume</source>
         <translation>音量</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>可视对讲系统</translation>
     </message>
 </context>
 <context>

@@ -685,10 +685,6 @@ Address: %2</source>
 <context>
     <name>Antintrusion</name>
     <message>
-        <source>Burglar alarm</source>
-        <translation>Αντικλεπτικό</translation>
-    </message>
-    <message>
         <source>enter code</source>
         <translation>Eισαγωγή κωδικού</translation>
     </message>
@@ -813,13 +809,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>Automation</name>
-    <message>
-        <source>automation</source>
-        <translation>Αυτοματισμός</translation>
-    </message>
-</context>
-<context>
     <name>BasicSplit</name>
     <message>
         <source>program</source>
@@ -873,7 +862,7 @@ Address: %2</source>
 &lt;/head&gt;
 &lt;body&gt;
 &lt;h1&gt;Server not found&lt;/h1&gt;
-&lt;p&gt;Can&apos;t find the server at $SERVER. Please try again&lt;/p&gt;
+&lt;p&gt;Can&apos;t find the server in $SERVER. Please try again&lt;/p&gt;
 &lt;hr&gt;
 &lt;ul&gt;
 &lt;li&gt;Check the address for typing errors such as &lt;b&gt;ww.example.com&lt;/b&gt; instead of &lt;b&gt;www.example.com&lt;/b&gt;&lt;/li&gt;
@@ -1448,13 +1437,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>EnergyManagement</name>
-    <message>
-        <source>Energy management</source>
-        <translation>Διαχείριση Ενέργειας</translation>
-    </message>
-</context>
-<context>
     <name>EnergyManagementNames</name>
     <message>
         <source>Blocked</source>
@@ -1659,6 +1641,14 @@ Address: %2</source>
 <context>
     <name>Floor</name>
     <message>
+        <source>Add Floor</source>
+        <translation>Προσθήκη ορόφου</translation>
+    </message>
+    <message>
+        <source>Insert new floor name</source>
+        <translation>Εισαγωγή νέου ονόματος ορόφου</translation>
+    </message>
+    <message>
         <source>New Name:</source>
         <translation>Νέο όνομα:</translation>
     </message>
@@ -1732,13 +1722,6 @@ Address: %2</source>
     <message>
         <source>Instant consumption</source>
         <translation>στιγμιαία κατανάλωση</translation>
-    </message>
-</context>
-<context>
-    <name>Lighting</name>
-    <message>
-        <source>lighting</source>
-        <translation>Φωτισμός</translation>
     </message>
 </context>
 <context>
@@ -1849,13 +1832,6 @@ Address: %2</source>
     <message>
         <source>°C</source>
         <translation>°C</translation>
-    </message>
-</context>
-<context>
-    <name>Messages</name>
-    <message>
-        <source>messages</source>
-        <translation>Μηνύματα</translation>
     </message>
 </context>
 <context>
@@ -2113,6 +2089,10 @@ Address: %2</source>
 <context>
     <name>RoomModify</name>
     <message>
+        <source>Add object</source>
+        <translation>Προσθήκη αντικειμένου</translation>
+    </message>
+    <message>
         <source>Background image</source>
         <translation>Εικόνα φόντου</translation>
     </message>
@@ -2132,6 +2112,18 @@ Address: %2</source>
         <source>Confirm operation</source>
         <translation>Επιβεβαίωση λειτουργίας</translation>
     </message>
+    <message>
+        <source>Delete room</source>
+        <translation>Κατάργηση δωματίου</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the room and all associated information?</source>
+        <translation>Θέλετε να σβήσετε μόνιμα το δωμάτιο και τις συνδεόμενες πληροφορίες;</translation>
+    </message>
+    <message>
+        <source>Objectlinks list</source>
+        <translation>Λίστα Objectlinks</translation>
+    </message>
 </context>
 <context>
     <name>Rooms</name>
@@ -2143,8 +2135,24 @@ Address: %2</source>
 <context>
     <name>RoomsItems</name>
     <message>
+        <source>Add Room</source>
+        <translation>Προσθήκη δωματίου</translation>
+    </message>
+    <message>
         <source>Confirm operation</source>
         <translation>Επιβεβαίωση λειτουργίας</translation>
+    </message>
+    <message>
+        <source>Delete Floor</source>
+        <translation>Κατάργηση Ορόφου</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the floor, all contained rooms and all associated information?</source>
+        <translation>Θέλετε να σβήσετε μόνιμα το δωμάτιο και τις συνδεόμενες πληροφορίες;</translation>
+    </message>
+    <message>
+        <source>Insert new room name</source>
+        <translation>Εισαγωγή νέου ονόματος δωματίου</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -2153,6 +2161,10 @@ Address: %2</source>
 </context>
 <context>
     <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Είστε σίγουροι για την διαγραφή του επιλεγμένου αντικειμένου;</translation>
+    </message>
     <message>
         <source>Confirm deletion</source>
         <translation>Επιβεβαίωση κατάργησης</translation>
@@ -2191,7 +2203,7 @@ Address: %2</source>
         <translation>Ακυρώστε το σενάριο</translation>
     </message>
     <message>
-        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operat</source>
+        <source>If you didn&apos;t cancel the scenario, you will add actions to the pre-existing scenario. Press OK if you want to start scenario programming, CANCEL if you wish to abort the operation.</source>
         <translation>Αν δεν έχετε ακυρώσετε το σενάριο, θα πρέπει να προσθέσετε τις δράσεις στο προ-υφιστάμενο σενάριο. Πατήστε Ok αν επιθυμείτε να ξεκινήσετε τον προγραμματισμό του σεναρίου, AΚΎΡΩΣΗ αν επιθυμείτε να ακυρώσετε την διαδικασία.</translation>
     </message>
     <message>
@@ -2213,13 +2225,6 @@ Address: %2</source>
     <message>
         <source>stop programming</source>
         <translation>στάση προγραμματισμού</translation>
-    </message>
-</context>
-<context>
-    <name>Scenarios</name>
-    <message>
-        <source>Scenarios</source>
-        <translation>Σενάριο</translation>
     </message>
 </context>
 <context>
@@ -2802,6 +2807,14 @@ Continue?</source>
 <context>
     <name>SettingsObjectLink</name>
     <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Είστε σίγουροι για την διαγραφή του επιλεγμένου αντικειμένου;</translation>
+    </message>
+    <message>
+        <source>Change object name</source>
+        <translation>Αλλαγή του ονόματος αντικειμένου</translation>
+    </message>
+    <message>
         <source>Confirm deletion</source>
         <translation>Επιβεβαίωση κατάργησης</translation>
     </message>
@@ -2856,6 +2869,14 @@ Continue?</source>
         <translation>Επιβεβαίωση λειτουργίας</translation>
     </message>
     <message>
+        <source>Delete Profile</source>
+        <translation>Κατάργηση Προφίλ</translation>
+    </message>
+    <message>
+        <source>Do you want to permanently delete the profile and all associated information?</source>
+        <translation>Θέλετε να σβήσετε μόνιμα το δωμάτιο και τις συνδεόμενες με αυτό  πληροφορίες;</translation>
+    </message>
+    <message>
         <source>Do you want to restore background to default value?</source>
         <translation>Θέλετε να επαναφέρετε την πρότυπη εικόνα background;</translation>
     </message>
@@ -2869,6 +2890,10 @@ Continue?</source>
     <message>
         <source>Add Profile</source>
         <translation>Προσθήκη προφίλ</translation>
+    </message>
+    <message>
+        <source>Insert new profile name</source>
+        <translation>Εισαγωγή νέου ονόματος προφίλ</translation>
     </message>
     <message>
         <source>New Name:</source>
@@ -3011,13 +3036,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>SoundDiffusion</name>
-    <message>
-        <source>Sound System</source>
-        <translation>Ηχητική σκέδαση</translation>
-    </message>
-</context>
-<context>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
@@ -3126,6 +3144,45 @@ Continue?</source>
     </message>
 </context>
 <context>
+    <name>SystemsNames</name>
+    <message>
+        <source>automation</source>
+        <translation>Αυτοματισμός</translation>
+    </message>
+    <message>
+        <source>Burglar alarm</source>
+        <translation>Αντικλεπτικό</translation>
+    </message>
+    <message>
+        <source>Energy management</source>
+        <translation>Διαχείριση Ενέργειας</translation>
+    </message>
+    <message>
+        <source>lighting</source>
+        <translation>Φωτισμός</translation>
+    </message>
+    <message>
+        <source>messages</source>
+        <translation>Μηνύματα</translation>
+    </message>
+    <message>
+        <source>Scenarios</source>
+        <translation>Σενάριο</translation>
+    </message>
+    <message>
+        <source>Sound System</source>
+        <translation>Ηχητική σκέδαση</translation>
+    </message>
+    <message>
+        <source>temperature control</source>
+        <translation>Θερμορύθμιση</translation>
+    </message>
+    <message>
+        <source>video door entry</source>
+        <translation>Θυροτηλέφωνο</translation>
+    </message>
+</context>
+<context>
     <name>TextDialog</name>
     <message>
         <source>cancel</source>
@@ -3226,7 +3283,7 @@ Continue?</source>
     </message>
     <message>
         <source>auto</source>
-        <translation>Αυτ/το</translation>
+        <translation>Αυτο</translation>
     </message>
     <message>
         <source>Automatic</source>
@@ -3298,7 +3355,7 @@ Continue?</source>
     </message>
     <message>
         <source>Silent</source>
-        <translation>Σιωπηρός</translation>
+        <translation>Σιωπηρή</translation>
     </message>
     <message>
         <source>summer</source>
@@ -3319,13 +3376,6 @@ Continue?</source>
     <message>
         <source>winter</source>
         <translation>Χειμώνας</translation>
-    </message>
-</context>
-<context>
-    <name>ThermalRegulation</name>
-    <message>
-        <source>temperature control</source>
-        <translation>Θερμορύθμιση</translation>
     </message>
 </context>
 <context>
@@ -3356,13 +3406,6 @@ Continue?</source>
     <message>
         <source>volume</source>
         <translation>Ένταση</translation>
-    </message>
-</context>
-<context>
-    <name>VideoDoorEntry</name>
-    <message>
-        <source>video door entry</source>
-        <translation>Θυροτηλέφωνο</translation>
     </message>
 </context>
 <context>
