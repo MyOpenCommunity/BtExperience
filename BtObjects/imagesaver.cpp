@@ -90,6 +90,13 @@ void ImageSaver::startDownload(QObject *_object, QString _property, QString down
 	size = _size;
 	save_file_path = _save_file_path;
 
+	// The file loading operation always fails and we have a fallback to the network
+	// manager; however, it seems that the file:// protocol is not handled correctly
+	// and we always have a download error.
+	// This fixes this issue by stripping the protocol, thus forcing the local
+	// file loading.
+	if (download_url.startsWith("file://"))
+		download_url = download_url.mid(7);
 	image_buffer.load(download_url);
 
 	if (image_buffer.isNull())
