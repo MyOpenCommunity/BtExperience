@@ -61,24 +61,24 @@ MenuColumn {
         }
     }
 
-    ButtonImageThreeStates {
-        id: replyButton
+//    ButtonImageThreeStates {
+//        id: replyButton
 
-        defaultImageBg: "../../images/common/btn_66x35.svg"
-        pressedImageBg: "../../images/common/btn_66x35_P.svg"
-        shadowImage: "../../images/common/btn_shadow_66x35.svg"
-        defaultImage: "../../images/common/messaggio_ricevuto/ico_rispondi.svg"
-        pressedImage: "../../images/common/messaggio_ricevuto/ico_rispondi_P.svg"
-        anchors {
-            bottom: imageBg.bottom
-            bottomMargin: imageBg.height / 100 * 2.66
-            right: deleteButton.left
-            rightMargin: imageBg.width / 100 * 2.83
-        }
+//        defaultImageBg: "../../images/common/btn_66x35.svg"
+//        pressedImageBg: "../../images/common/btn_66x35_P.svg"
+//        shadowImage: "../../images/common/btn_shadow_66x35.svg"
+//        defaultImage: "../../images/common/messaggio_ricevuto/ico_rispondi.svg"
+//        pressedImage: "../../images/common/messaggio_ricevuto/ico_rispondi_P.svg"
+//        anchors {
+//            bottom: imageBg.bottom
+//            bottomMargin: imageBg.height / 100 * 2.66
+//            right: deleteButton.left
+//            rightMargin: imageBg.width / 100 * 2.83
+//        }
 
-        onPressed: {
-            console.log("reply pressed")
-            column.closeColumn()
-        }
-    }
+//        onPressed: {
+//            console.log("reply pressed")
+//            column.closeColumn()
+//        }
+//    }
 }
