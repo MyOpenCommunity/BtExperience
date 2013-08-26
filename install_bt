@@ -37,8 +37,6 @@ rm -rf images
 ln -s ../../../../../cfg/extra/1/images images
 cd -
 
-echo "FEEGA "${ROOTFS}
-
 # modify powervr.ini
 echo "[default]
 WindowSystem=libpvrQWSWSEGL.so
@@ -74,6 +72,7 @@ bin/BtExperience/BtExperience -qws -noswcursor &
 
 wait" > BtExperience_qws
 
-cp BtExperience_qws $BTWEB_APP_BIN_NO_STACKOPEN
+chmod a+x BtExperience_qws
+cp -a BtExperience_qws $BTWEB_APP_BIN_NO_STACKOPEN
 
 exit 0
