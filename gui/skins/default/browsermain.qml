@@ -125,7 +125,7 @@ Item {
 
             FavoritesBar {
                 id: favoritesBar
-                page: webBrowser
+                page: browserItem
                 webView: webView
                 state: "hidden"
                 z: webViewContaineer.z + 1
