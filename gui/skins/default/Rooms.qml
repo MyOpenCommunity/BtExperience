@@ -28,7 +28,7 @@ Page {
     MediaModel {
         source: myHomeModels.rooms
         id: roomsModel
-        containers: [floorsModel.getObject(0).uii]
+        containers: [floorsModel.getObject(bottomFloorsView.selectedIndex).uii]
     }
 
     ControlPathView {
@@ -91,7 +91,7 @@ Page {
         }
         height: 110
         model: floorsModel
-        selectedIndex: 0
+        selectedIndex: global.floorIndex
         delegate: Image {
             property variant itemObject: floorsModel.getObject(index)
 
@@ -114,10 +114,7 @@ Page {
 
             BeepingMouseArea {
                 anchors.fill: parent
-                onClicked: {
-                    bottomFloorsView.selectedIndex = index
-                    roomsModel.containers = [floorsModel.getObject(index).uii]
-                }
+                onClicked: global.floorIndex = index
             }
         }
     }

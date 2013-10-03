@@ -80,6 +80,8 @@ class GlobalProperties : public GlobalPropertiesCommon
 	Q_PROPERTY(UpnpStatus upnpStatus READ getUpnpStatus NOTIFY upnpStatusChanged)
 	Q_PROPERTY(bool upnpPlaying READ getUpnpPlaying NOTIFY upnpStatusChanged)
 
+	Q_PROPERTY(int floorIndex READ getFloorIndex WRITE setFloorIndex NOTIFY floorIndexChanged)
+
 	Q_ENUMS(UpnpStatus)
 
 public:
@@ -139,6 +141,9 @@ public:
 	UpnpStatus getUpnpStatus() const;
 	bool getUpnpPlaying() const;
 
+	int getFloorIndex() const;
+	void setFloorIndex(int new_floor);
+
 public slots:
 	void setMaxTravelledDistanceOnLastMove(QPoint pos);
 
@@ -150,6 +155,7 @@ signals:
 	void homePageUrlChanged();
 	void keepingHistoryChanged();
 	void upnpStatusChanged();
+	void floorIndexChanged();
 
 private slots:
 	void beepChanged();
@@ -183,6 +189,7 @@ private:
 	QString password, home_page_url;
 	bool password_enabled, keeping_history;
 	UpnpStatus upnp_status;
+	int floor_index;
 	int cpu_frequency;
 
 	QHash<int, int> pathview_offsets;

@@ -715,6 +715,19 @@ bool GlobalProperties::getUpnpPlaying() const
 	return upnp_status != UpnpInactive;
 }
 
+int GlobalProperties::getFloorIndex() const
+{
+	return floor_index;
+}
+
+void GlobalProperties::setFloorIndex(int new_floor)
+{
+	if (floor_index == new_floor)
+		return;
+	floor_index = new_floor;
+	emit floorIndexChanged();
+}
+
 void GlobalProperties::sendDelayedFrames()
 {
 	bt_global::devices_cache.checkLazyUpdate(LAZY_UPDATE_COUNT);

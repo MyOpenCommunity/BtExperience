@@ -104,6 +104,7 @@ MenuColumn {
                             if (f.uii === floorUii)
                                 floorsModel.remove(f)
                         }
+                        global.floorIndex = 0
                         column.closeColumn()
                     }
                 }
