@@ -7,6 +7,7 @@ Column {
     property alias title: titleLabel.text
     property alias titleColor: titleLabel.color
     property alias text: bodyText.text
+    property bool cancelVisible: true
 
     signal closePopup
 
@@ -85,6 +86,7 @@ CANCEL if you wish to abort the operation.")
                 shadowImage: "../images/common/btn_shadow_99x35.svg"
                 text: qsTr("cancel")
                 font.pixelSize: 14
+                visible: textDialog.cancelVisible
                 onPressed: {
                     textDialog.cancelClicked()
                     textDialog.closePopup()

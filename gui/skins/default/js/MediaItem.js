@@ -4,8 +4,6 @@
 function mediaItemEnabled(itemObject, restoredItem) {
     if (itemObject.mountPoint)
         return itemObject.mountPoint.mounted
-    if (itemObject.sourceType === SourceObject.Upnp)
-        return !global.upnpPlaying || itemObject === restoredItem
 
     return true
 }

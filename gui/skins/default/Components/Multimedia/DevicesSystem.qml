@@ -35,7 +35,7 @@ MenuColumn {
             hasChild: true
             enabled: Script.mediaItemEnabled(itemObject, restoredItem)
             onEnabledChanged: if (!Script.mediaItemMounted(itemObject)) column.closeChild()
-            onDelegateTouched: pagList._openColumn(itemObject, false)
+            onDelegateTouched: pagList.tryOpenColumn(itemObject, false)
         }
 
         model: modelList
@@ -51,6 +51,15 @@ MenuColumn {
             column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
         }
 
+        function tryOpenColumn(itemObject, restoreState) {
+            if (itemObject.sourceType === SourceObject.Upnp && global.upnpPlaying && itemObject !== restoredItem) {
+                pageObject.installPopup(upnpDialog)
+            }
+            else {
+                _openColumn(itemObject, restoreState)
+            }
+        }
+
         function restoreBrowserState() {
             for (var i = 0; i < modelList.count; ++i) {
                 var itemObject = modelList.getObject(i)
@@ -62,6 +71,22 @@ MenuColumn {
                     _openColumn(itemObject, true)
                     break
                 }
+            }
+        }
+    }
+
+    Component {
+        id: upnpDialog
+
+        TextDialog {
+            title: qsTr("UPnP is playing")
+            text: qsTr("UPnP support is limited to only one active source and \
+there's already an active source. Please stop the other player before \
+continuing.")
+            cancelVisible: false
+
+            function okClicked() {
+                pagList.currentIndex = -1
             }
         }
     }

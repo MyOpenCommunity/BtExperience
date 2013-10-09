@@ -19,9 +19,29 @@ MenuColumn {
             id: sourceDelegate
             property variant itemObject: sourceModel.model.getObject(index)
             enabled: Script.mediaItemEnabled(itemObject)
+            selectOnClick: false
             name: itemObject.name
-            onDelegateTouched: column.sourceSelected(itemObject)
+            onDelegateTouched: {
+                if (itemObject.sourceType === SourceObject.Upnp && global.upnpPlaying) {
+                    pageObject.installPopup(upnpDialog)
+                }
+                else {
+                    column.sourceSelected(itemObject)
+                }
+            }
         }
         onCurrentPageChanged: column.closeChild()
+    }
+
+    Component {
+        id: upnpDialog
+
+        TextDialog {
+            title: qsTr("UPnP is playing")
+            text: qsTr("UPnP support is limited to only one active source and \
+there's already an active source. Please stop the other player before \
+continuing.")
+            cancelVisible: false
+        }
     }
 }
