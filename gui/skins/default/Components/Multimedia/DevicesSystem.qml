@@ -80,9 +80,8 @@ MenuColumn {
 
         TextDialog {
             title: qsTr("UPnP is playing")
-            text: qsTr("UPnP support is limited to only one active source and \
-there's already an active source. Please stop the other player before \
-continuing.")
+            text: qsTr("UPnP support is limited to only one active source. \
+Please stop the source in sound diffusion section before continuing.")
             cancelVisible: false
 
             function okClicked() {
