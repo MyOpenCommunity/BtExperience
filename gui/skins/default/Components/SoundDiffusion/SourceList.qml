@@ -1,5 +1,6 @@
 import QtQuick 1.1
 import BtObjects 1.0
+import BtExperience 1.0
 import Components 1.0
 
 import "../../js/MediaItem.js" as Script
@@ -22,7 +23,9 @@ MenuColumn {
             selectOnClick: false
             name: itemObject.name
             onDelegateTouched: {
-                if (itemObject.sourceType === SourceObject.Upnp && global.upnpPlaying) {
+                if (itemObject.sourceType === SourceObject.Upnp &&
+                        global.upnpStatus !== GlobalProperties.UpnpInactive &&
+                        global.upnpStatus !== GlobalProperties.UpnpSoundDiffusion) {
                     pageObject.installPopup(upnpDialog)
                 }
                 else {
