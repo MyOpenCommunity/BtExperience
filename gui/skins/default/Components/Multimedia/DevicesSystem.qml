@@ -28,6 +28,8 @@ MenuColumn {
         currentIndex: -1
 
         property QtObject restoredItem
+        property variant savedItem
+        property bool upnpStopped: false
 
         delegate: MenuItemDelegate {
             itemObject: modelList.getObject(index)
@@ -35,7 +37,7 @@ MenuColumn {
             hasChild: true
             enabled: Script.mediaItemEnabled(itemObject, restoredItem)
             onEnabledChanged: if (!Script.mediaItemMounted(itemObject)) column.closeChild()
-            onDelegateTouched: pagList.tryOpenColumn(itemObject, false)
+            onDelegateTouched: pagList.tryOpenColumn(itemObject)
         }
 
         model: modelList
@@ -51,12 +53,13 @@ MenuColumn {
             column.loadColumn(upnp ? upnpBrowser : directoryBrowser, itemObject.name, itemObject, props)
         }
 
-        function tryOpenColumn(itemObject, restoreState) {
-            if (itemObject.sourceType === SourceObject.Upnp && global.upnpPlaying && itemObject !== restoredItem) {
+        function tryOpenColumn(itemObject) {
+            if (itemObject.sourceType === SourceObject.Upnp && global.upnpPlaying) {
+                savedItem = itemObject
                 pageObject.installPopup(upnpDialog)
             }
             else {
-                _openColumn(itemObject, restoreState)
+                _openColumn(itemObject, false)
             }
         }
 
@@ -75,17 +78,37 @@ MenuColumn {
         }
     }
 
+    Connections {
+        target: column.pageObject
+        onPopupDismissed: {
+            if (pagList.upnpStopped) {
+                pagList.tryOpenColumn(pagList.savedItem)
+                pagList.upnpStopped = false
+            }
+        }
+    }
+
     Component {
         id: upnpDialog
 
         TextDialog {
-            title: qsTr("UPnP is playing")
+            title: qsTr("Sound diffusion is playing")
             text: qsTr("UPnP support is limited to only one active source. \
-Please stop the source in sound diffusion section before continuing.")
-            cancelVisible: false
+The UPnP source is busy in sound diffusion. Do you want to stop the sound diffusion \
+source?")
 
             function okClicked() {
+                sourceModel.getObject(0).audioVideoPlayer.terminate()
+                pagList.upnpStopped = true
+            }
+
+            function cancelClicked() {
                 pagList.currentIndex = -1
+            }
+
+            ObjectModel {
+                id: sourceModel
+                filters: [{objectId: ObjectInterface.IdSoundSource, objectKey: SourceObject.Upnp}]
             }
         }
     }

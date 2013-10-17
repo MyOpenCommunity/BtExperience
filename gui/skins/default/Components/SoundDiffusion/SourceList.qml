@@ -12,8 +12,11 @@ MenuColumn {
 
     SourceModel { id: sourceModel }
 
+    property variant savedObject
     PaginatorList {
         id: paginator
+        property bool okClicked: false
+
         elementsOnPage: 8
         model: sourceModel.model
         delegate: MenuItemDelegate {
@@ -26,6 +29,7 @@ MenuColumn {
                 if (itemObject.sourceType === SourceObject.Upnp &&
                         global.upnpStatus !== GlobalProperties.UpnpInactive &&
                         global.upnpStatus !== GlobalProperties.UpnpSoundDiffusion) {
+                    column.savedObject = itemObject
                     pageObject.installPopup(upnpDialog)
                 }
                 else {
@@ -36,14 +40,29 @@ MenuColumn {
         onCurrentPageChanged: column.closeChild()
     }
 
+    Connections {
+        target: column.pageObject
+        onPopupDismissed: {
+            if (paginator.okClicked)
+                column.sourceSelected(column.savedObject)
+        }
+    }
+
     Component {
         id: upnpDialog
 
         TextDialog {
-            title: qsTr("UPnP is playing")
+            title: qsTr("Multimedia is playing")
             text: qsTr("UPnP support is limited to only one active source. \
-Please stop the player in multimedia section before continuing.")
-            cancelVisible: false
+The UPnP source is busy in multimedia. Do you want to stop the multimedia \
+source?")
+            function okClicked() {
+                global.audioVideoPlayer.terminate()
+                paginator.okClicked = true
+            }
+            function cancelClicked() {
+                paginator.okClicked = false
+            }
         }
     }
 }

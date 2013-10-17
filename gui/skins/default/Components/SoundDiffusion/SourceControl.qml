@@ -35,6 +35,7 @@ MenuColumn {
     QtObject {
         id: privateProps
         property int currentIndex: -1
+        property bool okClicked: false
 
         function updateSourceItem(sourceObj) {
             if (itemLoader.item && itemLoader.item.objModel === sourceObj)
@@ -188,7 +189,19 @@ MenuColumn {
         Column {
             id: mediaPlayerColumn
             property variant objModel: undefined
+
+            function startBrowsing() {
+                if (privateProps.currentIndex !== 1)
+                    privateProps.currentIndex = 1
+                var comp = objModel.sourceType === SourceObject.Upnp ? upnpBrowser : directoryBrowser
+                var props = {rootPath: objModel.rootPath,
+                    upnp: objModel.sourceType === SourceObject.Upnp,
+                }
+                column.loadColumn(comp, browseItem.name, objModel, props)
+            }
+
             MenuItem {
+                id: browseItem
                 name: qsTr("browse")
                 hasChild: true
                 isSelected: privateProps.currentIndex === 1
@@ -196,13 +209,13 @@ MenuColumn {
                 enabled: global.upnpStatus === GlobalProperties.UpnpSoundDiffusion ? true : Script.mediaItemEnabled(objModel)
                 onEnabledChanged: column.closeChild()
                 onTouched: {
-                    if (privateProps.currentIndex !== 1)
-                        privateProps.currentIndex = 1
-                    var comp = objModel.sourceType === SourceObject.Upnp ? upnpBrowser : directoryBrowser
-                    var props = {rootPath: objModel.rootPath,
-                        upnp: objModel.sourceType === SourceObject.Upnp,
+                    if (objModel.sourceType === SourceObject.Upnp &&
+                            global.upnpStatus !== GlobalProperties.UpnpSoundDiffusion &&
+                            global.upnpStatus !== GlobalProperties.UpnpInactive) {
+                        pageObject.installPopup(upnpDialog)
                     }
-                    column.loadColumn(comp, name, mediaPlayerColumn.objModel, props)
+                    else
+                        mediaPlayerColumn.startBrowsing()
                 }
             }
 
@@ -302,6 +315,34 @@ MenuColumn {
     Component {
         id: radioList
         IpRadioList {}
+    }
+
+    Connections {
+        target: column.pageObject
+        onPopupDismissed: {
+            if (privateProps.okClicked) {
+                itemLoader.item.startBrowsing()
+                privateProps.okClicked = false
+            }
+        }
+    }
+
+    Component {
+        id: upnpDialog
+
+        TextDialog {
+            title: qsTr("Multimedia is playing")
+            text: qsTr("UPnP support is limited to only one active source. \
+The UPnP source is busy in multimedia. Do you want to stop the multimedia \
+source?")
+            function okClicked() {
+                global.audioVideoPlayer.terminate()
+                privateProps.okClicked = true
+            }
+            function cancelClicked() {
+                privateProps.okClicked = false
+            }
+        }
     }
 
     Connections {
