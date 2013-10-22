@@ -20,9 +20,14 @@ Item {
         id: imageDelegate
         // the up-navigation is needed because images are referred to project
         // top folder
-        source: itemObject.cardImageCached[0] === "/" ?
+        source: {
+            if (itemObject)
+                return itemObject.cardImageCached[0] === "/" ?
                     itemObject.cardImageCached :
                     "../" + itemObject.cardImageCached
+            else
+                return ""
+        }
         anchors {
             fill: bg
             topMargin: bg.height / 100 * 1.65
@@ -65,7 +70,7 @@ Item {
 
     UbuntuLightText {
         id: textDelegate
-        text: itemObject.description
+        text: itemObject ? itemObject.description : ""
         color: homeProperties.skin === HomeProperties.Clear ? "#434343" : "white"
         font.pixelSize: 20
         horizontalAlignment: Text.AlignHCenter

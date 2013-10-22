@@ -24,9 +24,9 @@ PathView {
     delegate: PathViewDelegate {
         id: viewDelegate
         itemObject: control.model.getObject(index)
-        z: PathView.elementZ
-        scale: PathView.elementScale
-        opacity: PathView.elementOpacity
+        z: PathView.elementZ || 0
+        scale: PathView.elementScale || 1
+        opacity: PathView.elementOpacity || 1
         onDelegateClicked: {
             // here is the entry point to trigger the card action; it is a
             // good time to beep :) this is useful to catch all beep "paths"
