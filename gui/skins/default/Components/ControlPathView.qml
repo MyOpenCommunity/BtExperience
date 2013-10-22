@@ -22,18 +22,13 @@ Item {
 
     signal clicked(variant delegate)
 
-    Component.onCompleted: {
-        offsetBehavior.enabled = false
-        pathView.offset = global.getPathviewOffset(pathviewId)
-        offsetBehavior.enabled = true
-    }
-
     ControlPathViewInternal {
         id: pathView
 
         anchors.fill: parent
         onClicked: control.clicked(delegate)
 
+        offset: global.getPathviewOffset(pathviewId)
         onOffsetChanged: {
             // remove pressed status when scrolling cards
             offset_diff = Math.abs(global.getPathviewOffset(pathviewId) - Math.round(offset))
