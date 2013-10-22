@@ -31,17 +31,19 @@ Page {
         containers: [floorsModel.getObject(bottomFloorsView.selectedIndex).uii]
     }
 
-    ControlPathView {
+    // Use a loader to destroy and rebuild ControlPathView.
+    // If we re-use a single ControlPathView, it's really hard to get the offset
+    // value right because:
+    // - we must ensure that the offset is valid when switching from a floor
+    //   with many rooms to a floor with few rooms (bug #22348)
+    // - we must not show the offset animation when switching model, which is
+    //   hard because we depend on many different signals
+    // - resetting the offset on model reset leads to bugs in other places (bug
+    //   #24111)
+    Loader {
+        id: loader
         visible: roomsModel.count >= 3
-        x0FiveElements: 150
-        x0ThreeElements: 250
-        y0: 180
-        x1: 445
-        y1: 160
-        x2FiveElements: 740
-        x2ThreeElements: 640
-        pathviewId: privateProps.floorUii()
-        model: roomsModel
+        sourceComponent: pathViewComponent
         anchors {
             right: parent.right
             rightMargin: 30
@@ -51,9 +53,34 @@ Page {
             topMargin: 50
             bottom: bottomFloorsView.top
         }
-        pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
-        arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
-        onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': privateProps.floorUii()})
+    }
+
+    Component {
+        id: pathViewComponent
+        ControlPathView {
+            x0FiveElements: 150
+            x0ThreeElements: 250
+            y0: 180
+            x1: 445
+            y1: 160
+            x2FiveElements: 740
+            x2ThreeElements: 640
+            pathviewId: privateProps.floorUii()
+            model: roomsModel
+            pathOffset: model.count === 4 ? -40 : (model.count === 6 ? -40 : 0)
+            arrowsMargin: model.count === 4 ? 70 : (model.count === 6 ? 30 : 10)
+            onClicked: Stack.goToPage("Room.qml", {'room': delegate, 'floorUii': privateProps.floorUii()})
+        }
+    }
+
+    Connections {
+        target: roomsModel
+        onModelAboutToBeReset: {
+            loader.sourceComponent = undefined
+        }
+        onModelReset: {
+            loader.sourceComponent = pathViewComponent
+        }
     }
 
     CardView {

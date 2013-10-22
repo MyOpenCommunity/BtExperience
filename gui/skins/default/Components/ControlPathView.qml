@@ -45,18 +45,6 @@ Item {
         }
     }
 
-    Connections {
-        target: model
-        onModelAboutToBeReset: {
-            offsetBehavior.enabled = false
-            pathView.offset = 0
-        }
-        onModelReset: {
-            pathView.offset = global.getPathviewOffset(pathviewId)
-            offsetBehavior.enabled = true
-        }
-    }
-
     SvgImage {
         id: prevArrow
         source: "../images/common/freccia_sx.svg"
