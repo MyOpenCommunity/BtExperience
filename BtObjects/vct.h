@@ -246,6 +246,9 @@ class CCTV : public VDEBase
 
 	/*!
 		\brief Gets the id of the associated teleloop
+
+		Returns 0 if the teleloop is not enabled, a number in range [1-9] inclusive
+		otherwise.
 	*/
 	Q_PROPERTY(int associatedTeleloopId READ getAssociatedTeleloopId NOTIFY associatedTeleloopIdChanged)
 

@@ -161,6 +161,7 @@ MenuColumn {
                     privateProps.currentIndex = 4
                 column.loadColumn(teleloopComponent, name)
             }
+            visible: privateProps.model.associatedTeleloopId !== 0
 
             Component {
                 id: teleloopComponent
