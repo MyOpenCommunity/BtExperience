@@ -972,13 +972,13 @@ void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
 			if (status)
 				startLocalPlayback(!values_list.contains(VirtualSourceDevice::DIM_SELF_REQUEST));
 			else
-				player->terminate();
+				player->pause();
 		}
 			break;
 
 		case SourceDevice::DIM_AREAS_UPDATED:
 			if (!dev->isActive())
-				player->terminate();
+				player->pause();
 			break;
 
 		case VirtualSourceDevice::REQ_NEXT_TRACK:
