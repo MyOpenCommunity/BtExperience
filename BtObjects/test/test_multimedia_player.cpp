@@ -680,14 +680,6 @@ void TestPlaylistPlayer::init()
 	player = new AudioVideoPlayer(this);
 	static_cast<MultiMediaPlayer*>(player->getMediaPlayer())->mediaplayer_output_mode = MediaPlayer::OutputStdout;
 	model = new DirectoryListModel(this);
-
-	QVariantList root;
-
-	foreach (QString part, QDir::currentPath().split("/", QString::SkipEmptyParts))
-		root << part;
-	root << "files" << "audio" << "broken";
-
-	model->setRootPath(root);
 }
 
 void TestPlaylistPlayer::cleanup()
@@ -698,6 +690,7 @@ void TestPlaylistPlayer::cleanup()
 
 void TestPlaylistPlayer::testLoopCheck()
 {
+	model->setRootPath(buildRootPath("files/audio/broken"));
 	ObjectTester next(player->getMediaPlayer(), SIGNAL(currentSourceChanged(QString)));
 	ObjectTester loop(player, SIGNAL(loopDetected()));
 
@@ -720,6 +713,7 @@ void TestPlaylistPlayer::testLoopCheck()
 
 void TestPlaylistPlayer::testResetLoopCheck()
 {
+	model->setRootPath(buildRootPath("files/audio/broken"));
 	player->loop_starting_file = 3;
 
 	player->terminate();
@@ -732,6 +726,32 @@ void TestPlaylistPlayer::testResetLoopCheck()
 	player->generatePlaylistLocal(model, 4, model->getCount(), false);
 	player->nextTrack();
 	QCOMPARE(player->loop_starting_file, 4);
+}
+
+void TestPlaylistPlayer::testGenerateLocal()
+{
+	model->setRootPath(buildRootPath("files/media_content"));
+	player->generatePlaylistLocal(model, 0, model->getCount(), false);
+
+	QStringList check = QStringList() << "f5.mp3" << "f6.mp3";
+	QCOMPARE(player->local_list->totalFiles(), check.size());
+	for (int i = 0; i < player->local_list->totalFiles(); ++i)
+	{
+		QString full_path = player->local_list->currentFilePath();
+		QCOMPARE(full_path.split("/", QString::SkipEmptyParts).last(), check.at(i));
+		player->local_list->nextFile();
+	}
+}
+
+QVariantList TestPlaylistPlayer::buildRootPath(QString path)
+{
+	QVariantList root;
+
+	foreach (QString part, QDir::currentPath().split("/", QString::SkipEmptyParts))
+		root << part;
+	foreach (const QString &part, path.split("/", QString::SkipEmptyParts))
+		root << part;
+	return root;
 }
 
 void TestPlaylistPlayer::initTestCase()

@@ -3,6 +3,8 @@
 
 #include "test_btobject.h"
 
+#include <QVariantList>
+
 class MultiMediaPlayer;
 class AudioVideoPlayer;
 class DirectoryListModel;
@@ -64,8 +66,10 @@ private slots:
 
 	void testLoopCheck();
 	void testResetLoopCheck();
+	void testGenerateLocal();
 
 private:
+	QVariantList buildRootPath(QString path);
 	AudioVideoPlayer *player;
 	DirectoryListModel *model;
 };
