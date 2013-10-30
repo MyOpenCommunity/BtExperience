@@ -8,8 +8,8 @@ DEFINES += BT_EXPERIENCE_TODO_REVIEW_ME
 
 INCLUDEPATH+= . .. ../.. ../../../common_files ../../../stackopen
 INCLUDEPATH+= ../../../stackopen/common_develer/lib
-INCLUDEPATH+= ../ts ../../../libqtdevices ../../../libqtdevices/test
-DEPENDPATH+= . .. ../..
+INCLUDEPATH+= ../../../libqtdevices ../../../libqtdevices/test ../../..
+DEPENDPATH+= . .. ../.. ../../..
 
 TARGET = test
 CONFIG   += console
@@ -53,7 +53,6 @@ HEADERS += \
 	test_videodoorentry_objects.h \
 	common_files/logger.h \
 	objecttester.h \
-	ts/main.h \
 	../../libqtdevices/test/openserver_mock.h \
 	../../libqtdevices/definitions.h
 

@@ -25,6 +25,8 @@
 #include "scenarioobjects.h"
 #include "openmsg.h"
 
+#include "bt_global_config.h"
+
 #include <QtTest>
 
 Q_DECLARE_METATYPE(DeviceValues)

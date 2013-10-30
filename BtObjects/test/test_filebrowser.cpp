@@ -22,7 +22,8 @@
 #include "test_filebrowser.h"
 #include "objecttester.h"
 #include "folderlistmodel.h"
-#include "treebrowser.h"
+
+#include <libqtcommon/treebrowser.h>
 
 #include <QtTest>
 

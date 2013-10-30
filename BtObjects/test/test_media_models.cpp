@@ -48,7 +48,12 @@ void TestMediaModel::init()
 	container = new Container(2001, 3, "", "Test container");
 	container->setItemOrder(QList<int>() << 102 << 101 << 100);
 	uii_map->insert(3, container);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
 	MediaModel::setUiiMapper(uii_map);
+#else
+	UiiMapper::setUiiMapper(uii_map);
+#endif
 
 	QList<ItemInterface *> test_items;
 	for (int i = 0; i < 5; ++i)

@@ -1,9 +1,11 @@
 #include "test_multimedia_player.h"
 #include "multimediaplayer.h"
 #include "objecttester.h"
-#include "mediaplayer.h"
 #include "playlistplayer.h"
 #include "folderlistmodel.h"
+
+#include <libqtcommon/mediaplayer.h>
+#include <libqtcommon/list_manager.h>
 
 #include <QtTest>
 #include <gst/gst.h>
