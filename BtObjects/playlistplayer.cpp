@@ -179,24 +179,7 @@ void PlayListPlayer::generate(DirectoryListModel *model, int index, int total_fi
 	model->setRange(QVariantList() << -1 << -1);
 
 	// needs file to know file type (needs to select files of the same type)
-	// but remember to skip directories!
-	//
-	// BUG: the scan of USB/SD cards returns when it finds any mp3 in a directory.
-	// The scan returns a list of directories and files; directories are listed
-	// first. When we start play, we start from index 0, which is a directory.
-	// Here we loop over all the listed files and select the same
-	// "file type" as the starting index, which in our case is a directory.
-	// The end result is that we will build a list of directories.
 	FileObject *file = static_cast<FileObject *>(model->getObject(index));
-	if (file->getFileType() & FileObject::Directory)
-		for (int real_index = (index + 1) % model->getCount();
-			 real_index != index;
-			 real_index = (real_index + 1) % model->getCount())
-		{
-			file = static_cast<FileObject *>(model->getObject(real_index));
-			if ((file->getFileType() & FileObject::Directory) == 0)
-				break;
-		}
 
 	// creates list of files (of the same type) to play
 	EntryInfoList entry_list;

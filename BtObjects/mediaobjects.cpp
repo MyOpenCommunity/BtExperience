@@ -669,7 +669,28 @@ void SourceLocalMedia::pathScanComplete()
 	if (!*terminated && files->getCount())
 	{
 		qDebug() << "Playing from USB/SD";
-		startPlay(files, 0, files->getCount());
+
+		// BUG: the scan of USB/SD cards returns when it finds any mp3 in a directory.
+		// The scan returns a list of directories and files; directories are listed
+		// first. When we start play, we start from index 0, which is a directory.
+		// Here we loop over all the listed files and select the same
+		// "file type" as the starting index, which in our case is a directory.
+		// The end result is that we will build a list of directories.
+		//
+		// Note that we also have to skip video and image files.
+		int index = 0;
+		FileObject *file = static_cast<FileObject *>(files->getObject(index));
+		if (file->getFileType() & (~FileObject::Audio))
+			for (index = (index + 1) % files->getCount();
+				 index != 0;
+				 index = (index + 1) % files->getCount())
+			{
+				file = static_cast<FileObject *>(files->getObject(index));
+				if ((file->getFileType() & (~FileObject::Audio)) == 0)
+					break;
+			}
+
+		startPlay(files, index, files->getCount());
 	}
 
 	files->deleteLater();
