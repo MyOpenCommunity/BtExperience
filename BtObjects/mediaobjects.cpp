@@ -909,6 +909,7 @@ SourceMultiMedia::SourceMultiMedia(VirtualSourceDevice *d) :
 	source_index = -1;
 
 	MultiMediaPlayer *p = static_cast<MultiMediaPlayer *>(player->getMediaPlayer());
+	connect(player, SIGNAL(playingChanged()), SLOT(resetSourceIndex()));
 
 #if defined(BT_HARDWARE_X11)
 	p->setCommandLineArguments(QStringList(), QStringList());
@@ -975,6 +976,14 @@ void SourceMultiMedia::firstMediaContentStatus(bool status)
 		nextSource();
 	else
 		setSourceObject(sources[source_index]);
+}
+
+// We need to reset the source_index because otherwise we will never cycle
+// more than once through the available sources when an SCS frame ON is received.
+void SourceMultiMedia::resetSourceIndex()
+{
+	if (player->isStopped())
+		source_index = -1;
 }
 
 void SourceMultiMedia::valueReceived(const DeviceValues &values_list)

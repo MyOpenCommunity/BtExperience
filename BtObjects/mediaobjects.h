@@ -547,6 +547,7 @@ protected slots:
 
 private slots:
 	void firstMediaContentStatus(bool status);
+	void resetSourceIndex();
 
 private:
 	void startLocalPlayback(bool force);
