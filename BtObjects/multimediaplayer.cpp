@@ -1,8 +1,8 @@
 #include "multimediaplayer.h"
-#include "mediaplayer.h"
 #include "gstmediaplayer.h"
 
-#include "generic_functions.h"
+#include <libqtcommon/mediaplayer.h>
+#include <libqtcommon/entryinfo.h>
 
 #include <QTime>
 #include <QTimer>

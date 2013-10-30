@@ -1,6 +1,5 @@
 #include "mediaobjects.h"
 #include "media_device.h"
-#include "list_manager.h"
 #include "playlistplayer.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
@@ -9,6 +8,8 @@
 #include "globalmodels.h"
 #include "medialink.h"
 #include "bt_global_config.h"
+
+#include <libqtcommon/list_manager.h>
 
 #include <QDebug>
 #include <QFutureWatcher>

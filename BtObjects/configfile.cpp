@@ -11,6 +11,8 @@
 #include "xml_functions.h"
 #include "xmlobject.h"
 
+#include <libqtcommon/scenevodevicescond.h> // TemperatureScale, CELSIUS
+
 #define FILE_SAVE_INTERVAL 10000
 
 

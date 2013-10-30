@@ -3,7 +3,6 @@
 #include "playlistplayer.h"
 #include "audiostate.h"
 #include "screenstate.h"
-#include "mediaplayer.h" // SoundPlayer
 #include "mediaobjects.h" // SourceMedia
 #include "ringtonemanager.h"
 #include "configfile.h"
@@ -17,6 +16,7 @@
 #include "bt_global_config.h"
 #include "paths.h"
 
+#include <libqtcommon/mediaplayer.h> // SoundPlayer
 #include <QTimer>
 #include <QDateTime>
 #include <QScreen>

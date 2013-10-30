@@ -32,7 +32,8 @@
 #include "eventfilters.h"
 #include "globalpropertiescommon.h"
 #include "xml_functions.h"
-#include "signalshandler.h"
+
+#include <libqtcommon/signalshandler.h>
 
 #define VERBOSITY_LEVEL_DEFAULT 0x1F
 

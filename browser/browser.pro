@@ -19,8 +19,8 @@ maliit {
     DEFINES += BT_MALIIT
 }
 
-INCLUDEPATH += ./common_files ../gui ../BtObjects ../BtObjects/ts ../BtObjects/../../libqtdevices
-DEPENDPATH += . ../../libqtdevices ../gui ../BtObjects ../BtObjects/ts
+INCLUDEPATH += ./common_files ../gui ../BtObjects ../.. ../BtObjects/../../libqtdevices
+DEPENDPATH += . ../../libqtdevices ../gui ../BtObjects ../..
 LIBS += -lssl
 
 DESTDIR = ../bin/$${HARDWARE}

@@ -72,14 +72,15 @@ HEADERS += \
 	../../libqtdevices/thermal_device.h \
 	../../libqtdevices/videodoorentry_device.h \
 	../../libqtdevices/xml_functions.h \
-	ts/connectiontester.h \
-	ts/list_manager.h \
-	ts/mediaplayer.h \
-	ts/scaleconversion.h \
-	ts/scenevodevicescond.h \
-	ts/treebrowser.h \
-	ts/xmlclient.h \
-	ts/xmldevice.h
+	../../libqtcommon/connectiontester.h \
+	../../libqtcommon/entryinfo.h \
+	../../libqtcommon/list_manager.h \
+	../../libqtcommon/mediaplayer.h \
+	../../libqtcommon/scaleconversion.h \
+	../../libqtcommon/scenevodevicescond.h \
+	../../libqtcommon/treebrowser.h \
+	../../libqtcommon/xmlclient.h \
+	../../libqtcommon/xmldevice.h
 
 SOURCES += \
 	alarmclock.cpp \
@@ -151,11 +152,12 @@ SOURCES += \
 	../../libqtdevices/thermal_device.cpp \
 	../../libqtdevices/videodoorentry_device.cpp \
 	../../libqtdevices/xml_functions.cpp \
-	ts/connectiontester.cpp \
-	ts/list_manager.cpp \
-	ts/mediaplayer.cpp \
-	ts/scaleconversion.cpp \
-	ts/scenevodevicescond.cpp \
-	ts/treebrowser.cpp \
-	ts/xmlclient.cpp \
-	ts/xmldevice.cpp
+	../../libqtcommon/connectiontester.cpp \
+	../../libqtcommon/entryinfo.cpp \
+	../../libqtcommon/list_manager.cpp \
+	../../libqtcommon/mediaplayer.cpp \
+	../../libqtcommon/scaleconversion.cpp \
+	../../libqtcommon/scenevodevicescond.cpp \
+	../../libqtcommon/treebrowser.cpp \
+	../../libqtcommon/xmlclient.cpp \
+	../../libqtcommon/xmldevice.cpp

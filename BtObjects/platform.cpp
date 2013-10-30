@@ -1,7 +1,8 @@
 #include "platform.h"
 #include "platform_device.h"
-#include "connectiontester.h"
 #include "configfile.h"
+
+#include <libqtcommon/connectiontester.h>
 
 #include <QDebug>
 #include <QDate>

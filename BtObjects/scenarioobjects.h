@@ -7,7 +7,7 @@
 
 #include "objectinterface.h"
 #include "device.h" // DeviceValues, RawDevice
-#include "scenevodevicescond.h"
+#include <libqtcommon/scenevodevicescond.h>
 
 class ScenarioDevice;
 class QDomNode;

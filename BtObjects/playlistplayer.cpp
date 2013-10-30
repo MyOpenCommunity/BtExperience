@@ -1,8 +1,9 @@
 #include "playlistplayer.h"
 #include "folderlistmodel.h"
-#include "list_manager.h"
 #include "mounts.h"
 #include "medialink.h"
+
+#include <libqtcommon/list_manager.h>
 
 #include <QDebug>
 #include <QTime>

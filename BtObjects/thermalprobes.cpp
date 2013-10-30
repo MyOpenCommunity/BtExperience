@@ -1,10 +1,11 @@
 #include "thermalprobes.h"
 #include "thermalobjects.h"
-#include "scaleconversion.h" // bt2Celsius
 #include "probe_device.h"
 #include "thermal_device.h" // for min/max manual temps
 #include "xmlobject.h"
 #include "devices_cache.h"
+
+#include <libqtcommon/scaleconversion.h> // bt2Celsius
 
 #include <QDebug>
 

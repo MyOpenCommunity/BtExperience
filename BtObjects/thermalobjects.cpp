@@ -2,11 +2,12 @@
 #include "thermalprobes.h"
 #include "thermal_device.h"
 #include "probe_device.h"
-#include "scaleconversion.h" // bt2Celsius
 #include "shared_functions.h"
 #include "objectmodel.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
+
+#include <libqtcommon/scaleconversion.h> // bt2Celsius
 
 #include <QDebug>
 #include <QCoreApplication>

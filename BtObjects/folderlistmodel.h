@@ -2,7 +2,7 @@
 #define FOLDERLISTMODEL_H
 
 #include "objectinterface.h"
-#include "generic_functions.h" // EntryInfo
+#include <libqtcommon/entryinfo.h>
 
 #include <QAbstractListModel>
 #include <QUrl>

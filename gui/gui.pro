@@ -15,8 +15,8 @@ qtcAddDeployment()
 include(../config.pri)
 
 INCLUDEPATH += ./common_files ../../stackopen/liblghal
-INCLUDEPATH += ../BtObjects ../BtObjects/ts ../BtObjects/../../libqtdevices
-DEPENDPATH += ../BtObjects ../BtObjects/ts ../BtObjects/../../libqtdevices
+INCLUDEPATH += ../BtObjects ../BtObjects/../../libqtdevices ../BtObjects/../..
+DEPENDPATH += ../BtObjects ../BtObjects/../.. ../BtObjects/../../libqtdevices
 LIBS += -lssl -L../bin/$${HARDWARE}/BtObjects -lbtobjects
 isArm() {
     LIBS += -L../../stackopen/liblghal -llghal
@@ -73,7 +73,8 @@ SOURCES += \
         inputcontextwrapper.cpp \
         ringtonemanager.cpp \
         watchdog.cpp \
-        ../BtObjects/ts/signalshandler.cpp \
+		../../libqtcommon/signalshandler.cpp \
+	../../libqtcommon/entryinfo.h \
     ../BtObjects/paths.cpp
 
 HEADERS += \
@@ -90,7 +91,8 @@ HEADERS += \
     inputcontextwrapper.h \
         ringtonemanager.h \
         watchdog.h \
-        ../BtObjects/ts/signalshandler.h \
+		../../libqtcommon/signalshandler.h \
+	../../libqtcommon/entryinfo.h \
     ../BtObjects/paths.h
 
 TRANSLATIONS += locale/bt_experience_it.ts \

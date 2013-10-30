@@ -1,10 +1,11 @@
 #include "splitadvancedscenario.h"
 #include "probe_device.h"
-#include "scaleconversion.h"
 #include "choicelist.h"
 #include "devices_cache.h"
 #include "xmlobject.h"
 #include "uiimapper.h"
+
+#include <libqtcommon/scaleconversion.h>
 
 #include <QDebug>
 

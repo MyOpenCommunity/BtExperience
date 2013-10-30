@@ -1,11 +1,11 @@
 #include "audiostate.h"
 
 #include "multimediaplayer.h"
-#include "mediaplayer.h" // SoundPlayer
 #include "generic_functions.h"
 #include "bt_global_config.h"
 #include "mediaobjects.h"
 
+#include <libqtcommon/mediaplayer.h> // SoundPlayer
 #include <QStringList>
 #include <QMetaEnum>
 

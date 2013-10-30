@@ -10,7 +10,6 @@
 #include "mediaobjects.h"
 #include "messagessystem.h"
 #include "multimediaplayer.h"
-#include "mediaplayer.h"
 #include "xml_functions.h"
 #include "platform.h"
 #include "platform_device.h"
@@ -39,7 +38,9 @@
 #include "mounts.h"
 #include "alarmclocknotifier.h"
 #include "screenstate.h"
-#include "calibration.h"
+#include "bt_global_config.h"
+
+#include <libqtcommon/mediaplayer.h>
 
 #include <qdeclarative.h> // qmlRegisterUncreatableType
 #include <QDeclarativeEngine>

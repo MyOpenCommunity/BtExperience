@@ -1,5 +1,6 @@
 #include "imagesaver.h"
-#include "generic_functions.h"
+
+#include <libqtcommon/entryinfo.h>
 
 #include <QtDebug>
 #include <QNetworkRequest>

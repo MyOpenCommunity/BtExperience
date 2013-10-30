@@ -1,12 +1,13 @@
 #include "splitbasicscenario.h"
 #include "airconditioning_device.h"
 #include "probe_device.h"
-#include "scaleconversion.h"
 #include "devices_cache.h"
 #include "xml_functions.h"
 #include "xmlobject.h"
 #include "uiimapper.h"
 #include "objectmodel.h"
+
+#include <libqtcommon/scaleconversion.h>
 
 #include <QDebug>
 

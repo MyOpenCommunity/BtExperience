@@ -1,5 +1,5 @@
 #include "folderlistmodel.h"
-#include "treebrowser.h"
+#include <libqtcommon/treebrowser.h>
 
 #include <QtDebug>
 

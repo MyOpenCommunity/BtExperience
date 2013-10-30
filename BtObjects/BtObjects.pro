@@ -10,7 +10,7 @@ DEFINES += XML_SERVER_ADDRESS=\\\"openserver\\\"
 DEFINES += BT_EXPERIENCE_TODO_REVIEW_ME
 
 INCLUDEPATH += ./common_files
-DEPENDPATH += . ../../libqtdevices ts
+DEPENDPATH += . ../../libqtdevices ../..
 
 TARGET = $$qtLibraryTarget($$TARGET)
 
@@ -28,7 +28,7 @@ INSTALLS += target
 SOURCES += btobjectsplugin.cpp
 HEADERS += btobjectsplugin.h
 
-INCLUDEPATH += . ./ts ../../libqtdevices
+INCLUDEPATH += . ../../ ../../libqtdevices
 
 include(btobjects.pri)
 
