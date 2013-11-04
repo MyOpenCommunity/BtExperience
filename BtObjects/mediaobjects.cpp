@@ -942,9 +942,15 @@ void SourceMultiMedia::startLocalPlayback(bool force)
 		return;
 	}
 
-	if (!force || source_index != -1)
+	if (!force)
 		return;
 
+	// We need to reset the source_index because otherwise we will never cycle
+	// more than once through the available sources when an SCS frame ON is received.
+	// Here we already know the player is stopped for some reason (eg. mediaserver
+	// playing in multimedia, USB key unmounted); we need to restart the search
+	// for a local source.
+	source_index = -1;
 	nextSource();
 }
 
@@ -976,14 +982,6 @@ void SourceMultiMedia::firstMediaContentStatus(bool status)
 		nextSource();
 	else
 		setSourceObject(sources[source_index]);
-}
-
-// We need to reset the source_index because otherwise we will never cycle
-// more than once through the available sources when an SCS frame ON is received.
-void SourceMultiMedia::resetSourceIndex()
-{
-	if (player->isStopped())
-		source_index = -1;
 }
 
 void SourceMultiMedia::valueReceived(const DeviceValues &values_list)
