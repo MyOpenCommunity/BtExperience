@@ -137,15 +137,18 @@ Page {
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
+    SystemsModel { id: cctvSystem; systemId: Container.IdVideoDoorEntry }
     ObjectModel {
         id: camerasModel
         filters: [
             {objectId: ObjectInterface.IdExternalPlace},
             {objectId: ObjectInterface.IdSurveillanceCamera}
         ]
+        containers: [cctvSystem.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
+    SystemsModel { id: scenarioSystem; systemId: Container.IdScenarios }
     ObjectModel {
         id: scenariosModel
         filters: [
@@ -155,6 +158,7 @@ Page {
             {objectId: ObjectInterface.IdAdvancedScenario },
             {objectId: ObjectInterface.IdScheduledScenario}
         ]
+        containers: [scenarioSystem.systemUii]
         range: paginator.computePageRange(paginator.currentPage, paginator.elementsOnPage)
     }
 
