@@ -46,7 +46,7 @@ SOURCES += \
     ../BtObjects/linkinterface.cpp \
     ../BtObjects/medialink.cpp \
     ../BtObjects/paths.cpp \
-    ../BtObjects/ts/signalshandler.cpp \
+	../../libqtcommon/signalshandler.cpp \
     ../gui/applicationcommon.cpp \
     ../gui/eventfilters.cpp \
     ../gui/globalpropertiescommon.cpp \
@@ -70,7 +70,7 @@ HEADERS += \
     ../BtObjects/linkinterface.h \
     ../BtObjects/medialink.h \
     ../BtObjects/paths.h \
-    ../BtObjects/ts/signalshandler.h \
+	../../libqtcommon/signalshandler.h \
     ../gui/applicationcommon.h \
     ../gui/eventfilters.h \
     ../gui/globalpropertiescommon.h \
