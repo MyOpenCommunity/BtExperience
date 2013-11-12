@@ -51,7 +51,7 @@ MenuColumn {
 
     Column {
         MenuItem {
-            name: qsTr("Change card image")
+            name: qsTr("Change card")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
             onTouched: {

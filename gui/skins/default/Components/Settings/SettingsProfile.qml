@@ -29,7 +29,7 @@ MenuColumn {
 
     Column {
         MenuItem {
-            name: qsTr("Change card image")
+            name: qsTr("Change card")
             isSelected: privateProps.currentIndex === 1
             hasChild: true
             onTouched: {
@@ -40,7 +40,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Change background image")
+            name: qsTr("Change background")
             isSelected: privateProps.currentIndex === 2
             hasChild: true
             onTouched: {
@@ -61,7 +61,7 @@ MenuColumn {
         }
 
         MenuItem {
-            name: qsTr("Restore background image")
+            name: qsTr("Restore background")
             isSelected: privateProps.currentIndex === 4
             onTouched: {
                 privateProps.currentIndex = -1
