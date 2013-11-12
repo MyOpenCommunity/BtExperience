@@ -72,9 +72,7 @@ MenuColumn {
 
         TextDialog {
             title: qsTr("Multimedia is playing")
-            text: qsTr("UPnP support is limited to only one active source. \
-The UPnP source is busy in multimedia. Do you want to stop the multimedia \
-source?")
+            text: qsTr("Multimedia is busy, do you want to stop the source?")
             function okClicked() {
                 global.audioVideoPlayer.terminate()
                 paginator.okClicked = true

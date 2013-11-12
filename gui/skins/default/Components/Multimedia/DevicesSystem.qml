@@ -112,9 +112,7 @@ MenuColumn {
 
         TextDialog {
             title: qsTr("Sound diffusion is playing")
-            text: qsTr("UPnP support is limited to only one active source. \
-The UPnP source is busy in sound diffusion. Do you want to stop the sound diffusion \
-source?")
+            text: qsTr("Sound diffusion is playing, do you want to stop the source?")
 
             function okClicked() {
                 sourceModel.getObject(0).audioVideoPlayer.terminate()
