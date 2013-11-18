@@ -20,6 +20,7 @@
 import QtQuick 1.1
 import Components 1.0
 import BtObjects 1.0
+import BtExperience 1.0
 
 import "../../js/Stack.js" as Stack
 import "../../js/MediaItem.js" as Script
@@ -73,7 +74,8 @@ MenuColumn {
         }
 
         function tryOpenColumn(itemObject) {
-            if (itemObject.sourceType === SourceObject.Upnp && global.upnpPlaying) {
+            if (itemObject.sourceType === SourceObject.Upnp &&
+                    global.upnpStatus === GlobalProperties.UpnpSoundDiffusion) {
                 savedItem = itemObject
                 pageObject.installPopup(upnpDialog)
             }
