@@ -114,7 +114,7 @@ MenuColumn {
 
         TextDialog {
             title: qsTr("Sound diffusion is playing")
-            text: qsTr("Sound diffusion is playing, do you want to stop the source?")
+            text: qsTr("To activate media server in Multimedia you need to stop the source.Proceed?")
 
             function okClicked() {
                 sourceModel.getObject(0).audioVideoPlayer.terminate()

@@ -72,7 +72,7 @@ MenuColumn {
 
         TextDialog {
             title: qsTr("Multimedia is playing")
-            text: qsTr("Multimedia is busy, do you want to stop the source?")
+            text: qsTr("To activate media server in sound diffusion you need to stop the source.Proceed?")
             function okClicked() {
                 global.audioVideoPlayer.terminate()
                 paginator.okClicked = true
