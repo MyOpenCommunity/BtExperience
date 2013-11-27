@@ -103,15 +103,9 @@ Page {
         id: cardListView
         CardView {
             delegate: CardDelegate {
-                property variant itemObject: cardListViewModel.getObject(index)
-                source: itemObject.cardImageCached
-                label: itemObject.description
-
+                itemObject: cardListViewModel.getObject(index)
                 onClicked: cardClicked(itemObject)
             }
-
-            delegateSpacing: 40
-            visibleElements: 2
 
             model: cardListViewModel
         }

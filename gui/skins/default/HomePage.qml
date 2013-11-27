@@ -210,15 +210,9 @@ BasePage {
         }
         visible: model.count < 3
         delegate: CardDelegate {
-            property variant itemObject: profilesModel.getObject(index)
-            source: itemObject.cardImageCached
-            label: itemObject.description
-
+            itemObject: profilesModel.getObject(index)
             onClicked: Stack.goToPage('Profile.qml', {'profile': itemObject})
         }
-
-        delegateSpacing: 40
-        visibleElements: 2
 
         model: profilesModel
     }

@@ -113,15 +113,9 @@ Page {
         }
         visible: model.count < 3
         delegate: CardDelegate {
-            property variant itemObject: roomsModel.getObject(index)
-            source: itemObject.cardImageCached
-            label: itemObject.description
-
+            itemObject: roomsModel.getObject(index)
             onClicked: Stack.goToPage("Room.qml", {'room': itemObject, 'floorUii': privateProps.floorUii()})
         }
-
-        delegateSpacing: 40
-        visibleElements: 2
 
         model: roomsModel
     }

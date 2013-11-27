@@ -81,15 +81,9 @@ Page {
         id: cardList
         CardView {
             delegate: CardDelegate {
-                property variant itemObject: systemsModel.getObject(index)
-                source: itemObject.cardImageCached
-                label: itemObject.description
-
+                itemObject: systemsModel.getObject(index)
                 onClicked: Stack.goToPage(Script.getTarget(itemObject.containerId))
             }
-
-            delegateSpacing: 40
-            visibleElements: 2
 
             model: systemsModel
         }

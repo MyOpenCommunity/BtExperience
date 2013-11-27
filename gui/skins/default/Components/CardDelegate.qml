@@ -21,36 +21,38 @@ import QtQuick 1.1
 import BtObjects 1.0
 import Components 1.0
 import Components.Text 1.0
-import BtExperience 1.0
 
 Item {
     id: itemDelegate
+    // This is almost a verbatim copy of PathViewDelegate
 
-    property alias source: imageDelegate.source
-    property alias label: textDelegate.text
-    property int index: -1
-    property variant view
-    property alias moveAnimationRunning: defaultAnimation.running
+    property variant itemObject: undefined
 
-    signal clicked
-    signal removeAnimationFinished()
+    signal clicked(variant delegate)
 
-    width: cardShadow.width
-    height: cardShadow.height
-    onHeightChanged: itemDelegate.view.height = height // needed to correctly dimension the view
+    width: bg.width
+    height: bg.height
 
     Image { // placed here because the background must mask part of the image
         id: imageDelegate
         // the up-navigation is needed because images are referred to project
         // top folder
+        source: {
+            if (itemObject)
+                return itemObject.cardImageCached[0] === "/" ?
+                    itemObject.cardImageCached :
+                    "../" + itemObject.cardImageCached
+            else
+                return ""
+        }
+
         anchors {
             fill: bg
             topMargin: bg.height / 100 * 1.65
-            leftMargin: bg.width / 100 * 2.38
-            rightMargin: bg.width / 100 * 2.86
-            bottomMargin: bg.height / 100 * 16.17
+            leftMargin: bg.width / 100 * 1.98
+            rightMargin: bg.width / 100 * 2.38
+            bottomMargin: bg.height / 100 * 15.50
         }
-        source: ""
     }
 
     Image {
@@ -67,7 +69,6 @@ Item {
 
     SvgImage {
         id: bg
-        anchors.centerIn: parent
 
         source: homeProperties.skin === HomeProperties.Clear ?
                     "../images/profiles/scheda_profili.svg" :
@@ -77,6 +78,7 @@ Item {
     BorderImage {
         id: cardShadow
         source: "../images/profiles/card_shadow.png"
+        anchors.centerIn: bg
         width: 238
         height: 331
         border { left: 24; top: 22; right: 24; bottom: 22 }
@@ -86,60 +88,42 @@ Item {
 
     UbuntuLightText {
         id: textDelegate
-        text: "prova microfono"
+        text: itemObject ? itemObject.description : ""
         color: homeProperties.skin === HomeProperties.Clear ? "#434343" : "white"
-        font.pixelSize: 18
+        font.pixelSize: 20
         horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
         anchors {
             bottom: bg.bottom
-            bottomMargin: 10
+            bottomMargin: 15
             left: bg.left
+            leftMargin: 8
             right: bg.right
+            rightMargin: 8
         }
-        elide: Text.ElideRight
     }
 
     BeepingMouseArea {
+        id: pressArea
         anchors.fill: parent
-        onClicked: itemDelegate.clicked()
-        onPressed: itemDelegate.view.currentPressed = index
-        onReleased: itemDelegate.view.currentPressed = -1
+        onClicked: itemDelegate.clicked(itemObject)
     }
 
-    states: [
-        State {
-            when: itemDelegate.view.currentPressed === index
-            PropertyChanges {
-                target: bg
-                source: homeProperties.skin === HomeProperties.Clear ?
-                            "../images/profiles/scheda_profili_P.svg" :
-                            "../images/profiles/scheda_profili.svg"
-            }
-            PropertyChanges {
-                target: textDelegate
-                color: homeProperties.skin === HomeProperties.Clear ? "white" : "#434343"
-            }
-            PropertyChanges {
-                target: bgProfilePressed
-                visible: true
-            }
-        },
-        State {
-            name: "remove"
+    states: State {
+        when: pressArea.pressed
+        PropertyChanges {
+            target: bg
+            source: homeProperties.skin === HomeProperties.Clear ?
+                        "../images/profiles/scheda_profili_P.svg" :
+                        "../images/profiles/scheda_profili.svg"
         }
-    ]
-
-    transitions:
-        Transition {
-        from: "*"
-        to: "remove"
-        SequentialAnimation {
-            NumberAnimation { target: itemDelegate; property: "opacity"; to: 0; duration: 200; easing.type: Easing.InSine }
-            ScriptAction { script: itemDelegate.removeAnimationFinished() }
+        PropertyChanges {
+            target: textDelegate
+            color: homeProperties.skin === HomeProperties.Clear ? "white" : "#434343"
         }
-    }
-
-    Behavior on x {
-        NumberAnimation { id: defaultAnimation; duration: 300; easing.type: Easing.InSine }
+        PropertyChanges {
+            target: bgProfilePressed
+            visible: true
+        }
     }
 }
