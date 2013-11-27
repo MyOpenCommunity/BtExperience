@@ -118,6 +118,16 @@ PathView {
     preferredHighlightBegin: (pathItemCount % 2) === 0 ? 0.49 : 0.5
     preferredHighlightEnd: (pathItemCount % 2) === 0 ? 0.49 : 0.5
 
+    Connections {
+        target: model
+        onModelAboutToBeReset: {
+            highlightRangeMode = PathView.NoHighlightRange
+        }
+        onModelReset: {
+            highlightRangeMode = PathView.StrictlyEnforceRange
+        }
+    }
+
     onFlickStarted: {
         currentPressed = -1
     }
