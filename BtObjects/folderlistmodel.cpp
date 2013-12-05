@@ -154,8 +154,7 @@ TreeBrowserListModelBase::TreeBrowserListModelBase(TreeBrowser *_browser, QObjec
 	filter = 0;
 	loading = false;
 
-	connect(this, SIGNAL(currentPathChanged()), this, SLOT(directoryChanged()));
-	connect(browser, SIGNAL(directoryChanged()), this, SIGNAL(currentPathChanged()));
+	connect(browser, SIGNAL(directoryChanged()), this, SLOT(directoryChanged()));
 	connect(browser, SIGNAL(directoryChangeError()), this, SIGNAL(directoryChangeError()));
 	connect(browser, SIGNAL(emptyDirectory()), this, SIGNAL(emptyDirectory()));
 	connect(browser, SIGNAL(isRootChanged()), this, SIGNAL(isRootChanged()));
@@ -307,7 +306,6 @@ void TreeBrowserListModelBase::directoryChanged()
 			resetCurrentRange();
 			current_path.pop_back();
 			setRange(getCurrentRange());
-			emit serverListChanged();
 		}
 		else
 		{
@@ -316,11 +314,12 @@ void TreeBrowserListModelBase::directoryChanged()
 			// but setting it to a range of the same size as the current one should
 			// not have any adverse affect and is probably a bit more efficient
 			setRange(QVariantList() << 0 << max_range - min_range);
-			emit serverListChanged();
 		}
+		emit serverListChanged();
 	}
 
 	pending_dirchange = QString();
+	emit currentPathChanged();
 }
 
 QVariantList TreeBrowserListModelBase::getRange() const
