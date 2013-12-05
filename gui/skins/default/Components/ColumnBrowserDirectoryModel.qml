@@ -29,7 +29,7 @@ ColumnBrowserCommon {
     property int level: localModel.currentPath.length - 1
 
     theModel: localModel
-    text: level === 1 ? dataModel.name : localModel.currentPath[level]
+    text: localModel.isRoot ? dataModel.name : localModel.currentPath[level]
 
     DirectoryListModel {
         id: localModel

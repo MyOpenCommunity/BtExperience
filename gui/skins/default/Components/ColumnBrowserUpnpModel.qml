@@ -28,7 +28,7 @@ ColumnBrowserCommon {
     property bool restoreState
 
     theModel: upnpModel
-    text: upnpModel.serverList ? "Media Server" : upnpModel.currentPath[upnpModel.currentPath.length - 1]
+    text: upnpModel.isRoot ? "Media Server" : upnpModel.currentPath[upnpModel.currentPath.length - 1]
 
     UPnPListModel {
         id: upnpModel

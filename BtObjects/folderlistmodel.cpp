@@ -157,7 +157,12 @@ TreeBrowserListModelBase::TreeBrowserListModelBase(TreeBrowser *_browser, QObjec
 	connect(browser, SIGNAL(directoryChanged()), this, SLOT(directoryChanged()));
 	connect(browser, SIGNAL(directoryChangeError()), this, SIGNAL(directoryChangeError()));
 	connect(browser, SIGNAL(emptyDirectory()), this, SIGNAL(emptyDirectory()));
+	// We have no other way to signal that we are entering or leaving the root
+	// directory (either server list for upnp or root directory for local folders).
+	// Using browser::isRootChanged is expensive because it is emitted for each
+	// directory change
 	connect(browser, SIGNAL(isRootChanged()), this, SIGNAL(isRootChanged()));
+	connect(browser, SIGNAL(rootDirectoryEntered()), this, SIGNAL(isRootChanged()));
 
 	// in case of success, the flag is reset after reloading the file list
 	connect(browser, SIGNAL(directoryChangeError()), this, SLOT(resetLoadingFlag()));
@@ -181,10 +186,7 @@ void TreeBrowserListModelBase::setRootPath(QVariantList _path)
 	current_path = _path;
 	emit rootPathChanged();
 	if (old_current != current_path)
-	{
 		emit currentPathChanged();
-		emit serverListChanged();
-	}
 	startLoadingItems();
 }
 
@@ -223,7 +225,6 @@ void TreeBrowserListModelBase::setCurrentPath(QVariantList cp)
 	{
 		current_path = cp;
 		emit currentPathChanged();
-		emit serverListChanged();
 	}
 }
 
@@ -250,14 +251,6 @@ void TreeBrowserListModelBase::exitDirectory()
 	// intentionally not the null string, see directoryChanged()
 	pending_dirchange = "";
 	browser->exitDirectory();
-
-	if (browser->isRoot())
-	{
-		current_path.clear();
-		page_position.clear();
-		browser->reset();
-		emit serverListChanged();
-	}
 }
 
 QVariantList TreeBrowserListModelBase::getCurrentPath() const
@@ -315,7 +308,6 @@ void TreeBrowserListModelBase::directoryChanged()
 			// not have any adverse affect and is probably a bit more efficient
 			setRange(QVariantList() << 0 << max_range - min_range);
 		}
-		emit serverListChanged();
 	}
 
 	pending_dirchange = QString();
@@ -376,11 +368,6 @@ void TreeBrowserListModelBase::restore(FolderListModelMemento *m)
 	setCurrentPath(m->current_path);
 	setRange(getCurrentRange());
 	setFilter(m->filter);
-}
-
-bool TreeBrowserListModelBase::getServerList() const
-{
-	return current_path.size() == 0;
 }
 
 
