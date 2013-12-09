@@ -823,29 +823,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authenticatie verplicht</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Wachtwoord</translation>
-    </message>
-    <message>
-        <source>This connection is unreliable. Do you wish to continue?</source>
-        <translation>De verbinding is niet veilig. U wilt doorgaan?</translation>
-    </message>
-    <message>
-        <source>Unreliable SSL connection</source>
-        <translation>Onveilige SSL-verbinding</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Gebruikersnaam</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -1240,6 +1217,17 @@ Adres: %2</translation>
     <message>
         <source>Devices</source>
         <translation>Apparaten</translation>
+    </message>
+</context>
+<context>
+    <name>DevicesSystem</name>
+    <message>
+        <source>Sound diffusion is playing</source>
+        <translation>Geluidsdiffusie ingeschakeld</translation>
+    </message>
+    <message>
+        <source>To activate media server in Multimedia you need to stop the source.Proceed?</source>
+        <translation>Om te mediaserver in Multimedia te kunnen activeren moet u de bron onderbreken. Doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -1929,85 +1917,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Actief</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>WEKKER</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>INBRAAKALARM</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Beschikbaar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Sluiten</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Commando verzonden</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGIEBEHEER</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Maandelijks Energierapport</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Negeren</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MELDINGEN</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Maandelijks doel bereikt</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Meer informatie</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>nieuw(e) bericht(en)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Uitstellen</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lezen</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SCENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Tonen</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Nazicht</translation>
-    </message>
-</context>
-<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -2105,10 +2014,6 @@ Adres: %2</translation>
         <translation>Beeld achtergrond wijzigen</translation>
     </message>
     <message>
-        <source>Change card image</source>
-        <translation>Beeld kaart wijzigen</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Handeling bevestigen</translation>
     </message>
@@ -2123,6 +2028,21 @@ Adres: %2</translation>
     <message>
         <source>Objectlinks list</source>
         <translation>Lijst van Objectlinks</translation>
+    </message>
+    <message>
+        <source>Change card</source>
+        <translation>Kaart verwisselen</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Het gekozen voorwerp elimineren?</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Wissen bevestigen</translation>
     </message>
 </context>
 <context>
@@ -2157,17 +2077,6 @@ Adres: %2</translation>
     <message>
         <source>New Name:</source>
         <translation>Nieuwe naam:</translation>
-    </message>
-</context>
-<context>
-    <name>RoomView</name>
-    <message>
-        <source>Are you sure to delete the selected object?</source>
-        <translation>Het gekozen voorwerp elimineren?</translation>
-    </message>
-    <message>
-        <source>Confirm deletion</source>
-        <translation>Wissen bevestigen</translation>
     </message>
 </context>
 <context>
@@ -2518,10 +2427,6 @@ Doorgaan?</translation>
         <translation>Achtergrondbeeld</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Beeld achtergrond wijzigen</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Handeling bevestigen</translation>
     </message>
@@ -2538,8 +2443,12 @@ Doorgaan?</translation>
         <translation>Quicklinks</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Achtergrondbeeld herstellen</translation>
+        <source>Change background</source>
+        <translation>Achtergrond wijzigen</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Achtergrond herstellen</translation>
     </message>
 </context>
 <context>
@@ -2857,14 +2766,6 @@ Doorgaan?</translation>
         <translation>Beeld kaart</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Beeld achtergrond wijzigen</translation>
-    </message>
-    <message>
-        <source>Change card image</source>
-        <translation>Beeld kaart wijzigen</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Handeling bevestigen</translation>
     </message>
@@ -2881,8 +2782,16 @@ Doorgaan?</translation>
         <translation>De default waarde van de achtergrond herstellen?</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Achtergrondbeeld herstellen</translation>
+        <source>Change card</source>
+        <translation>Kaart verwisselen</translation>
+    </message>
+    <message>
+        <source>Change background</source>
+        <translation>Achtergrond wijzigen</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Achtergrond herstellen</translation>
     </message>
 </context>
 <context>
@@ -3061,6 +2970,25 @@ Doorgaan?</translation>
         <source>Source changed</source>
         <translation>Bron gewijzigd</translation>
     </message>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Multimedia wordt afgespeeld</translation>
+    </message>
+    <message>
+        <source>UPnP support is limited to only one active source. The UPnP source is busy in multimedia. Do you want to stop the multimedia source?</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SourceList</name>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Multimedia wordt afgespeeld</translation>
+    </message>
+    <message>
+        <source>To activate media server in sound diffusion you need to stop the source.Proceed?</source>
+        <translation>Om te mediaserver in geluidsdiffusie te kunnen activeren moet u de bron onderbreken. Doorgaan?</translation>
+    </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
@@ -3202,21 +3130,6 @@ Doorgaan?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Snelheid luchtverhitter</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modi</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Temperatuurinstelling</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3273,6 +3186,21 @@ Doorgaan?</translation>
     <message>
         <source>Weekly</source>
         <translation>Wekelijk</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Snelheid luchtverhitter</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modi</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Temperatuurinstelling</translation>
     </message>
 </context>
 <context>
@@ -3442,6 +3370,111 @@ Doorgaan?</translation>
     <message>
         <source>mute</source>
         <translation>Mute</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authenticatie verplicht</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>De verbinding is niet veilig. U wilt doorgaan?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Onveilige SSL-verbinding</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Gebruikersnaam</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Actief</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>WEKKER</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>INBRAAKALARM</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Beschikbaar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Sluiten</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Commando verzonden</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERGIEBEHEER</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Maandelijks Energierapport</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Negeren</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MELDINGEN</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Maandelijks doel bereikt</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Meer informatie</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>nieuw(e) bericht(en)</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Uitstellen</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Lezen</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SCENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Tonen</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Nazicht</translation>
     </message>
 </context>
 </TS>

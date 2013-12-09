@@ -823,29 +823,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Αιτείται πιστοποίηση</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>κωδικός</translation>
-    </message>
-    <message>
-        <source>This connection is unreliable. Do you wish to continue?</source>
-        <translation>Μη εμπιστεύσιμη σύνδεση. Θέλετε να συνεχίσετε</translation>
-    </message>
-    <message>
-        <source>Unreliable SSL connection</source>
-        <translation>Μη εμπιστεύσιμη σύνδεση SSL</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Όνομα χρήστη</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -1240,6 +1217,17 @@ Address: %2</source>
     <message>
         <source>Devices</source>
         <translation>Συσκευές</translation>
+    </message>
+</context>
+<context>
+    <name>DevicesSystem</name>
+    <message>
+        <source>Sound diffusion is playing</source>
+        <translation>Ενεργή αναπαραγωγή ήχου</translation>
+    </message>
+    <message>
+        <source>To activate media server in Multimedia you need to stop the source.Proceed?</source>
+        <translation>Για ενεργοποίηση server Πολυμέσων θα πρέπει να σταματήσετε την πηγή. Συνέχεια;</translation>
     </message>
 </context>
 <context>
@@ -1929,85 +1917,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Ενεργοποιημένη</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ΞΥΠΝΗΤΗΡΙ</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ΑΝΤΙΚΛΕΠΤΙΚΟ</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Διαθέσιμο </translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Κλείσιμο</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Αποσταλείσα εντολή</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ΔΙΑΧΕΙΡΙΣΗ ΕΝΕΡΓΕΙΑΣ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Μηνιαία Αναφορά Ενέργειας</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Αγνόησε</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>ΜΗΝΥΜΑΤΑ</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Ανάκτηση μηνιαίου κατωφλίου </translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Περισσότερες πληροφορίες</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>νέο (α) μηνύμ(α)τα</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Αναβολή</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Ανάγνωση</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>ΣΕΝΑΡΙΟ</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Προβολή</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Σταση</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Επίβλεψη</translation>
-    </message>
-</context>
-<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -2105,10 +2014,6 @@ Address: %2</source>
         <translation>Αλλαγή εικόνας φόντου</translation>
     </message>
     <message>
-        <source>Change card image</source>
-        <translation>Αλλαγή εικόνας των card</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Επιβεβαίωση λειτουργίας</translation>
     </message>
@@ -2123,6 +2028,21 @@ Address: %2</source>
     <message>
         <source>Objectlinks list</source>
         <translation>Λίστα Objectlinks</translation>
+    </message>
+    <message>
+        <source>Change card</source>
+        <translation>Αλλαγή κάρτας</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Είστε σίγουροι για την διαγραφή του επιλεγμένου αντικειμένου;</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Επιβεβαίωση κατάργησης</translation>
     </message>
 </context>
 <context>
@@ -2157,17 +2077,6 @@ Address: %2</source>
     <message>
         <source>New Name:</source>
         <translation>Νέο όνομα:</translation>
-    </message>
-</context>
-<context>
-    <name>RoomView</name>
-    <message>
-        <source>Are you sure to delete the selected object?</source>
-        <translation>Είστε σίγουροι για την διαγραφή του επιλεγμένου αντικειμένου;</translation>
-    </message>
-    <message>
-        <source>Confirm deletion</source>
-        <translation>Επιβεβαίωση κατάργησης</translation>
     </message>
 </context>
 <context>
@@ -2518,10 +2427,6 @@ Continue?</source>
         <translation>Εικόνα φόντου</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Αλλαγή εικόνας φόντου</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Επιβεβαίωση λειτουργίας</translation>
     </message>
@@ -2538,8 +2443,12 @@ Continue?</source>
         <translation>Quicklinks</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Επαναφορά της εικόνας φόντου</translation>
+        <source>Change background</source>
+        <translation>Αλλαγή φόντου</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Επαναφορά φόντου</translation>
     </message>
 </context>
 <context>
@@ -2857,14 +2766,6 @@ Continue?</source>
         <translation>Εικόνα card</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Αλλαγή εικόνας φόντου</translation>
-    </message>
-    <message>
-        <source>Change card image</source>
-        <translation>Αλλαγή εικόνας των card</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Επιβεβαίωση λειτουργίας</translation>
     </message>
@@ -2881,8 +2782,16 @@ Continue?</source>
         <translation>Θέλετε να επαναφέρετε την πρότυπη εικόνα background;</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Επαναφορά της εικόνας φόντου</translation>
+        <source>Change card</source>
+        <translation>Αλλαγή κάρτας</translation>
+    </message>
+    <message>
+        <source>Change background</source>
+        <translation>Αλλαγή φόντου</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Επαναφορά φόντου</translation>
     </message>
 </context>
 <context>
@@ -3061,6 +2970,25 @@ Continue?</source>
         <source>Source changed</source>
         <translation>αλλαγή πηγής</translation>
     </message>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Αναπαραγωγή πολυμέσων</translation>
+    </message>
+    <message>
+        <source>UPnP support is limited to only one active source. The UPnP source is busy in multimedia. Do you want to stop the multimedia source?</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SourceList</name>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Αναπαραγωγή πολυμέσων</translation>
+    </message>
+    <message>
+        <source>To activate media server in sound diffusion you need to stop the source.Proceed?</source>
+        <translation>Για την ενεργοποίηση του server πολυμέσων κατά την αναπαραγωγή θα πρέπει να σταματήσετε την πηγή. Συνέχεια;</translation>
+    </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
@@ -3202,21 +3130,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Ταχύτητα του fancoil</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>λειτουργίες</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Ρυθμισμένη θερμοκρασία</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3273,6 +3186,21 @@ Continue?</source>
     <message>
         <source>Weekly</source>
         <translation>Εβδομαδιαία</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Ταχύτητα του fancoil</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>λειτουργίες</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Ρυθμισμένη θερμοκρασία</translation>
     </message>
 </context>
 <context>
@@ -3442,6 +3370,111 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>σιώπηση</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Αιτείται πιστοποίηση</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>κωδικός</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Μη εμπιστεύσιμη σύνδεση. Θέλετε να συνεχίσετε</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Μη εμπιστεύσιμη σύνδεση SSL</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Όνομα χρήστη</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Ενεργοποιημένη</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ΞΥΠΝΗΤΗΡΙ</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ΑΝΤΙΚΛΕΠΤΙΚΟ</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Διαθέσιμο </translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Κλείσιμο</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Αποσταλείσα εντολή</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ΔΙΑΧΕΙΡΙΣΗ ΕΝΕΡΓΕΙΑΣ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Μηνιαία Αναφορά Ενέργειας</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Αγνόησε</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>ΜΗΝΥΜΑΤΑ</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Ανάκτηση μηνιαίου κατωφλίου </translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Περισσότερες πληροφορίες</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>νέο (α) μηνύμ(α)τα</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Αναβολή</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Ανάγνωση</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>ΣΕΝΑΡΙΟ</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Προβολή</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Σταση</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Επίβλεψη</translation>
     </message>
 </context>
 </TS>

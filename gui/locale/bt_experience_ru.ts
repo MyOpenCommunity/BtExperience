@@ -823,29 +823,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Требуется аутентификация</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>пароль</translation>
-    </message>
-    <message>
-        <source>This connection is unreliable. Do you wish to continue?</source>
-        <translation>Это соединение ненадежное. Вы хотите продолжить?</translation>
-    </message>
-    <message>
-        <source>Unreliable SSL connection</source>
-        <translation>Ненадежное соединение SSL</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Имя пользователя</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -1240,6 +1217,17 @@ Address: %2</source>
     <message>
         <source>Devices</source>
         <translation>Устройства</translation>
+    </message>
+</context>
+<context>
+    <name>DevicesSystem</name>
+    <message>
+        <source>Sound diffusion is playing</source>
+        <translation>Работает звуковая трансляция</translation>
+    </message>
+    <message>
+        <source>To activate media server in Multimedia you need to stop the source.Proceed?</source>
+        <translation>Для активации медиа-сервера в Мультимедиа следует остановить воспроизведение. Продолжить?</translation>
     </message>
 </context>
 <context>
@@ -1929,85 +1917,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Включено</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ЧАСЫ-БУДИЛЬНИК</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>ОХРАННАЯ СИГНАЛИЗАЦИЯ</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Имеющийся в наличии</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Закрыть</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Команда отправлена</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>УПРАВЛЕНИЕ ЭНЕРГИЕЙ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Месячный отчет об энергии</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Игнорировать</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>СООБЩЕНИЯ</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Месячная цель достигнута</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Дополнительная информация</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>новое(ые) сообщение(я)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Отложить</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Читать</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>СЦЕНАРИЙ</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Показать</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Стоп</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Контроль</translation>
-    </message>
-</context>
-<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -2105,10 +2014,6 @@ Address: %2</source>
         <translation>Изменить фоновое изображение</translation>
     </message>
     <message>
-        <source>Change card image</source>
-        <translation>Изменить изображение карточек</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Подтвердить операцию</translation>
     </message>
@@ -2123,6 +2028,21 @@ Address: %2</source>
     <message>
         <source>Objectlinks list</source>
         <translation>Список ссылок на объекты</translation>
+    </message>
+    <message>
+        <source>Change card</source>
+        <translation>Изменить карту</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Вы действительно хотите удалить выбранный объект?</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Подтвердить удаление</translation>
     </message>
 </context>
 <context>
@@ -2157,17 +2077,6 @@ Address: %2</source>
     <message>
         <source>New Name:</source>
         <translation>Новое имя:</translation>
-    </message>
-</context>
-<context>
-    <name>RoomView</name>
-    <message>
-        <source>Are you sure to delete the selected object?</source>
-        <translation>Вы действительно хотите удалить выбранный объект?</translation>
-    </message>
-    <message>
-        <source>Confirm deletion</source>
-        <translation>Подтвердить удаление</translation>
     </message>
 </context>
 <context>
@@ -2518,10 +2427,6 @@ Continue?</source>
         <translation>Фоновое изображение</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Изменить фоновое изображение</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Подтвердить операцию</translation>
     </message>
@@ -2538,8 +2443,12 @@ Continue?</source>
         <translation>Быстрые ссылки</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Восстановить фоновое изображение</translation>
+        <source>Change background</source>
+        <translation>Изменить фон</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Восстановить фон</translation>
     </message>
 </context>
 <context>
@@ -2857,14 +2766,6 @@ Continue?</source>
         <translation>Изображение карточки</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Изменить фоновое изображение</translation>
-    </message>
-    <message>
-        <source>Change card image</source>
-        <translation>Изменить изображение карточек</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Подтвердить операцию</translation>
     </message>
@@ -2881,8 +2782,16 @@ Continue?</source>
         <translation>Вы хотите восстановить значение фона по умолчанию?</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Восстановить фоновое изображение</translation>
+        <source>Change card</source>
+        <translation>Изменить карту</translation>
+    </message>
+    <message>
+        <source>Change background</source>
+        <translation>Изменить фон</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Восстановить фон</translation>
     </message>
 </context>
 <context>
@@ -3061,6 +2970,25 @@ Continue?</source>
         <source>Source changed</source>
         <translation>Смена источника</translation>
     </message>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Работает мультимедиа</translation>
+    </message>
+    <message>
+        <source>UPnP support is limited to only one active source. The UPnP source is busy in multimedia. Do you want to stop the multimedia source?</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SourceList</name>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Работает мультимедиа</translation>
+    </message>
+    <message>
+        <source>To activate media server in sound diffusion you need to stop the source.Proceed?</source>
+        <translation>Для активации медиа-сервера в Звуковая трансляция следует остановить воспроизведение. Продолжить?</translation>
+    </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
@@ -3202,21 +3130,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Cкорость фанкойла</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Pежимы</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Заданная температура</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3273,6 +3186,21 @@ Continue?</source>
     <message>
         <source>Weekly</source>
         <translation>Недельный</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Cкорость фанкойла</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Pежимы</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Заданная температура</translation>
     </message>
 </context>
 <context>
@@ -3442,6 +3370,112 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>Hемой</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Требуется аутентификация</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>пароль</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Это соединение ненадежное. Вы хотите продолжить?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Ненадежное соединение SSL</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Имя пользователя</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Включено</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ЧАСЫ-БУДИЛЬНИК</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>ОХРАННАЯ СИГНАЛИЗАЦИЯ</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Имеющийся в наличии</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Команда отправлена</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>УПРАВЛЕНИЕ ЭНЕРГИЕЙ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Месячный отчет об энергии</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Игнорировать</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>СООБЩЕНИЯ</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Месячная цель достигнута</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Дополнительная информация</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>новое(ые) сообщение(я)</numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Отложить</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Читать</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>СЦЕНАРИЙ</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Показать</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Стоп</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Контроль</translation>
     </message>
 </context>
 </TS>

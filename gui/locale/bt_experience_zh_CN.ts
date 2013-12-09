@@ -823,29 +823,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>需要验证</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密码</translation>
-    </message>
-    <message>
-        <source>This connection is unreliable. Do you wish to continue?</source>
-        <translation>这个连接不可信。需要继续吗？</translation>
-    </message>
-    <message>
-        <source>Unreliable SSL connection</source>
-        <translation>不可信的SSL连接</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>用户名</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -1240,6 +1217,17 @@ Address: %2</source>
     <message>
         <source>Devices</source>
         <translation>设备</translation>
+    </message>
+</context>
+<context>
+    <name>DevicesSystem</name>
+    <message>
+        <source>Sound diffusion is playing</source>
+        <translation>声音的扩散正在播放</translation>
+    </message>
+    <message>
+        <source>To activate media server in Multimedia you need to stop the source.Proceed?</source>
+        <translation>要激活介质服务器在多媒体需要停止的来源。要继续吗？</translation>
     </message>
 </context>
 <context>
@@ -1929,85 +1917,6 @@ Address: %2</source>
     </message>
 </context>
 <context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>启动</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>闹钟</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>防盗</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>可用</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>指令已发送</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>能耗管理</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>能耗月报表</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>忽略</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>信息</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>月达成目标</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>更多信息</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>新的信息</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>推迟</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>读取</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>场景</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>显示</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>停止</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>监督</translation>
-    </message>
-</context>
-<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -2105,10 +2014,6 @@ Address: %2</source>
         <translation>更换背景图片</translation>
     </message>
     <message>
-        <source>Change card image</source>
-        <translation>更换卡片</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>确认操作</translation>
     </message>
@@ -2123,6 +2028,21 @@ Address: %2</source>
     <message>
         <source>Objectlinks list</source>
         <translation>Objectlinks列表</translation>
+    </message>
+    <message>
+        <source>Change card</source>
+        <translation>更换图片</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>确定要删除所选的事项吗？</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>确认删除</translation>
     </message>
 </context>
 <context>
@@ -2157,17 +2077,6 @@ Address: %2</source>
     <message>
         <source>New Name:</source>
         <translation>新名称：</translation>
-    </message>
-</context>
-<context>
-    <name>RoomView</name>
-    <message>
-        <source>Are you sure to delete the selected object?</source>
-        <translation>确定要删除所选的事项吗？</translation>
-    </message>
-    <message>
-        <source>Confirm deletion</source>
-        <translation>确认删除</translation>
     </message>
 </context>
 <context>
@@ -2518,10 +2427,6 @@ Continue?</source>
         <translation>背景图片</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>更换背景图片</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>确认操作</translation>
     </message>
@@ -2538,8 +2443,12 @@ Continue?</source>
         <translation>快捷链接</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>恢复背景图像</translation>
+        <source>Change background</source>
+        <translation>变化背景</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>恢复的背景</translation>
     </message>
 </context>
 <context>
@@ -2857,14 +2766,6 @@ Continue?</source>
         <translation>卡片图像</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>更换背景图片</translation>
-    </message>
-    <message>
-        <source>Change card image</source>
-        <translation>更换卡片</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>确认操作</translation>
     </message>
@@ -2881,8 +2782,16 @@ Continue?</source>
         <translation>要恢复背景为默认值吗？</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>恢复背景图像</translation>
+        <source>Change card</source>
+        <translation>更换图片</translation>
+    </message>
+    <message>
+        <source>Change background</source>
+        <translation>变化背景</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>恢复的背景</translation>
     </message>
 </context>
 <context>
@@ -3061,6 +2970,25 @@ Continue?</source>
         <source>Source changed</source>
         <translation>更换声源</translation>
     </message>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>多媒体正在发挥</translation>
+    </message>
+    <message>
+        <source>UPnP support is limited to only one active source. The UPnP source is busy in multimedia. Do you want to stop the multimedia source?</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SourceList</name>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>多媒体正在发挥</translation>
+    </message>
+    <message>
+        <source>To activate media server in sound diffusion you need to stop the source.Proceed?</source>
+        <translation>要激活介质服务器在的声音扩散，你需要停止源。要继续吗？</translation>
+    </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
@@ -3202,21 +3130,6 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>盘管风机速度</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>模式</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>温度设置</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3273,6 +3186,21 @@ Continue?</source>
     <message>
         <source>Weekly</source>
         <translation>每周</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>盘管风机速度</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>模式</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>温度设置</translation>
     </message>
 </context>
 <context>
@@ -3442,6 +3370,110 @@ Continue?</source>
     <message>
         <source>mute</source>
         <translation>静音</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>需要验证</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>这个连接不可信。需要继续吗？</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>不可信的SSL连接</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>用户名</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>启动</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>闹钟</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>防盗</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>可用</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>指令已发送</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>能耗管理</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>能耗月报表</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>忽略</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>信息</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>月达成目标</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>更多信息</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>新的信息</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>推迟</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>读取</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>场景</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>显示</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>停止</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>监督</translation>
     </message>
 </context>
 </TS>

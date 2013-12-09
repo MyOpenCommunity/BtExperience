@@ -823,29 +823,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Kimlik denetimi gerekli</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Şifre</translation>
-    </message>
-    <message>
-        <source>This connection is unreliable. Do you wish to continue?</source>
-        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
-    </message>
-    <message>
-        <source>Unreliable SSL connection</source>
-        <translation>Güvenli olmayan SSL bağlantısı</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Kullanıcı adı</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -1240,6 +1217,17 @@ Adres: %2</translation>
     <message>
         <source>Devices</source>
         <translation>Aygıtlar</translation>
+    </message>
+</context>
+<context>
+    <name>DevicesSystem</name>
+    <message>
+        <source>Sound diffusion is playing</source>
+        <translation>Ses difüzyonu aktif</translation>
+    </message>
+    <message>
+        <source>To activate media server in Multimedia you need to stop the source.Proceed?</source>
+        <translation>Multimedya içindeki media server &apos;i etkin kılmak için kaynağı durdurmalısınız.Devam?</translation>
     </message>
 </context>
 <context>
@@ -1929,85 +1917,6 @@ Adres: %2</translation>
     </message>
 </context>
 <context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Etkinleştirildi</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>ALARM SAATİ</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>İZİNSİZ GİRME ÖNLEME</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Kullanılabilir</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Kapat</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Komut gönderildi</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERJİ YÖNETİMİ</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Aylık Enerji Raporu</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Yoksay</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MESAJLAR</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Aylık sayıya ulaşıldı</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Daha fazla bilgi</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>yeni mesaj(lar)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Ertele</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Oku</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SENARYO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Göster</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Durdur</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Denetleme</translation>
-    </message>
-</context>
-<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -2105,10 +2014,6 @@ Adres: %2</translation>
         <translation>Arka plan fonunu değiştir</translation>
     </message>
     <message>
-        <source>Change card image</source>
-        <translation>Kart görüntüsü değiştir</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>İşlemi onaylayın</translation>
     </message>
@@ -2123,6 +2028,21 @@ Adres: %2</translation>
     <message>
         <source>Objectlinks list</source>
         <translation>Objectlinks listesi</translation>
+    </message>
+    <message>
+        <source>Change card</source>
+        <translation>Kart değiştir</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Seçilen nesnesini silmek istediğinizden emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Silmeyi onaylayın</translation>
     </message>
 </context>
 <context>
@@ -2157,17 +2077,6 @@ Adres: %2</translation>
     <message>
         <source>New Name:</source>
         <translation>Yeni ad:</translation>
-    </message>
-</context>
-<context>
-    <name>RoomView</name>
-    <message>
-        <source>Are you sure to delete the selected object?</source>
-        <translation>Seçilen nesnesini silmek istediğinizden emin misiniz?</translation>
-    </message>
-    <message>
-        <source>Confirm deletion</source>
-        <translation>Silmeyi onaylayın</translation>
     </message>
 </context>
 <context>
@@ -2518,10 +2427,6 @@ Devam?</translation>
         <translation>Arka plan fonu</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Arka plan fonunu değiştir</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>İşlemi onaylayın</translation>
     </message>
@@ -2538,8 +2443,12 @@ Devam?</translation>
         <translation>Hızlı bağlantılar</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Arka plan fonunu geri yükle</translation>
+        <source>Change background</source>
+        <translation>Arka plan fonu değiştir</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Arka plan fonu geri yükle</translation>
     </message>
 </context>
 <context>
@@ -2857,14 +2766,6 @@ Devam?</translation>
         <translation>Kart görüntüsü</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Arka plan fonunu değiştir</translation>
-    </message>
-    <message>
-        <source>Change card image</source>
-        <translation>Kart görüntüsü değiştir</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>İşlemi onaylayın</translation>
     </message>
@@ -2881,8 +2782,16 @@ Devam?</translation>
         <translation>Arka plan fonuna varsayılan görüntüyü geri yüklemek istiyor musunuz?</translation>
     </message>
     <message>
-        <source>Restore background image</source>
-        <translation>Arka plan fonunu geri yükle</translation>
+        <source>Change card</source>
+        <translation>Kart değiştir</translation>
+    </message>
+    <message>
+        <source>Change background</source>
+        <translation>Arka plan fonu değiştir</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
+        <translation>Arka plan fonu geri yükle</translation>
     </message>
 </context>
 <context>
@@ -3061,6 +2970,25 @@ Devam?</translation>
         <source>Source changed</source>
         <translation>Kaynak değiştirme</translation>
     </message>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Multimedia aktif</translation>
+    </message>
+    <message>
+        <source>UPnP support is limited to only one active source. The UPnP source is busy in multimedia. Do you want to stop the multimedia source?</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SourceList</name>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Multimedia aktif</translation>
+    </message>
+    <message>
+        <source>To activate media server in sound diffusion you need to stop the source.Proceed?</source>
+        <translation>Ses difüzyonu içindeki media server&apos;i etkin kılmak için kaynağı durdurmalısınız.Devam?</translation>
+    </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
@@ -3202,21 +3130,6 @@ Devam?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Fanlı ısıtıcı hızı</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Yöntemler</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Sıcaklık ayarı</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3273,6 +3186,21 @@ Devam?</translation>
     <message>
         <source>Weekly</source>
         <translation>Haftalık</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Fanlı ısıtıcı hızı</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Yöntemler</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Sıcaklık ayarı</translation>
     </message>
 </context>
 <context>
@@ -3442,6 +3370,110 @@ Devam?</translation>
     <message>
         <source>mute</source>
         <translation>Sessiz</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Kimlik denetimi gerekli</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Bu bağlantı güvenli değil. Devam etmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Güvenli olmayan SSL bağlantısı</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Kullanıcı adı</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Etkinleştirildi</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>ALARM SAATİ</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>İZİNSİZ GİRME ÖNLEME</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Kullanılabilir</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Kapat</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Komut gönderildi</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERJİ YÖNETİMİ</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Aylık Enerji Raporu</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Yoksay</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MESAJLAR</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Aylık sayıya ulaşıldı</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Daha fazla bilgi</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>yeni mesaj(lar)</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Ertele</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Oku</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SENARYO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Göster</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Durdur</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Denetleme</translation>
     </message>
 </context>
 </TS>

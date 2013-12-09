@@ -823,29 +823,6 @@ Adresse: %2</translation>
     </message>
 </context>
 <context>
-    <name>browsermain</name>
-    <message>
-        <source>Authentication required</source>
-        <translation>Authentifizierung erforderlich</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Passwort</translation>
-    </message>
-    <message>
-        <source>This connection is unreliable. Do you wish to continue?</source>
-        <translation>Diese Verbindung ist nicht vertrauenswürdig Wollen Sie fortfahren?</translation>
-    </message>
-    <message>
-        <source>Unreliable SSL connection</source>
-        <translation>Nicht vertrauenswürdige Verbindung</translation>
-    </message>
-    <message>
-        <source>User name</source>
-        <translation>Benutzername</translation>
-    </message>
-</context>
-<context>
     <name>BrowserPage</name>
     <message>
         <source>multimedia</source>
@@ -1240,6 +1217,17 @@ Adresse: %2</translation>
     <message>
         <source>Devices</source>
         <translation>Vorrichtungen</translation>
+    </message>
+</context>
+<context>
+    <name>DevicesSystem</name>
+    <message>
+        <source>Sound diffusion is playing</source>
+        <translation>Schalldiffusion ist in Betrieb</translation>
+    </message>
+    <message>
+        <source>To activate media server in Multimedia you need to stop the source.Proceed?</source>
+        <translation>Um den Media Server als Multimedia zu aktivieren, müssen Sie die Quelle stoppen. Fortfahren?</translation>
     </message>
 </context>
 <context>
@@ -1929,85 +1917,6 @@ Adresse: %2</translation>
     </message>
 </context>
 <context>
-    <name>popup</name>
-    <message>
-        <source>activated</source>
-        <translation>Aktiv</translation>
-    </message>
-    <message>
-        <source>ALARM CLOCK</source>
-        <translation>WECKER</translation>
-    </message>
-    <message>
-        <source>ANTINTRUSION</source>
-        <translation>EINBRUCHSICHERHEIT</translation>
-    </message>
-    <message>
-        <source>available</source>
-        <translation>Verfügbar</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation>Schliessen</translation>
-    </message>
-    <message>
-        <source>Command sent</source>
-        <translation>Befehl wurde gesendet</translation>
-    </message>
-    <message>
-        <source>ENERGY MANAGEMENT</source>
-        <translation>ENERGIE MANAGEMENT</translation>
-    </message>
-    <message>
-        <source>Energy Monthly Report</source>
-        <translation>Energie-Monatsbericht</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translation>Ignorieren</translation>
-    </message>
-    <message>
-        <source>MESSAGES</source>
-        <translation>MELDUNGEN</translation>
-    </message>
-    <message>
-        <source>Monthly goal reached</source>
-        <translation>Monatliches Ziel erreicht</translation>
-    </message>
-    <message>
-        <source>More info</source>
-        <translation>Mehr Informationen</translation>
-    </message>
-    <message>
-        <source>new message(s)</source>
-        <translation>Neue Meldung(en)</translation>
-    </message>
-    <message>
-        <source>Postpone</source>
-        <translation>Verschieben</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lesen</translation>
-    </message>
-    <message>
-        <source>SCENARIO</source>
-        <translation>SZENARIO</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation>Zeigen</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Ausschalten</translation>
-    </message>
-    <message>
-        <source>SUPERVISION</source>
-        <translation>Supervision</translation>
-    </message>
-</context>
-<context>
     <name>PopupPage</name>
     <message>
         <source>zone</source>
@@ -2105,10 +2014,6 @@ Adresse: %2</translation>
         <translation>Hintergrund ändern</translation>
     </message>
     <message>
-        <source>Change card image</source>
-        <translation>Bild der Card ändern</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Vorgang bestätigen</translation>
     </message>
@@ -2123,6 +2028,21 @@ Adresse: %2</translation>
     <message>
         <source>Objectlinks list</source>
         <translation>Liste der Objektlinks</translation>
+    </message>
+    <message>
+        <source>Change card</source>
+        <translation>Karte ändern</translation>
+    </message>
+</context>
+<context>
+    <name>RoomView</name>
+    <message>
+        <source>Are you sure to delete the selected object?</source>
+        <translation>Wollen Sie das gewählte Objekt wirklich löschen?</translation>
+    </message>
+    <message>
+        <source>Confirm deletion</source>
+        <translation>Löschen bestätigen</translation>
     </message>
 </context>
 <context>
@@ -2157,17 +2077,6 @@ Adresse: %2</translation>
     <message>
         <source>New Name:</source>
         <translation>Neuer Name:</translation>
-    </message>
-</context>
-<context>
-    <name>RoomView</name>
-    <message>
-        <source>Are you sure to delete the selected object?</source>
-        <translation>Wollen Sie das gewählte Objekt wirklich löschen?</translation>
-    </message>
-    <message>
-        <source>Confirm deletion</source>
-        <translation>Löschen bestätigen</translation>
     </message>
 </context>
 <context>
@@ -2518,10 +2427,6 @@ Wollen Sie fortfahren?</translation>
         <translation>Bild im Hintergrund</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Hintergrund ändern</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Vorgang bestätigen</translation>
     </message>
@@ -2538,7 +2443,11 @@ Wollen Sie fortfahren?</translation>
         <translation>Quicklinks</translation>
     </message>
     <message>
-        <source>Restore background image</source>
+        <source>Change background</source>
+        <translation>Hintergrund ändern</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
         <translation>Hintergrund wieder herstellen</translation>
     </message>
 </context>
@@ -2857,14 +2766,6 @@ Wollen Sie fortfahren?</translation>
         <translation>Bild der Card</translation>
     </message>
     <message>
-        <source>Change background image</source>
-        <translation>Hintergrund ändern</translation>
-    </message>
-    <message>
-        <source>Change card image</source>
-        <translation>Bild der Card ändern</translation>
-    </message>
-    <message>
         <source>Confirm operation</source>
         <translation>Vorgang bestätigen</translation>
     </message>
@@ -2881,7 +2782,15 @@ Wollen Sie fortfahren?</translation>
         <translation>Wollen Sie den Hintergrund auf Default-Wert wiederherstellen?</translation>
     </message>
     <message>
-        <source>Restore background image</source>
+        <source>Change card</source>
+        <translation>Karte ändern</translation>
+    </message>
+    <message>
+        <source>Change background</source>
+        <translation>Hintergrund ändern</translation>
+    </message>
+    <message>
+        <source>Restore background</source>
         <translation>Hintergrund wieder herstellen</translation>
     </message>
 </context>
@@ -3061,6 +2970,25 @@ Wollen Sie fortfahren?</translation>
         <source>Source changed</source>
         <translation>Quelle geändert</translation>
     </message>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Multimedia ist in Betrieb</translation>
+    </message>
+    <message>
+        <source>UPnP support is limited to only one active source. The UPnP source is busy in multimedia. Do you want to stop the multimedia source?</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SourceList</name>
+    <message>
+        <source>Multimedia is playing</source>
+        <translation>Multimedia ist in Betrieb</translation>
+    </message>
+    <message>
+        <source>To activate media server in sound diffusion you need to stop the source.Proceed?</source>
+        <translation>Um den Media Server als Schalldiffusion zu aktivieren, müssen Sie die Quelle stoppen. Fortfahren?</translation>
+    </message>
 </context>
 <context>
     <name>SplitBasicOffProgram</name>
@@ -3202,21 +3130,6 @@ Wollen Sie fortfahren?</translation>
     </message>
 </context>
 <context>
-    <name>ThermalControlledProbe</name>
-    <message>
-        <source>fancoil speed</source>
-        <translation>Fancoil-Geschwindigkeit</translation>
-    </message>
-    <message>
-        <source>modes</source>
-        <translation>Modi</translation>
-    </message>
-    <message>
-        <source>temperature set</source>
-        <translation>Eingestellte Temperatur</translation>
-    </message>
-</context>
-<context>
     <name>ThermalControlUnit</name>
     <message>
         <source>Antifreeze</source>
@@ -3273,6 +3186,21 @@ Wollen Sie fortfahren?</translation>
     <message>
         <source>Weekly</source>
         <translation>Wöchentlich</translation>
+    </message>
+</context>
+<context>
+    <name>ThermalControlledProbe</name>
+    <message>
+        <source>fancoil speed</source>
+        <translation>Fancoil-Geschwindigkeit</translation>
+    </message>
+    <message>
+        <source>modes</source>
+        <translation>Modi</translation>
+    </message>
+    <message>
+        <source>temperature set</source>
+        <translation>Eingestellte Temperatur</translation>
     </message>
 </context>
 <context>
@@ -3442,6 +3370,111 @@ Wollen Sie fortfahren?</translation>
     <message>
         <source>mute</source>
         <translation>Stumm</translation>
+    </message>
+</context>
+<context>
+    <name>browsermain</name>
+    <message>
+        <source>Authentication required</source>
+        <translation>Authentifizierung erforderlich</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <source>This connection is unreliable. Do you wish to continue?</source>
+        <translation>Diese Verbindung ist nicht vertrauenswürdig Wollen Sie fortfahren?</translation>
+    </message>
+    <message>
+        <source>Unreliable SSL connection</source>
+        <translation>Nicht vertrauenswürdige Verbindung</translation>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation>Benutzername</translation>
+    </message>
+</context>
+<context>
+    <name>popup</name>
+    <message>
+        <source>activated</source>
+        <translation>Aktiv</translation>
+    </message>
+    <message>
+        <source>ALARM CLOCK</source>
+        <translation>WECKER</translation>
+    </message>
+    <message>
+        <source>ANTINTRUSION</source>
+        <translation>EINBRUCHSICHERHEIT</translation>
+    </message>
+    <message>
+        <source>available</source>
+        <translation>Verfügbar</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Schliessen</translation>
+    </message>
+    <message>
+        <source>Command sent</source>
+        <translation>Befehl wurde gesendet</translation>
+    </message>
+    <message>
+        <source>ENERGY MANAGEMENT</source>
+        <translation>ENERGIE MANAGEMENT</translation>
+    </message>
+    <message>
+        <source>Energy Monthly Report</source>
+        <translation>Energie-Monatsbericht</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation>Ignorieren</translation>
+    </message>
+    <message>
+        <source>MESSAGES</source>
+        <translation>MELDUNGEN</translation>
+    </message>
+    <message>
+        <source>Monthly goal reached</source>
+        <translation>Monatliches Ziel erreicht</translation>
+    </message>
+    <message>
+        <source>More info</source>
+        <translation>Mehr Informationen</translation>
+    </message>
+    <message numerus="yes">
+        <source>new message(s)</source>
+        <translation>
+            <numerusform>Neue Meldung(en)</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Postpone</source>
+        <translation>Verschieben</translation>
+    </message>
+    <message>
+        <source>Read</source>
+        <translation>Lesen</translation>
+    </message>
+    <message>
+        <source>SCENARIO</source>
+        <translation>SZENARIO</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Zeigen</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Ausschalten</translation>
+    </message>
+    <message>
+        <source>SUPERVISION</source>
+        <translation>Supervision</translation>
     </message>
 </context>
 </TS>
