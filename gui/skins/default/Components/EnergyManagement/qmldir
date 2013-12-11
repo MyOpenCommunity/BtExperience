@@ -1,4 +1,5 @@
 Appliance 1.0 Appliance.qml
+EnergyCardView 1.0 EnergyCardView.qml
 EnergyDataDelegate 1.0 EnergyDataDelegate.qml
 EnergyDateSelector 1.0 EnergyDateSelector.qml
 EnergyDayGraph 1.0 EnergyDayGraph.qml

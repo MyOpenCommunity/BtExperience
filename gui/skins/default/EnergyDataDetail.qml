@@ -127,7 +127,7 @@ Page {
             }
         }
 
-        CardView {
+        EnergyCardView {
             id: columnView
             anchors {
                 // TODO: I'd like to center the arrows in the 'gray' area on the

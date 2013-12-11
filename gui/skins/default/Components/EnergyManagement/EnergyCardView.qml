@@ -1,0 +1,232 @@
+/*
+ * Copyright © 2011-2013 BTicino S.p.A.
+ *
+ * This file is part of BtExperience.
+ *
+ * BtExperience is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * BtExperience is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with BtExperience. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+import QtQuick 1.1
+import Components 1.0
+// will contain all created delegates, assume we can index it from 0 to model.count
+import "../../js/CustomView.js" as Vars
+
+Item {
+    id: cardView
+
+    property int visibleElements: 3
+    property int delegateSpacing: 10
+    property variant model
+    property Component delegate
+    property int delegateWidth: 150
+
+    Connections {
+        target: model
+        ignoreUnknownSignals: true
+        onCountChanged: {
+            clipView.modelReset()
+        }
+        onContainersChanged: {
+            clipView.modelReset()
+        }
+    }
+
+    Image {
+        id: prevArrow
+        source: "../../images/common/freccia_sx.svg"
+        anchors {
+            left: parent.left
+            verticalCenter: parent.verticalCenter
+        }
+
+        BeepingMouseArea {
+            id: mouseAreaSx
+            anchors.fill: parent
+            onClicked: {
+                // Any delegate is ok to test the animation running property
+                //
+                // Take currentIndex + 1 because we are guaranteed it always exists
+                // (after delegates are created) and also the modulo operation
+                // is always in the range [0, model.count - 1] (not so if we use currentIndex - 1)
+                // Don't use currentIndex because in some cases it's going to be
+                // destroyed.
+                var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
+                var enabled = delegate === undefined ? false : !delegate.moveAnimationRunning
+                if (enabled)
+                    clipView.decrementCurrentIndex()
+            }
+        }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaSx.pressed === true
+                PropertyChanges {
+                    target: prevArrow
+                    source: "../../images/common/freccia_sx_P.svg"
+                }
+            }
+        ]
+    }
+
+    Item {
+        id: listViewSpace
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: prevArrow.right
+            leftMargin: 2
+            right: nextArrow.left
+            rightMargin: 2
+        }
+        Item {
+            property int currentIndex: -1
+            property int currentPressed: -1
+
+            function initDelegates() {
+                currentIndex = 0
+                var n = Math.min(visibleElements, model.count)
+                if (n === 0) {
+                    return
+                }
+                // firstly, creates the first delegate at x = 0
+                Vars.dict[0] = delegate.createObject(clipView, {"x": 0, "y": 0, "index": 0, "view": clipView})
+                // then, calculates delegate width from first delegate and creates other delegates
+                // please note that some delegates width are computed from CardView.js constants
+                // while others have their own width; to account for both we recompute the delegate width
+                // from the first delegate assuming that the delegate knows its "correct" width
+                cardView.delegateWidth = Vars.dict[0].width
+                for (var i = 1; i < n; ++i) {
+                    var delegateX = (cardView.delegateWidth + delegateSpacing) * i
+                    Vars.dict[i] = delegate.createObject(clipView, {"x": delegateX, "y": 0, "index": i, "view": clipView})
+                }
+            }
+
+            function clearDelegates() {
+                for (var d in Vars.dict) {
+                    Vars.dict[d].destroy()
+                }
+            }
+
+            function modelReset() {
+                clearDelegates()
+                initDelegates()
+            }
+
+            function moveDelegates(direction) {
+                var factor = direction === Vars.DIR_LEFT ? 1 : -1
+                for (var d in Vars.dict) {
+                    Vars.dict[d].x += (cardView.delegateWidth + delegateSpacing) * factor
+                }
+            }
+
+            function removeDelegate(index) {
+                var exitingDelegate = Vars.dict[index]
+                exitingDelegate.removeAnimationFinished.connect(exitingDelegate.destroy)
+                exitingDelegate.state = "remove"
+            }
+
+            function incrementCurrentIndex() {
+                // 1. create the new delegate outside on the right
+                var lastIndex = (currentIndex + visibleElements - 1) % model.count
+                var newDelegateIndex = (lastIndex + 1) % model.count
+                var newDelegateX = Vars.dict[lastIndex].x + Vars.dict[lastIndex].width + delegateSpacing
+                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
+
+                // 2. Remove and destroy the leftmost delegate
+                removeDelegate(currentIndex)
+
+                if (++currentIndex >= model.count)
+                    currentIndex = 0
+                moveDelegates(Vars.DIR_RIGHT)
+            }
+
+            function decrementCurrentIndex() {
+                var newDelegateIndex = currentIndex - 1
+                // wrap around, cannot use modulo for negative numbers
+                if (newDelegateIndex < 0)
+                    newDelegateIndex = model.count - 1
+
+                var newDelegateX = Vars.dict[currentIndex].x - Vars.dict[currentIndex].width - delegateSpacing
+                Vars.dict[newDelegateIndex] = delegate.createObject(clipView, {"x": newDelegateX, "y": 0, "index": newDelegateIndex, "view": clipView})
+
+                var lastIndex = (currentIndex + visibleElements - 1) % model.count
+                removeDelegate(lastIndex)
+
+                if (--currentIndex < 0)
+                    currentIndex = model.count - 1
+                moveDelegates(Vars.DIR_LEFT)
+            }
+
+            id: clipView
+            clip: true
+            width: {
+                var n = Math.min(visibleElements, model.count)
+                if (n === 0)
+                    return 0
+                return n * cardView.delegateWidth + (n - 1) * delegateSpacing
+            }
+            anchors.centerIn: parent
+        }
+    }
+
+    Image {
+        id: nextArrow
+        source: "../../images/common/freccia_dx.svg"
+        anchors {
+            right: parent.right
+            verticalCenter: parent.verticalCenter
+        }
+
+        BeepingMouseArea {
+            id: mouseAreaDx
+            anchors.fill: parent
+            onClicked: {
+                // see comment on the other arrow
+                var delegate = Vars.dict[(clipView.currentIndex + 1) % model.count]
+                var enabled = delegate === undefined ? false : !delegate.moveAnimationRunning
+                if (enabled)
+                    clipView.incrementCurrentIndex()
+            }
+        }
+
+        states: [
+            State {
+                name: "pressed"
+                when: mouseAreaDx.pressed === true
+                PropertyChanges {
+                    target: nextArrow
+                    source: "../../images/common/freccia_dx_P.svg"
+                }
+            }
+        ]
+    }
+
+    states: State {
+        name: "hiddenArrows"
+        when: model.count <= visibleElements
+        PropertyChanges {
+            target: nextArrow
+            visible: false
+        }
+        PropertyChanges {
+            target: prevArrow
+            visible: false
+        }
+    }
+
+    // hack to work using ListModel, which don't send the countChanged
+    // signals when the model is associated to the view.
+    Component.onCompleted: clipView.modelReset()
+}
