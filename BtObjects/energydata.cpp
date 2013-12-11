@@ -30,8 +30,8 @@
 #include <QVector>
 
 #if TEST_ENERGY_DATA
-#include <QTimer>
 #include "delayedslotcaller.h"
+#include <QTimer>
 #endif //TEST_ENERGY_DATA
 
 #define INVALID_VALUE -1
@@ -46,6 +46,10 @@
 #define CACHE_TRIM_INTERVAL_MSEC 300 * 1000 // 5 min
 // consumption goals check interval
 #define GOAL_CHECK_INTERVAL (50 * 60 * 1000)
+
+// delay (ms) between successive calls to requestCumulativeMonth
+// Required to not overload the physical device with requests
+#define DELAY_INTERVAL 150
 
 /*
 	EnergyData tries to reduce the amount of requests performed by the object, it does so by:
@@ -318,6 +322,9 @@ EnergyData::EnergyData(EnergyDevice *_dev, QString _name, EnergyFamily::FamilyTy
 	trim_cache.setInterval(CACHE_TRIM_INTERVAL_MSEC);
 	connect(&trim_cache, SIGNAL(timeout()), this, SLOT(trimCache()));
 
+	delay_timer.setInterval(DELAY_INTERVAL);
+	delay_timer.setSingleShot(false);
+	connect(&delay_timer, SIGNAL(timeout()), SLOT(sendCumulativeMonthRequest()));
 #if TEST_ENERGY_DATA
 	last_thresholds = thresholds = QVariantList() << 2.2 << 3.80;
 
@@ -877,7 +884,8 @@ void EnergyData::requestUpdate(int type, QDate date, RequestOptions options)
 		dev->requestCumulativeDay(key.date);
 		break;
 	case CumulativeMonthValue:
-		dev->requestCumulativeMonth(key.date);
+		cumulative_month_requests.enqueue(key.date);
+		delay_timer.start();
 		break;
 	case CumulativeYearValue:
 		// see comment in valueReceived()
@@ -1045,6 +1053,13 @@ void EnergyData::checkConsumptionGoals()
 	}
 
 	requestUpdate(CumulativeMonthValue, today, Force);
+}
+
+void EnergyData::sendCumulativeMonthRequest()
+{
+	dev->requestCumulativeMonth(cumulative_month_requests.dequeue());
+	if (cumulative_month_requests.isEmpty())
+		delay_timer.stop();
 }
 
 void EnergyData::checkConsumptionGoal(QDate date, double month_value)
