@@ -42,7 +42,6 @@
 #include <QVector>
 #include <QSharedPointer>
 #include <QWeakPointer>
-#include <QQueue>
 
 class EnergyDevice;
 class EnergyGraph;
@@ -406,8 +405,6 @@ private slots:
 	// called on first day of month to check consumption goals
 	void checkConsumptionGoals();
 
-	void sendCumulativeMonthRequest();
-
 private:
 	enum RequestOptions
 	{
@@ -483,11 +480,6 @@ private:
 
 	EnergyFamily::FamilyType family;
 	QString family_name;
-
-	// These are used to delay the frame requests when asking for year graphs,
-	// physical device can't keep up with us if we send too many frames at once.
-	QTimer delay_timer;
-	QQueue<QDate> cumulative_month_requests;
 
 #if TEST_ENERGY_DATA
 private slots:
