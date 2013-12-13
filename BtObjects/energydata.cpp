@@ -645,6 +645,8 @@ void EnergyData::cacheYearGraphData(QDate date, double month_value)
 
 	// if the new value is different from the old one and we have all the data for the
 	// year, update EnergyGraph/EnergyItem objects
+	// If we fail this check, graph data is not updated. In particular, if we
+	// never receive at least one full graph, we never visualize the graph.
 	if (old_value == month_value || !checkYearGraphDataIsValid(actual_date, *values))
 		return;
 
