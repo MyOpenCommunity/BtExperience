@@ -2948,7 +2948,7 @@ Wollen Sie fortfahren?</translation>
     <name>SourceControl</name>
     <message>
         <source>browse</source>
-        <translation>Abrollen</translation>
+        <translation>Durchblättern</translation>
     </message>
     <message>
         <source>no album</source>
