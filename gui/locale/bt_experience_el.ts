@@ -406,7 +406,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>Τ</translation>
+        <translation>Π</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Address: %2</source>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Π</translation>
+        <translation>T</translation>
     </message>
     <message>
         <source>W</source>

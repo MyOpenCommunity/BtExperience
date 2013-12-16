@@ -406,7 +406,7 @@ Indirizzo: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>M</translation>
+        <translation>G</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Indirizzo: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>G</translation>
+        <translation>M</translation>
     </message>
     <message>
         <source>W</source>

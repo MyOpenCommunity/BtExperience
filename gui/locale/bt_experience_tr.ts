@@ -406,7 +406,7 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>S</translation>
+        <translation>Pe</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Adres: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>Pe</translation>
+        <translation>S</translation>
     </message>
     <message>
         <source>W</source>

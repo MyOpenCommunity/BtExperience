@@ -406,7 +406,7 @@ Endereço: %2</translation>
     <message>
         <source>T</source>
         <comment>Thursday</comment>
-        <translation>3ª</translation>
+        <translation>5ª</translation>
     </message>
     <message>
         <source>time</source>
@@ -415,7 +415,7 @@ Endereço: %2</translation>
     <message>
         <source>T</source>
         <comment>Tuesday</comment>
-        <translation>5ª</translation>
+        <translation>3ª</translation>
     </message>
     <message>
         <source>W</source>
