@@ -41,7 +41,20 @@ Page {
     /** the uii for the ground */
     property int floorUii
 
-    source: room.image
+    // We can't use the image directly, because the configuration software
+    // doesn't resize images that are smaller than the screen resolution, and
+    // we don't want to stretch the image.
+    // This code mimics what we already do when saving images from external
+    // sources, centering the image with a black border around it.
+    Rectangle {
+        color: "black"
+        anchors.fill: parent
+        z: -1000
+        Image {
+            source: room.image
+            anchors.centerIn: parent
+        }
+    }
 
     /**
       Called when rooms button on navigation bar is clicked.

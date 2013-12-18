@@ -52,7 +52,18 @@ Page {
         Stack.goToPage("Settings.qml", {navigationTarget: Navigation.PROFILE, navigationData: profilePage.profile})
     }
 
-    source: profile.image === "" ? homeProperties.homeBgImage : profile.image
+    // Don't stretch images smaller than screen resolution.
+    // See Room.qml for more information
+    Rectangle {
+        color: "black"
+        anchors.fill: parent
+        z: -1000
+        Image {
+            source: profile.image === "" ? homeProperties.homeBgImage : profile.image
+            anchors.centerIn: parent
+        }
+    }
+
     text: profile.description
     showSystemsButton: false
     showSettingsButton: true
