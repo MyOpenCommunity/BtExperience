@@ -36,7 +36,17 @@ import "js/Stack.js" as Stack
 Page {
     id: mainarea
 
-    source : homeProperties.homeBgImage
+    // Don't stretch images smaller than screen resolution.
+    // See Room.qml for more information
+    Rectangle {
+        color: "black"
+        anchors.fill: parent
+        z: -1000
+        Image {
+            source : homeProperties.homeBgImage
+            anchors.centerIn: parent
+        }
+    }
     text: qsTr("rooms")
 
     MediaModel {

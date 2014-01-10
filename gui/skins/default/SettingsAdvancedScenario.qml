@@ -31,7 +31,17 @@ Page {
     property variant scenarioObject: undefined
 
     text: qsTr("Advanced scenario")
-    source : homeProperties.homeBgImage
+    // Don't stretch images smaller than screen resolution.
+    // See Room.qml for more information
+    Rectangle {
+        color: "black"
+        anchors.fill: parent
+        z: -1000
+        Image {
+            source : homeProperties.homeBgImage
+            anchors.centerIn: parent
+        }
+    }
 
     Item {
         anchors {

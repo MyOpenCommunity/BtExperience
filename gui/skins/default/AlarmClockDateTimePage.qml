@@ -75,7 +75,17 @@ Page {
     }
 
     text: qsTr("Alarm settings")
-    source : homeProperties.homeBgImage
+    // Don't stretch images smaller than screen resolution.
+    // See Room.qml for more information
+    Rectangle {
+        color: "black"
+        anchors.fill: parent
+        z: -1000
+        Image {
+            source : homeProperties.homeBgImage
+            anchors.centerIn: parent
+        }
+    }
 
     Component.onDestruction: if (page.alarmClock) page.alarmClock.reset()
 
