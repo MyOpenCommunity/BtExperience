@@ -46,7 +46,7 @@ BasePage {
         anchors.fill: parent
         z: -1000
         Image {
-            source : homeProperties.homeBgImage
+    	    source : homeProperties.homeBgImage
             anchors.centerIn: parent
         }
     }

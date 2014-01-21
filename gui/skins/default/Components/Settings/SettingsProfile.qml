@@ -72,6 +72,7 @@ MenuColumn {
         MenuItem {
             name: qsTr("Delete Profile")
             isSelected: privateProps.currentIndex === 5
+            enabled: profilesModel.count > 1? 1: 0
             onTouched: {
                 privateProps.currentIndex = -1
                 pageObject.installPopup(deleteDialog, {"item": column.dataModel})
