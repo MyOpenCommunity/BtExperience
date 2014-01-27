@@ -118,13 +118,20 @@ PathView {
     preferredHighlightBegin: (pathItemCount % 2) === 0 ? 0.49 : 0.5
     preferredHighlightEnd: (pathItemCount % 2) === 0 ? 0.49 : 0.5
 
+    // Here we need to workaround a bug in PathView (fixed in Qt 5).
+    // If we don't do this, we hit bug #24979, but if we do we hit bug #24111.
+    // However, bug #24111 only happens with 8 cards in the PathView, but
+    // the maximum number of rooms is 7, so we should be safe for the time
+    // being on Qt 4.
     Connections {
         target: model
         onModelAboutToBeReset: {
-            highlightRangeMode = PathView.NoHighlightRange
+            if (_pageName === "Rooms")
+                highlightRangeMode = PathView.NoHighlightRange
         }
         onModelReset: {
-            highlightRangeMode = PathView.StrictlyEnforceRange
+            if (_pageName === "Rooms")
+                highlightRangeMode = PathView.StrictlyEnforceRange
         }
     }
 
