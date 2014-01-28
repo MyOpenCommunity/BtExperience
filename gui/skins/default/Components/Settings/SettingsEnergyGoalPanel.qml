@@ -42,11 +42,15 @@ MenuColumn {
             }
 
             onMinusClicked: {
-                if (privateProps.goal > 0) {
-                    if (dataModel.energyType === EnergyData.Electricity)
-                        privateProps.goal -= .1
-                    else
-                        privateProps.goal -= 1
+                var delta = 1
+                var limit = 1
+                if (dataModel.energyType === EnergyData.Electricity) {
+                    delta = 0.1
+                    limit = 0.1
+                }
+                if (privateProps.goal > limit) {
+                    privateProps.goal -= delta
+                    console.log("goal now", privateProps.goal)
                 }
             }
 
