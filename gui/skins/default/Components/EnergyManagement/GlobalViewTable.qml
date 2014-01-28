@@ -223,7 +223,11 @@ Column {
                                         fill: parent
                                         rightMargin: privateProps.textMargin
                                     }
-                                    text: tableRow.hasRate() ? energyFunctions.formatValue(tableRow.monthItem) : "---"
+                                    text: tableRow.hasRate() ?
+                                              monthItemValue.measureType === EnergyData.Currency ?
+                                                  energyFunctions.formatCurrency(tableRow.monthItem) :
+                                                  energyFunctions.formatValue(tableRow.monthItem)
+                                          : "---"
                                     font.pixelSize: 14
                                     color: "white"
                                     horizontalAlignment: Text.AlignRight

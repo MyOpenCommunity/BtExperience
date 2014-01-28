@@ -510,6 +510,11 @@ class EnergyItem : public QObject
 	Q_PROPERTY(EnergyData::ValueType valueType READ getValueType CONSTANT)
 
 	/*!
+	  \brief The family type for this object (Electricity, Gas...)
+	*/
+	Q_PROPERTY(EnergyFamily::FamilyType family READ getFamily CONSTANT)
+
+	/*!
 		\brief The value for the measure
 
 		Since the value is requested asynchronously, the value might be invalid when the
@@ -577,8 +582,9 @@ public:
 	QVariant getConsumptionGoal() const;
 	bool getGoalEnabled() const;
 
-	virtual int getDecimals() const;
-	bool isElectricity() const;
+	int getDecimals() const;
+
+	EnergyFamily::FamilyType getFamily() const;
 
 public slots:
 	/*!
@@ -638,7 +644,6 @@ public:
 
 	virtual QVariant getValue() const;
 	virtual QString getMeasureUnit() const;
-	virtual int getDecimals() const;
 
 signals:
 	void thresholdsChanged(QVariantList thresholds);

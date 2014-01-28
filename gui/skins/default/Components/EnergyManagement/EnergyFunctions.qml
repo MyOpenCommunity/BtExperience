@@ -45,6 +45,18 @@ QtObject {
 
     function formatValue(energyItem) {
         if (energyItem.isValid) {
+            if (energyItem.family === EnergyData.Electricity && energyItem.value < 1.0) {
+                // bug #20716, visualize values less than 1 kwh as wh, strip
+                // initial "k" from measureUnit
+                return (energyItem.value * 1000).toFixed(0) + " " + energyItem.measureUnit.substr(1)
+            }
+            return energyItem.value.toFixed(energyItem.decimals) + " " + energyItem.measureUnit;
+        }
+        return ""
+    }
+
+    function formatCurrency(energyItem) {
+        if (energyItem.isValid) {
             return energyItem.value.toFixed(energyItem.decimals) + " " + energyItem.measureUnit;
         }
         return ""

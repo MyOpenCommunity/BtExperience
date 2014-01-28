@@ -516,7 +516,9 @@ Page {
 
                 UbuntuLightText {
                     anchors.centerIn: parent
-                    text: energyFunctions.formatValue(cumulativeConsumptionItem.consumptionItem)
+                    text: consumptionValue.measureType === EnergyData.Currency ?
+                              energyFunctions.formatCurrency(cumulativeConsumptionItem.consumptionItem) :
+                              energyFunctions.formatValue(cumulativeConsumptionItem.consumptionItem)
                     color: "grey"
                     font.pixelSize: 18
                 }
